@@ -6,6 +6,7 @@ public class EnemyCharacter : BaseCharacter
 {
     EnemyBaseContainer enemyBase;
     [SerializeField] float walkingSpeed;
+    [SerializeField] Collider hand;
     Transform[] targetPoints;
     State state;
     public float getWalkingSpeed { get { return walkingSpeed; } }
@@ -14,23 +15,34 @@ public class EnemyCharacter : BaseCharacter
     public Vector3 getPoint { get { return targetPoints[Random.Range(0, targetPoints.Length)].position; } }
     public State getCurrentState { get { return state; } }
 
-    void Start()
+    public void Initialize(EnemyBaseContainer enemyBase, Transform[] targetPoints)
     {
-        currentHP = maxHealthPoint;
+        gameObject.SetActive(true);
+        this.enemyBase = enemyBase;
+        this.targetPoints = targetPoints;
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        state = new Walking(animator, controller, transform, FindObjectOfType<PlayerCharacter>().transform);
+        controller.enabled = true;
+        alive = true;
+        currentHP = maxHealthPoint;
+        state = new Walking(animator, controller, transform, PlayerCharacter.Instance.transform);
     }
 
-    void Update()
+    public bool EnemyUpdate()
     {
-        state = state.Process();
+        if (alive)
+        {
+            state = state.Process();
+            hand.enabled = state is Attack;
+            return true;
+        }
+        else return false;
     }
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + Vector3.up, attackDistance);
+        Gizmos.DrawWireSphere(transform.position + (Vector3.up * transform.localScale.y), attackDistance);
     }
 
     public override void GetDamage(float damage)
@@ -38,25 +50,19 @@ public class EnemyCharacter : BaseCharacter
         currentHP -= damage;
         if (currentHP <= 0)
         {
-            this.enabled = false;
             controller.enabled = false;
             animator.SetBool("alive", false);
-            enemyBase.RemoveEnemyFromList(gameObject);
+            alive = false;
             StartCoroutine(Await());
         }
-    }
-
-    public void GetData(EnemyBaseContainer _base, Transform[] points)
-    {
-        enemyBase = _base;
-        targetPoints = points;
     }
 
     IEnumerator Await()
     {
         yield return new WaitWhile(() => IsDeath());
-        GetComponent<ItemDrop>().Drop();
-        Destroy(gameObject);
+        GetComponent<ItemDrop>().DropItems();
+        Pools.Push(this);
+        gameObject.SetActive(false);
     }
     bool IsDeath()
     {

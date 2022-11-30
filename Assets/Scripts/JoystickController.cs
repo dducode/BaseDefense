@@ -9,7 +9,13 @@ public class JoystickController : MonoBehaviour
     [SerializeField] RectTransform joystick;
     [SerializeField] RectTransform circle;
 
-    void Start() => circle.gameObject.SetActive(false);
+    public Vector2 JoystickPosition { get; private set; }
+
+    void Start()
+    {
+        circle.gameObject.SetActive(false);
+        JoystickPosition = Vector2.zero;
+    }
     void OnDisable() => circle.gameObject.SetActive(false);
 
 #if UNITY_EDITOR
@@ -41,28 +47,20 @@ public class JoystickController : MonoBehaviour
     {
         var size = circle.rect.size;
         Vector2 joystickPos = new Vector2();
-        Vector3 movement = new Vector3();
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-        circle.transform as RectTransform,
-        new Vector2(Input.mousePosition.x, Input.mousePosition.y),
-        null,
-        out joystickPos
-       );
-        joystickPos = Vector2.ClampMagnitude(joystickPos, size.x / 2);
-        joystick.localPosition = joystickPos;
-
-        movement = joystickPos;
-        movement = Vector3.Normalize(movement);
-
-        PlayerCharacter.getInstance.Movement(
-            joystickPos.magnitude / (size.x / 2), 
-            new Vector3(movement.x, 0, movement.y)
+            circle.transform as RectTransform,
+            new Vector2(Input.mousePosition.x, Input.mousePosition.y),
+            null,
+            out joystickPos
         );
+        JoystickPosition = Vector2.ClampMagnitude(joystickPos, size.x / 2);
+        joystick.localPosition = JoystickPosition;
+        JoystickPosition = JoystickPosition.normalized * (JoystickPosition.magnitude / (size.x / 2));
     }
     public void EndTouch()
     {
         circle.gameObject.SetActive(false);
         joystick.localPosition = Vector2.zero;
-        PlayerCharacter.getInstance.Movement(0, Vector3.zero);
+        JoystickPosition = Vector2.zero;
     }
 }

@@ -439,8 +439,8 @@ Transform:
   m_GameObject: {fileID: 1786588370087917798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1786588370495500549}
   - {fileID: 1786588369637996188}
@@ -460,9 +460,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealthPoint: 100
-  maxSpeed: 3
-  attackDistance: 0.75
-  walkingSpeed: 2
+  maxSpeed: 5
+  attackDistance: 1.25
+  walkingSpeed: 3
+  hand: {fileID: 3872991518174540616}
 --- !u!114 &1929896161184053226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,10 +477,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 2547748597644747348, guid: 0aaf42ad268c86b44b3bae94bfebfa5a, type: 3}
-  - {fileID: 1000010880751780, guid: c3c0707254334a64ca8198f7486e977d, type: 3}
-  force: 3
-  forceMode: 1
+  - {fileID: 2360663159339950683, guid: 0aaf42ad268c86b44b3bae94bfebfa5a, type: 3}
+  - {fileID: 5203258588667499559, guid: c3c0707254334a64ca8198f7486e977d, type: 3}
+  forceScalar: 3
   itemsCount:
     minLimit: 0
     maxLimit: 100
@@ -514,7 +514,7 @@ CharacterController:
   m_GameObject: {fileID: 1786588370087917798}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5

@@ -8,42 +8,33 @@ public class PlayerCharacter : BaseCharacter
 {
     private static PlayerCharacter instance;
 
-    public static PlayerCharacter getInstance
-    {
-        get
-        {
-            if (instance == null)
-                instance = FindObjectOfType<PlayerCharacter>();
-            return instance;
-        }
-    }
+    public static PlayerCharacter Instance => instance;
+    public float MaxHealthPoint => maxHealthPoint;
+    public float CurrentHP => currentHP;
 
-    [SerializeField] GameObject gun;
+    [SerializeField] Transform slotForGun;
     [SerializeField] Transform recoveryPoint;
-    [SerializeField] TextMeshProUGUI HP;
-    [SerializeField] Slider HPBar;
+    GameObject gun;
     EnemyBaseContainer enemyBase;
     GunShooting gunShooting;
     Vector3 lookToEnemy;
     Vector3 lookToMovement;
-    IEnumerator attackEnemy;
     bool inBase;
+    bool inEnemyBase;
 
+    void Awake() => instance = this;
     void Start()
     {
         currentHP = maxHealthPoint;
-        HPBar.maxValue = maxHealthPoint;
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        gun = slotForGun.GetChild(0).gameObject;
         gunShooting = gun.GetComponent<GunShooting>();
         gun.SetActive(false);
-        attackEnemy = Attack();
     }
 
     void Update()
     {
-        HP.text = currentHP.ToString();
-        HPBar.value = currentHP;
         if (lookToEnemy != Vector3.zero)
             transform.rotation = Quaternion.Slerp(
             transform.rotation, Quaternion.LookRotation(lookToEnemy), Time.smoothDeltaTime * 15f
@@ -52,6 +43,37 @@ public class PlayerCharacter : BaseCharacter
             transform.rotation = Quaternion.Slerp(
             transform.rotation, Quaternion.LookRotation(lookToMovement), Time.smoothDeltaTime * 15f
             );
+
+        if (inEnemyBase) Attack();
+        else if (inBase) RecoveryHP();
+        Movement();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("EnemyBase"))
+        {
+            enemyBase = other.gameObject.GetComponent<EnemyBaseContainer>();
+            inEnemyBase = true;
+            SetParams(inEnemyBase);
+        }
+        if (other.CompareTag("PlayerBase"))
+            inBase = true;
+        if (other.CompareTag("Shop"))
+            Game.UI.OpenShop();
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("EnemyBase"))
+        {
+            inEnemyBase = false;
+            SetParams(inEnemyBase);
+            lookToEnemy = Vector3.zero;
+        }
+        if (other.CompareTag("PlayerBase")) 
+            inBase = false;
+        if (other.CompareTag("Shop"))
+            Game.UI.CloseShop();
     }
 
     void OnDrawGizmosSelected()
@@ -65,14 +87,12 @@ public class PlayerCharacter : BaseCharacter
         currentHP -= damage;
         if (currentHP <= 0)
         {
-            HP.text = "0";
-            HPBar.value = 0;
+            currentHP = 0;
             animator.SetBool("alive", false);
             gun.SetActive(false);
             this.enabled = false;
             controller.enabled = false;
             BroadcastMessages.SendMessage(MessageType.DEATH_PLAYER);
-            StopCoroutine(attackEnemy);
         }
     }
 
@@ -86,38 +106,34 @@ public class PlayerCharacter : BaseCharacter
         this.enabled = true;
         controller.enabled = true;
         currentHP = maxHealthPoint;
+        inEnemyBase = false;
+        inBase = true;
     }
-    IEnumerator RecoveryHP()
+    void RecoveryHP()
     {
-        while (currentHP < maxHealthPoint && inBase)
-        {
-            currentHP++;
-            yield return new WaitForSeconds(.2f);
-        }
+        if (currentHP < maxHealthPoint)
+            currentHP += Time.deltaTime * 5f;
     }
 
-    public void Movement(float speed, Vector3 move)
+    void Movement()
     {
-        move = move * speed * maxSpeed;
+        Vector3 move = Game.GetInputFromJoystick();
         lookToMovement = move;
-        animator.SetFloat("speed", speed * maxSpeed);
+        animator.SetFloat("speed", move.magnitude * maxSpeed);
+        move = move * maxSpeed;
         controller.Move(move * Time.smoothDeltaTime);
     }
 
-    IEnumerator Attack()
+    void Attack()
     {
-        while (true)
+        GameObject enemy = GetNearestEnemy();
+        if (enemy is not null)
         {
-            GameObject enemy = GetNearestEnemy();
-            if (enemy is not null)
-            {
-                lookToEnemy = enemy.transform.position - transform.position;
-                gunShooting.Shot(enemy.transform.position + Vector3.up);
-            }
-            else
-                lookToEnemy = Vector3.zero;
-            yield return null;
+            lookToEnemy = enemy.transform.position - transform.position;
+            gunShooting.Shot(enemy.transform.position + Vector3.up);
         }
+        else
+            lookToEnemy = Vector3.zero;
     }
 
     GameObject GetNearestEnemy()
@@ -138,29 +154,6 @@ public class PlayerCharacter : BaseCharacter
         return target;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("EnemyBase"))
-        {
-            enemyBase = other.gameObject.GetComponent<EnemyBaseContainer>();
-            bool inEnemyBase = true;
-            inBase = false;
-            SetParams(inEnemyBase);
-            StartCoroutine(attackEnemy);
-        }
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("EnemyBase"))
-        {
-            bool inEnemyBase = false;
-            inBase = true;
-            SetParams(inEnemyBase);
-            StopCoroutine(attackEnemy);
-            StartCoroutine(RecoveryHP());
-            lookToEnemy = Vector3.zero;
-        }
-    }
     void SetParams(bool inBase)
     {
         gun.SetActive(inBase);

@@ -10,6 +10,7 @@ TagManager:
   - Undefined
   - Gem
   - Money
+  - Shop
   layers:
   - Default
   - TransparentFX

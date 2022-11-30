@@ -6,15 +6,15 @@ public class Attack : State
 
     public Attack
     (
-        Animator _animator, CharacterController _controller, 
-        Transform _agent, Transform _player
+        Animator animator, CharacterController controller, 
+        Transform agent, Transform player
     )
     {
         stage = Enter;
-        animator = _animator;
-        controller = _controller;
-        agent = _agent;
-        player = _player;
+        this.animator = animator;
+        this.controller = controller;
+        this.agent = agent;
+        this.player = player;
     }
     protected override void Enter()
     {
@@ -32,10 +32,10 @@ public class Attack : State
         );
 
         RaycastHit hit;
-        int layerMask = 1<<7;
+        int layerMask = 1<<3;
         layerMask = ~layerMask;
         Physics.Raycast(
-            agent.position + Vector3.up, 
+            agent.position + (Vector3.up * agent.transform.localScale.y), 
             player.position - agent.position,
             out hit,
             Mathf.Infinity,

@@ -1,0 +1,7 @@
+
+    #ROOTNAMESPACEBEGIN#
+public interface #SCRIPTNAME#
+{
+    
+}
+#ROOTNAMESPACEEND#

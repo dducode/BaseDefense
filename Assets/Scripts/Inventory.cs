@@ -1,42 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Object;
 
-public class Inventory : MonoBehaviour
+public struct Inventory
 {
-    private static Inventory instance;
-
-    public static Inventory getInstance
-    {
-        get
-        {
-            if (instance == null)
-                instance = FindObjectOfType<Inventory>();
-            return instance;
-        }
-    }
-
-    void Awake()
-    {
-        money = PlayerPrefs.GetInt("Money", 0);
-        gems = PlayerPrefs.GetInt("Gem", 0);
-        ui = FindObjectOfType<DisplayingUI>();
-    }
-
-    int money;
+    int moneys;
     int gems;
-    public int getMoney { get { return money; } }
-    public int getGems { get { return gems; } }
 
-    DisplayingUI ui;
-
-    public void CollectItem(GameObject item)
+    public void Initialize()
     {
-        if (item.CompareTag("Money")) money += 5;
-        if (item.CompareTag("Gem")) gems++;
+        moneys = PlayerPrefs.GetInt("Money", 0);
+        gems = PlayerPrefs.GetInt("Gem", 0);
+        Game.UI.UpdateUI(moneys, gems);
+    }
 
-        PlayerPrefs.SetInt("Money", money);
-        PlayerPrefs.SetInt("Gem", gems);
-        ui.UpdateUI();
+    public void PutItem(Item item)
+    {
+        if (item is Money)
+        {
+            moneys += 5;
+            PlayerPrefs.SetInt("Money", moneys);
+        }
+        else if (item is Gem)
+        {
+            gems++;
+            PlayerPrefs.SetInt("Gem", gems);
+        }
+        else
+        {
+            Debug.LogError($"Unknow item {item}");
+            return;
+        }
+        item.DestroyItem();
+        PlayerPrefs.Save();
+        Game.UI.UpdateUI(moneys, gems);
     }
 }

@@ -15,7 +15,7 @@ public abstract class State
     protected abstract void Update();
     protected abstract void Exit();
 
-    public void Trigger(bool _attackTrigger) => attackTrigger = _attackTrigger;
+    public void Trigger(bool attackTrigger) => this.attackTrigger = attackTrigger;
 
     public State Process()
     {

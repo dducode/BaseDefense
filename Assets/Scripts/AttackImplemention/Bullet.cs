@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    void Start()
+    Rigidbody rb;
+
+    void Awake() => rb = GetComponent<Rigidbody>();
+    
+    public void Shot(Vector3 force)
     {
-        StartCoroutine(DestroyObject());
+        gameObject.SetActive(true);
+        rb.AddForce(force);
     }
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy"))
-            other.gameObject.GetComponent<EnemyCharacter>().GetDamage(Random.Range(10, 25));
-        Destroy(gameObject);
-    }
-    IEnumerator DestroyObject()
-    {
-        yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
+            other.gameObject.GetComponent<EnemyCharacter>().GetDamage(other.relativeVelocity.magnitude * rb.mass * 100);
+        Pools.Push(this);
+        gameObject.SetActive(false);
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 }

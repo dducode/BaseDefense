@@ -15,7 +15,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        movement = PlayerCharacter.getInstance.transform.position + startPos;
+        movement = PlayerCharacter.Instance.transform.position + startPos;
         transform.position = movement;
     }
 }

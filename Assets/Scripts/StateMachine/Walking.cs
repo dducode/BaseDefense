@@ -7,15 +7,15 @@ public class Walking : State
 
     public Walking
     (
-        Animator _animator, CharacterController _controller,
-        Transform _agent, Transform _player
+        Animator animator, CharacterController controller,
+        Transform agent, Transform player
     )
     {
         stage = Enter;
-        animator = _animator;
-        controller = _controller;
-        agent = _agent;
-        player = _player;
+        this.animator = animator;
+        this.controller = controller;
+        this.agent = agent;
+        this.player = player;
     }
     protected override void Enter()
     {

@@ -81,8 +81,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d273435445d963e4d9c86ecb380d8ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1786588370087917798, guid: 3bb52b3bdced64b469b7896e5c28283b, type: 3}
+  enemyPrefab: {fileID: 6836825664886260108, guid: 3bb52b3bdced64b469b7896e5c28283b,
+    type: 3}
   maxEnemiesCount: 10
+  startEnemiesCount: 5
   timeSpawn: 5
   radiusSpawn: 12.5
   targetPoints:
@@ -149,8 +151,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.0000002, z: 6.123235e-17}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.0000002, z: 1}
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!65 &8169979258022794796
 BoxCollider:
   m_ObjectHideFlags: 0
