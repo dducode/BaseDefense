@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GunShooting : MonoBehaviour
+public class Gun : MonoBehaviour
 {
+    [SerializeField] GunType gunType;
     [SerializeField] Bullet bulletPrefab;
+    [SerializeField] Transform[] muzzles;
     [SerializeField] float intervalShots;
     [SerializeField, Tooltip("Сила выстрела оружия - определяет, с какой скоростью будет лететь пуля после выстрела")] 
     MinMaxSliderFloat muzzleEnergy = new MinMaxSliderFloat(0, 25);
     float timeOfLastShot;
-    List<GameObject> muzzles;
+
+    public GunType GunType => gunType;
 
     void Start()
     {
-        muzzles = new List<GameObject>();
-        for (int i = 0; i < transform.childCount; i++)
-            muzzles.Add(transform.GetChild(i).gameObject);
         timeOfLastShot = Time.time;
     }
 
@@ -24,7 +24,7 @@ public class GunShooting : MonoBehaviour
     {
         if (timeOfLastShot + intervalShots <= Time.time)
         {
-            for (int i = 0; i < muzzles.Count; i++)
+            for (int i = 0; i < muzzles.Length; i++)
             {
                 Bullet bullet;
                 if (Pools.BulletsCount == 0)

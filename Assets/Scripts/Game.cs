@@ -8,8 +8,9 @@ public static class Game
     public static Scene ItemsScene { get; private set; }
     public static Scene EnemiesScene { get; private set; }
     public static Scene BulletsScene { get; private set; }
-    public static JoystickController Joystick { get; private set; }
     public static DisplayingUI UI { get; private set; }
+    public static JoystickController Joystick { get; private set; }
+    public static Shop Shop { get; private set; }
 
     [RuntimeInitializeOnLoadMethod]
     static void Initialize()
@@ -17,8 +18,9 @@ public static class Game
         ItemsScene = SceneManager.CreateScene("Items");
         EnemiesScene = SceneManager.CreateScene("Enemies");
         BulletsScene = SceneManager.CreateScene("Bullets");
-        Joystick = FindObjectOfType<JoystickController>();
         UI = FindObjectOfType<DisplayingUI>();
+        Joystick = FindObjectOfType<JoystickController>();
+        Shop = FindObjectOfType<Shop>();
     }
 
     public static Vector3 GetInputFromJoystick()

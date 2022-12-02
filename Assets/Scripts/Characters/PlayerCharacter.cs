@@ -12,25 +12,31 @@ public class PlayerCharacter : BaseCharacter
     public float MaxHealthPoint => maxHealthPoint;
     public float CurrentHP => currentHP;
 
-    [SerializeField] Transform slotForGun;
+    [SerializeField] Gun[] guns;
     [SerializeField] Transform recoveryPoint;
-    GameObject gun;
+    Gun activeGun;
+    GunType activeTypeGun;
     EnemyBaseContainer enemyBase;
-    GunShooting gunShooting;
     Vector3 lookToEnemy;
     Vector3 lookToMovement;
     bool inBase;
     bool inEnemyBase;
 
-    void Awake() => instance = this;
+    void Awake()
+    {
+        instance = this;
+        BroadcastMessages.AddListener(MessageType.RESTART, Resurrection);
+    }
+    void OnDestroy() => BroadcastMessages.RemoveListener(MessageType.RESTART, Resurrection);
     void Start()
     {
         currentHP = maxHealthPoint;
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        gun = slotForGun.GetChild(0).gameObject;
-        gunShooting = gun.GetComponent<GunShooting>();
-        gun.SetActive(false);
+        activeTypeGun = GunType.Pistol_1;
+        for (int i = 0; i < guns.Length; i++)
+            guns[i].gameObject.SetActive(false);
+        activeGun = guns[(int)activeTypeGun];
     }
 
     void Update()
@@ -60,7 +66,7 @@ public class PlayerCharacter : BaseCharacter
         if (other.CompareTag("PlayerBase"))
             inBase = true;
         if (other.CompareTag("Shop"))
-            Game.UI.OpenShop();
+            Game.Shop.Open();
     }
     void OnTriggerExit(Collider other)
     {
@@ -73,7 +79,10 @@ public class PlayerCharacter : BaseCharacter
         if (other.CompareTag("PlayerBase")) 
             inBase = false;
         if (other.CompareTag("Shop"))
-            Game.UI.CloseShop();
+        {
+            Game.Shop.Close();
+            activeGun = guns[(int)Game.Shop.ActiveGunType];
+        }
     }
 
     void OnDrawGizmosSelected()
@@ -89,7 +98,7 @@ public class PlayerCharacter : BaseCharacter
         {
             currentHP = 0;
             animator.SetBool("alive", false);
-            gun.SetActive(false);
+            activeGun.gameObject.SetActive(false);
             this.enabled = false;
             controller.enabled = false;
             BroadcastMessages.SendMessage(MessageType.DEATH_PLAYER);
@@ -130,7 +139,7 @@ public class PlayerCharacter : BaseCharacter
         if (enemy is not null)
         {
             lookToEnemy = enemy.transform.position - transform.position;
-            gunShooting.Shot(enemy.transform.position + Vector3.up);
+            activeGun.Shot(enemy.transform.position + Vector3.up);
         }
         else
             lookToEnemy = Vector3.zero;
@@ -156,7 +165,7 @@ public class PlayerCharacter : BaseCharacter
 
     void SetParams(bool inBase)
     {
-        gun.SetActive(inBase);
+        activeGun.gameObject.SetActive(inBase);
         animator.SetBool("inEnemyBase", inBase);
     }
 }

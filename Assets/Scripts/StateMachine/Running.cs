@@ -35,8 +35,7 @@ public class Running : State
         controller.Move(agent.forward * speed * Time.smoothDeltaTime);
         
         RaycastHit hit;
-        int layerMask = 1<<3;
-        layerMask = ~layerMask;
+        int layerMask = 1<<6;
         Physics.Raycast(
             agent.position + (Vector3.up * agent.transform.localScale.y), 
             player.position - agent.position,
@@ -49,7 +48,7 @@ public class Running : State
             nextState = new Walking(animator, controller, agent, player);
             stage = Exit;
         }
-        if (hit.transform.CompareTag("Player"))
+        if (hit.transform && hit.transform.CompareTag("Player"))
         {
             if (hit.distance < attackDistance)
             {

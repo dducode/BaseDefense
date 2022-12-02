@@ -32,8 +32,7 @@ public class Attack : State
         );
 
         RaycastHit hit;
-        int layerMask = 1<<3;
-        layerMask = ~layerMask;
+        int layerMask = 1<<6;
         Physics.Raycast(
             agent.position + (Vector3.up * agent.transform.localScale.y), 
             player.position - agent.position,
@@ -41,7 +40,7 @@ public class Attack : State
             Mathf.Infinity,
             layerMask);
 
-        if (hit.transform.CompareTag("Player"))
+        if (hit.transform && hit.transform.CompareTag("Player"))
         {   
             if (hit.distance > attackDistance + 0.5f)
             {

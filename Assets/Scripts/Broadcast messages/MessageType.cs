@@ -1,4 +1,4 @@
 ﻿public enum MessageType
 {
-    DEATH_PLAYER
+    DEATH_PLAYER, RESTART
 }

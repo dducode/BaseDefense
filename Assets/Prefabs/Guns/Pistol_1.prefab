@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1239185256303248091}
   - component: {fileID: 5761335859041961006}
   - component: {fileID: 7498659653727449316}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pistol_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,11 +75,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8291244877435752753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12287e7a662fc63409b2a16ea4c29279, type: 3}
+  m_Script: {fileID: 11500000, guid: 5abeb030aa8f43d479b02abff82d491c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1183884636868395896, guid: e246f3ee417231046b28771467b67270,
+  gunType: 0
+  bulletPrefab: {fileID: 1183884636868395896, guid: 04a988901021f3b429b687293b33b6f5,
     type: 3}
+  muzzles:
+  - {fileID: 4143071789195490231}
   intervalShots: 0.5
   muzzleEnergy:
     minLimit: 0
