@@ -25,7 +25,7 @@ public class EnemyCharacter : BaseCharacter
         controller.enabled = true;
         alive = true;
         currentHP = maxHealthPoint;
-        state = new Walking(animator, controller, transform, PlayerCharacter.Instance.transform);
+        state = new Walking(animator, controller, transform, Game.Player.transform);
     }
 
     public bool EnemyUpdate()

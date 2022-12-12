@@ -11,6 +11,7 @@ public static class Game
     public static DisplayingUI UI { get; private set; }
     public static JoystickController Joystick { get; private set; }
     public static Shop Shop { get; private set; }
+    public static PlayerCharacter Player { get; private set; }
 
     [RuntimeInitializeOnLoadMethod]
     static void Initialize()
@@ -21,6 +22,7 @@ public static class Game
         UI = FindObjectOfType<DisplayingUI>();
         Joystick = FindObjectOfType<JoystickController>();
         Shop = FindObjectOfType<Shop>();
+        Player = FindObjectOfType<PlayerCharacter>();
     }
 
     public static Vector3 GetInputFromJoystick()

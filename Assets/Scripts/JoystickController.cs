@@ -53,5 +53,6 @@ public class JoystickController : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         this.enabled = false;
         circle.gameObject.SetActive(false);
+        JoystickPosition = Vector3.zero;
     }
 }

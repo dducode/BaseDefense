@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GunSlot : MonoBehaviour
 {
-    [SerializeField] Gun gunPrefab;
+    [SerializeField] GunType gunType;
 
-    public GunType GunType => gunPrefab.GunType;
+    public GunType GunType => gunType;
 }

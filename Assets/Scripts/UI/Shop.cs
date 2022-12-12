@@ -2,23 +2,43 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] RectTransform frame;
-    Canvas canvas;
-    GunType activeGunType;
-
-    public GunType ActiveGunType => activeGunType;
+    Gun[] guns;
 
     void Start()
     {
-        canvas = GetComponent<Canvas>();
-        canvas.enabled = false;
+        if (transform.childCount == 0)
+        {
+            Debug.LogWarning("No guns installed in shop");
+            return;
+        }
+        int childCount = transform.childCount;
+        guns = new Gun[childCount];
+        for (int i = 0; i < childCount; i++)
+            guns[i] = transform.GetChild(i).GetComponent<Gun>();
     }
 
-    public void Select(GunSlot slot)
+    public Gun Select(GunSlot slot, Gun playerGun)
     {
-        frame.localPosition = slot.transform.localPosition;
-        activeGunType = slot.GunType;
+        for (int i = 0; i < guns.Length; i++)
+            if (guns[i].GunType == slot.GunType)
+            {
+                Gun gun = guns[i];
+                playerGun.transform.parent = transform;
+                guns[i] = playerGun;
+                return gun;
+            }
+        Debug.LogError($"Not found gun of type {slot.GunType}");
+        return playerGun;
     }
-    public void Open() => canvas.enabled = true;
-    public void Close() => canvas.enabled = false;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            Game.UI.OpenShop();
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            Game.UI.CloseShop();
+    }
 }

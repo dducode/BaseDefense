@@ -6,37 +6,26 @@ using TMPro;
 
 public class PlayerCharacter : BaseCharacter
 {
-    private static PlayerCharacter instance;
-
-    public static PlayerCharacter Instance => instance;
     public float MaxHealthPoint => maxHealthPoint;
     public float CurrentHP => currentHP;
 
-    [SerializeField] Gun[] guns;
+    [SerializeField] Transform gunSlot;
     [SerializeField] Transform recoveryPoint;
-    Gun activeGun;
-    GunType activeTypeGun;
-    EnemyBaseContainer enemyBase;
+    Gun gun;
     Vector3 lookToEnemy;
     Vector3 lookToMovement;
     bool inBase;
     bool inEnemyBase;
 
-    void Awake()
-    {
-        instance = this;
-        BroadcastMessages.AddListener(MessageType.RESTART, Resurrection);
-    }
+    void Awake() => BroadcastMessages.AddListener(MessageType.RESTART, Resurrection);
     void OnDestroy() => BroadcastMessages.RemoveListener(MessageType.RESTART, Resurrection);
     void Start()
     {
         currentHP = maxHealthPoint;
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        activeTypeGun = GunType.Pistol_1;
-        for (int i = 0; i < guns.Length; i++)
-            guns[i].gameObject.SetActive(false);
-        activeGun = guns[(int)activeTypeGun];
+        gun = gunSlot.GetChild(0).GetComponent<Gun>();
+        gun.gameObject.SetActive(false);
     }
 
     void Update()
@@ -59,14 +48,11 @@ public class PlayerCharacter : BaseCharacter
     {
         if (other.CompareTag("EnemyBase"))
         {
-            enemyBase = other.gameObject.GetComponent<EnemyBaseContainer>();
             inEnemyBase = true;
             SetParams(inEnemyBase);
         }
         if (other.CompareTag("PlayerBase"))
             inBase = true;
-        if (other.CompareTag("Shop"))
-            Game.Shop.Open();
     }
     void OnTriggerExit(Collider other)
     {
@@ -78,17 +64,20 @@ public class PlayerCharacter : BaseCharacter
         }
         if (other.CompareTag("PlayerBase")) 
             inBase = false;
-        if (other.CompareTag("Shop"))
-        {
-            Game.Shop.Close();
-            activeGun = guns[(int)Game.Shop.ActiveGunType];
-        }
     }
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position + Vector3.up, attackDistance);
+    }
+    public void SelectGun(GunSlot slot)
+    {
+        gun = Game.Shop.Select(slot, gun);
+        gun.transform.parent = gunSlot;
+        gun.transform.localPosition = Vector3.zero;
+        gun.transform.localRotation = Quaternion.identity;
+        gun.transform.localScale = Vector3.one;
     }
 
     public override void GetDamage(float damage)
@@ -98,7 +87,7 @@ public class PlayerCharacter : BaseCharacter
         {
             currentHP = 0;
             animator.SetBool("alive", false);
-            activeGun.gameObject.SetActive(false);
+            gun.gameObject.SetActive(false);
             this.enabled = false;
             controller.enabled = false;
             BroadcastMessages.SendMessage(MessageType.DEATH_PLAYER);
@@ -139,7 +128,7 @@ public class PlayerCharacter : BaseCharacter
         if (enemy is not null)
         {
             lookToEnemy = enemy.transform.position - transform.position;
-            activeGun.Shot(enemy.transform.position + Vector3.up);
+            gun.Shot(enemy.transform.position + Vector3.up);
         }
         else
             lookToEnemy = Vector3.zero;
@@ -165,7 +154,7 @@ public class PlayerCharacter : BaseCharacter
 
     void SetParams(bool inBase)
     {
-        activeGun.gameObject.SetActive(inBase);
+        gun.gameObject.SetActive(inBase);
         animator.SetBool("inEnemyBase", inBase);
     }
 }

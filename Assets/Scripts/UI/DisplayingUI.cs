@@ -7,7 +7,9 @@ public class DisplayingUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI moneys;
     [SerializeField] TextMeshProUGUI gems;
+    [SerializeField] Canvas shop;
     [SerializeField] Canvas deathWindow;
+    [SerializeField] RectTransform frame;
 
     void OnEnable() => BroadcastMessages.AddListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
     void OnDisable() => BroadcastMessages.RemoveListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
@@ -15,6 +17,7 @@ public class DisplayingUI : MonoBehaviour
     void Start()
     {
         deathWindow.enabled = false;
+        shop.enabled = false;
     }
     
     public void UpdateUI(int moneys, int gems)
@@ -34,4 +37,11 @@ public class DisplayingUI : MonoBehaviour
         BroadcastMessages.SendMessage(MessageType.RESTART);
         deathWindow.enabled = false;
     }
+    public void SelectGun(GunSlot slot)
+    {
+        frame.localPosition = slot.transform.localPosition;
+        Game.Player.SelectGun(slot);
+    }
+    public void OpenShop() => shop.enabled = true;
+    public void CloseShop() => shop.enabled = false;
 }
