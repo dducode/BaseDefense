@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Object;
 
-public struct Inventory
+public class Inventory
 {
     int moneys;
     int gems;
+    DisplayingUI UI;
 
-    public void Initialize()
+    public Inventory(DisplayingUI UI)
     {
+        this.UI = UI;
         moneys = PlayerPrefs.GetInt("Money", 0);
         gems = PlayerPrefs.GetInt("Gem", 0);
-        Game.UI.UpdateUI(moneys, gems);
+        UI.UpdateUI(moneys, gems);
     }
 
     public void PutItem(Item item)
@@ -34,6 +36,6 @@ public struct Inventory
         }
         item.DestroyItem();
         PlayerPrefs.Save();
-        Game.UI.UpdateUI(moneys, gems);
+        UI.UpdateUI(moneys, gems);
     }
 }

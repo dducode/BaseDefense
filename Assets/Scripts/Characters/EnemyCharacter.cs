@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class EnemyCharacter : BaseCharacter
 {
-    EnemyBaseContainer enemyBase;
     [SerializeField] float walkingSpeed;
     [SerializeField] Collider hand;
+    EnemyBaseContainer enemyBase;
     Transform[] targetPoints;
     State state;
     public float getWalkingSpeed { get { return walkingSpeed; } }
@@ -15,7 +16,8 @@ public class EnemyCharacter : BaseCharacter
     public Vector3 getPoint { get { return targetPoints[Random.Range(0, targetPoints.Length)].position; } }
     public State getCurrentState { get { return state; } }
 
-    public void Initialize(EnemyBaseContainer enemyBase, Transform[] targetPoints)
+    [Inject]
+    public void Initialize(EnemyBaseContainer enemyBase, Transform[] targetPoints, PlayerCharacter player)
     {
         gameObject.SetActive(true);
         this.enemyBase = enemyBase;
@@ -25,7 +27,7 @@ public class EnemyCharacter : BaseCharacter
         controller.enabled = true;
         alive = true;
         currentHP = maxHealthPoint;
-        state = new Walking(animator, controller, transform, Game.Player.transform);
+        state = new Walking(animator, controller, transform, player.transform);
     }
 
     public bool EnemyUpdate()
@@ -69,4 +71,6 @@ public class EnemyCharacter : BaseCharacter
         AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
         return !(info.IsName("Death") && info.normalizedTime >= 0.9f);
     }
+
+    public class Factory : PlaceholderFactory<Transform[], EnemyCharacter> {}
 }

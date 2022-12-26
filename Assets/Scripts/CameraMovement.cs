@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class CameraMovement : MonoBehaviour
 {
     Vector3 startPos;
     Vector3 movement;
+    [Inject] PlayerCharacter player;
 
     void Start()
     {
@@ -15,7 +17,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        movement = Game.Player.transform.position + startPos;
+        movement = player.transform.position + startPos;
         transform.position = movement;
     }
 }

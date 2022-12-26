@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Zenject;
 
 public class PlayerCharacter : BaseCharacter
 {
@@ -11,14 +12,21 @@ public class PlayerCharacter : BaseCharacter
 
     [SerializeField] Transform gunSlot;
     [SerializeField] Transform recoveryPoint;
+    JoystickController joystick;
+    Shop shop;
     Gun gun;
     Vector3 lookToEnemy;
     Vector3 lookToMovement;
     bool inBase;
     bool inEnemyBase;
 
-    void Awake() => BroadcastMessages.AddListener(MessageType.RESTART, Resurrection);
-    void OnDestroy() => BroadcastMessages.RemoveListener(MessageType.RESTART, Resurrection);
+    [Inject]
+    public void Construct(Shop shop, JoystickController joystick)
+    {
+        this.shop = shop;
+        this.joystick = joystick;
+    }
+
     void Start()
     {
         currentHP = maxHealthPoint;
@@ -73,7 +81,7 @@ public class PlayerCharacter : BaseCharacter
     }
     public void SelectGun(GunSlot slot)
     {
-        gun = Game.Shop.Select(slot, gun);
+        gun = shop.Select(slot, gun);
         gun.transform.parent = gunSlot;
         gun.transform.localPosition = Vector3.zero;
         gun.transform.localRotation = Quaternion.identity;
@@ -94,6 +102,7 @@ public class PlayerCharacter : BaseCharacter
         }
     }
 
+    [Listener(MessageType.RESTART)]
     public void Resurrection()
     {
         animator.SetBool("alive", true);
@@ -115,7 +124,7 @@ public class PlayerCharacter : BaseCharacter
 
     void Movement()
     {
-        Vector3 move = Game.GetInputFromJoystick();
+        Vector3 move = joystick.GetInput();
         lookToMovement = move;
         animator.SetFloat("speed", move.magnitude * maxSpeed);
         move = move * maxSpeed;

@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using Zenject;
 
 public class EnemyBaseContainer : MonoBehaviour
 {
-    [SerializeField] EnemyCharacter enemyPrefab;
     [SerializeField] int maxEnemiesCount = 10;
     [SerializeField] int startEnemiesCount = 5;
     [SerializeField] float timeSpawn = 3f;
     [SerializeField] float radiusSpawn = 10f;
     [SerializeField] Transform[] targetPoints;
+
     float timeOfLastSpawn;
     List<EnemyCharacter> enemies;
+    [Inject] EnemyCharacter.Factory enemyFactory;
 
     void Start()
     {
@@ -43,14 +45,13 @@ public class EnemyBaseContainer : MonoBehaviour
         EnemyCharacter enemy;
         if (Pools.EnemiesCount == 0)
         {
-            enemy = Instantiate(enemyPrefab);
+            enemy = enemyFactory.Create(targetPoints);
             SceneManager.MoveGameObjectToScene(enemy.gameObject, Game.EnemiesScene);
         }
         else
             enemy = Pools.PopEnemy();
         enemy.transform.localPosition = position;
         enemy.transform.localRotation = rotation;
-        enemy.Initialize(this, targetPoints);
         enemies.Add(enemy);
     }
 

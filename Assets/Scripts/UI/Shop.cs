@@ -1,8 +1,10 @@
 using UnityEngine;
+using Zenject;
 
 public class Shop : MonoBehaviour
 {
     Gun[] guns;
+    [Inject] DisplayingUI UI;
 
     void Start()
     {
@@ -34,11 +36,11 @@ public class Shop : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            Game.UI.OpenShop();
+            UI.OpenShop();
     }
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
-            Game.UI.CloseShop();
+            UI.CloseShop();
     }
 }

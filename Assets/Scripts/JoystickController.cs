@@ -11,17 +11,6 @@ public class JoystickController : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public Vector2 JoystickPosition { get; private set; }
 
-    void Awake()
-    {
-        BroadcastMessages.AddListener(MessageType.DEATH_PLAYER, DisableJoystick);
-        BroadcastMessages.AddListener(MessageType.RESTART, EnableJoystick);
-    }
-    void OnDestroy()
-    {
-        BroadcastMessages.RemoveListener(MessageType.DEATH_PLAYER, DisableJoystick);
-        BroadcastMessages.RemoveListener(MessageType.RESTART, EnableJoystick);
-    }
-
     void Start()
     {
         circle.gameObject.SetActive(false);
@@ -48,11 +37,21 @@ public class JoystickController : MonoBehaviour, IBeginDragHandler, IDragHandler
         JoystickPosition = Vector2.zero;
     }
 
+    [Listener(MessageType.RESTART)]
     void EnableJoystick() => this.enabled = true;
-    void DisableJoystick()
+
+    [Listener(MessageType.DEATH_PLAYER)]
+    public void DisableJoystick()
     {
         this.enabled = false;
         circle.gameObject.SetActive(false);
         JoystickPosition = Vector3.zero;
+    }
+
+    public Vector3 GetInput()
+    {
+        Vector2 m = JoystickPosition;
+        Vector3 move = new Vector3(m.x, 0, m.y);
+        return move;
     }
 }

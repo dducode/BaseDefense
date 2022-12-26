@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 public class ItemCollecting : MonoBehaviour
 {
@@ -14,10 +15,7 @@ public class ItemCollecting : MonoBehaviour
     int stackSize;
     int stacksCount;
     Stack<Money> moneys;
-    Inventory inventory;
-
-    void OnEnable() => BroadcastMessages.AddListener(MessageType.DEATH_PLAYER, LossMoney);
-    void OnDisable() => BroadcastMessages.RemoveListener(MessageType.DEATH_PLAYER, LossMoney);
+    [Inject] Inventory inventory;
 
     void Start()
     {
@@ -25,7 +23,6 @@ public class ItemCollecting : MonoBehaviour
         stackSize = 0;
         stacksCount = 0;
         moneys = new Stack<Money>();
-        inventory.Initialize();
     }
 
     void OnTriggerEnter(Collider other)
@@ -82,6 +79,7 @@ public class ItemCollecting : MonoBehaviour
         stacksCount = 0;
     }
 
+    [Listener(MessageType.DEATH_PLAYER)]
     void LossMoney()
     {
         int moneysCount = moneys.Count;

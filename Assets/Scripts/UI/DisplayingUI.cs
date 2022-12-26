@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Zenject;
 
 public class DisplayingUI : MonoBehaviour
 {
@@ -10,9 +11,7 @@ public class DisplayingUI : MonoBehaviour
     [SerializeField] Canvas shop;
     [SerializeField] Canvas deathWindow;
     [SerializeField] RectTransform frame;
-
-    void OnEnable() => BroadcastMessages.AddListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
-    void OnDisable() => BroadcastMessages.RemoveListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
+    [Inject] PlayerCharacter player;
 
     void Start()
     {
@@ -26,6 +25,7 @@ public class DisplayingUI : MonoBehaviour
         this.gems.text = gems.ToString();
     }
 
+    [Listener(MessageType.DEATH_PLAYER)]
     public void DisplayDeathWindow() => StartCoroutine(Await());
     IEnumerator Await()
     {
@@ -40,7 +40,7 @@ public class DisplayingUI : MonoBehaviour
     public void SelectGun(GunSlot slot)
     {
         frame.localPosition = slot.transform.localPosition;
-        Game.Player.SelectGun(slot);
+        player.SelectGun(slot);
     }
     public void OpenShop() => shop.enabled = true;
     public void CloseShop() => shop.enabled = false;
