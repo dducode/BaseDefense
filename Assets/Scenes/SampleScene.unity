@@ -328,7 +328,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6836825664886260108, guid: 3bb52b3bdced64b469b7896e5c28283b,
     type: 3}
-  enemyBase: {fileID: 6666218377085408991}
 --- !u!114 &42022975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,12 +638,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 121494092}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2341,12 +2340,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 707045962}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2491,12 +2490,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 722743146}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2902,12 +2901,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 838743974}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4178,12 +4177,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1424875353}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4989,12 +4988,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1638050744}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5412,8 +5411,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1101823694}
   m_HandleRect: {fileID: 1101823693}
   m_Direction: 2
-  m_Value: 0.9999991
-  m_Size: 0.59194154
+  m_Value: 0.9999993
+  m_Size: 0.5919416
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6670,12 +6669,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a92c34a9d5939df428c6509302c78e08, type: 3}
---- !u!1 &6666218377085408991 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6666218377073095350, guid: a92c34a9d5939df428c6509302c78e08,
-    type: 3}
-  m_PrefabInstance: {fileID: 6666218377085408990}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6666218377085408992 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7498109341505265478, guid: a92c34a9d5939df428c6509302c78e08,

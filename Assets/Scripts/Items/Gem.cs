@@ -14,13 +14,11 @@ public class Gem : Item
 
     public override void DestroyItem()
     {
-        Pools.Push(this);
-        gameObject.SetActive(false);
+        ObjectsPool<Gem>.Push(this);
     }
 
     public override void Drop(Vector3 force, Vector3 torque = default)
     {
-        gameObject.SetActive(true);
         rb.AddForce(force, forceMode);
         rb.AddTorque(torque, forceMode);
     }

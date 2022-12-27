@@ -27,13 +27,13 @@ public class Gun : MonoBehaviour
             for (int i = 0; i < muzzles.Length; i++)
             {
                 Bullet bullet;
-                if (Pools.BulletsCount == 0)
+                if (ObjectsPool<Bullet>.IsEmpty())
                 {
                     bullet = Instantiate(bulletPrefab);
                     SceneManager.MoveGameObjectToScene(bullet.gameObject, Game.BulletsScene);
                 }
                 else
-                    bullet = Pools.PopBullet();
+                    bullet = ObjectsPool<Bullet>.Pop();
                 bullet.transform.localPosition = muzzles[i].transform.position;
                 bullet.transform.localRotation = muzzles[i].transform.rotation;
                 Vector3 dispertion = new Vector3(Random.Range(-.1f, .1f), 0, 0);

@@ -43,15 +43,14 @@ public class EnemyBaseContainer : MonoBehaviour
         position.y = 0;
         Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360f), 0);
         EnemyCharacter enemy;
-        if (Pools.EnemiesCount == 0)
+        if (ObjectsPool<EnemyCharacter>.IsEmpty())
         {
             enemy = enemyFactory.Create(targetPoints);
             SceneManager.MoveGameObjectToScene(enemy.gameObject, Game.EnemiesScene);
         }
         else
-            enemy = Pools.PopEnemy();
-        enemy.transform.localPosition = position;
-        enemy.transform.localRotation = rotation;
+            enemy = ObjectsPool<EnemyCharacter>.Pop();
+        enemy.Spawn(position, rotation);
         enemies.Add(enemy);
     }
 

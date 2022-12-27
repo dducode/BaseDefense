@@ -8,7 +8,7 @@ public class Walking : State
     public Walking
     (
         Animator animator, CharacterController controller,
-        Transform agent, Transform player
+        EnemyCharacter agent, Transform player
     )
     {
         stage = Enter;
@@ -16,23 +16,23 @@ public class Walking : State
         this.controller = controller;
         this.agent = agent;
         this.player = player;
+        speed = agent.getWalkingSpeed;
+        targetPoint = agent.getPoint;
+        transform = agent.transform;
     }
     protected override void Enter()
     {
         animator.SetBool("walking", true);
-        EnemyCharacter enemy = agent.GetComponent<EnemyCharacter>();
-        targetPoint = enemy.getPoint;
-        speed = enemy.getWalkingSpeed;
         stage = Update;
     }
     protected override void Update()
     {
-        agent.rotation = Quaternion.Slerp(
-            agent.rotation, 
-            Quaternion.LookRotation(targetPoint - agent.position), 
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation, 
+            Quaternion.LookRotation(targetPoint - transform.position), 
             Time.smoothDeltaTime * 15f
         );
-        controller.Move(agent.forward * speed * Time.smoothDeltaTime);
+        controller.Move(transform.forward * speed * Time.smoothDeltaTime);
         
         if (attackTrigger)
         {

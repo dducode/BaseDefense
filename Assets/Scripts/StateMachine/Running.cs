@@ -8,7 +8,7 @@ public class Running : State
     public Running
     (
         Animator animator, CharacterController controller, 
-        Transform agent, Transform player
+        EnemyCharacter agent, Transform player
     )
     {
         stage = Enter;
@@ -16,29 +16,29 @@ public class Running : State
         this.controller = controller;
         this.agent = agent;
         this.player = player;
+        speed = agent.getMaxSpeed;
+        attackDistance = agent.getAttackDistance;
+        transform = agent.transform;
     }
     protected override void Enter()
     {
         animator.SetBool("running", true);
-        EnemyCharacter enemy = agent.GetComponent<EnemyCharacter>();
-        speed = enemy.getMaxSpeed;
-        attackDistance = enemy.getAttackDistance;
         stage = Update;
     }
     protected override void Update()
     {
-        agent.rotation = Quaternion.Slerp(
-            agent.rotation, 
-            Quaternion.LookRotation(player.position - agent.position), 
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation, 
+            Quaternion.LookRotation(player.position - transform.position), 
             Time.smoothDeltaTime * 15f
         );
-        controller.Move(agent.forward * speed * Time.smoothDeltaTime);
+        controller.Move(transform.forward * speed * Time.smoothDeltaTime);
         
         RaycastHit hit;
         int layerMask = 1<<6;
         Physics.Raycast(
-            agent.position + (Vector3.up * agent.transform.localScale.y), 
-            player.position - agent.position,
+            transform.position + (Vector3.up * agent.transform.localScale.y), 
+            player.position - transform.position,
             out hit,
             Mathf.Infinity,
             layerMask);

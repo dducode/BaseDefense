@@ -5,8 +5,11 @@ using Zenject;
 
 public class EnemyCharacter : BaseCharacter
 {
+    [Header("Характеристики врага")]
     [SerializeField] float walkingSpeed;
-    [SerializeField] Collider hand;
+    [Header("Связанные объекты")]
+    [SerializeField, Tooltip("Коллайдер атакующей руки врага")] 
+    Collider hand;
     EnemyBaseContainer enemyBase;
     Transform[] targetPoints;
     State state;
@@ -19,15 +22,20 @@ public class EnemyCharacter : BaseCharacter
     [Inject]
     public void Initialize(EnemyBaseContainer enemyBase, Transform[] targetPoints, PlayerCharacter player)
     {
-        gameObject.SetActive(true);
-        this.enemyBase = enemyBase;
-        this.targetPoints = targetPoints;
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        controller.enabled = true;
-        alive = true;
+        this.enemyBase = enemyBase;
+        this.targetPoints = targetPoints;
+        state = new Walking(animator, controller, this, player.transform);
+    }
+
+    public void Spawn(Vector3 position, Quaternion rotation)
+    {
         currentHP = maxHealthPoint;
-        state = new Walking(animator, controller, transform, player.transform);
+        alive = true;
+        controller.enabled = false;
+        transform.SetLocalPositionAndRotation(position, rotation);
+        controller.enabled = true;
     }
 
     public bool EnemyUpdate()
@@ -36,9 +44,8 @@ public class EnemyCharacter : BaseCharacter
         {
             state = state.Process();
             hand.enabled = state is Attack;
-            return true;
         }
-        else return false;
+        return alive;
     }
 
     void OnDrawGizmosSelected()
@@ -63,8 +70,7 @@ public class EnemyCharacter : BaseCharacter
     {
         yield return new WaitWhile(() => IsDeath());
         GetComponent<ItemDrop>().DropItems();
-        Pools.Push(this);
-        gameObject.SetActive(false);
+        ObjectsPool<EnemyCharacter>.Push(this);
     }
     bool IsDeath()
     {

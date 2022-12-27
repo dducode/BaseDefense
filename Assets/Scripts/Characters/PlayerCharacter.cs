@@ -10,8 +10,11 @@ public class PlayerCharacter : BaseCharacter
     public float MaxHealthPoint => maxHealthPoint;
     public float CurrentHP => currentHP;
 
-    [SerializeField] Transform gunSlot;
-    [SerializeField] Transform recoveryPoint;
+    [Header("Связанные объекты")]
+    [SerializeField, Tooltip("Transform руки, в которой игрок держит оружие")] 
+    Transform gunSlot;
+    [SerializeField, Tooltip("Точка рестарта")] 
+    Transform recoveryPoint;
     JoystickController joystick;
     Shop shop;
     Gun gun;
@@ -27,11 +30,9 @@ public class PlayerCharacter : BaseCharacter
         this.joystick = joystick;
     }
 
-    void Start()
+    public override void Awake()
     {
-        currentHP = maxHealthPoint;
-        controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        base.Awake();
         gun = gunSlot.GetChild(0).GetComponent<Gun>();
         gun.gameObject.SetActive(false);
     }

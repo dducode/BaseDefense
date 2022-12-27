@@ -7,7 +7,7 @@ public class Attack : State
     public Attack
     (
         Animator animator, CharacterController controller, 
-        Transform agent, Transform player
+        EnemyCharacter agent, Transform player
     )
     {
         stage = Enter;
@@ -15,27 +15,27 @@ public class Attack : State
         this.controller = controller;
         this.agent = agent;
         this.player = player;
+        attackDistance = agent.getAttackDistance;
+        transform = agent.transform;
     }
     protected override void Enter()
     {
         animator.SetBool("attack", true);
-        EnemyCharacter enemy = agent.GetComponent<EnemyCharacter>();
-        attackDistance = enemy.getAttackDistance;
         stage = Update;
     }
     protected override void Update()
     {
-        agent.rotation = Quaternion.Slerp(
-            agent.rotation, 
-            Quaternion.LookRotation(player.position - agent.position), 
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation, 
+            Quaternion.LookRotation(player.position - transform.position), 
             Time.smoothDeltaTime * 15f
         );
 
         RaycastHit hit;
         int layerMask = 1<<6;
         Physics.Raycast(
-            agent.position + (Vector3.up * agent.transform.localScale.y), 
-            player.position - agent.position,
+            transform.position + (Vector3.up * agent.transform.localScale.y), 
+            player.position - transform.position,
             out hit,
             Mathf.Infinity,
             layerMask);

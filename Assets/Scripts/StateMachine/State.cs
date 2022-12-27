@@ -7,8 +7,9 @@ public abstract class State
     protected State nextState;
     protected Animator animator;
     protected CharacterController controller;
-    protected Transform agent;
+    protected EnemyCharacter agent;
     protected Transform player;
+    protected Transform transform;
     protected bool attackTrigger;
 
     protected abstract void Enter();

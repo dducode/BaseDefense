@@ -18,23 +18,23 @@ public class ItemDrop : MonoBehaviour
             Item item;
             if (itemPrefab is Money)
             {
-                if (Pools.MoneysCount == 0)
+                if (ObjectsPool<Money>.IsEmpty())
                 {
                     item = Instantiate(itemPrefab);
                     SceneManager.MoveGameObjectToScene(item.gameObject, Game.ItemsScene);
                 }
                 else
-                    item = Pools.PopMoney();
+                    item = ObjectsPool<Money>.Pop();
             }
             else if (itemPrefab is Gem)
             {
-                if (Pools.GemsCount == 0)
+                if (ObjectsPool<Gem>.IsEmpty())
                 {
                     item = Instantiate(itemPrefab);
                     SceneManager.MoveGameObjectToScene(item.gameObject, Game.ItemsScene);
                 }
                 else
-                    item = Pools.PopGem();
+                    item = ObjectsPool<Gem>.Pop();
             }
             else
             {
