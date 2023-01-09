@@ -6,6 +6,6 @@ public class Punch : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<PlayerCharacter>()?.GetDamage(Random.Range(10, 25));
+        other.GetComponent<PlayerCharacter>()?.Hit(Random.Range(10, 25));
     }
 }

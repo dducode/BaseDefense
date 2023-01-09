@@ -3,23 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
+using BroadcastMessages;
 
 public class ItemCollecting : MonoBehaviour
 {
+    ///<summary>Место, в котором находятся собранные деньги, пока игрок находится на вражеской базе</summary>
+    [Tooltip("Место, в котором находятся собранные деньги, пока игрок находится на вражеской базе")] 
     [SerializeField] Transform stackForMoneys;
-    [SerializeField] float spaceBetweenItems = 0.15f;
-    [SerializeField] int maxStackSize = 15;
-    [SerializeField] int maxStasksCount = 2;
-    [SerializeField] float forceScalar = 3;
-    Vector3 firstPos;
+
+    ///<summary>Максимальное количество пачек денег в одной стопке. [1, infinity]</summary>
+    [Tooltip("Максимальное количество пачек денег в одной стопке. [1, infinity]")]
+    [SerializeField, Min(1)] int maxStackSize = 15;
+
+    ///<summary>Максимальное количество стеков. [1, infinity]</summary>
+    [Tooltip("Максимальное количество стеков. [1, infinity]")] 
+    [SerializeField, Min(1)] int maxStasksCount = 2;
+
+    ///<summary>Определяет, с какой силой сбросить все деньги. [0, infinity]</summary>
+    [Tooltip("Определяет, с какой силой сбросить все деньги. [0, infinity]")] 
+    [SerializeField, Min(0)] float forceScalar = 3;
+
+    ///<summary>Расстояние между пачками денег в стопке. [0, infinity]</summary>
+    [Tooltip("Расстояние между пачками денег в стопке. [0, infinity]")]
+    [SerializeField, Min(0)] float spaceBetweenMoneys = 0.15f;
+
+    ///<summary>
+    ///Запоминает начальное положение преобразования stackForMoneys, 
+    ///т.к. в процессе сбора преобразование стека перемещается
+    ///</summary>
+    Vector3 firstPosition;
+
+    ///<summary>Хранит все собранные игроком деньги</summary>
+    Stack<Money> moneys;
+
     int stackSize;
     int stacksCount;
-    Stack<Money> moneys;
     [Inject] Inventory inventory;
 
     void Start()
     {
-        firstPos = stackForMoneys.localPosition;
+        firstPosition = stackForMoneys.localPosition;
         stackSize = 0;
         stacksCount = 0;
         moneys = new Stack<Money>();
@@ -35,31 +58,32 @@ public class ItemCollecting : MonoBehaviour
             StartCoroutine(DropMoney());
     }
 
+    ///<summary>Укладывает пачку денег на верх стека</summary>
     void StackMoney(Money money)
     {
         money.Collect();
         money.transform.SetParent(stackForMoneys.parent);
-        money.transform.rotation = stackForMoneys.rotation;
-        money.transform.localPosition = stackForMoneys.localPosition;
+        money.transform.SetPositionAndRotation(stackForMoneys.position, stackForMoneys.rotation);
         moneys.Push(money);
         stackSize++;
-        if (stackSize < maxStackSize)
+        if (stackSize < maxStackSize) // Перемещение преобразования стека наверх
         {
             Vector3 vector = stackForMoneys.localPosition;
-            vector.y += spaceBetweenItems;
+            vector.y += spaceBetweenMoneys;
             stackForMoneys.localPosition = vector;
         }
-        else
+        else // Перемещение преобразования стека вниз и вперёд
         {
             Vector3 vector = stackForMoneys.localPosition;
             vector.y = 0;
-            vector.z += spaceBetweenItems * 2.5f;
+            vector.z += spaceBetweenMoneys * 2.5f;
             stackForMoneys.localPosition = vector;
             stackSize = 0;
             stacksCount++;
         }
     }
 
+    ///<summary>Реализует анимацию сброса денег, когда игрок доходит до своей базы</summary>
     IEnumerator DropMoney()
     {
         int moneysCount = moneys.Count;
@@ -74,7 +98,7 @@ public class ItemCollecting : MonoBehaviour
             inventory.PutItem(money);
             yield return new WaitForFixedUpdate();
         }
-        stackForMoneys.localPosition = firstPos;
+        stackForMoneys.localPosition = firstPosition;
         stackSize = 0;
         stacksCount = 0;
     }
@@ -91,7 +115,7 @@ public class ItemCollecting : MonoBehaviour
             Vector3 force = new Vector3(Random.Range(0f, 1f), 1, Random.Range(0f, 1f)) * forceScalar;
             money.Drop(force);
         }
-        stackForMoneys.localPosition = firstPos;
+        stackForMoneys.localPosition = firstPosition;
         stackSize = 0;
         stacksCount = 0;
     }

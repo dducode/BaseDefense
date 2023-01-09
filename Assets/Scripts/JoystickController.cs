@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using BroadcastMessages;
 
 public class JoystickController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {

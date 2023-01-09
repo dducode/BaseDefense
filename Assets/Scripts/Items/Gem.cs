@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class Gem : Item
 {
-    [SerializeField] ForceMode forceMode = ForceMode.Impulse;
-    Rigidbody rb;
-
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-
     public override void DestroyItem()
     {
         ObjectsPool<Gem>.Push(this);

@@ -4,18 +4,14 @@ public class Attack : State
 {
     float attackDistance;
 
-    public Attack
-    (
-        Animator animator, CharacterController controller, 
-        EnemyCharacter agent, Transform player
-    )
+    public Attack(EnemyCharacter agent, Transform player)
     {
         stage = Enter;
-        this.animator = animator;
-        this.controller = controller;
         this.agent = agent;
         this.player = player;
-        attackDistance = agent.getAttackDistance;
+        animator = agent.Animator;
+        controller = agent.Controller;
+        attackDistance = agent.AttackDistance;
         transform = agent.transform;
     }
     protected override void Enter()
@@ -44,13 +40,13 @@ public class Attack : State
         {   
             if (hit.distance > attackDistance + 0.5f)
             {
-                nextState = new Running(animator, controller, agent, player);
+                nextState = new Running(agent, player);
                 stage = Exit;
             }
         }
         else
         {
-            nextState = new Walking(animator, controller, agent, player);
+            nextState = new Walking(agent, player);
             stage = Exit;
         }
     }

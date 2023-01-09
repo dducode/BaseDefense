@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class Money : Item
 {
-    [SerializeField] float collectionTime;
-    [SerializeField] ForceMode forceMode = ForceMode.Impulse;
-    SphereCollider trigger;
-    Rigidbody rb;
-
-    void Awake()
-    {
-        trigger = GetComponent<SphereCollider>();
-        rb = GetComponent<Rigidbody>();
-    }
+    ///<summary>Время, необходимое для проигрывания анимации сброса предмета на базу</summary>
+    ///<remarks>Не может быть меньше 0</remarks>
+    [SerializeField, Min(0), 
+    Tooltip("Время, необходимое для проигрывания анимации сброса предмета на базу. Не может быть меньше 0")] 
+    float collectionTime = 3;
 
     public override void DestroyItem()
     {

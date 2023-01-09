@@ -5,9 +5,9 @@ public abstract class State
 {   
     protected Action stage;
     protected State nextState;
+    protected EnemyCharacter agent;
     protected Animator animator;
     protected CharacterController controller;
-    protected EnemyCharacter agent;
     protected Transform player;
     protected Transform transform;
     protected bool attackTrigger;
@@ -16,7 +16,7 @@ public abstract class State
     protected abstract void Update();
     protected abstract void Exit();
 
-    public void Trigger(bool attackTrigger) => this.attackTrigger = attackTrigger;
+    public void SetTrigger(bool value) => attackTrigger = value;
 
     public State Process()
     {

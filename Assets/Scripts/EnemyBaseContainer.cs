@@ -7,13 +7,31 @@ using Zenject;
 
 public class EnemyBaseContainer : MonoBehaviour
 {
-    [SerializeField] int maxEnemiesCount = 10;
-    [SerializeField] int startEnemiesCount = 5;
-    [SerializeField] float timeSpawn = 3f;
-    [SerializeField] float radiusSpawn = 10f;
-    [SerializeField] Transform[] targetPoints;
+    ///<summary>Максимально возможное количество врагов на базе</summary>
+    [SerializeField, Tooltip("Максимально возможное количество врагов на базе")] 
+    int maxEnemiesCount = 10;
 
+    ///<summary>Начальное количество врагов на базе</summary>
+    [SerializeField, Tooltip("Начальное количество врагов на базе")] 
+    int startEnemiesCount = 5;
+
+    ///<summary>Временной интервал между порождением новых врагов</summary>
+    [SerializeField, Tooltip("Временной интервал между порождением новых врагов")] 
+    float timeSpawn = 3f;
+
+    ///<summary>Максимальное расстояние от центра базы для порождения новых врагов</summary>
+    [SerializeField, Tooltip("Максимальное расстояние от центра базы для порождения новых врагов")] 
+    float radiusSpawn = 10f;
+
+    ///<summary>Целевые точки для патруля врагами</summary>
+    [SerializeField, Tooltip("Целевые точки для патруля врагами")] 
+    Transform[] targetPoints;
+
+    ///<summary>Время, прошедшее с момента последнего порождения врага</summary>
     float timeOfLastSpawn;
+
+    ///<summary>Содержит всех врагов, находящихся на базе</summary>
+    ///<remarks>Мёртвые враги удаляются из списка</remarks>
     List<EnemyCharacter> enemies;
     [Inject] EnemyCharacter.Factory enemyFactory;
 
@@ -22,6 +40,12 @@ public class EnemyBaseContainer : MonoBehaviour
         enemies = new List<EnemyCharacter>();
         for (int i = 0; i < startEnemiesCount; i++)
             SpawnEnemy();
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, radiusSpawn);
     }
 
     void Update()
@@ -54,18 +78,12 @@ public class EnemyBaseContainer : MonoBehaviour
         enemies.Add(enemy);
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, radiusSpawn);
-    }
-
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             foreach (EnemyCharacter enemy in enemies)
-                enemy.getCurrentState.Trigger(true);
+                enemy.SetTrigger(true);
         }
     }
     void OnTriggerExit(Collider other)
@@ -73,7 +91,7 @@ public class EnemyBaseContainer : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             foreach (EnemyCharacter enemy in enemies)
-                enemy.getCurrentState.Trigger(false);
+                enemy.SetTrigger(false);
         }
     }
 }

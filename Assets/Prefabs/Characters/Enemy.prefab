@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee8990c2cec8c64f83fd5047a4b1fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealthPoint: 100
+  maxHealthPoints: 100
   maxSpeed: 5
   attackDistance: 1.25
   walkingSpeed: 3

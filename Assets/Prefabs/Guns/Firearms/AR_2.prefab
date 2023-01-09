@@ -76,21 +76,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6173023692739038251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5abeb030aa8f43d479b02abff82d491c, type: 3}
+  m_Script: {fileID: 11500000, guid: bfc05aeed2bdbce4e91763b8fc6be2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunType: 4
-  bulletPrefab: {fileID: 1183884636868395896, guid: 04a988901021f3b429b687293b33b6f5,
+  gunName: 4
+  projectilePrefab: {fileID: 1183884636868395896, guid: 04a988901021f3b429b687293b33b6f5,
     type: 3}
+  intervalOfShots: 0.35
   muzzles:
   - {fileID: 7064098262170049855}
   - {fileID: 2642405585738934792}
-  intervalShots: 0.3
   muzzleEnergy:
     minLimit: 0
     maxLimit: 25
-    minValue: 7
-    maxValue: 13
+    minValue: 6
+    maxValue: 12
 --- !u!33 &7588274475988719924
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using Zenject;
 
 public class Shop : MonoBehaviour
 {
+    ///<summary>Хранит всё оружие, имеющееся в магазине</summary>
     Gun[] guns;
     [Inject] DisplayingUI UI;
 
@@ -19,17 +20,22 @@ public class Shop : MonoBehaviour
             guns[i] = transform.GetChild(i).GetComponent<Gun>();
     }
 
-    public Gun Select(GunSlot slot, Gun playerGun)
+    ///<summary>Вызывается для взятия оружия из магазина</summary>
+    ///<param name="gunName">Оружие, которое необходимо забрать из магазина</param>
+    ///<returns>
+    ///Если в магазине нет запрашиваемого оружия - возвращается оружие игрока, иначе возвращается оружие из слота
+    ///</returns>
+    public Gun TakeGun(GunName gunName, Gun playerGun)
     {
         for (int i = 0; i < guns.Length; i++)
-            if (guns[i].GunType == slot.GunType)
+            if (guns[i].GunName == gunName)
             {
                 Gun gun = guns[i];
                 playerGun.transform.parent = transform;
                 guns[i] = playerGun;
                 return gun;
             }
-        Debug.LogError($"Not found gun of type {slot.GunType}");
+        Debug.LogError($"Not found gun of type {gunName}");
         return playerGun;
     }
 

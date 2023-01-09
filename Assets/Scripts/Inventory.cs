@@ -17,6 +17,10 @@ public class Inventory
         UI.UpdateUI(moneys, gems);
     }
 
+    ///<summary>Кладёт предмет в инвентарь и сохраняет значение в PlayerPrefs</summary>
+    ///<remarks>
+    ///Если тип предмета неизвестен - выводится сообщение в консоль с ошибкой. Сохранение значения не происходит
+    ///</remarks>
     public void PutItem(Item item)
     {
         if (item is Money)

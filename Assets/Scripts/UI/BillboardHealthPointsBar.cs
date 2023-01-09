@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BillboardHPBar : MonoBehaviour
+public class BillboardHealthPointsBar : MonoBehaviour
 {
     Transform mainCamera;
     Vector3 startPos;

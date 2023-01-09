@@ -3,26 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Zenject;
+using BroadcastMessages;
 
 public class DisplayingUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI moneys;
-    [SerializeField] TextMeshProUGUI gems;
-    [SerializeField] Canvas shop;
-    [SerializeField] Canvas deathWindow;
-    [SerializeField] RectTransform frame;
+    ///<summary>Отображает количество денег у игрока</summary>
+    [SerializeField, Tooltip("Отображает количество денег у игрока")] 
+    TextMeshProUGUI moneys;
+
+    ///<summary>Отображает количество кристаллов у игрока</summary>
+    [SerializeField, Tooltip("Отображает количество кристаллов у игрока")] 
+    TextMeshProUGUI gems;
+
+    ///<summary>Окно, выводимое при смерти игрока</summary>
+    [SerializeField, Tooltip("Окно, выводимое при смерти игрока")] 
+    Canvas deathWindow;
+
+    ///<summary>Рамка для выбранного игроком оружия</summary>
+    [SerializeField, Tooltip("Рамка для выбранного игроком оружия")] 
+    RectTransform frame;
+
+    [SerializeField] Canvas shopWindow;
     [Inject] PlayerCharacter player;
 
     void Start()
     {
         deathWindow.enabled = false;
-        shop.enabled = false;
+        shopWindow.enabled = false;
     }
     
     public void UpdateUI(int moneys, int gems)
     {
-        this.moneys.text = moneys.ToString();
-        this.gems.text = gems.ToString();
+        this.moneys.text = moneys.ToStringWithSeparator();
+        this.gems.text = gems.ToStringWithSeparator();
     }
 
     [Listener(MessageType.DEATH_PLAYER)]
@@ -34,14 +47,14 @@ public class DisplayingUI : MonoBehaviour
     }
     public void Restart()
     {
-        BroadcastMessages.SendMessage(MessageType.RESTART);
+        Messenger.SendMessage(MessageType.RESTART);
         deathWindow.enabled = false;
     }
     public void SelectGun(GunSlot slot)
     {
         frame.localPosition = slot.transform.localPosition;
-        player.SelectGun(slot);
+        player.SelectGun(slot.GunName);
     }
-    public void OpenShop() => shop.enabled = true;
-    public void CloseShop() => shop.enabled = false;
+    public void OpenShop() => shopWindow.enabled = true;
+    public void CloseShop() => shopWindow.enabled = false;
 }

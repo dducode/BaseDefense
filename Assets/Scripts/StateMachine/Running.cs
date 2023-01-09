@@ -5,19 +5,15 @@ public class Running : State
     float speed;
     float attackDistance;
 
-    public Running
-    (
-        Animator animator, CharacterController controller, 
-        EnemyCharacter agent, Transform player
-    )
+    public Running(EnemyCharacter agent, Transform player)
     {
         stage = Enter;
-        this.animator = animator;
-        this.controller = controller;
         this.agent = agent;
         this.player = player;
-        speed = agent.getMaxSpeed;
-        attackDistance = agent.getAttackDistance;
+        animator = agent.Animator;
+        controller = agent.Controller;
+        speed = agent.MaxSpeed;
+        attackDistance = agent.AttackDistance;
         transform = agent.transform;
     }
     protected override void Enter()
@@ -45,20 +41,20 @@ public class Running : State
 
         if (!attackTrigger)
         {
-            nextState = new Walking(animator, controller, agent, player);
+            nextState = new Walking(agent, player);
             stage = Exit;
         }
         if (hit.transform && hit.transform.CompareTag("Player"))
         {
             if (hit.distance < attackDistance)
             {
-                nextState = new Attack(animator, controller, agent, player);
+                nextState = new Attack(agent, player);
                 stage = Exit;
             }
         }
         else
         {
-            nextState = new Walking(animator, controller, agent, player);
+            nextState = new Walking(agent, player);
             stage = Exit;
         }
     }

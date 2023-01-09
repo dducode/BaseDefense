@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08055fa7c01d25e44bc0d528771c71e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealthPoint: 100
+  maxHealthPoints: 100
   maxSpeed: 7.5
   attackDistance: 10
   gunSlot: {fileID: 1804538561354731679}
@@ -132,9 +132,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stackForMoneys: {fileID: 1821068503}
-  spaceBetweenItems: 0.15
+  spaceBetweenMoneys: 0.15
   maxStackSize: 15
-  maxStasksCount: 1
+  maxStasksCount: 2
   forceScalar: 3
 --- !u!114 &5252772932302689387
 MonoBehaviour:
@@ -145,11 +145,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 109172321315190402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8d6fe7edc0c224592661e78959c500, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fee2febec6019d4cabd63be70933bc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPBar: {fileID: 4812512256737508629}
-  HP: {fileID: 6017029018257572276}
+  HealthPointsBar: {fileID: 4812512256737508629}
+  HealthPointsView: {fileID: 6017029018257572276}
 --- !u!95 &6640601484063307330
 Animator:
   serializedVersion: 4
@@ -1670,7 +1670,7 @@ GameObject:
   - component: {fileID: 8687854231051127441}
   - component: {fileID: 4812512256737508629}
   m_Layer: 6
-  m_Name: HP
+  m_Name: Health points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1708,7 +1708,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6691001364925012501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c50843327b40d954fbd324f08c442962, type: 3}
+  m_Script: {fileID: 11500000, guid: cb5bff14412f6aa47832c5d8d027d5b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4812512256737508629

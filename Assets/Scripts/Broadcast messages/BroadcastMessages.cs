@@ -3,206 +3,74 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-public static class BroadcastMessages
+namespace BroadcastMessages
 {
-    readonly public static Dictionary<MessageType, Message> dict = new Dictionary<MessageType, Message>();
-
-    [RuntimeInitializeOnLoadMethod]
-    public static void AddAllListeners()
+    ///<summary>Мессенджер используется для рассылки сообщений всем подписавшимся на рассылку</summary>
+    ///<remarks>
+    ///Методы MonoBehaviour классов можно подписать автоматически с помощью атрибута Listener.
+    ///Также на рассылку можно подписаться вручную, вызвав метод AddListener()
+    ///</remarks>
+    public static class Messenger
     {
-        dict.Clear();
-        MonoBehaviour[] behaviours = MonoBehaviour.FindObjectsOfType<MonoBehaviour>();
-        foreach (MonoBehaviour behaviour in behaviours)
+        public readonly static Dictionary<MessageType, List<ListenerInfo>> dict = 
+            new Dictionary<MessageType, List<ListenerInfo>>();
+
+        [RuntimeInitializeOnLoadMethod]
+        static void AddAllListeners()
         {
-            MethodInfo[] methods = behaviour.GetType().GetMethods(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-                );
-            foreach (MethodInfo method in methods)
+            dict.Clear();
+            MonoBehaviour[] behaviours = MonoBehaviour.FindObjectsOfType<MonoBehaviour>();
+            foreach (MonoBehaviour behaviour in behaviours)
             {
-                if (method.GetParameters().Length == 0)
+                MethodInfo[] methods = behaviour.GetType().GetMethods(
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
+                    );
+                foreach (MethodInfo method in methods)
                 {
                     ListenerAttribute listener = Attribute.GetCustomAttribute(
                         method, typeof(ListenerAttribute)) as ListenerAttribute;
                     if (listener != null)
-                    {
-                        Action action = Delegate.CreateDelegate(typeof(Action), behaviour, method) as Action;
-                        AddListener(listener.MessageType, action);
-                    }
+                        WriteInDict(listener.MessageType, new ListenerInfo(behaviour, method));
                 }
             }
         }
-    }
 
-    public static void AddListener(MessageType message, Action listener)
-    {
-        if (!dict.ContainsKey(message))
-            dict.Add(message, new Message());
-        dict[message].AddListener(listener);
-    }
-    public static void RemoveListener(MessageType message, Action listener)
-    {
-        if (dict.ContainsKey(message))
-            dict[message].RemoveListener(listener);
-        if (dict[message].listeners.Count == 0)
-            dict.Remove(message);
-    }
-    public static void SendMessage(MessageType message)
-    {
-        if (dict.ContainsKey(message))
-            dict[message].SendMessage();
-    }
-}
-
-public static class BroadcastMessages<T1>
-{
-    readonly public static Dictionary<MessageType, Message<T1>> dict = new Dictionary<MessageType, Message<T1>>();
-
-    [RuntimeInitializeOnLoadMethod]
-    public static void AddAllListeners()
-    {
-        dict.Clear();
-        MonoBehaviour[] behaviours = MonoBehaviour.FindObjectsOfType<MonoBehaviour>();
-        foreach (MonoBehaviour behaviour in behaviours)
+        static void WriteInDict(MessageType message, ListenerInfo listenerInfo)
         {
-            MethodInfo[] methods = behaviour.GetType().GetMethods(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-            );
-            foreach (MethodInfo method in methods)
-            {
-                if (method.GetParameters().Length == 1)
-                {
-                    ListenerAttribute listener = Attribute.GetCustomAttribute(
-                        method, typeof(ListenerAttribute)) as ListenerAttribute;
-                    if (listener != null)
-                    {
-                        Action<T1> action = Delegate.CreateDelegate(
-                            typeof(Action<T1>), behaviour, method) as Action<T1>;
-                        AddListener(listener.MessageType, action);
-                    }
-                }
-            }
+            if (!dict.ContainsKey(message))
+                dict.Add(message, new List<ListenerInfo>());
+            dict[message].Add(listenerInfo);
         }
-    }
 
-    public static void AddListener(MessageType message, Action<T1> listener)
-    {
-        if (!dict.ContainsKey(message))
-            dict.Add(message, new Message<T1>());
-        dict[message].AddListener(listener);
-    }
-    public static void RemoveListener(MessageType message, Action<T1> listener)
-    {
-        if (dict.ContainsKey(message))
-            dict[message].RemoveListener(listener);
-        if (dict[message].listeners.Count == 0)
-            dict.Remove(message);
-    }
-    public static void SendMessage(MessageType message, T1 a)
-    {
-        if (dict.ContainsKey(message))
-            dict[message].SendMessage(a);
-    }
-}
-
-public static class BroadcastMessages<T1, T2>
-{
-    readonly public static Dictionary<MessageType, Message<T1, T2>> dict = new Dictionary<MessageType, Message<T1, T2>>();
-
-    [RuntimeInitializeOnLoadMethod]
-    public static void AddAllListeners()
-    {
-        dict.Clear();
-        MonoBehaviour[] behaviours = MonoBehaviour.FindObjectsOfType<MonoBehaviour>();
-        foreach (MonoBehaviour behaviour in behaviours)
+        ///<summary>Добавляет подписчика на рассылку сообщений</summary>
+        ///<param name="message">Тип отправляемого сообщения</param>
+        ///<param name="listener">Метод, который необходимо подписать</param>
+        public static void AddListener(MessageType message, Action listener)
         {
-            MethodInfo[] methods = behaviour.GetType().GetMethods(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-                );
-            foreach (MethodInfo method in methods)
-            {
-                if (method.GetParameters().Length == 2)
-                {
-                    ListenerAttribute listener = Attribute.GetCustomAttribute(
-                        method, typeof(ListenerAttribute)) as ListenerAttribute;
-                    if (listener != null)
-                    {
-                        Action<T1, T2> action = Delegate.CreateDelegate(
-                            typeof(Action<T1, T2>), behaviour, method) as Action<T1, T2>;
-                        AddListener(listener.MessageType, action);
-                    }
-                }
-            }
+            WriteInDict(message, new ListenerInfo(listener.Target, listener.Method));
         }
-    }
 
-    public static void AddListener(MessageType message, Action<T1, T2> listener)
-    {
-        if (!dict.ContainsKey(message))
-            dict.Add(message, new Message<T1, T2>());
-        dict[message].AddListener(listener);
-    }
-    public static void RemoveListener(MessageType message, Action<T1, T2> listener)
-    {
-        if (dict.ContainsKey(message))
-            dict[message].RemoveListener(listener);
-        if (dict[message].listeners.Count == 0)
-            dict.Remove(message);
-    }
-    public static void SendMessage(MessageType message, T1 a, T2 b)
-    {
-        if (dict.ContainsKey(message))
-            dict[message].SendMessage(a, b);
-    }
-}
-
-public static class BroadcastMessages<T1, T2, T3>
-{
-    readonly public static Dictionary<MessageType, Message<T1, T2, T3>> dict = new Dictionary<MessageType, Message<T1, T2, T3>>();
-
-    [RuntimeInitializeOnLoadMethod]
-    public static void AddAllListeners()
-    {
-        dict.Clear();
-        MonoBehaviour[] behaviours = MonoBehaviour.FindObjectsOfType<MonoBehaviour>();
-        foreach (MonoBehaviour behaviour in behaviours)
+        ///<summary>Отправляет сообщение всем подписчикам</summary>
+        ///<param name="message">Тип отправляемого сообщения</param>
+        public static void SendMessage(MessageType message)
         {
-            MethodInfo[] methods = behaviour.GetType().GetMethods(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-                );
-            foreach (MethodInfo method in methods)
+            foreach (ListenerInfo listenerInfo in dict[message])
             {
-                if (method.GetParameters().Length == 3)
-                {
-                    ListenerAttribute listener = Attribute.GetCustomAttribute(
-                        method, typeof(ListenerAttribute)) as ListenerAttribute;
-                    if (listener != null)
-                    {
-                        Action<T1, T2, T3> action = Delegate.CreateDelegate(
-                            typeof(Action<T1, T2, T3>), behaviour, method) as Action<T1, T2, T3>;
-                        AddListener(listener.MessageType, action);
-                    }
-                }
+                if (listenerInfo.method.GetParameters().Length == 0)
+                    listenerInfo.method.Invoke(listenerInfo.instance, null);
+            }
+        }
+
+        public struct ListenerInfo
+        {
+            public object instance;
+            public MethodInfo method;
+
+            public ListenerInfo(object instance, MethodInfo method)
+            {
+                this.instance = instance;
+                this.method = method;
             }
         }
     }
-
-    public static void AddListener(MessageType message, Action<T1, T2, T3> listener)
-    {
-        if (!dict.ContainsKey(message))
-            dict.Add(message, new Message<T1, T2, T3>());
-        dict[message].AddListener(listener);
-    }
-    public static void RemoveListener(MessageType message, Action<T1, T2, T3> listener)
-    {
-        if (dict.ContainsKey(message))
-            dict[message].RemoveListener(listener);
-        if (dict[message].listeners.Count == 0)
-            dict.Remove(message);
-    }
-    public static void SendMessage(MessageType message, T1 a, T2 b, T3 c)
-    {
-        if (dict.ContainsKey(message))
-            dict[message].SendMessage(a, b, c);
-    }
 }
-

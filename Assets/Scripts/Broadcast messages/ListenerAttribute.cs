@@ -1,12 +1,17 @@
 using UnityEngine;
 using System;
 
-[AttributeUsage(AttributeTargets.Method)]
-public class ListenerAttribute : Attribute
+namespace BroadcastMessages
 {
-    public MessageType MessageType { get; }
-    public ListenerAttribute (MessageType messageType)
+    ///<summary>Атрибут Listener добавляется к методу, который необходимо подписать на рассылку сообщений</summary>
+    [AttributeUsage(AttributeTargets.Method)]
+    public class ListenerAttribute : Attribute
     {
-        MessageType = messageType;
+        public MessageType MessageType { get; }
+        public ListenerAttribute (MessageType messageType)
+        {
+            MessageType = messageType;
+        }
     }
 }
+

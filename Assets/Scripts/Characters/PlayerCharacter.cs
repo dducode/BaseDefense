@@ -1,25 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Zenject;
+using BroadcastMessages;
 
 public class PlayerCharacter : BaseCharacter
 {
-    public float MaxHealthPoint => maxHealthPoint;
-    public float CurrentHP => currentHP;
-
+    ///<summary>Transform руки, в которой игрок держит оружие</summary>
     [Header("Связанные объекты")]
-    [SerializeField, Tooltip("Transform руки, в которой игрок держит оружие")] 
+    [SerializeField, Tooltip("Transform руки, в которой игрок держит оружие")]
     Transform gunSlot;
-    [SerializeField, Tooltip("Точка рестарта")] 
+
+    ///<summary>Точка респавна игрока</summary>
+    [SerializeField, Tooltip("Точка респавна игрока")]
     Transform recoveryPoint;
+
+    ///<inheritdoc cref="BaseCharacter.maxHealthPoints"/>
+    public float MaxHealthPoints => maxHealthPoints;
+
+    ///<summary>Направление взгляда в сторону врага</summary>
+    Vector3 lookToEnemy;
+
     JoystickController joystick;
     Shop shop;
     Gun gun;
-    Vector3 lookToEnemy;
-    Vector3 lookToMovement;
+    Vector3 move;
     bool inBase;
     bool inEnemyBase;
 
@@ -37,29 +42,53 @@ public class PlayerCharacter : BaseCharacter
         gun.gameObject.SetActive(false);
     }
 
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position + Vector3.up, attackDistance);
+    }
+
     void Update()
     {
         if (lookToEnemy != Vector3.zero)
-            transform.rotation = Quaternion.Slerp(
-            transform.rotation, Quaternion.LookRotation(lookToEnemy), Time.smoothDeltaTime * 15f
-            );
-        else if (lookToMovement != Vector3.zero)
-            transform.rotation = Quaternion.Slerp(
-            transform.rotation, Quaternion.LookRotation(lookToMovement), Time.smoothDeltaTime * 15f
-            );
+            LookToTarget(lookToEnemy, 15);
+        else if (move != Vector3.zero)
+            LookToTarget(move, 15);
 
-        if (inEnemyBase) Attack();
-        else if (inBase) RecoveryHP();
-        Movement();
+        if (inEnemyBase) // поиск ближайшего врага на вражеской базе и атака врага
+        {
+            GameObject enemy = GetNearestEnemy();
+            if (enemy is null)
+                lookToEnemy = Vector3.zero;
+            else
+            {
+                lookToEnemy = enemy.transform.position - transform.position;
+                gun.Shot(enemy.transform.position + Vector3.up);
+            }
+        }
+        else if (inBase) // восстановление здоровья на своей базе
+            CurrentHealthPoints += Time.smoothDeltaTime * 5f;
+
+        {   // Перемещение игрока с помощью джойстика
+            move = joystick.GetInput();
+            Animator.SetFloat("speed", move.magnitude * maxSpeed);
+            move = move * maxSpeed;
+            Controller.Move(move * Time.smoothDeltaTime);
+        }
+
+        //Реализует плавный поворот к цели с определённой скоростью
+        void LookToTarget(Vector3 target, float speed)
+        {
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation, Quaternion.LookRotation(target), Time.smoothDeltaTime * speed
+            );
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("EnemyBase"))
-        {
-            inEnemyBase = true;
-            SetParams(inEnemyBase);
-        }
+            SetParams(true);
         if (other.CompareTag("PlayerBase"))
             inBase = true;
     }
@@ -67,83 +96,51 @@ public class PlayerCharacter : BaseCharacter
     {
         if (other.CompareTag("EnemyBase"))
         {
-            inEnemyBase = false;
-            SetParams(inEnemyBase);
+            SetParams(false);
             lookToEnemy = Vector3.zero;
         }
         if (other.CompareTag("PlayerBase")) 
             inBase = false;
     }
 
-    void OnDrawGizmosSelected()
+    ///<summary>Вызывается при выборе оружия из магазина</summary>
+    ///<param name="gunName">Выбранное оружие</param>
+    public void SelectGun(GunName gunName)
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position + Vector3.up, attackDistance);
-    }
-    public void SelectGun(GunSlot slot)
-    {
-        gun = shop.Select(slot, gun);
+        gun = shop.TakeGun(gunName, gun);
         gun.transform.parent = gunSlot;
-        gun.transform.localPosition = Vector3.zero;
-        gun.transform.localRotation = Quaternion.identity;
+        gun.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         gun.transform.localScale = Vector3.one;
     }
 
-    public override void GetDamage(float damage)
+    public override void Hit(float damage)
     {
-        currentHP -= damage;
-        if (currentHP <= 0)
+        CurrentHealthPoints -= damage;
+        if (CurrentHealthPoints == 0)
         {
-            currentHP = 0;
-            animator.SetBool("alive", false);
+            Animator.SetBool("alive", false);
             gun.gameObject.SetActive(false);
             this.enabled = false;
-            controller.enabled = false;
-            BroadcastMessages.SendMessage(MessageType.DEATH_PLAYER);
+            Controller.enabled = false;
+            Messenger.SendMessage(MessageType.DEATH_PLAYER);
         }
     }
 
     [Listener(MessageType.RESTART)]
     public void Resurrection()
     {
-        animator.SetBool("alive", true);
-        animator.SetBool("inEnemyBase", false);
+        Animator.SetBool("alive", true);
+        Animator.SetBool("inEnemyBase", false);
         lookToEnemy = Vector3.zero;
-        transform.position = recoveryPoint.position;
-        transform.rotation = Quaternion.identity;
+        transform.SetPositionAndRotation(recoveryPoint.position, Quaternion.identity);
         this.enabled = true;
-        controller.enabled = true;
-        currentHP = maxHealthPoint;
+        Controller.enabled = true;
+        CurrentHealthPoints = maxHealthPoints;
         inEnemyBase = false;
         inBase = true;
     }
-    void RecoveryHP()
-    {
-        if (currentHP < maxHealthPoint)
-            currentHP += Time.deltaTime * 5f;
-    }
 
-    void Movement()
-    {
-        Vector3 move = joystick.GetInput();
-        lookToMovement = move;
-        animator.SetFloat("speed", move.magnitude * maxSpeed);
-        move = move * maxSpeed;
-        controller.Move(move * Time.smoothDeltaTime);
-    }
-
-    void Attack()
-    {
-        GameObject enemy = GetNearestEnemy();
-        if (enemy is not null)
-        {
-            lookToEnemy = enemy.transform.position - transform.position;
-            gun.Shot(enemy.transform.position + Vector3.up);
-        }
-        else
-            lookToEnemy = Vector3.zero;
-    }
-
+    ///<returns>Возвращает ближайшего к игроку врага. Если рядом врагов нет - возвращает null</returns>
     GameObject GetNearestEnemy()
     {
         GameObject target = null;
@@ -162,9 +159,12 @@ public class PlayerCharacter : BaseCharacter
         return target;
     }
 
-    void SetParams(bool inBase)
+    ///<summary>Устанавливает параметры, связанные с нахождением на вражеской базе</summary>
+    ///<param name="value">Значение, устанавливаемое необходимым параметрам</param>
+    void SetParams(bool value)
     {
-        gun.gameObject.SetActive(inBase);
-        animator.SetBool("inEnemyBase", inBase);
+        inEnemyBase = value;
+        gun.gameObject.SetActive(value);
+        Animator.SetBool("inEnemyBase", value);
     }
 }

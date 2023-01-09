@@ -5,47 +5,39 @@ using Zenject;
 
 public class EnemyCharacter : BaseCharacter
 {
+    ///<summary>Скорость, развиваемая врагом при патруле</summary>
     [Header("Характеристики врага")]
-    [SerializeField] float walkingSpeed;
+    [SerializeField, Tooltip("Скорость, развиваемая врагом при патруле")] 
+    float walkingSpeed;
+
+    ///<summary>Коллайдер атакующей руки врага</summary>
     [Header("Связанные объекты")]
     [SerializeField, Tooltip("Коллайдер атакующей руки врага")] 
     Collider hand;
+
+    ///<inheritdoc cref="walkingSpeed"/>
+    public float WalkingSpeed => walkingSpeed;
+
+    ///<inheritdoc cref="BaseCharacter.maxSpeed"/>
+    public float MaxSpeed => maxSpeed;
+
+    ///<inheritdoc cref="BaseCharacter.attackDistance"/>
+    public float AttackDistance => attackDistance;
+
     EnemyBaseContainer enemyBase;
     Transform[] targetPoints;
-    State state;
-    public float getWalkingSpeed { get { return walkingSpeed; } }
-    public float getMaxSpeed { get { return maxSpeed; } }
-    public float getAttackDistance { get { return attackDistance; } }
-    public Vector3 getPoint { get { return targetPoints[Random.Range(0, targetPoints.Length)].position; } }
-    public State getCurrentState { get { return state; } }
+    PlayerCharacter player;
+    State State;
 
     [Inject]
     public void Initialize(EnemyBaseContainer enemyBase, Transform[] targetPoints, PlayerCharacter player)
     {
-        controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        Controller = GetComponent<CharacterController>();
+        Animator = GetComponent<Animator>();
         this.enemyBase = enemyBase;
         this.targetPoints = targetPoints;
-        state = new Walking(animator, controller, this, player.transform);
-    }
-
-    public void Spawn(Vector3 position, Quaternion rotation)
-    {
-        currentHP = maxHealthPoint;
-        alive = true;
-        controller.enabled = false;
-        transform.SetLocalPositionAndRotation(position, rotation);
-        controller.enabled = true;
-    }
-
-    public bool EnemyUpdate()
-    {
-        if (alive)
-        {
-            state = state.Process();
-            hand.enabled = state is Attack;
-        }
-        return alive;
+        this.player = player;
+        State = new Walking(this, player.transform);
     }
 
     void OnDrawGizmosSelected()
@@ -54,14 +46,56 @@ public class EnemyCharacter : BaseCharacter
         Gizmos.DrawWireSphere(transform.position + (Vector3.up * transform.localScale.y), attackDistance);
     }
 
-    public override void GetDamage(float damage)
+    ///<summary>Вызывается как для порождения нового врага, так и для респавна умершего</summary>
+    ///<param name="position">Точка спавна врага</param>
+    ///<param name="rotation">Поворот, принимаемый во время спавна</param>
+    public void Spawn(Vector3 position, Quaternion rotation)
     {
-        currentHP -= damage;
-        if (currentHP <= 0)
+        CurrentHealthPoints = maxHealthPoints;
+        Controller.enabled = false;
+        transform.SetLocalPositionAndRotation(position, rotation);
+        Controller.enabled = true;
+        State = new Walking(this, player.transform);
+    }
+
+    ///<summary>Заменяет обычный Update метод</summary>
+    ///<remarks>
+    ///Должен вызываться из другого сценария. Обычно это сценарий, который порождает персонажей данного типа
+    ///</remarks>
+    ///<returns>Возвращает false, если персонаж мёртв</returns>
+    public bool EnemyUpdate()
+    {
+        if (IsAlive)
         {
-            controller.enabled = false;
-            animator.SetBool("alive", false);
-            alive = false;
+            State = State.Process();
+            hand.enabled = State is Attack;
+        }
+        if (State is Walking) // Восстановление здоровья при патруле
+            CurrentHealthPoints += Time.smoothDeltaTime * 5f;
+
+        return IsAlive;
+    }
+
+    ///<summary>Вызывается для получения случайной целевой точки патруля</summary>
+    public Vector3 GetRandomPoint()
+    {
+        return targetPoints[Random.Range(0, targetPoints.Length)].position;
+    }
+
+    ///<summary>Устанавливает триггер для атаки на игрока</summary>
+    ///<param name="value">Значение устанавливаемого триггера</param>
+    public void SetTrigger(bool value)
+    {
+        State.SetTrigger(value);
+    }
+
+    public override void Hit(float damage)
+    {
+        CurrentHealthPoints -= damage;
+        if (!IsAlive)
+        {
+            Controller.enabled = false;
+            Animator.SetBool("alive", false);
             StartCoroutine(Await());
         }
     }
@@ -74,7 +108,7 @@ public class EnemyCharacter : BaseCharacter
     }
     bool IsDeath()
     {
-        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo info = Animator.GetCurrentAnimatorStateInfo(0);
         return !(info.IsName("Death") && info.normalizedTime >= 0.9f);
     }
 

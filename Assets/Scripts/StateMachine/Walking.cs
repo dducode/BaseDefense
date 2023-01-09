@@ -5,19 +5,15 @@ public class Walking : State
     float speed;
     Vector3 targetPoint;
 
-    public Walking
-    (
-        Animator animator, CharacterController controller,
-        EnemyCharacter agent, Transform player
-    )
+    public Walking (EnemyCharacter agent, Transform player)
     {
         stage = Enter;
-        this.animator = animator;
-        this.controller = controller;
         this.agent = agent;
         this.player = player;
-        speed = agent.getWalkingSpeed;
-        targetPoint = agent.getPoint;
+        animator = agent.Animator;
+        controller = agent.Controller;
+        speed = agent.WalkingSpeed;
+        targetPoint = agent.GetRandomPoint();
         transform = agent.transform;
     }
     protected override void Enter()
@@ -36,7 +32,7 @@ public class Walking : State
         
         if (attackTrigger)
         {
-            nextState = new Running(animator, controller, agent, player);
+            nextState = new Running(agent, player);
             stage = Exit;
         }
     }

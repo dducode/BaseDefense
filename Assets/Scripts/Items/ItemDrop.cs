@@ -5,10 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class ItemDrop : MonoBehaviour
 {
-    [SerializeField] Item[] items;
-    [SerializeField] float forceScalar;
-    [SerializeField] MinMaxSliderInt itemsCount = new MinMaxSliderInt(0, 100);
+    ///<summary>Предметы, выпадаемые с персонажа после смерти</summary>
+    [SerializeField, Tooltip("Предметы, выпадаемые с персонажа после смерти")] 
+    Item[] items;
 
+    ///<summary>
+    ///Сила, с которой выпадают предметы. Не может быть меньше 0
+    ///</summary>
+    [SerializeField, Min(0),
+    Tooltip("Сила, с которой выпадают предметы. Не может быть меньше 0")] 
+    float forceScalar;
+
+    ///<summary>Количество выпадаемых предметов в определённом диапазоне</summary>
+    [SerializeField, Tooltip("Количество выпадаемых предметов в определённом диапазоне")] 
+    MinMaxSliderInt itemsCount = new MinMaxSliderInt(0, 100);
+
+    ///<summary>Вызывается для выброса предметов из персонажа</summary>
+    ///<remarks>Выпадаемые предметы и их количество выбираются случайным образом</remarks>
     public void DropItems()
     {
         int itemsCount = Random.Range(this.itemsCount.minValue, this.itemsCount.maxValue + 1);
@@ -41,8 +54,7 @@ public class ItemDrop : MonoBehaviour
                 Debug.LogError($"Unknow item prefab {itemPrefab}");
                 return;
             }
-            item.transform.localPosition = transform.position + Vector3.up;
-            item.transform.localRotation = Random.rotation;
+            item.transform.SetLocalPositionAndRotation(transform.position + Vector3.up, Random.rotation);
             Vector3 force = new Vector3(Random.Range(0f, 1f), 1, Random.Range(0f, 1f)) * forceScalar;
             item.Drop(force);
         }
