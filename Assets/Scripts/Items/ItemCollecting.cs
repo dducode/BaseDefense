@@ -66,13 +66,15 @@ public class ItemCollecting : MonoBehaviour
         money.transform.SetPositionAndRotation(stackForMoneys.position, stackForMoneys.rotation);
         moneys.Push(money);
         stackSize++;
-        if (stackSize < maxStackSize) // Перемещение преобразования стека наверх
+        if (stackSize < maxStackSize) 
+        // Перемещение преобразования стека наверх
         {
             Vector3 vector = stackForMoneys.localPosition;
             vector.y += spaceBetweenMoneys;
             stackForMoneys.localPosition = vector;
         }
-        else // Перемещение преобразования стека вниз и вперёд
+        else 
+        // Перемещение преобразования стека вниз и вперёд
         {
             Vector3 vector = stackForMoneys.localPosition;
             vector.y = 0;

@@ -5,9 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public abstract class Item : MonoBehaviour
 {
-    [SerializeField, Tooltip("Вид силы, прикладываемый к предмету")] 
-    protected ForceMode forceMode = ForceMode.Impulse;
-
     protected SphereCollider trigger;
     protected Rigidbody rb;
 
@@ -18,7 +15,7 @@ public abstract class Item : MonoBehaviour
 
     ///<summary>Уничтожает предмет</summary>
     ///<remarks>
-    ///Рекомендуется вместо вызова метода Destroy в данном методе использовать пул объектов
+    ///Рекомендуется вместо вызова метода Destroy в данном методе использовать ObjectsPool
     ///</remarks>
     public abstract void DestroyItem();
 

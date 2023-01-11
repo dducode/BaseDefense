@@ -5,9 +5,9 @@ using UnityEngine;
 public class Money : Item
 {
     ///<summary>Время, необходимое для проигрывания анимации сброса предмета на базу</summary>
-    ///<remarks>Не может быть меньше 0</remarks>
+    ///<value>[0, infinity]</value>
     [SerializeField, Min(0), 
-    Tooltip("Время, необходимое для проигрывания анимации сброса предмета на базу. Не может быть меньше 0")] 
+    Tooltip("Время, необходимое для проигрывания анимации сброса предмета на базу. [0, infinity]")] 
     float collectionTime = 3;
 
     public override void DestroyItem()
@@ -20,8 +20,8 @@ public class Money : Item
     {
         trigger.enabled = true;
         rb.isKinematic = false;
-        rb.AddForce(force, forceMode);
-        rb.AddTorque(torque, forceMode);
+        rb.AddForce(force, ForceMode.Impulse);
+        rb.AddTorque(torque, ForceMode.Impulse);
     }
 
     public void Collect()

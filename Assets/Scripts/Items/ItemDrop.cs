@@ -6,19 +6,17 @@ using UnityEngine.SceneManagement;
 public class ItemDrop : MonoBehaviour
 {
     ///<summary>Предметы, выпадаемые с персонажа после смерти</summary>
-    [SerializeField, Tooltip("Предметы, выпадаемые с персонажа после смерти")] 
-    Item[] items;
+    [Tooltip("Предметы, выпадаемые с персонажа после смерти")]
+    [SerializeField] Item[] items;
 
-    ///<summary>
-    ///Сила, с которой выпадают предметы. Не может быть меньше 0
-    ///</summary>
-    [SerializeField, Min(0),
-    Tooltip("Сила, с которой выпадают предметы. Не может быть меньше 0")] 
-    float forceScalar;
+    ///<summary>Сила, с которой выпадают предметы</summary>
+    ///<value>[0, infinity]</value>
+    [Tooltip("Сила, с которой выпадают предметы. [0, infinity]")]
+    [SerializeField, Min(0)] float forceScalar;
 
     ///<summary>Количество выпадаемых предметов в определённом диапазоне</summary>
-    [SerializeField, Tooltip("Количество выпадаемых предметов в определённом диапазоне")] 
-    MinMaxSliderInt itemsCount = new MinMaxSliderInt(0, 100);
+    [Tooltip("Количество выпадаемых предметов в определённом диапазоне")]
+    [SerializeField] MinMaxSliderInt itemsCount = new MinMaxSliderInt(0, 100);
 
     ///<summary>Вызывается для выброса предметов из персонажа</summary>
     ///<remarks>Выпадаемые предметы и их количество выбираются случайным образом</remarks>

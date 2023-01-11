@@ -40,12 +40,6 @@ public class EnemyCharacter : BaseCharacter
         State = new Walking(this, player.transform);
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + (Vector3.up * transform.localScale.y), attackDistance);
-    }
-
     ///<summary>Вызывается как для порождения нового врага, так и для респавна умершего</summary>
     ///<param name="position">Точка спавна врага</param>
     ///<param name="rotation">Поворот, принимаемый во время спавна</param>

@@ -13,4 +13,15 @@ public static class GameExtensions
             symbols.Insert(i, separator);
         return string.Concat(symbols);
     }
+
+    ///<summary>Задаёт линейную и угловую скорость тела</summary>
+    ///<param name="velocity">Линейная скорость, устанавливаемая телу</param>
+    ///<param name="angularVelocity">Угловая скорость, устанавливаемая телу</param>
+    public static void SetVelocityAndAngularVelocity(
+        this Rigidbody rigidbody, Vector3 velocity, Vector3 angularVelocity
+    )
+    {
+        rigidbody.velocity = velocity;
+        rigidbody.angularVelocity = angularVelocity;
+    }
 }

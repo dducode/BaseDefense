@@ -7,20 +7,25 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public abstract class BaseCharacter : MonoBehaviour
 {
+    [Tooltip("Отображает в сцене радиус атаки персонажа")]
+    [SerializeField] Color gizmosView = Color.white;
     ///<summary>
-    ///Максимально возможное количество очков здоровья для данного персонажа. [1, infinity]
+    ///Максимально возможное количество очков здоровья для данного персонажа
     ///</summary>
+    ///<value>[1, infinity]</value>
     [Header("Общие характеристики персонажа")]
     [Tooltip("Максимально возможное количество очков здоровья для данного персонажа. [1, infinity]")] 
     [SerializeField, Min(1)]
     protected float maxHealthPoints = 100;
 
-    ///<summary>Максимально развиваемая персонажем скорость. [0, infinity]</summary>
+    ///<summary>Максимально развиваемая персонажем скорость</summary>
+    ///<value>[0, infinity]</value>
     [Tooltip("Максимально развиваемая персонажем скорость. [0, infinity]")] 
     [SerializeField, Min(0)]
     protected float maxSpeed = 5;
 
-    ///<summary>Расстояние, с которого персонаж начинает атаковать. [0, infinity]</summary>
+    ///<summary>Расстояние, с которого персонаж начинает атаковать</summary>
+    ///<value>[0, infinity]</value>
     [Tooltip("Расстояние, с которого персонаж начинает атаковать. [0, infinity]")] 
     [SerializeField, Min(0)]
     protected float attackDistance;
@@ -28,7 +33,8 @@ public abstract class BaseCharacter : MonoBehaviour
     public CharacterController Controller { get; protected set; }
     public Animator Animator { get; protected set; }
 
-    ///<summary>Текущее количество здоровья персонажа. [0, maxHealthPoints]</summary>
+    ///<summary>Текущее количество здоровья персонажа</summary>
+    ///<value>[0, maxHealthPoints]</value>
     float currentHealthPoints;
     ///<inheritdoc cref="currentHealthPoints"/>
     public float CurrentHealthPoints
@@ -54,5 +60,11 @@ public abstract class BaseCharacter : MonoBehaviour
         Controller = GetComponent<CharacterController>();
         Animator = GetComponent<Animator>();
         CurrentHealthPoints = maxHealthPoints;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = gizmosView;
+        Gizmos.DrawWireSphere(transform.position + (Vector3.up * transform.localScale.y), attackDistance);
     }
 }

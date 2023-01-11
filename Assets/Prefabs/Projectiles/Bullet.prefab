@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905a871a3c84d3a4585056c266753293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  a: 0
 --- !u!33 &8621233572905018493
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -189,8 +190,8 @@ TrailRenderer:
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -0.14086956
-        outSlope: -0.14086956
+        inSlope: -0.046956517
+        outSlope: -0.046956517
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.1851852

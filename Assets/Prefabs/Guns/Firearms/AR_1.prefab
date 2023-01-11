@@ -81,14 +81,15 @@ MonoBehaviour:
   gunName: 3
   projectilePrefab: {fileID: 1183884636868395896, guid: 04a988901021f3b429b687293b33b6f5,
     type: 3}
-  intervalOfShots: 0.35
   muzzles:
   - {fileID: 2549330613764838382}
-  muzzleEnergy:
+  intervalOfShots: 0.35
+  bulletEnergy:
     minLimit: 0
     maxLimit: 25
     minValue: 7
     maxValue: 15
+  dispertionScalar: 0.1
 --- !u!33 &8942082068820932510
 MeshFilter:
   m_ObjectHideFlags: 0

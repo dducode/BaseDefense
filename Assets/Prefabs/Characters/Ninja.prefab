@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08055fa7c01d25e44bc0d528771c71e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gizmosView: {r: 0, g: 0, b: 1, a: 1}
   maxHealthPoints: 100
   maxSpeed: 7.5
   attackDistance: 10
@@ -132,10 +133,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stackForMoneys: {fileID: 1821068503}
-  spaceBetweenMoneys: 0.15
   maxStackSize: 15
   maxStasksCount: 2
   forceScalar: 3
+  spaceBetweenMoneys: 0.15
 --- !u!114 &5252772932302689387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,7 +798,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3265106805919984239}
-  m_LocalRotation: {x: -0.45977, y: 0.5643614, z: 0.028124781, w: 0.68506706}
+  m_LocalRotation: {x: -0.4234584, y: 0.4861101, z: -0.13288394, w: 0.75280935}
   m_LocalPosition: {x: -0.012999986, y: 0.058000065, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

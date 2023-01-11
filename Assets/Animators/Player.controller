@@ -7,7 +7,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Base Layer
+  m_Name: Base
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -4724826888886321362}
@@ -94,7 +94,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
-  m_ExitTime: 0.9248748
+  m_ExitTime: 0.9681907
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
