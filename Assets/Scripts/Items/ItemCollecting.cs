@@ -11,19 +11,23 @@ public class ItemCollecting : MonoBehaviour
     [Tooltip("Место, в котором находятся собранные деньги, пока игрок находится на вражеской базе")] 
     [SerializeField] Transform stackForMoneys;
 
-    ///<summary>Максимальное количество пачек денег в одной стопке. [1, infinity]</summary>
+    ///<summary>Максимальное количество пачек денег в одной стопке</summary>
+    ///<value>[1, infinity]</value>
     [Tooltip("Максимальное количество пачек денег в одной стопке. [1, infinity]")]
     [SerializeField, Min(1)] int maxStackSize = 15;
 
-    ///<summary>Максимальное количество стеков. [1, infinity]</summary>
+    ///<summary>Максимальное количество стеков</summary>
+    ///<value>[1, infinity]</value>
     [Tooltip("Максимальное количество стеков. [1, infinity]")] 
     [SerializeField, Min(1)] int maxStasksCount = 2;
 
-    ///<summary>Определяет, с какой силой сбросить все деньги. [0, infinity]</summary>
+    ///<summary>Определяет, с какой силой сбросить все деньги</summary>
+    ///<value>[0, infinity]</value>
     [Tooltip("Определяет, с какой силой сбросить все деньги. [0, infinity]")] 
     [SerializeField, Min(0)] float forceScalar = 3;
 
-    ///<summary>Расстояние между пачками денег в стопке. [0, infinity]</summary>
+    ///<summary>Расстояние между пачками денег в стопке</summary>
+    ///<value>[0, infinity]</value>
     [Tooltip("Расстояние между пачками денег в стопке. [0, infinity]")]
     [SerializeField, Min(0)] float spaceBetweenMoneys = 0.15f;
 

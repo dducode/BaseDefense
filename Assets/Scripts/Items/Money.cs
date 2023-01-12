@@ -6,9 +6,8 @@ public class Money : Item
 {
     ///<summary>Время, необходимое для проигрывания анимации сброса предмета на базу</summary>
     ///<value>[0, infinity]</value>
-    [SerializeField, Min(0), 
-    Tooltip("Время, необходимое для проигрывания анимации сброса предмета на базу. [0, infinity]")] 
-    float collectionTime = 3;
+    [Tooltip("Время, необходимое для проигрывания анимации сброса предмета на базу. [0, infinity]")]
+    [SerializeField, Min(0)] float collectionTime = 3;
 
     public override void DestroyItem()
     {
