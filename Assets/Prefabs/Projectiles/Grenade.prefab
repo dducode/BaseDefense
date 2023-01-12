@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7105908306352034807}
   - component: {fileID: 3394516993389491314}
   m_Layer: 0
-  m_Name: Grenade_3
+  m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 5130858438603600220, guid: 11d2aee669534394d95be21f45653605, type: 3}
-  damageRadius: 5
-  maxDamage: 200
+  damageRadius: 3
+  maxDamage: 100
 --- !u!33 &2769623377101097645
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -63,10 +63,11 @@ public class EnemyCharacter : BaseCharacter
         {
             State = State.Process();
             hand.enabled = State is Attack;
-        }
-        if (State is Walking) // Восстановление здоровья при патруле
-            CurrentHealthPoints += Time.smoothDeltaTime * 5f;
 
+            if (State is Walking) // Восстановление здоровья при патруле
+                CurrentHealthPoints += Time.smoothDeltaTime * 5f;
+        }
+        
         return IsAlive;
     }
 

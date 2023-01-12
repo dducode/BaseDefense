@@ -4,13 +4,33 @@ public class Grenade : Projectile
 {
     ///<summary>Определяет радиус поражения при взрыве гранаты</summary>
     ///<value>[0.001, infinity]</value>
-    [Tooltip("Определяет радиус поражения при взрыве гранаты. [0.001, infinity]")]
-    [SerializeField, Min(0.001f)] float damageRadius;
+    float damageRadius;
 
     ///<summary>Урон зависит от дальности от эпицентра взрыва</summary>
     ///<value>[0, infinity]</value>
-    [Tooltip("Урон зависит от дальности от эпицентра взрыва. [0, infinity]")]
-    [SerializeField, Min(0)] float maxDamage;
+    float maxDamage;
+
+    ///<inheritdoc cref="damageRadius"/>
+    public float DamageRadius
+    {
+        get { return damageRadius; }
+        set
+        {
+            damageRadius = value;
+            if (damageRadius < 0.001f) damageRadius = 0.001f;
+        }
+    }
+
+    ///<inheritdoc cref="maxDamage"/>
+    public float MaxDamage
+    {
+        get { return maxDamage; }
+        set
+        {
+            maxDamage = value;
+            if (maxDamage < 0) maxDamage = 0;
+        }
+    }
 
     void OnDrawGizmosSelected()
     {

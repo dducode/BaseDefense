@@ -48,11 +48,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunName: 7
-  projectilePrefab: {fileID: 4813531904856078078, guid: 05a65abfad240c94b8fb4b08b1aeca3b,
+  projectilePrefab: {fileID: 4813531904856078078, guid: 2041318d9adc59a42a2a37ec09cf081c,
     type: 3}
+  intervalOfShots: 1.5
   muzzles:
   - {fileID: 1655006443053680918}
-  intervalOfShots: 1.5
+  damageRadius: 4
+  maxDamage: 150
 --- !u!33 &179224322542775519
 MeshFilter:
   m_ObjectHideFlags: 0
