@@ -24,12 +24,16 @@ public class DisplayingUI : MonoBehaviour
     RectTransform frame;
 
     [SerializeField] Canvas shopWindow;
+    [SerializeField] Canvas playerUpgradesWindow;
+    [SerializeField] PlayerUpgradeValues playerUpgradeValues;
     [Inject] PlayerCharacter player;
+    [Inject] ItemCollecting itemCollecting;
 
     void Start()
     {
         deathWindow.enabled = false;
         shopWindow.enabled = false;
+        playerUpgradesWindow.enabled = false;
     }
     
     public void UpdateUI(int moneys, int gems)
@@ -57,4 +61,36 @@ public class DisplayingUI : MonoBehaviour
     }
     public void OpenShop() => shopWindow.enabled = true;
     public void CloseShop() => shopWindow.enabled = false;
+
+    public void UpgradePlayer(PlayerUpgradesUI playerUpgrades)
+    {
+        player.Upgrade(playerUpgrades.UpgradeType);
+        playerUpgradeValues.SetValues(player.MaxSpeed, itemCollecting.StackSize, player.MaxHealthPoints);
+    }
+    public void OpenUpgrades()
+    {
+        playerUpgradesWindow.enabled = true;
+        playerUpgradeValues.SetValues(player.MaxSpeed, itemCollecting.StackSize, player.MaxHealthPoints);
+    }
+    public void CloseUpgrades() => playerUpgradesWindow.enabled = false;
+
+    [System.Serializable]
+    public struct PlayerUpgradeValues
+    {
+        public TextMeshProUGUI speed;
+        public TextMeshProUGUI stackSize;
+        public TextMeshProUGUI maxHealth;
+
+        public void SetValues(float speed, int stackSize, float maxHealth)
+        {
+            this.speed.text = $"Speed: {speed}";
+            this.stackSize.text = $"Stack size: {stackSize}";
+            this.maxHealth.text = $"Max health: {maxHealth}";
+        }
+    }
+}
+
+public enum UpgradeTypes
+{
+    Upgrade_Speed, Upgrade_Stack_Size, Upgrade_Max_Health
 }

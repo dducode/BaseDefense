@@ -37,6 +37,19 @@ public class Arrow : Projectile
     ///<summary>Обычный урон. Зависит от скорости стрелы</summary>
     float damage;
 
+    Collider coll;
+    ParticleSystem poison;
+
+    public override void Awake()
+    {
+        base.Awake();
+        coll = GetComponent<Collider>();
+        poison = Instantiate(effect, transform);
+        Vector3 position = new Vector3(0, 0, 0.25f);
+        poison.transform.localPosition = position;
+        poison.Stop();
+    }
+
     public override void AddImpulse(Vector3 force)
     {
         trailRenderer.Clear();
@@ -49,16 +62,16 @@ public class Arrow : Projectile
         if (collision.gameObject.GetComponent<EnemyCharacter>() is EnemyCharacter enemy)
         {
             enemy.Hit(damage);
-            transform.parent = enemy.transform;
-            rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
-            trailRenderer.emitting = false;
-            rb.isKinematic = true;
             StartCoroutine(HitEnemyWithPoison(enemy));
         }
+        else
+            ObjectsPool<Arrow>.Push(this);
+        rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
     }
 
     IEnumerator HitEnemyWithPoison(EnemyCharacter enemy)
     {
+        SetParams(true);
         float time = Time.time + damageTime;
         while (time > Time.time)
         {
@@ -67,10 +80,23 @@ public class Arrow : Projectile
                 break;
             yield return null;
         }
-        transform.parent = null;
-        trailRenderer.emitting = true;
-        rb.isKinematic = false;
+        SetParams(false);
         SceneManager.MoveGameObjectToScene(gameObject, Game.ProjectilesScene);
         ObjectsPool<Arrow>.Push(this);
+
+        /*
+        Устанавливает параметры для нормальной работы сопрограммы.
+        Пока стрела поражает врага ядом, рендер пути, коллайдер стрелы и физика жёсткого тела будут отключены.
+        Также на время стрела "прилипает" к врагу и проигрывается эффект поражения ядом.
+        */
+        void SetParams(bool value)
+        {
+            transform.parent = value ? enemy.transform : null;
+            trailRenderer.emitting = !value;
+            rb.isKinematic = value;
+            coll.enabled = !value;
+            if (value) poison.Play();
+            else poison.Stop();
+        }
     }
 }

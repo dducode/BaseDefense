@@ -69,10 +69,19 @@ public class EnemyCharacter : BaseCharacter
         if (IsAlive)
         {
             State = State.Process();
-            hand.enabled = State is Attack;
+            if (State is Attack)
+            {
+                AnimatorStateInfo info = Animator.GetCurrentAnimatorStateInfo(0);
+                int cycle = (int)info.normalizedTime;
+                hand.enabled = info.IsName("Base.Attack") && 
+                    info.normalizedTime - cycle > 0.5f &&
+                    info.normalizedTime - cycle < 0.75f;
+            }
+            else
+                hand.enabled = false;
 
             if (State is Walking) // Восстановление здоровья при патруле
-                CurrentHealthPoints += Time.smoothDeltaTime * 5f;
+                CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 20;
         }
         
         return IsAlive;
@@ -98,11 +107,11 @@ public class EnemyCharacter : BaseCharacter
         {
             Controller.enabled = false;
             Animator.SetBool("alive", false);
-            StartCoroutine(Await());
+            StartCoroutine(AwaitAnimation());
         }
     }
 
-    IEnumerator Await()
+    IEnumerator AwaitAnimation()
     {
         yield return new WaitWhile(() => IsDeath());
         GetComponent<ItemDrop>().DropItems();

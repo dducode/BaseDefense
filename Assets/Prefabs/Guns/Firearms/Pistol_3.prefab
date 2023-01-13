@@ -121,8 +121,8 @@ MonoBehaviour:
   shotPower:
     minLimit: 0
     maxLimit: 25
-    minValue: 8
-    maxValue: 9
+    minValue: 10
+    maxValue: 12
 --- !u!33 &7491500192199795307
 MeshFilter:
   m_ObjectHideFlags: 0

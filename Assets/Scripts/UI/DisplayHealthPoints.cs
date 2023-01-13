@@ -9,14 +9,14 @@ public class DisplayHealthPoints : MonoBehaviour
     [SerializeField] TextMeshProUGUI HealthPointsView;
     PlayerCharacter playerCharacter;
 
-    void Start()
+    void Awake()
     {
         playerCharacter = GetComponent<PlayerCharacter>();
-        HealthPointsBar.maxValue = playerCharacter.MaxHealthPoints;
     }
 
     void Update()
     {
+        HealthPointsBar.maxValue = playerCharacter.MaxHealthPoints;
         int HPValue = (int)playerCharacter.CurrentHealthPoints;
         HealthPointsBar.value = HPValue;
         HealthPointsView.text = HPValue.ToStringWithSeparator();

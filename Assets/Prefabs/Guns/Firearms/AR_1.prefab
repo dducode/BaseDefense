@@ -84,12 +84,12 @@ MonoBehaviour:
   intervalOfShots: 0.35
   muzzles:
   - {fileID: 2549330613764838382}
-  dispertionScalar: 0.1
+  dispertionScalar: 0.2
   shotPower:
     minLimit: 0
     maxLimit: 25
-    minValue: 7
-    maxValue: 15
+    minValue: 10
+    maxValue: 20
 --- !u!33 &8942082068820932510
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -88,12 +88,12 @@ MonoBehaviour:
   - {fileID: 1577867291894751026}
   - {fileID: 727379910944781466}
   - {fileID: 567851906310650263}
-  dispertionScalar: 0.1
+  dispertionScalar: 0.2
   shotPower:
     minLimit: 0
     maxLimit: 25
-    minValue: 5
-    maxValue: 10
+    minValue: 6
+    maxValue: 12
 --- !u!33 &2673519462368176284
 MeshFilter:
   m_ObjectHideFlags: 0

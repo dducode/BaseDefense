@@ -31,6 +31,9 @@ public class ItemCollecting : MonoBehaviour
     [Tooltip("Расстояние между пачками денег в стопке. [0, infinity]")]
     [SerializeField, Min(0)] float spaceBetweenMoneys = 0.15f;
 
+    ///<inheritdoc cref="maxStasksCount"/>
+    public int StackSize => maxStasksCount;
+
     ///<summary>
     ///Запоминает начальное положение преобразования stackForMoneys, 
     ///т.к. в процессе сбора преобразование стека перемещается
@@ -58,9 +61,15 @@ public class ItemCollecting : MonoBehaviour
             inventory.PutItem(other.GetComponent<Gem>());
         if (other.CompareTag("Money") && stacksCount < maxStasksCount)
             StackMoney(other.GetComponent<Money>());
-        if (other.CompareTag("PlayerBase"))
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("EnemyBase"))
             StartCoroutine(DropMoney());
     }
+
+    public void UpgradeStackSize() => ++maxStasksCount;
 
     ///<summary>Укладывает пачку денег на верх стека</summary>
     void StackMoney(Money money)

@@ -19,6 +19,9 @@ public class PlayerCharacter : BaseCharacter
     ///<inheritdoc cref="BaseCharacter.maxHealthPoints"/>
     public float MaxHealthPoints => maxHealthPoints;
 
+    ///<inheritdoc cref="BaseCharacter.maxSpeed"/>
+    public float MaxSpeed => maxSpeed;
+
     ///<summary>Направление взгляда в сторону врага</summary>
     Vector3 lookToEnemy;
 
@@ -26,11 +29,7 @@ public class PlayerCharacter : BaseCharacter
     Shop shop;
     Gun gun;
     Vector3 move;
-    bool inBase;
     bool inEnemyBase;
-    IEnumerator awaitAnimation;
-
-    bool invulnerability;
 
     [Inject]
     public void Construct(Shop shop, JoystickController joystick)
@@ -54,7 +53,7 @@ public class PlayerCharacter : BaseCharacter
             LookToTarget(move, 15);
 
         if (inEnemyBase && !Animator.IsInTransition(0)) // Ожидание перехода для предотвращения преждевременной стрельбы
-        // поиск ближайшего врага на вражеской базе и атака
+        // Поиск ближайшего врага на вражеской базе и атака
         {
             GameObject enemy = GetNearestEnemy();
             if (enemy is null)
@@ -62,20 +61,21 @@ public class PlayerCharacter : BaseCharacter
             else
             {
                 lookToEnemy = enemy.transform.position - transform.position;
-                if (Vector3.Dot(lookToEnemy.normalized, transform.forward) > .9f)
+                if (Vector3.Dot(lookToEnemy.normalized, transform.forward) > .9f) // Прицеливание
                 {
                     if (gun is GrenadeLauncher grenade)
+                    // Стреляет из гранатомёта только на безопасном расстоянии
                     {
-                        if (lookToEnemy.magnitude > grenade.DamageRadius)
-                            gun.Shot(enemy.transform.position + Vector3.up);
+                        if (lookToEnemy.magnitude > grenade.DamageRadius + 1)
+                            grenade.Shot(enemy.transform.position + Vector3.up);
                     }
                     else
                         gun.Shot(enemy.transform.position + Vector3.up);
                 }
             }
         }
-        else if (inBase) // восстановление здоровья на своей базе
-            CurrentHealthPoints += Time.smoothDeltaTime * 5f;
+        else // Восстановление здоровья на своей базе
+            CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 20;
 
         // Перемещение игрока с помощью джойстика
         move = joystick.GetInput();
@@ -83,24 +83,19 @@ public class PlayerCharacter : BaseCharacter
         move = move * maxSpeed;
         Controller.Move(move * Time.smoothDeltaTime);
 
-        //Реализует плавный поворот к цели с определённой скоростью
+        // Реализует плавный поворот к цели с определённой скоростью
         void LookToTarget(Vector3 target, float speed)
         {
             transform.rotation = Quaternion.Slerp(
                 transform.rotation, Quaternion.LookRotation(target), Time.smoothDeltaTime * speed
             );
         }
-
-        if (Input.GetKeyDown(KeyCode.I))
-            invulnerability = true;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("EnemyBase"))
             SetParams(true);
-        if (other.CompareTag("PlayerBase"))
-            inBase = true;
     }
     void OnTriggerExit(Collider other)
     {
@@ -109,8 +104,6 @@ public class PlayerCharacter : BaseCharacter
             SetParams(false);
             lookToEnemy = Vector3.zero;
         }
-        if (other.CompareTag("PlayerBase")) 
-            inBase = false;
     }
 
     ///<summary>Вызывается при выборе оружия из магазина</summary>
@@ -123,10 +116,25 @@ public class PlayerCharacter : BaseCharacter
         gun.transform.localScale = Vector3.one;
     }
 
+    public void Upgrade(UpgradeTypes upgradeType)
+    {
+        switch (upgradeType)
+        {
+            case UpgradeTypes.Upgrade_Speed:
+                maxSpeed += 0.5f;
+                break;
+            case UpgradeTypes.Upgrade_Stack_Size:
+                GetComponent<ItemCollecting>().UpgradeStackSize();
+                break;
+            case UpgradeTypes.Upgrade_Max_Health:
+                maxHealthPoints += 10;
+                CurrentHealthPoints = maxHealthPoints;
+                break;
+        }
+    }
+
     public override void Hit(float damage)
     {
-        if (invulnerability)
-            return;
         CurrentHealthPoints -= damage;
         if (CurrentHealthPoints == 0)
         {
@@ -149,7 +157,6 @@ public class PlayerCharacter : BaseCharacter
         Controller.enabled = true;
         CurrentHealthPoints = maxHealthPoints;
         inEnemyBase = false;
-        inBase = true;
     }
 
     ///<returns>Возвращает ближайшего к игроку врага. Если рядом врагов нет - возвращает null</returns>

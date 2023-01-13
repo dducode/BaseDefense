@@ -9,6 +9,7 @@ public class LevelInstaller : MonoInstaller
     {
         Container.Bind<EnemyBaseContainer>().FromComponentInHierarchy().AsSingle();
         Container.Bind<PlayerCharacter>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<ItemCollecting>().FromComponentInHierarchy().AsSingle();
         Container.BindFactory<Transform[], EnemyCharacter, EnemyCharacter.Factory>().FromComponentInNewPrefab(enemyPrefab);
 
         Container.Bind<DisplayingUI>().FromComponentInHierarchy().AsSingle();
