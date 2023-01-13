@@ -5,9 +5,14 @@ using UnityEngine;
 public class Punch : MonoBehaviour
 {
     ///<summary>Урон, наносимый врагом игроку</summary>
-    ///<value>Диапазон значений на отрезке [0, 100]</value>
-    [Tooltip("Урон, наносимый врагом игроку")]
-    [SerializeField] MinMaxSliderFloat damage = new MinMaxSliderFloat(0, 100);
+    ///<value>Диапазон значений на отрезке [minLimit, maxLimit]</value>
+    MinMaxSliderFloat damage;
+
+    public MinMaxSliderFloat Damage
+    {
+        get { return damage; }
+        set { damage = value; }
+    }
 
     void OnTriggerEnter(Collider other)
     {

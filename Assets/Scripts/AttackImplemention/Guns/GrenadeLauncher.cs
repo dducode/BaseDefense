@@ -14,6 +14,8 @@ public class GrenadeLauncher : Gun
     [Tooltip("Урон зависит от дальности от эпицентра взрыва. [0, infinity]")]
     [SerializeField, Min(0)] float maxDamage;
 
+    public float DamageRadius => damageRadius;
+
     public override void Shot(Vector3 target)
     {
         if (timeOfLastShot + intervalOfShots < Time.time)

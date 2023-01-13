@@ -6,14 +6,20 @@ using Zenject;
 public class EnemyCharacter : BaseCharacter
 {
     ///<summary>Скорость, развиваемая врагом при патруле</summary>
+    ///<value>[0, infinity]</value>
     [Header("Характеристики врага")]
-    [SerializeField, Tooltip("Скорость, развиваемая врагом при патруле")] 
-    float walkingSpeed;
+    [Tooltip("Скорость, развиваемая врагом при патруле. [0, infinity]")]
+    [SerializeField, Min(0)] float walkingSpeed;
 
-    ///<summary>Коллайдер атакующей руки врага</summary>
+    ///<summary>Урон, наносимый врагом игроку</summary>
+    ///<value>Диапазон значений на отрезке [0, 100]</value>
+    [Tooltip("Урон, наносимый врагом игроку")]
+    [SerializeField] MinMaxSliderFloat damage = new MinMaxSliderFloat(0, 100);
+
+    ///<summary>Атакующая рука врага</summary>
     [Header("Связанные объекты")]
-    [SerializeField, Tooltip("Коллайдер атакующей руки врага")] 
-    Collider hand;
+    [Tooltip("Атакующая рука врага")]
+    [SerializeField] Punch hand;
 
     ///<inheritdoc cref="walkingSpeed"/>
     public float WalkingSpeed => walkingSpeed;
@@ -37,6 +43,7 @@ public class EnemyCharacter : BaseCharacter
         this.enemyBase = enemyBase;
         this.targetPoints = targetPoints;
         this.player = player;
+        hand.Damage = damage;
         State = new Walking(this, player.transform);
     }
 

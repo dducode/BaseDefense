@@ -7,13 +7,6 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(MinMaxSliderInt))]
 public class MinMaxSliderEditor : PropertyDrawer
 {
-    const int LINE_COUNT = 2;
-
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        return base.GetPropertyHeight(property, label) * LINE_COUNT;
-    }
-
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         var minValueProperty = property.FindPropertyRelative("minValue");
@@ -25,15 +18,15 @@ public class MinMaxSliderEditor : PropertyDrawer
         using (var propertyScope = new EditorGUI.PropertyScope(position, label, property))
         {
             var sliderRect = EditorGUI.PrefixLabel(position, label);
-            sliderRect.height = position.height / LINE_COUNT;
+            sliderRect.width /= 2.0f;
 
             var valuesRect = sliderRect;
-            valuesRect.y += sliderRect.height;
-            valuesRect.width /= 2.0f;
+            valuesRect.width /= 2.5f;
 
             var minValueRect = valuesRect;
             var maxValueRect = valuesRect;
-            maxValueRect.x += minValueRect.width;
+            sliderRect.x += valuesRect.width * 1.25f;
+            maxValueRect.x += valuesRect.width * 1.5f + sliderRect.width;
 
             if (minValueProperty.propertyType == SerializedPropertyType.Float)
             {

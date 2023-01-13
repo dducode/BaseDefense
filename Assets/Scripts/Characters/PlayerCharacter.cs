@@ -63,7 +63,15 @@ public class PlayerCharacter : BaseCharacter
             {
                 lookToEnemy = enemy.transform.position - transform.position;
                 if (Vector3.Dot(lookToEnemy.normalized, transform.forward) > .9f)
-                    gun.Shot(enemy.transform.position + Vector3.up);
+                {
+                    if (gun is GrenadeLauncher grenade)
+                    {
+                        if (lookToEnemy.magnitude > grenade.DamageRadius)
+                            gun.Shot(enemy.transform.position + Vector3.up);
+                    }
+                    else
+                        gun.Shot(enemy.transform.position + Vector3.up);
+                }
             }
         }
         else if (inBase) // восстановление здоровья на своей базе

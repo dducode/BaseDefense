@@ -78,11 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 771f59d860ed6d74cbbc91f39300b8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage:
-    minLimit: 0
-    maxLimit: 100
-    minValue: 10
-    maxValue: 25
 --- !u!135 &3872991518174540616
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -469,7 +464,12 @@ MonoBehaviour:
   maxSpeed: 5
   attackDistance: 1.25
   walkingSpeed: 3
-  hand: {fileID: 3872991518174540616}
+  damage:
+    minLimit: 0
+    maxLimit: 100
+    minValue: 10
+    maxValue: 25
+  hand: {fileID: 1995022228285166839}
 --- !u!114 &1929896161184053226
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,9 +14,9 @@ public class Bullet : Projectile
         damage = force.magnitude;
     }
 
-    void OnCollisionEnter(Collision other)
+    public override void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.GetComponent<EnemyCharacter>() is EnemyCharacter enemy)
+        if (collision.gameObject.GetComponent<EnemyCharacter>() is EnemyCharacter enemy)
         {
             enemy.Hit(damage);
             Instantiate(effect, transform.position, Quaternion.identity);

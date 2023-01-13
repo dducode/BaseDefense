@@ -16,6 +16,8 @@ public abstract class Projectile : MonoBehaviour
     ///<param name="force">Вектор направления силы выстрела</param>
     public abstract void AddImpulse(Vector3 force);
 
+    public abstract void OnCollisionEnter(Collision collision);
+
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();

@@ -44,7 +44,7 @@ public class Grenade : Projectile
         rb.AddForce(force);
     }
 
-    void OnCollisionEnter(Collision other)
+    public override void OnCollisionEnter(Collision collision)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, damageRadius);
         ParticleSystem explosion = Instantiate(effect, transform.position, Quaternion.identity);
