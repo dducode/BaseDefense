@@ -7,6 +7,17 @@ public class Punch : MonoBehaviour
     ///<summary>Урон, наносимый врагом игроку</summary>
     ///<value>Диапазон значений на отрезке [minLimit, maxLimit]</value>
     MinMaxSliderFloat damage;
+    
+    SphereCollider trigger;
+
+    void Awake()
+    {
+        trigger = GetComponent<SphereCollider>();
+        trigger.isTrigger = true;
+    }
+
+    void OnEnable() => trigger.enabled = true;
+    void OnDisable() => trigger.enabled = false;
 
     public MinMaxSliderFloat Damage
     {

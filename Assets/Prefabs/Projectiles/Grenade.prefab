@@ -49,9 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7d8cf59abd63846ba7be8cb705abc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect: {fileID: 5130858438603600220, guid: 11d2aee669534394d95be21f45653605, type: 3}
-  damageRadius: 3
-  maxDamage: 100
+  gizmosView: {r: 1, g: 0, b: 0, a: 1}
+  explosion: {fileID: 5130858438603600220, guid: 11d2aee669534394d95be21f45653605,
+    type: 3}
 --- !u!33 &2769623377101097645
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -34,20 +34,16 @@ public class Arrow : Projectile
         }
     }
 
-    ///<summary>Обычный урон. Зависит от скорости стрелы</summary>
+    ///<summary>Обычный урон при попадании. Зависит от скорости стрелы</summary>
     float damage;
 
     Collider coll;
-    ParticleSystem poison;
 
     public override void Awake()
     {
         base.Awake();
         coll = GetComponent<Collider>();
-        poison = Instantiate(effect, transform);
         Vector3 position = new Vector3(0, 0, 0.25f);
-        poison.transform.localPosition = position;
-        poison.Stop();
     }
 
     public override void AddImpulse(Vector3 force)
@@ -75,10 +71,10 @@ public class Arrow : Projectile
         float time = Time.time + damageTime;
         while (time > Time.time)
         {
-            enemy.Hit(poisonDamage * Time.smoothDeltaTime);
+            enemy.Hit(poisonDamage);
             if (!enemy.IsAlive)
                 break;
-            yield return null;
+            yield return new WaitForSeconds(1);
         }
         SetParams(false);
         SceneManager.MoveGameObjectToScene(gameObject, Game.ProjectilesScene);
@@ -95,8 +91,6 @@ public class Arrow : Projectile
             trailRenderer.emitting = !value;
             rb.isKinematic = value;
             coll.enabled = !value;
-            if (value) poison.Play();
-            else poison.Stop();
         }
     }
 }

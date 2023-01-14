@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Zenject;
 using BroadcastMessages;
@@ -25,9 +26,9 @@ public class DisplayingUI : MonoBehaviour
 
     [SerializeField] Canvas shopWindow;
     [SerializeField] Canvas playerUpgradesWindow;
-    [SerializeField] PlayerUpgradeValues playerUpgradeValues;
+    [SerializeField] UpgradeValues upgradeValues;
     [Inject] PlayerCharacter player;
-    [Inject] ItemCollecting itemCollecting;
+    [Inject] Upgrades upgrades;
 
     void Start()
     {
@@ -64,33 +65,47 @@ public class DisplayingUI : MonoBehaviour
 
     public void UpgradePlayer(PlayerUpgradesUI playerUpgrades)
     {
-        player.Upgrade(playerUpgrades.UpgradeType);
-        playerUpgradeValues.SetValues(player.MaxSpeed, itemCollecting.StackSize, player.MaxHealthPoints);
+        upgrades.Upgrade(playerUpgrades.UpgradeType);
+        upgradeValues.SetValues(upgrades);
     }
     public void OpenUpgrades()
     {
         playerUpgradesWindow.enabled = true;
-        playerUpgradeValues.SetValues(player.MaxSpeed, itemCollecting.StackSize, player.MaxHealthPoints);
+        upgradeValues.SetValues(upgrades);
     }
     public void CloseUpgrades() => playerUpgradesWindow.enabled = false;
 
     [System.Serializable]
-    public struct PlayerUpgradeValues
+    public struct UpgradeValues
     {
-        public TextMeshProUGUI speed;
-        public TextMeshProUGUI stackSize;
-        public TextMeshProUGUI maxHealth;
+        public UpgradeableProperty speed;
+        public UpgradeableProperty capacity;
+        public UpgradeableProperty maxHealth;
 
-        public void SetValues(float speed, int stackSize, float maxHealth)
+        public void SetValues(Upgrades upgrades)
         {
-            this.speed.text = $"Speed: {speed}";
-            this.stackSize.text = $"Stack size: {stackSize}";
-            this.maxHealth.text = $"Max health: {maxHealth}";
+            for (int i = 0; i < upgrades.Targets.Length; i++)
+            {
+                if (upgrades.Targets[i] is PlayerCharacter player)
+                {
+                    speed.textField.text = $"Speed: {player.MaxSpeed}";
+                    speed.button.interactable = player.MaxSpeed < upgrades.Speed.maxValue;
+                    maxHealth.textField.text = $"Max health: {player.MaxHealthPoints}";
+                    maxHealth.button.interactable = player.MaxHealthPoints < upgrades.MaxHealth.maxValue;
+                }
+                else if (upgrades.Targets[i] is ItemCollecting itemCollecting)
+                {
+                    capacity.textField.text = $"Capacity: {itemCollecting.Capacity}";
+                    capacity.button.interactable = itemCollecting.Capacity < upgrades.Capacity.maxValue;
+                }
+            }
+        }
+        [System.Serializable]
+        public struct UpgradeableProperty
+        {
+            public TextMeshProUGUI textField;
+            public Button button;
         }
     }
 }
 
-public enum UpgradeTypes
-{
-    Upgrade_Speed, Upgrade_Stack_Size, Upgrade_Max_Health
-}

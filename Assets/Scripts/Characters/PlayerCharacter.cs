@@ -5,7 +5,7 @@ using UnityEngine;
 using Zenject;
 using BroadcastMessages;
 
-public class PlayerCharacter : BaseCharacter
+public class PlayerCharacter : BaseCharacter, IUpgradeable
 {
     ///<summary>Transform руки, в которой игрок держит оружие</summary>
     [Header("Связанные объекты")]
@@ -61,7 +61,7 @@ public class PlayerCharacter : BaseCharacter
             else
             {
                 lookToEnemy = enemy.transform.position - transform.position;
-                if (Vector3.Dot(lookToEnemy.normalized, transform.forward) > .9f) // Прицеливание
+                if (Vector3.Dot(lookToEnemy.normalized, transform.forward) > .95f) // Прицеливание
                 {
                     if (gun is GrenadeLauncher grenade)
                     // Стреляет из гранатомёта только на безопасном расстоянии
@@ -116,18 +116,15 @@ public class PlayerCharacter : BaseCharacter
         gun.transform.localScale = Vector3.one;
     }
 
-    public void Upgrade(UpgradeTypes upgradeType)
+    public void Upgrade(UpgradeTypes upgradeType, float step)
     {
         switch (upgradeType)
         {
             case UpgradeTypes.Upgrade_Speed:
-                maxSpeed += 0.5f;
-                break;
-            case UpgradeTypes.Upgrade_Stack_Size:
-                GetComponent<ItemCollecting>().UpgradeStackSize();
+                maxSpeed += step;
                 break;
             case UpgradeTypes.Upgrade_Max_Health:
-                maxHealthPoints += 10;
+                maxHealthPoints += step;
                 CurrentHealthPoints = maxHealthPoints;
                 break;
         }
@@ -136,6 +133,9 @@ public class PlayerCharacter : BaseCharacter
     public override void Hit(float damage)
     {
         CurrentHealthPoints -= damage;
+        var emission = HitEffect.emission;
+        emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
+        HitEffect.Play();
         if (CurrentHealthPoints == 0)
         {
             Animator.SetBool("alive", false);

@@ -3,32 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 ///<summary>Базовый класс для всех типов персонажей</summary>
-[RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(CharacterController), typeof(Animator), typeof(ParticleSystem))]
 public abstract class BaseCharacter : MonoBehaviour
 {
     [Tooltip("Отображает в сцене радиус атаки персонажа")]
     [SerializeField] Color gizmosView = Color.white;
-    ///<summary>
-    ///Максимально возможное количество очков здоровья для данного персонажа
-    ///</summary>
+
+    ///<summary>Максимально возможное количество очков здоровья для данного персонажа</summary>
     ///<value>[1, infinity]</value>
     [Header("Общие характеристики персонажа")]
     [Tooltip("Максимально возможное количество очков здоровья для данного персонажа. [1, infinity]")] 
-    [SerializeField, Min(1)]
-    protected float maxHealthPoints = 100;
+    [SerializeField, Min(1)] protected float maxHealthPoints = 100;
 
     ///<summary>Максимально развиваемая персонажем скорость</summary>
     ///<value>[0, infinity]</value>
     [Tooltip("Максимально развиваемая персонажем скорость. [0, infinity]")] 
-    [SerializeField, Min(0)]
-    protected float maxSpeed = 5;
+    [SerializeField, Min(0)] protected float maxSpeed = 5;
 
     ///<summary>Расстояние, с которого персонаж начинает атаковать</summary>
     ///<value>[0, infinity]</value>
     [Tooltip("Расстояние, с которого персонаж начинает атаковать. [0, infinity]")] 
-    [SerializeField, Min(0)]
-    protected float attackDistance;
+    [SerializeField, Min(0)] protected float attackDistance;
+
+    ///<summary>Анимация, проигрываемая при получении урона персонажем</summary>
+    public ParticleSystem HitEffect { get; protected set; }
 
     public CharacterController Controller { get; protected set; }
     public Animator Animator { get; protected set; }
@@ -59,6 +57,7 @@ public abstract class BaseCharacter : MonoBehaviour
     {
         Controller = GetComponent<CharacterController>();
         Animator = GetComponent<Animator>();
+        HitEffect = GetComponent<ParticleSystem>();
         CurrentHealthPoints = maxHealthPoints;
     }
 

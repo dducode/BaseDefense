@@ -103,6 +103,9 @@ public class EnemyCharacter : BaseCharacter
     public override void Hit(float damage)
     {
         CurrentHealthPoints -= damage;
+        var emission = HitEffect.emission;
+        emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
+        HitEffect.Play();
         if (!IsAlive)
         {
             Controller.enabled = false;

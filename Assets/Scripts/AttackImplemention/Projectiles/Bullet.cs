@@ -17,10 +17,7 @@ public class Bullet : Projectile
     public override void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<EnemyCharacter>() is EnemyCharacter enemy)
-        {
             enemy.Hit(damage);
-            Instantiate(effect, transform.position, Quaternion.identity);
-        }
         ObjectsPool<Bullet>.Push(this);
         rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
     }

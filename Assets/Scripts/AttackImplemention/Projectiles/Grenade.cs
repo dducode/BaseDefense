@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Grenade : Projectile
 {
+    ///<summary>Эффект, который необходимо воспроизвести после попадания гранаты</summary>
+    [Tooltip("Эффект, который необходимо воспроизвести после попадания гранаты")]
+    [SerializeField] ParticleSystem explosion;
+
     ///<summary>Определяет радиус поражения при взрыве гранаты</summary>
     ///<value>[0.001, infinity]</value>
     float damageRadius;
@@ -32,12 +36,6 @@ public class Grenade : Projectile
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, damageRadius);
-    }
-
     public override void AddImpulse(Vector3 force)
     {
         trailRenderer.Clear();
@@ -47,7 +45,7 @@ public class Grenade : Projectile
     public override void OnCollisionEnter(Collision collision)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, damageRadius);
-        ParticleSystem explosion = Instantiate(effect, transform.position, Quaternion.identity);
+        Instantiate(explosion, transform.position, Quaternion.identity);
         foreach (Collider collider in colliders)
         {
             if (collider.GetComponent<BaseCharacter>() is BaseCharacter character)

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using Zenject;
 using BroadcastMessages;
 
-public class ItemCollecting : MonoBehaviour
+public class ItemCollecting : MonoBehaviour, IUpgradeable
 {
     ///<summary>Место, в котором находятся собранные деньги, пока игрок находится на вражеской базе</summary>
     [Tooltip("Место, в котором находятся собранные деньги, пока игрок находится на вражеской базе")] 
@@ -16,10 +16,10 @@ public class ItemCollecting : MonoBehaviour
     [Tooltip("Максимальное количество пачек денег в одной стопке. [1, infinity]")]
     [SerializeField, Min(1)] int maxStackSize = 15;
 
-    ///<summary>Максимальное количество стеков</summary>
+    ///<summary>Максимальное количество стопок</summary>
     ///<value>[1, infinity]</value>
-    [Tooltip("Максимальное количество стеков. [1, infinity]")] 
-    [SerializeField, Min(1)] int maxStasksCount = 2;
+    [Tooltip("Максимальное количество стопок. [1, infinity]")] 
+    [SerializeField, Min(1)] int capacity = 2;
 
     ///<summary>Определяет, с какой силой сбросить все деньги</summary>
     ///<value>[0, infinity]</value>
@@ -32,7 +32,7 @@ public class ItemCollecting : MonoBehaviour
     [SerializeField, Min(0)] float spaceBetweenMoneys = 0.15f;
 
     ///<inheritdoc cref="maxStasksCount"/>
-    public int StackSize => maxStasksCount;
+    public int Capacity => capacity;
 
     ///<summary>
     ///Запоминает начальное положение преобразования stackForMoneys, 
@@ -47,7 +47,7 @@ public class ItemCollecting : MonoBehaviour
     int stacksCount;
     [Inject] Inventory inventory;
 
-    void Start()
+    void Awake()
     {
         firstPosition = stackForMoneys.localPosition;
         stackSize = 0;
@@ -59,7 +59,7 @@ public class ItemCollecting : MonoBehaviour
     {
         if (other.CompareTag("Gem"))
             inventory.PutItem(other.GetComponent<Gem>());
-        if (other.CompareTag("Money") && stacksCount < maxStasksCount)
+        if (other.CompareTag("Money") && stacksCount < capacity)
             StackMoney(other.GetComponent<Money>());
     }
 
@@ -69,7 +69,11 @@ public class ItemCollecting : MonoBehaviour
             StartCoroutine(DropMoney());
     }
 
-    public void UpgradeStackSize() => ++maxStasksCount;
+    public void Upgrade(UpgradeTypes upgradeType, float step)
+    {
+        if (upgradeType == UpgradeTypes.Upgrade_Capacity)
+            capacity += (int)step;
+    }
 
     ///<summary>Укладывает пачку денег на верх стека</summary>
     void StackMoney(Money money)
