@@ -5,16 +5,27 @@ using UnityEngine;
 using Zenject;
 using BroadcastMessages;
 
-public class PlayerCharacter : BaseCharacter, IUpgradeable
+[RequireComponent(typeof(ItemCollecting), typeof(DisplayHealthPoints))]
+public class PlayerCharacter : BaseCharacter
 {
     ///<summary>Transform руки, в которой игрок держит оружие</summary>
+    [Tooltip("Transform руки, в которой игрок держит оружие")]
     [Header("Связанные объекты")]
-    [SerializeField, Tooltip("Transform руки, в которой игрок держит оружие")]
-    Transform gunSlot;
+    [SerializeField] Transform gunSlot;
 
     ///<summary>Точка респавна игрока</summary>
-    [SerializeField, Tooltip("Точка респавна игрока")]
-    Transform recoveryPoint;
+    [Tooltip("Точка респавна игрока")]
+    [SerializeField] Transform recoveryPoint;
+
+    ///<inheritdoc cref="Upgrades"/>
+    [Tooltip("Хранит в себе информацию о прокачиваемых характеристиках игрока")]
+    [SerializeField] Upgrades upgrades = new Upgrades();
+
+    ///<inheritdoc cref="DisplayHealthPoints"/>
+    DisplayHealthPoints displayHealthPoints;
+
+    ///<inheritdoc cref="ItemCollecting"/>
+    ItemCollecting itemCollecting;
 
     ///<inheritdoc cref="BaseCharacter.maxHealthPoints"/>
     public float MaxHealthPoints => maxHealthPoints;
@@ -22,13 +33,20 @@ public class PlayerCharacter : BaseCharacter, IUpgradeable
     ///<inheritdoc cref="BaseCharacter.maxSpeed"/>
     public float MaxSpeed => maxSpeed;
 
+    ///<inheritdoc cref="ItemCollecting.Capacity"/>
+    public int Capacity => itemCollecting.Capacity;
+
+    public bool IsNotMaxForSpeed => maxSpeed < upgrades.Speed.maxValue;
+    public bool IsNotMaxForMaxHealth => maxHealthPoints < upgrades.MaxHealth.maxValue;
+    public bool IsNotMaxForCapacity => Capacity < upgrades.Capacity.maxValue;
+
     ///<summary>Направление взгляда в сторону врага</summary>
     Vector3 lookToEnemy;
+    Vector3 move;
 
     JoystickController joystick;
     Shop shop;
     Gun gun;
-    Vector3 move;
     bool inEnemyBase;
 
     [Inject]
@@ -41,6 +59,9 @@ public class PlayerCharacter : BaseCharacter, IUpgradeable
     public override void Awake()
     {
         base.Awake();
+        itemCollecting = GetComponent<ItemCollecting>();
+        displayHealthPoints = GetComponent<DisplayHealthPoints>();
+        displayHealthPoints.SetMaxValue((int)maxHealthPoints);
         gun = gunSlot.GetChild(0).GetComponent<Gun>();
         gun.gameObject.SetActive(false);
     }
@@ -74,8 +95,12 @@ public class PlayerCharacter : BaseCharacter, IUpgradeable
                 }
             }
         }
-        else // Восстановление здоровья на своей базе
+        else 
+        // Восстановление здоровья на своей базе
+        {
             CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 20;
+            displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+        }
 
         // Перемещение игрока с помощью джойстика
         move = joystick.GetInput();
@@ -96,6 +121,10 @@ public class PlayerCharacter : BaseCharacter, IUpgradeable
     {
         if (other.CompareTag("EnemyBase"))
             SetParams(true);
+        if (other.GetComponent<Gem>() is Gem gem)
+            itemCollecting.PutGem(gem);
+        if (other.GetComponent<Money>() is Money money)
+            itemCollecting.StackMoney(money);
     }
     void OnTriggerExit(Collider other)
     {
@@ -103,6 +132,7 @@ public class PlayerCharacter : BaseCharacter, IUpgradeable
         {
             SetParams(false);
             lookToEnemy = Vector3.zero;
+            StartCoroutine(itemCollecting.DropMoney());
         }
     }
 
@@ -116,16 +146,33 @@ public class PlayerCharacter : BaseCharacter, IUpgradeable
         gun.transform.localScale = Vector3.one;
     }
 
-    public void Upgrade(UpgradeTypes upgradeType, float step)
+    ///<summary>Прокачивает характеристики игрока</summary>
+    ///<param name="upgradeType">Определяет прокачиваемую характеристику</param>
+    public void Upgrade(UpgradeTypes upgradeType)
     {
         switch (upgradeType)
         {
             case UpgradeTypes.Upgrade_Speed:
-                maxSpeed += step;
+                if (maxSpeed < upgrades.Speed.maxValue)
+                {
+                    maxSpeed += upgrades.Speed.step;
+                    if (maxSpeed > upgrades.Speed.maxValue)
+                        maxSpeed = upgrades.Speed.maxValue;
+                }
                 break;
             case UpgradeTypes.Upgrade_Max_Health:
-                maxHealthPoints += step;
-                CurrentHealthPoints = maxHealthPoints;
+                if (maxHealthPoints < upgrades.MaxHealth.maxValue)
+                {
+                    maxHealthPoints += upgrades.MaxHealth.step;
+                    if (maxHealthPoints > upgrades.MaxHealth.maxValue)
+                        maxHealthPoints = upgrades.MaxHealth.maxValue;
+                    CurrentHealthPoints = maxHealthPoints;
+                    displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+                    displayHealthPoints.SetMaxValue((int)maxHealthPoints);
+                }
+                break;
+            case UpgradeTypes.Upgrade_Capacity:
+                itemCollecting.UpgradeCapacity(upgrades.Capacity.step, upgrades);
                 break;
         }
     }
@@ -133,6 +180,7 @@ public class PlayerCharacter : BaseCharacter, IUpgradeable
     public override void Hit(float damage)
     {
         CurrentHealthPoints -= damage;
+        displayHealthPoints.UpdateView((int)CurrentHealthPoints);
         var emission = HitEffect.emission;
         emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
         HitEffect.Play();

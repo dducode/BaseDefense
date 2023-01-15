@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 using Zenject;
 using BroadcastMessages;
 
-public class ItemCollecting : MonoBehaviour, IUpgradeable
+///<summary>Обеспечивает сбор предметов с игрового поля, сброшенных с врагов</summary>
+public class ItemCollecting : MonoBehaviour
 {
     ///<summary>Место, в котором находятся собранные деньги, пока игрок находится на вражеской базе</summary>
     [Tooltip("Место, в котором находятся собранные деньги, пока игрок находится на вражеской базе")] 
@@ -31,17 +32,17 @@ public class ItemCollecting : MonoBehaviour, IUpgradeable
     [Tooltip("Расстояние между пачками денег в стопке. [0, infinity]")]
     [SerializeField, Min(0)] float spaceBetweenMoneys = 0.15f;
 
-    ///<inheritdoc cref="maxStasksCount"/>
+    ///<inheritdoc cref="capacity"/>
     public int Capacity => capacity;
 
     ///<summary>
     ///Запоминает начальное положение преобразования stackForMoneys, 
     ///т.к. в процессе сбора преобразование стека перемещается
     ///</summary>
-    Vector3 firstPosition;
+    Vector3 firstPosition = new Vector3();
 
     ///<summary>Хранит все собранные игроком деньги</summary>
-    Stack<Money> moneys;
+    Stack<Money> moneys = new Stack<Money>();
 
     int stackSize;
     int stacksCount;
@@ -52,31 +53,26 @@ public class ItemCollecting : MonoBehaviour, IUpgradeable
         firstPosition = stackForMoneys.localPosition;
         stackSize = 0;
         stacksCount = 0;
-        moneys = new Stack<Money>();
     }
 
-    void OnTriggerEnter(Collider other)
+    public void UpgradeCapacity(int step, Upgrades upgrades)
     {
-        if (other.CompareTag("Gem"))
-            inventory.PutItem(other.GetComponent<Gem>());
-        if (other.CompareTag("Money") && stacksCount < capacity)
-            StackMoney(other.GetComponent<Money>());
+        if (capacity < upgrades.Capacity.maxValue)
+        {
+            capacity += step;
+            if (capacity > upgrades.Capacity.maxValue)
+                capacity = upgrades.Capacity.maxValue;
+        }
     }
 
-    void OnTriggerExit(Collider other)
+    ///<summary>Кладёт кристалл в инвентарь</summary>
+    public void PutGem(Gem gem)
     {
-        if (other.CompareTag("EnemyBase"))
-            StartCoroutine(DropMoney());
-    }
-
-    public void Upgrade(UpgradeTypes upgradeType, float step)
-    {
-        if (upgradeType == UpgradeTypes.Upgrade_Capacity)
-            capacity += (int)step;
+        inventory.PutItem(gem);
     }
 
     ///<summary>Укладывает пачку денег на верх стека</summary>
-    void StackMoney(Money money)
+    public void StackMoney(Money money)
     {
         money.Collect();
         money.transform.SetParent(stackForMoneys.parent);
@@ -102,8 +98,8 @@ public class ItemCollecting : MonoBehaviour, IUpgradeable
         }
     }
 
-    ///<summary>Реализует анимацию сброса денег, когда игрок доходит до своей базы</summary>
-    IEnumerator DropMoney()
+    ///<summary>Реализует анимацию сброса денег и кладёт их в инвентарь</summary>
+    public IEnumerator DropMoney()
     {
         int moneysCount = moneys.Count;
         for (int i = 0; i < moneysCount; i++)

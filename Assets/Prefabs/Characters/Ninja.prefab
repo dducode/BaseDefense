@@ -73,9 +73,8 @@ GameObject:
   m_Component:
   - component: {fileID: 776883070312361016}
   - component: {fileID: 8898313077455794108}
-  - component: {fileID: 2405035922944741484}
-  - component: {fileID: 692002938518751448}
-  - component: {fileID: 5252772932302689387}
+  - component: {fileID: 5889282864084239706}
+  - component: {fileID: 7690216125940568686}
   - component: {fileID: 6640601484063307330}
   - component: {fileID: 2778999579685924952}
   - component: {fileID: 4892976389399200589}
@@ -123,7 +122,17 @@ MonoBehaviour:
   attackDistance: 12.5
   gunSlot: {fileID: 1804538561354731679}
   recoveryPoint: {fileID: 0}
---- !u!114 &2405035922944741484
+  upgrades:
+    speed:
+      maxValue: 10
+      step: 0.25
+    maxHealth:
+      maxValue: 1000
+      step: 25
+    capacity:
+      maxValue: 10
+      step: 1
+--- !u!114 &5889282864084239706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,37 +146,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stackForMoneys: {fileID: 1821068503}
   maxStackSize: 15
-  maxStacksCount: 2
+  capacity: 2
   forceScalar: 3
   spaceBetweenMoneys: 0.15
---- !u!114 &692002938518751448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109172321315190402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d076e9d6fb3251419b41222b18b9fdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeSpeed:
-    minLimit: 0
-    maxLimit: 50
-    minValue: 6
-    maxValue: 10
-  upgradeMaxHealth:
-    minLimit: 1
-    maxLimit: 1000
-    minValue: 100
-    maxValue: 1000
-  upgradeCapacity:
-    minLimit: 1
-    maxLimit: 10
-    minValue: 2
-    maxValue: 8
---- !u!114 &5252772932302689387
+--- !u!114 &7690216125940568686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,7 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthPointsBar: {fileID: 4812512256737508629}
-  HealthPointsView: {fileID: 6017029018257572276}
 --- !u!95 &6640601484063307330
 Animator:
   serializedVersion: 4

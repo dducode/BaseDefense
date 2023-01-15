@@ -28,7 +28,6 @@ public class DisplayingUI : MonoBehaviour
     [SerializeField] Canvas playerUpgradesWindow;
     [SerializeField] UpgradeValues upgradeValues;
     [Inject] PlayerCharacter player;
-    [Inject] Upgrades upgrades;
 
     void Start()
     {
@@ -65,13 +64,13 @@ public class DisplayingUI : MonoBehaviour
 
     public void UpgradePlayer(PlayerUpgradesUI playerUpgrades)
     {
-        upgrades.Upgrade(playerUpgrades.UpgradeType);
-        upgradeValues.SetValues(upgrades);
+        player.Upgrade(playerUpgrades.UpgradeType);
+        upgradeValues.SetValues(player);
     }
     public void OpenUpgrades()
     {
         playerUpgradesWindow.enabled = true;
-        upgradeValues.SetValues(upgrades);
+        upgradeValues.SetValues(player);
     }
     public void CloseUpgrades() => playerUpgradesWindow.enabled = false;
 
@@ -82,23 +81,16 @@ public class DisplayingUI : MonoBehaviour
         public UpgradeableProperty capacity;
         public UpgradeableProperty maxHealth;
 
-        public void SetValues(Upgrades upgrades)
+        public void SetValues(PlayerCharacter player)
         {
-            for (int i = 0; i < upgrades.Targets.Length; i++)
-            {
-                if (upgrades.Targets[i] is PlayerCharacter player)
-                {
-                    speed.textField.text = $"Speed: {player.MaxSpeed}";
-                    speed.button.interactable = player.MaxSpeed < upgrades.Speed.maxValue;
-                    maxHealth.textField.text = $"Max health: {player.MaxHealthPoints}";
-                    maxHealth.button.interactable = player.MaxHealthPoints < upgrades.MaxHealth.maxValue;
-                }
-                else if (upgrades.Targets[i] is ItemCollecting itemCollecting)
-                {
-                    capacity.textField.text = $"Capacity: {itemCollecting.Capacity}";
-                    capacity.button.interactable = itemCollecting.Capacity < upgrades.Capacity.maxValue;
-                }
-            }
+            speed.textField.text = $"Speed: {player.MaxSpeed}";
+            speed.button.interactable = player.IsNotMaxForSpeed;
+
+            maxHealth.textField.text = $"Max health: {player.MaxHealthPoints}";
+            maxHealth.button.interactable = player.IsNotMaxForMaxHealth;
+
+            capacity.textField.text = $"Capacity: {player.Capacity}";
+            capacity.button.interactable = player.IsNotMaxForCapacity;
         }
         [System.Serializable]
         public struct UpgradeableProperty
