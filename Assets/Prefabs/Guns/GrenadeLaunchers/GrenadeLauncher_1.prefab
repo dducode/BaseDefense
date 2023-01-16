@@ -81,7 +81,7 @@ MonoBehaviour:
   gunName: 6
   projectilePrefab: {fileID: 4813531904856078078, guid: 2041318d9adc59a42a2a37ec09cf081c,
     type: 3}
-  intervalOfShots: 1.5
+  intervalOfShots: 2
   muzzles:
   - {fileID: 1036696539612619409}
   damageRadius: 3

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-///<summary>Реализует отображение полосы здоровья игрока</summary>
+///<summary>Реализует отображение полосы здоровья</summary>
 public class DisplayHealthPoints : MonoBehaviour
 {
     [SerializeField] Slider HealthPointsBar;

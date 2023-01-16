@@ -40,8 +40,8 @@ public class PlayerCharacter : BaseCharacter
     public bool IsNotMaxForMaxHealth => maxHealthPoints < upgrades.MaxHealth.maxValue;
     public bool IsNotMaxForCapacity => Capacity < upgrades.Capacity.maxValue;
 
-    ///<summary>Направление взгляда в сторону врага</summary>
-    Vector3 lookToEnemy;
+    ///<summary>Направление взгляда в сторону атакуемой сущности</summary>
+    Vector3 lookToAttackable;
     Vector3 move;
 
     JoystickController joystick;
@@ -68,30 +68,33 @@ public class PlayerCharacter : BaseCharacter
 
     void Update()
     {
-        if (lookToEnemy != Vector3.zero)
-            LookToTarget(lookToEnemy, 15);
+        if (lookToAttackable != Vector3.zero)
+            LookToTarget(lookToAttackable, 15);
         else if (move != Vector3.zero)
             LookToTarget(move, 15);
 
         if (inEnemyBase && !Animator.IsInTransition(0)) // Ожидание перехода для предотвращения преждевременной стрельбы
         // Поиск ближайшего врага на вражеской базе и атака
         {
-            GameObject enemy = GetNearestEnemy();
-            if (enemy is null)
-                lookToEnemy = Vector3.zero;
+            GameObject attackable = GetNearestAttackable();
+            if (attackable is null)
+                lookToAttackable = Vector3.zero;
             else
             {
-                lookToEnemy = enemy.transform.position - transform.position;
-                if (Vector3.Dot(lookToEnemy.normalized, transform.forward) > .95f) // Прицеливание
+                Vector3 attackablePosition = attackable.transform.position;
+                Vector3 playerPosition = transform.position;
+                attackablePosition.y = playerPosition.y = 0;
+                lookToAttackable = attackablePosition - playerPosition;
+                if (Vector3.Dot(lookToAttackable.normalized, transform.forward) > .95f) // Прицеливание
                 {
                     if (gun is GrenadeLauncher grenade)
                     // Стреляет из гранатомёта только на безопасном расстоянии
                     {
-                        if (lookToEnemy.magnitude > grenade.DamageRadius + 1)
-                            grenade.Shot(enemy.transform.position + Vector3.up);
+                        if (lookToAttackable.magnitude > grenade.DamageRadius + 1)
+                            grenade.Shot(attackable.transform.position + Vector3.up);
                     }
                     else
-                        gun.Shot(enemy.transform.position + Vector3.up);
+                        gun.Shot(attackable.transform.position + Vector3.up);
                 }
             }
         }
@@ -131,8 +134,9 @@ public class PlayerCharacter : BaseCharacter
         if (other.CompareTag("EnemyBase"))
         {
             SetParams(false);
-            lookToEnemy = Vector3.zero;
-            StartCoroutine(itemCollecting.DropMoney());
+            lookToAttackable = Vector3.zero;
+            if (!itemCollecting.DropIsInProcess)
+                StartCoroutine(itemCollecting.DropMoney());
         }
     }
 
@@ -199,7 +203,7 @@ public class PlayerCharacter : BaseCharacter
     {
         Animator.SetBool("alive", true);
         Animator.SetBool("inEnemyBase", false);
-        lookToEnemy = Vector3.zero;
+        lookToAttackable = Vector3.zero;
         transform.SetPositionAndRotation(recoveryPoint.position, Quaternion.identity);
         this.enabled = true;
         Controller.enabled = true;
@@ -207,20 +211,20 @@ public class PlayerCharacter : BaseCharacter
         inEnemyBase = false;
     }
 
-    ///<returns>Возвращает ближайшего к игроку врага. Если рядом врагов нет - возвращает null</returns>
-    GameObject GetNearestEnemy()
+    ///<returns>Возвращает ближайшую к игроку атакуемую сущность. Если рядом таких нет - возвращает null</returns>
+    GameObject GetNearestAttackable()
     {
         GameObject target = null;
-        Collider[] enemies = Physics.OverlapSphere(
+        Collider[] attackables = Physics.OverlapSphere(
             transform.position, attackDistance, 1 << 3
-        ); // 1 << 3 - маска слоя врага (3: EnemyLayer)
+        ); // 1 << 3 - маска слоя атакуемой сущности (3: AttackableLayer)
         float dist = Mathf.Infinity;
-        foreach (Collider enemy in enemies)
+        foreach (Collider attackable in attackables)
         {
-            Vector3 distance = enemy.transform.position - transform.position;
+            Vector3 distance = attackable.transform.position - transform.position;
             if (distance.magnitude < dist)
             {
-                target = enemy.gameObject;
+                target = attackable.gameObject;
                 dist = distance.magnitude;
             }
         }

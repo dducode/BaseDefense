@@ -15,7 +15,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - EnemyLayer
+  - AttackableLayer
   - Water
   - UI
   - PlayerLayer

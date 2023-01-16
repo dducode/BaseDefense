@@ -44,6 +44,9 @@ public class ItemCollecting : MonoBehaviour
     ///<summary>Хранит все собранные игроком деньги</summary>
     Stack<Money> moneys = new Stack<Money>();
 
+    ///<summary>Рекомендуется использовать это свойство перед запуском сопрограммы сброса денег</summary>
+    public bool DropIsInProcess { get; private set; }
+
     int stackSize;
     int stacksCount;
     [Inject] Inventory inventory;
@@ -74,6 +77,8 @@ public class ItemCollecting : MonoBehaviour
     ///<summary>Укладывает пачку денег на верх стека</summary>
     public void StackMoney(Money money)
     {
+        if (stacksCount == capacity)
+            return;
         money.Collect();
         money.transform.SetParent(stackForMoneys.parent);
         money.transform.SetPositionAndRotation(stackForMoneys.position, stackForMoneys.rotation);
@@ -101,6 +106,7 @@ public class ItemCollecting : MonoBehaviour
     ///<summary>Реализует анимацию сброса денег и кладёт их в инвентарь</summary>
     public IEnumerator DropMoney()
     {
+        DropIsInProcess = true;
         int moneysCount = moneys.Count;
         for (int i = 0; i < moneysCount; i++)
         {
@@ -116,6 +122,7 @@ public class ItemCollecting : MonoBehaviour
         stackForMoneys.localPosition = firstPosition;
         stackSize = 0;
         stacksCount = 0;
+        DropIsInProcess = false;
     }
 
     [Listener(MessageType.DEATH_PLAYER)]

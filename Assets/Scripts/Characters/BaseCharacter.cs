@@ -4,7 +4,7 @@ using UnityEngine;
 
 ///<summary>Базовый класс для всех типов персонажей</summary>
 [RequireComponent(typeof(CharacterController), typeof(Animator), typeof(ParticleSystem))]
-public abstract class BaseCharacter : MonoBehaviour
+public abstract class BaseCharacter : MonoBehaviour, IAttackable
 {
     [Tooltip("Отображает в сцене радиус атаки персонажа")]
     [SerializeField] Color gizmosView = Color.white;
@@ -47,10 +47,8 @@ public abstract class BaseCharacter : MonoBehaviour
 
     ///<summary>Состояние персонажа "жив/мёртв"</summary>
     ///<returns>Возвращает true, если текущий показатель здоровья больше 0, иначе false</returns>
-    public bool IsAlive { get { return currentHealthPoints > 0; } }
+    public bool IsAlive => currentHealthPoints > 0;
 
-    ///<summary>Вызывается для нанесения урона персонажу</summary>
-    ///<param name="damage">Количество урона, наносимого персонажу</param>
     public abstract void Hit(float damage);
 
     public virtual void Awake()

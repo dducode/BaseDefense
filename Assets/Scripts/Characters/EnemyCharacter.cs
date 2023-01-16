@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(ItemDrop))]
 public class EnemyCharacter : BaseCharacter
 {
     ///<summary>Скорость, развиваемая врагом при патруле</summary>
@@ -34,12 +35,14 @@ public class EnemyCharacter : BaseCharacter
     Transform[] targetPoints;
     PlayerCharacter player;
     State State;
+    ItemDrop itemDrop;
 
     [Inject]
     public void Initialize(EnemyBaseContainer enemyBase, Transform[] targetPoints, PlayerCharacter player)
     {
         Controller = GetComponent<CharacterController>();
         Animator = GetComponent<Animator>();
+        itemDrop = GetComponent<ItemDrop>();
         this.enemyBase = enemyBase;
         this.targetPoints = targetPoints;
         this.player = player;
@@ -117,7 +120,7 @@ public class EnemyCharacter : BaseCharacter
     IEnumerator AwaitAnimation()
     {
         yield return new WaitWhile(() => IsDeath());
-        GetComponent<ItemDrop>().DropItems();
+        itemDrop.DropItems();
         ObjectsPool<EnemyCharacter>.Push(this);
     }
     bool IsDeath()

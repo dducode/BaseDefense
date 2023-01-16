@@ -484,15 +484,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e09f110920bcac4c8859318d90ef7c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - {fileID: 2360663159339950683, guid: 0aaf42ad268c86b44b3bae94bfebfa5a, type: 3}
-  - {fileID: 5203258588667499559, guid: c3c0707254334a64ca8198f7486e977d, type: 3}
+  itemPrefab: {fileID: 2360663159339950683, guid: 0aaf42ad268c86b44b3bae94bfebfa5a,
+    type: 3}
   forceScalar: 3
   itemsCount:
     minLimit: 0
     maxLimit: 100
-    minValue: 1
-    maxValue: 10
+    minValue: 2
+    maxValue: 5
 --- !u!95 &1786588370087917793
 Animator:
   serializedVersion: 4

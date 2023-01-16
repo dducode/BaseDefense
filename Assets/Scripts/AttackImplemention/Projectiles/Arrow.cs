@@ -55,10 +55,13 @@ public class Arrow : Projectile
 
     public override void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<EnemyCharacter>() is EnemyCharacter enemy)
+        if (collision.gameObject.GetComponent<IAttackable>() is IAttackable attackable)
         {
-            enemy.Hit(damage);
-            StartCoroutine(HitEnemyWithPoison(enemy));
+            attackable.Hit(damage);
+            if (attackable is EnemyCharacter enemy)
+                StartCoroutine(HitEnemyWithPoison(enemy));
+            else
+                ObjectsPool<Arrow>.Push(this);
         }
         else
             ObjectsPool<Arrow>.Push(this);

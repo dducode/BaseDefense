@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class ItemDrop : MonoBehaviour
 {
-    ///<summary>Предметы, выпадаемые с персонажа после смерти</summary>
-    [Tooltip("Предметы, выпадаемые с персонажа после смерти")]
-    [SerializeField] Item[] items;
+    ///<summary>Предмет, выпадаемый с персонажа после смерти</summary>
+    [Tooltip("Предмет, выпадаемый с персонажа после смерти")]
+    [SerializeField] Item itemPrefab;
 
     ///<summary>Сила, с которой выпадают предметы</summary>
     ///<value>[0, infinity]</value>
@@ -18,14 +18,13 @@ public class ItemDrop : MonoBehaviour
     [Tooltip("Количество выпадаемых предметов в определённом диапазоне")]
     [SerializeField] MinMaxSliderInt itemsCount = new MinMaxSliderInt(0, 100);
 
-    ///<summary>Вызывается для выброса предметов из персонажа</summary>
-    ///<remarks>Выпадаемые предметы и их количество выбираются случайным образом</remarks>
+    ///<summary>Вызывается для выброса предметов</summary>
+    ///<remarks>Количество выпадаемых предметов выбирается случайным образом</remarks>
     public void DropItems()
     {
         int itemsCount = Random.Range(this.itemsCount.minValue, this.itemsCount.maxValue + 1);
         for (int i = 0; i < itemsCount; i++)
         {
-            Item itemPrefab = items[Random.Range(0, items.Length)];
             Item item;
             if (itemPrefab is Money)
             {

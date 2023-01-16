@@ -48,12 +48,16 @@ public class Grenade : Projectile
         Instantiate(explosion, transform.position, Quaternion.identity);
         foreach (Collider collider in colliders)
         {
-            if (collider.GetComponent<BaseCharacter>() is BaseCharacter character)
+            if (collider.GetComponent<IAttackable>() is IAttackable attackable)
             {
-                Vector3 characterPosition = character.transform.position + character.Controller.center;
-                float distance = (characterPosition - transform.position).magnitude;
-                distance -= character.Controller.radius;
-                character.Hit(maxDamage * (1 - distance / damageRadius));
+                float distance = 0;
+                float damage = 0;
+                if (attackable is MonoBehaviour behaviour)
+                    distance = (behaviour.transform.position - transform.position).magnitude;
+                damage = maxDamage * (1 - distance / damageRadius);
+                if (damage < 0)
+                    damage = 0;
+                attackable.Hit(damage);
             }
         }
         ObjectsPool<Grenade>.Push(this);

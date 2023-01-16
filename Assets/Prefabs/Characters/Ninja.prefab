@@ -124,13 +124,13 @@ MonoBehaviour:
   recoveryPoint: {fileID: 0}
   upgrades:
     speed:
-      maxValue: 10
+      maxValue: 9
       step: 0.25
     maxHealth:
-      maxValue: 1000
+      maxValue: 500
       step: 25
     capacity:
-      maxValue: 10
+      maxValue: 5
       step: 1
 --- !u!114 &5889282864084239706
 MonoBehaviour:
@@ -6561,6 +6561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5bff14412f6aa47832c5d8d027d5b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  billboardMode: 0
 --- !u!114 &4812512256737508629
 MonoBehaviour:
   m_ObjectHideFlags: 0
