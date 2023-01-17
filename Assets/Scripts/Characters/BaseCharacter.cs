@@ -37,11 +37,13 @@ public abstract class BaseCharacter : MonoBehaviour, IAttackable
     ///<inheritdoc cref="currentHealthPoints"/>
     public float CurrentHealthPoints
     {
-        get { return currentHealthPoints; }
+        get => currentHealthPoints;
         protected set
         {
             currentHealthPoints = value;
             currentHealthPoints = Mathf.Clamp(currentHealthPoints, 0, maxHealthPoints);
+            if (!IsAlive)
+                DestroyCharacter();
         }
     }
 
@@ -49,7 +51,12 @@ public abstract class BaseCharacter : MonoBehaviour, IAttackable
     ///<returns>Возвращает true, если текущий показатель здоровья больше 0, иначе false</returns>
     public bool IsAlive => currentHealthPoints > 0;
 
+    ///<summary>Вызывается для нанесения урона персонажу</summary>
+    ///<param name ="damage">Количество нанесённого урона</param>
     public abstract void Hit(float damage);
+
+    ///<summary>Вызывается автоматически, когда персонаж мёртв</summary>
+    protected abstract void DestroyCharacter();
 
     public virtual void Awake()
     {

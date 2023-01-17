@@ -15,7 +15,7 @@ public class CameraMovement : MonoBehaviour
         movement = startPos;
     }
 
-    void Update()
+    void LateUpdate()
     {
         movement = player.transform.position + startPos;
         transform.position = movement;

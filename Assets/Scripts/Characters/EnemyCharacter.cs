@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(ItemDrop))]
+[RequireComponent(typeof(ItemDrop), typeof(Ragdoll))]
 public class EnemyCharacter : BaseCharacter
 {
     ///<summary>Скорость, развиваемая врагом при патруле</summary>
@@ -31,19 +31,19 @@ public class EnemyCharacter : BaseCharacter
     ///<inheritdoc cref="BaseCharacter.attackDistance"/>
     public float AttackDistance => attackDistance;
 
-    EnemyBaseContainer enemyBase;
+    EnemyFactory enemyFactory;
     Transform[] targetPoints;
     PlayerCharacter player;
     State State;
     ItemDrop itemDrop;
+    Ragdoll ragdoll;
 
     [Inject]
-    public void Initialize(EnemyBaseContainer enemyBase, Transform[] targetPoints, PlayerCharacter player)
+    public void Initialize(EnemyFactory enemyFactory, Transform[] targetPoints, PlayerCharacter player)
     {
-        Controller = GetComponent<CharacterController>();
-        Animator = GetComponent<Animator>();
         itemDrop = GetComponent<ItemDrop>();
-        this.enemyBase = enemyBase;
+        ragdoll = GetComponent<Ragdoll>();
+        this.enemyFactory = enemyFactory;
         this.targetPoints = targetPoints;
         this.player = player;
         hand.Damage = damage;
@@ -56,6 +56,8 @@ public class EnemyCharacter : BaseCharacter
     public void Spawn(Vector3 position, Quaternion rotation)
     {
         CurrentHealthPoints = maxHealthPoints;
+        Animator.enabled = true;
+        ragdoll.enabled = false;
         Controller.enabled = false;
         transform.SetLocalPositionAndRotation(position, rotation);
         Controller.enabled = true;
@@ -109,24 +111,22 @@ public class EnemyCharacter : BaseCharacter
         var emission = HitEffect.emission;
         emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
         HitEffect.Play();
-        if (!IsAlive)
-        {
-            Controller.enabled = false;
-            Animator.SetBool("alive", false);
-            StartCoroutine(AwaitAnimation());
-        }
     }
 
-    IEnumerator AwaitAnimation()
+    protected override void DestroyCharacter()
     {
-        yield return new WaitWhile(() => IsDeath());
+        Controller.enabled = false;
+        Animator.enabled = false;
+        ragdoll.enabled = true;
+        ragdoll.AddImpulse((transform.forward * -25) + Vector3.up);
+        StartCoroutine(AwaitRagdoll());
+    }
+
+    IEnumerator AwaitRagdoll()
+    {
+        yield return new WaitForSeconds(2);
         itemDrop.DropItems();
         ObjectsPool<EnemyCharacter>.Push(this);
-    }
-    bool IsDeath()
-    {
-        AnimatorStateInfo info = Animator.GetCurrentAnimatorStateInfo(0);
-        return !(info.IsName("Death") && info.normalizedTime >= 0.9f);
     }
 
     public class Factory : PlaceholderFactory<Transform[], EnemyCharacter> {}

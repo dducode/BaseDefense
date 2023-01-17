@@ -1,8 +1,7 @@
 using UnityEngine;
 
 ///<summary>Базовый класс для всех видов патронов</summary>
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(TrailRenderer))]
+[RequireComponent(typeof(Rigidbody), typeof(TrailRenderer))]
 public abstract class Projectile : MonoBehaviour
 {
     protected Rigidbody rb;

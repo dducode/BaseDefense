@@ -1,10 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 ///<summary>Базовый класс для всех видов выпадаемых предметов</summary>
-[RequireComponent(typeof(SphereCollider))]
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SphereCollider), typeof(Rigidbody))]
 public abstract class Item : MonoBehaviour
 {
+    ///<summary>Скорость анимации исчезания предмета</summary>
+    ///<value>[0, infinity]</value>
+    [Tooltip("Скорость анимации исчезания предмета. [0, infinity]")]
+    [SerializeField, Min(0)] float collapseSpeed = 2;
+
     protected SphereCollider trigger;
     protected Rigidbody rb;
 
@@ -24,5 +29,21 @@ public abstract class Item : MonoBehaviour
         trigger = GetComponent<SphereCollider>();
         rb = GetComponent<Rigidbody>();
         trigger.isTrigger = true;
+    }
+
+    ///<summary>
+    ///Вспомогательная сопрограмма для реализации анимации исчезания предмета в производных классах
+    ///</summary>
+    protected IEnumerator Collapse()
+    {
+        Vector3 scale = transform.localScale;
+        float step = 0;
+        while (transform.localScale != Vector3.zero)
+        {
+            scale = Vector3.Lerp(Vector3.one, Vector3.zero, step);
+            step += Time.smoothDeltaTime * collapseSpeed;
+            transform.localScale = scale;
+            yield return null;
+        }
     }
 }

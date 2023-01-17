@@ -11,6 +11,8 @@ TagManager:
   - Gem
   - Money
   - Shop
+  - ship
+  - asteroid
   layers:
   - Default
   - TransparentFX
@@ -21,8 +23,8 @@ TagManager:
   - PlayerLayer
   - Item
   - Exit
-  - Bullet
-  - 
+  - Projectile
+  - Ragdoll
   - 
   - 
   - 

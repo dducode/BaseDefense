@@ -62,6 +62,7 @@ public class PlayerCharacter : BaseCharacter
         itemCollecting = GetComponent<ItemCollecting>();
         displayHealthPoints = GetComponent<DisplayHealthPoints>();
         displayHealthPoints.SetMaxValue((int)maxHealthPoints);
+        displayHealthPoints.UpdateView((int)CurrentHealthPoints);
         gun = gunSlot.GetChild(0).GetComponent<Gun>();
         gun.gameObject.SetActive(false);
     }
@@ -188,14 +189,15 @@ public class PlayerCharacter : BaseCharacter
         var emission = HitEffect.emission;
         emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
         HitEffect.Play();
-        if (CurrentHealthPoints == 0)
-        {
-            Animator.SetBool("alive", false);
-            gun.gameObject.SetActive(false);
-            this.enabled = false;
-            Controller.enabled = false;
-            Messenger.SendMessage(MessageType.DEATH_PLAYER);
-        }
+    }
+
+    protected override void DestroyCharacter()
+    {
+        Animator.SetBool("alive", false);
+        gun.gameObject.SetActive(false);
+        this.enabled = false;
+        Controller.enabled = false;
+        Messenger.SendMessage(MessageType.DEATH_PLAYER);
     }
 
     [Listener(MessageType.RESTART)]

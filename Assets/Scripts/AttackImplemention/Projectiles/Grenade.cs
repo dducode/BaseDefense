@@ -60,6 +60,11 @@ public class Grenade : Projectile
                 attackable.Hit(damage);
             }
         }
+
+        colliders = Physics.OverlapSphere(transform.position, damageRadius);
+        foreach (Collider collider in colliders)
+            if (collider.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
+                rigidbody.AddExplosionForce(maxDamage, transform.position, damageRadius, 1);
         ObjectsPool<Grenade>.Push(this);
         rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
     }

@@ -7,7 +7,7 @@
         {
             "name": "Unity Editor",
             "type": "unity",
-            "path": "/C:/UnityProjects/Game Prototype/Library/EditorInstance.json",
+            "path": "/C:/UnityProjects/Base Defense/Library/EditorInstance.json",
             "request": "launch"
         },
         {

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2769623377101097647}
   - component: {fileID: 7105908306352034807}
   - component: {fileID: 3394516993389491314}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7d8cf59abd63846ba7be8cb705abc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gizmosView: {r: 1, g: 0, b: 0, a: 1}
   explosion: {fileID: 5130858438603600220, guid: 11d2aee669534394d95be21f45653605,
     type: 3}
 --- !u!33 &2769623377101097645

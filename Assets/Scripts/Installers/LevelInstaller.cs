@@ -7,7 +7,7 @@ public class LevelInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<EnemyBaseContainer>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<EnemyFactory>().FromComponentInHierarchy().AsSingle();
         Container.Bind<PlayerCharacter>().FromComponentInHierarchy().AsSingle();
         Container.BindFactory<Transform[], EnemyCharacter, EnemyCharacter.Factory>().FromComponentInNewPrefab(enemyPrefab);
 

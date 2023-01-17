@@ -17,6 +17,7 @@ public class Money : Item
 
     public override void Drop(Vector3 force, Vector3 torque = default)
     {
+        transform.localScale = Vector3.one;
         trigger.enabled = true;
         rb.isKinematic = false;
         rb.AddForce(force, ForceMode.Impulse);
@@ -32,6 +33,7 @@ public class Money : Item
     IEnumerator DestroyThis()
     {
         yield return new WaitForSeconds(collectionTime);
+        yield return Collapse();
         ObjectsPool<Money>.Push(this);
     }
 }
