@@ -79,7 +79,7 @@ public class ItemCollecting : MonoBehaviour
     {
         if (stacksCount == capacity)
             return;
-        money.Collect();
+        money.enabled = false;
         money.transform.SetParent(stackForMoneys.parent);
         money.transform.SetPositionAndRotation(stackForMoneys.position, stackForMoneys.rotation);
         moneys.Push(money);

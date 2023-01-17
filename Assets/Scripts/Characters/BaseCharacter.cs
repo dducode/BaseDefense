@@ -31,6 +31,20 @@ public abstract class BaseCharacter : MonoBehaviour, IAttackable
     public CharacterController Controller { get; protected set; }
     public Animator Animator { get; protected set; }
 
+    ///<summary>При включении поведения персонажа также включается его контроллёр</summary>
+    bool _enabledCharacter;
+    ///<inheritdoc cref="_enabledCharacter"/>
+    public new bool enabled
+    {
+        get => _enabledCharacter;
+        set
+        {
+            _enabledCharacter = value;
+            base.enabled = _enabledCharacter;
+            Controller.enabled = _enabledCharacter;
+        }
+    }
+
     ///<summary>Текущее количество здоровья персонажа</summary>
     ///<value>[0, maxHealthPoints]</value>
     float currentHealthPoints;

@@ -10,6 +10,21 @@ public abstract class Item : MonoBehaviour
     [Tooltip("Скорость анимации исчезания предмета. [0, infinity]")]
     [SerializeField, Min(0)] float collapseSpeed = 2;
 
+    ///<summary>При включении предмета также включается его триггер и физика жёсткого тела</summary>
+    bool _enabled;
+    ///<inheritdoc cref="_enabled"/>
+    public new bool enabled
+    {
+        get => _enabled;
+        set
+        {
+            _enabled = value;
+            base.enabled = _enabled;
+            trigger.enabled = _enabled;
+            rb.isKinematic = !_enabled;
+        }
+    }
+
     protected SphereCollider trigger;
     protected Rigidbody rb;
 
@@ -20,15 +35,16 @@ public abstract class Item : MonoBehaviour
 
     ///<summary>Уничтожает предмет</summary>
     ///<remarks>
-    ///Рекомендуется вместо вызова метода Destroy в данном методе использовать ObjectsPool
+    ///Рекомендуется вместо вызова метода Object.Destroy() в данном методе использовать ObjectsPool.Push()
     ///</remarks>
-    public abstract void DestroyItem();
+    public abstract void Destroy();
 
     public virtual void Awake()
     {
         trigger = GetComponent<SphereCollider>();
         rb = GetComponent<Rigidbody>();
         trigger.isTrigger = true;
+        enabled = true;
     }
 
     ///<summary>
@@ -37,11 +53,10 @@ public abstract class Item : MonoBehaviour
     protected IEnumerator Collapse()
     {
         Vector3 scale = transform.localScale;
-        float step = 0;
+        float time = Time.time;
         while (transform.localScale != Vector3.zero)
         {
-            scale = Vector3.Lerp(Vector3.one, Vector3.zero, step);
-            step += Time.smoothDeltaTime * collapseSpeed;
+            scale = Vector3.Lerp(Vector3.one, Vector3.zero, (Time.time - time) * collapseSpeed);
             transform.localScale = scale;
             yield return null;
         }

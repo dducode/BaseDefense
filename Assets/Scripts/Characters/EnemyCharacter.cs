@@ -31,6 +31,20 @@ public class EnemyCharacter : BaseCharacter
     ///<inheritdoc cref="BaseCharacter.attackDistance"/>
     public float AttackDistance => attackDistance;
 
+    ///<summary>При включении поведения врага также включаются его аниматор и контроллёр</summary>
+    bool _enabled;
+    ///<inheritdoc cref="_enabled"/>
+    public new bool enabled
+    {
+        get => _enabled;
+        set
+        {
+            _enabled = value;
+            base.enabled = _enabled;
+            Animator.enabled = _enabled;
+        }
+    }
+
     EnemyFactory enemyFactory;
     Transform[] targetPoints;
     PlayerCharacter player;
@@ -56,11 +70,10 @@ public class EnemyCharacter : BaseCharacter
     public void Spawn(Vector3 position, Quaternion rotation)
     {
         CurrentHealthPoints = maxHealthPoints;
-        Animator.enabled = true;
         ragdoll.enabled = false;
-        Controller.enabled = false;
+        enabled = false;
         transform.SetLocalPositionAndRotation(position, rotation);
-        Controller.enabled = true;
+        enabled = true;
         State = new Walking(this, player.transform);
     }
 
@@ -115,17 +128,16 @@ public class EnemyCharacter : BaseCharacter
 
     protected override void DestroyCharacter()
     {
-        Controller.enabled = false;
-        Animator.enabled = false;
+        enabled = false;
         ragdoll.enabled = true;
         ragdoll.AddImpulse((transform.forward * -25) + Vector3.up);
+        itemDrop.DropItems();
         StartCoroutine(AwaitRagdoll());
     }
 
     IEnumerator AwaitRagdoll()
     {
         yield return new WaitForSeconds(2);
-        itemDrop.DropItems();
         ObjectsPool<EnemyCharacter>.Push(this);
     }
 

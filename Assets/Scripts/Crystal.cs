@@ -20,7 +20,7 @@ public class Crystal : MonoBehaviour, IAttackable
             currentHealthPoints = value;
             currentHealthPoints = Mathf.Clamp(currentHealthPoints, 0, maxHealthPoints);
             if (currentHealthPoints == 0)
-                DestroyCrystal();
+                Destroy();
         }
     }
 
@@ -39,7 +39,7 @@ public class Crystal : MonoBehaviour, IAttackable
         CurrentHealthPoints -= damage;
     }
 
-    void DestroyCrystal()
+    void Destroy()
     {
         itemDrop.DropItems();
         Destroy(gameObject);

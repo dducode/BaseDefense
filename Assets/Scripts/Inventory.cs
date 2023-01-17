@@ -38,7 +38,7 @@ public class Inventory
             Debug.LogError($"Unknow item {item}");
             return;
         }
-        item.DestroyItem();
+        item.Destroy();
         PlayerPrefs.Save();
         UI.UpdateUI(moneys, gems);
     }

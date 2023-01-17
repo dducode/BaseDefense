@@ -148,7 +148,6 @@ public class PlayerCharacter : BaseCharacter
         gun = shop.TakeGun(gunName, gun);
         gun.transform.parent = gunSlot;
         gun.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        gun.transform.localScale = Vector3.one;
     }
 
     ///<summary>Прокачивает характеристики игрока</summary>
@@ -195,8 +194,7 @@ public class PlayerCharacter : BaseCharacter
     {
         Animator.SetBool("alive", false);
         gun.gameObject.SetActive(false);
-        this.enabled = false;
-        Controller.enabled = false;
+        enabled = false;
         Messenger.SendMessage(MessageType.DEATH_PLAYER);
     }
 
@@ -207,8 +205,7 @@ public class PlayerCharacter : BaseCharacter
         Animator.SetBool("inEnemyBase", false);
         lookToAttackable = Vector3.zero;
         transform.SetPositionAndRotation(recoveryPoint.position, Quaternion.identity);
-        this.enabled = true;
-        Controller.enabled = true;
+        enabled = true;
         CurrentHealthPoints = maxHealthPoints;
         inEnemyBase = false;
     }
