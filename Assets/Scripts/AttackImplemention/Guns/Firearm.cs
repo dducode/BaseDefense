@@ -21,14 +21,7 @@ public class Firearm : Gun
         {
             for (int i = 0; i < muzzles.Length; i++)
             {
-                Bullet bullet;
-                if (ObjectsPool<Bullet>.IsEmpty())
-                {
-                    bullet = Instantiate(projectilePrefab) as Bullet;
-                    SceneManager.MoveGameObjectToScene(bullet.gameObject, Game.ProjectilesScene);
-                }
-                else
-                    bullet = ObjectsPool<Bullet>.Pop();
+                Bullet bullet = ObjectsPool<Bullet>.Get(projectilePrefab as Bullet);
                 bullet.transform.SetLocalPositionAndRotation(
                     muzzles[i].transform.position, muzzles[i].transform.rotation
                 );

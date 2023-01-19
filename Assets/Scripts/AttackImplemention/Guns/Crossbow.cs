@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Crossbow : Gun
 {
@@ -24,14 +23,7 @@ public class Crossbow : Gun
         {
             for (int i = 0; i < muzzles.Length; i++)
             {
-                Arrow arrow;
-                if (ObjectsPool<Arrow>.IsEmpty())
-                {
-                    arrow = Instantiate(projectilePrefab) as Arrow;
-                    SceneManager.MoveGameObjectToScene(arrow.gameObject, Game.ProjectilesScene);
-                }
-                else
-                    arrow = ObjectsPool<Arrow>.Pop();
+                Arrow arrow = ObjectsPool<Arrow>.Get(projectilePrefab as Arrow);
                 arrow.transform.SetLocalPositionAndRotation(
                     muzzles[i].transform.position, muzzles[i].transform.rotation
                 );

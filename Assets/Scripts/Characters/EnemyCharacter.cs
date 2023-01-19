@@ -45,7 +45,6 @@ public class EnemyCharacter : BaseCharacter
         }
     }
 
-    EnemyFactory enemyFactory;
     Transform[] targetPoints;
     PlayerCharacter player;
     State State;
@@ -53,11 +52,10 @@ public class EnemyCharacter : BaseCharacter
     Ragdoll ragdoll;
 
     [Inject]
-    public void Initialize(EnemyFactory enemyFactory, Transform[] targetPoints, PlayerCharacter player)
+    public void Initialize(Transform[] targetPoints, PlayerCharacter player)
     {
         itemDrop = GetComponent<ItemDrop>();
         ragdoll = GetComponent<Ragdoll>();
-        this.enemyFactory = enemyFactory;
         this.targetPoints = targetPoints;
         this.player = player;
         hand.Damage = damage;
@@ -141,5 +139,5 @@ public class EnemyCharacter : BaseCharacter
         ObjectsPool<EnemyCharacter>.Push(this);
     }
 
-    public class Factory : PlaceholderFactory<Transform[], EnemyCharacter> {}
+    public class Factory : PlaceholderFactory<UnityEngine.Object, Transform[], EnemyCharacter> {}
 }

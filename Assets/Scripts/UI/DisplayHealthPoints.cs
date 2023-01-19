@@ -5,22 +5,23 @@ using TMPro;
 ///<summary>Реализует отображение полосы здоровья</summary>
 public class DisplayHealthPoints : MonoBehaviour
 {
-    [SerializeField] Slider HealthPointsBar;
-    TextMeshProUGUI HealthPointsView;
+    [SerializeField] Slider healthPointsBar;
+    TextMeshProUGUI healthPointsView;
 
     void Awake()
     {
-        HealthPointsView = HealthPointsBar.GetComponentInChildren<TextMeshProUGUI>();
+        healthPointsView = healthPointsBar.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void UpdateView(int currentHealthPoints)
     {
-        HealthPointsBar.value = currentHealthPoints;
-        HealthPointsView.text = currentHealthPoints.ToStringWithSeparator();
+        healthPointsBar.value = currentHealthPoints;
+        if (healthPointsView != null)
+            healthPointsView.text = currentHealthPoints.ToStringWithSeparator();
     }
 
     public void SetMaxValue(int maxHealthPoints)
     {
-        HealthPointsBar.maxValue = maxHealthPoints;
+        healthPointsBar.maxValue = maxHealthPoints;
     }
 }

@@ -61,9 +61,13 @@ public class PlayerCharacter : BaseCharacter
         base.Awake();
         itemCollecting = GetComponent<ItemCollecting>();
         displayHealthPoints = GetComponent<DisplayHealthPoints>();
+        gun = gunSlot.GetChild(0).GetComponent<Gun>();
+    }
+
+    void Start()
+    {
         displayHealthPoints.SetMaxValue((int)maxHealthPoints);
         displayHealthPoints.UpdateView((int)CurrentHealthPoints);
-        gun = gunSlot.GetChild(0).GetComponent<Gun>();
         gun.gameObject.SetActive(false);
     }
 

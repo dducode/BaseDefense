@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GrenadeLauncher : Gun
 {
@@ -22,14 +21,7 @@ public class GrenadeLauncher : Gun
         {
             for (int i = 0; i < muzzles.Length; i++)
             {
-                Grenade grenade;
-                if (ObjectsPool<Grenade>.IsEmpty())
-                {
-                    grenade = Instantiate(projectilePrefab) as Grenade;
-                    SceneManager.MoveGameObjectToScene(grenade.gameObject, Game.ProjectilesScene);
-                }
-                else
-                    grenade = ObjectsPool<Grenade>.Pop();
+                Grenade grenade = ObjectsPool<Grenade>.Get(projectilePrefab as Grenade);
                 grenade.transform.SetLocalPositionAndRotation(
                     muzzles[i].transform.position, muzzles[i].transform.rotation
                 );

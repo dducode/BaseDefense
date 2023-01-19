@@ -80,7 +80,7 @@ public class Arrow : Projectile
             yield return new WaitForSeconds(1);
         }
         SetParams(false);
-        SceneManager.MoveGameObjectToScene(gameObject, Game.ProjectilesScene);
+        ObjectsPool<Arrow>.MoveObjectToScene(this);
         ObjectsPool<Arrow>.Push(this);
 
         /*

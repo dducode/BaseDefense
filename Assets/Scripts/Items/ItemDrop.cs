@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ItemDrop : MonoBehaviour
 {
-    ///<summary>Предмет, выпадаемый с персонажа после смерти</summary>
-    [Tooltip("Предмет, выпадаемый с персонажа после смерти")]
+    ///<summary>Предмет, выпадаемый с объекта после уничтожения</summary>
+    [Tooltip("Предмет, выпадаемый с объекта после уничтожения")]
     [SerializeField] Item itemPrefab;
 
     ///<summary>Сила, с которой выпадают предметы</summary>
@@ -27,28 +26,12 @@ public class ItemDrop : MonoBehaviour
         {
             Item item;
             if (itemPrefab is Money)
-            {
-                if (ObjectsPool<Money>.IsEmpty())
-                {
-                    item = Instantiate(itemPrefab);
-                    SceneManager.MoveGameObjectToScene(item.gameObject, Game.ItemsScene);
-                }
-                else
-                    item = ObjectsPool<Money>.Pop();
-            }
+                item = ObjectsPool<Money>.Get(itemPrefab as Money);
             else if (itemPrefab is Gem)
-            {
-                if (ObjectsPool<Gem>.IsEmpty())
-                {
-                    item = Instantiate(itemPrefab);
-                    SceneManager.MoveGameObjectToScene(item.gameObject, Game.ItemsScene);
-                }
-                else
-                    item = ObjectsPool<Gem>.Pop();
-            }
+                item = ObjectsPool<Gem>.Get(itemPrefab as Gem);
             else
             {
-                Debug.LogError($"Unknow item prefab {itemPrefab}");
+                Debug.LogError($"Type {itemPrefab.GetType()} is not implemented");
                 return;
             }
             item.transform.SetLocalPositionAndRotation(transform.position + Vector3.up, Random.rotation);

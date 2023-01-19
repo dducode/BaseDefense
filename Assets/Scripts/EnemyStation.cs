@@ -6,25 +6,24 @@ using System.Linq;
 using Zenject;
 
 [RequireComponent(typeof(DisplayHealthPoints))]
-public class EnemyFactory : MonoBehaviour, IAttackable
+public class EnemyStation : MonoBehaviour, IAttackable
 {
-    ///<summary>Максимальное количество здоровья базы</summary>
+    ///<summary>Максимальное количество здоровья станции</summary>
     ///<value>[1, infinity]</value>
-    [Tooltip("Максимальное количество здоровья базы. [1, infinity]")]
+    [Tooltip("Максимальное количество здоровья станции. [1, infinity]")]
     [SerializeField, Min(1)] float maxHealthPoints = 300;
 
-    ///<summary>Анимация, воспроизводимая при уничтожении базы</summary>
-    [Tooltip("Анимация, воспроизводимая при уничтожении базы")]
+    ///<summary>Анимация, воспроизводимая при уничтожении станции</summary>
+    [Tooltip("Анимация, воспроизводимая при уничтожении станции")]
     [SerializeField] ParticleSystem destroyEffect;
 
-    ///<summary>Максимальное расстояние от центра базы для порождения новых врагов</summary>
+    ///<summary>Максимальное расстояние от центра спавна для порождения новых врагов</summary>
     ///<value>[0, infinity]</value>
-    [Tooltip("Максимальное расстояние от центра базы для порождения новых врагов. [0, infinity]")]
+    [Tooltip("Максимальное расстояние от центра спавна для порождения новых врагов. [0, infinity]")]
     [SerializeField, Min(0)] float radiusSpawn = 10f;
 
-    ///<summary>Целевые точки для патруля врагами</summary>
-    [Tooltip("Целевые точки для патруля врагами")]
-    [SerializeField] Transform[] targetPoints;
+    [SerializeField] Transform centerOfSpawn;
+    [SerializeField] EnemyCharacter enemyPrefab;
 
     ///<summary>Текущее количество здоровья базы</summary>
     ///<value>[0, maxHealthPoints]</value>
@@ -42,13 +41,17 @@ public class EnemyFactory : MonoBehaviour, IAttackable
         }
     }
 
-    [Inject] EnemyCharacter.Factory enemyFactory;
     DisplayHealthPoints displayHealthPoints;
+    [Inject] EnemyCharacter.Factory enemyFactory;
 
     void Awake()
     {
         CurrentHealthPoints = maxHealthPoints;
         displayHealthPoints = GetComponent<DisplayHealthPoints>();
+    }
+
+    void Start()
+    {
         displayHealthPoints.SetMaxValue((int)maxHealthPoints);
         displayHealthPoints.UpdateView((int)CurrentHealthPoints);
     }
@@ -56,23 +59,16 @@ public class EnemyFactory : MonoBehaviour, IAttackable
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        if (transform.parent != null)
-            Gizmos.DrawWireSphere(transform.parent.position, radiusSpawn);
+        if (centerOfSpawn != null)
+            Gizmos.DrawWireSphere(centerOfSpawn.position, radiusSpawn);
     }
 
-    public EnemyCharacter SpawnEnemy()
+    public EnemyCharacter SpawnEnemy(Transform[] targetPoints)
     {
-        Vector3 position = transform.parent.position + Random.insideUnitSphere * radiusSpawn;
+        Vector3 position = centerOfSpawn.position + Random.insideUnitSphere * radiusSpawn;
         position.y = 0;
         Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360f), 0);
-        EnemyCharacter enemy;
-        if (ObjectsPool<EnemyCharacter>.IsEmpty())
-        {
-            enemy = enemyFactory.Create(targetPoints);
-            SceneManager.MoveGameObjectToScene(enemy.gameObject, Game.EnemiesScene);
-        }
-        else
-            enemy = ObjectsPool<EnemyCharacter>.Pop();
+        EnemyCharacter enemy = ObjectsPool<EnemyCharacter>.GetEqual<Transform[]>(enemyFactory, enemyPrefab, targetPoints);
         enemy.Spawn(position, rotation);
         
         return enemy;

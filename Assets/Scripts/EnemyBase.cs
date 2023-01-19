@@ -20,7 +20,13 @@ public class EnemyBase : MonoBehaviour
     [Tooltip("Временной интервал между порождением новых врагов. [0, infinity]")]
     [SerializeField, Min(0)] float timeSpawn = 3f;
 
-    [SerializeField] EnemyFactory enemyFactory;
+    ///<summary>Содержит все вражеские станции, находящиеся на базе</summary>
+    [Tooltip("Содержит все вражеские станции, находящиеся на базе")]
+    [SerializeField] List<EnemyStation> enemyStations;
+
+    ///<summary>Целевые точки для патруля врагами</summary>
+    [Tooltip("Целевые точки для патруля врагами")]
+    [SerializeField] Transform[] targetPoints;
 
     ///<summary>Содержит всех врагов, находящихся на базе</summary>
     ///<remarks>Мёртвые враги удаляются из списка</remarks>
@@ -29,25 +35,25 @@ public class EnemyBase : MonoBehaviour
     ///<summary>Время, прошедшее с момента последнего порождения врага</summary>
     float timeOfLastSpawn;
 
+    int stationIndex;
+
     void Start()
     {
         enemies = new List<EnemyCharacter>();
         for (int i = 0; i < startEnemiesCount; i++)
-            enemies.Add(enemyFactory.SpawnEnemy());
-    }
-
-    ///<returns>Возвращает true, если прошло достаточно времени с момента последнего порождения</returns>
-    public bool HasTimePassed()
-    {
-        return timeOfLastSpawn + timeSpawn < Time.time;
+            enemies.Add(enemyStations[LoopIndex()].SpawnEnemy(targetPoints));
     }
 
     void Update()
     {
-        // необходима проверка на null, т.к. enemyFactory может быть уничтожена игроком
-        if (enemyFactory != null && enemies.Count < maxEnemiesCount && HasTimePassed())
+        // удаление уничтоженных станций
+        for (int i = 0; i < enemyStations.Count; i++)
+            if (enemyStations[i] == null)
+                enemyStations.RemoveAt(i);
+
+        if (enemyStations.Count != 0 && enemies.Count < maxEnemiesCount && HasTimePassed())
         {
-            enemies.Add(enemyFactory.SpawnEnemy());
+            enemies.Add(enemyStations[LoopIndex()].SpawnEnemy(targetPoints));
             timeOfLastSpawn = Time.time;
         }
 
@@ -71,5 +77,19 @@ public class EnemyBase : MonoBehaviour
             foreach (EnemyCharacter enemy in enemies)
                 enemy.SetTrigger(false);
         }
+    }
+
+    ///<returns>Возвращает true, если прошло достаточно времени с момента последнего порождения</returns>
+    public bool HasTimePassed()
+    {
+        return timeOfLastSpawn + timeSpawn < Time.time;
+    }
+
+    public int LoopIndex()
+    {
+        stationIndex++;
+        if (stationIndex >= enemyStations.Count)
+            stationIndex = 0;
+        return stationIndex;
     }
 }

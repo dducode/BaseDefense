@@ -112,7 +112,7 @@ public class ItemCollecting : MonoBehaviour
         {
             Money money = moneys.Pop();
             money.transform.parent = null;
-            SceneManager.MoveGameObjectToScene(money.gameObject, Game.ItemsScene);
+            ObjectsPool<Money>.MoveObjectToScene(money);
             Vector3 force = new Vector3(Random.Range(0f, 1f), 1, Random.Range(-1.5f, -0.5f)) * forceScalar;
             Vector3 torque = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
             money.Drop(force, torque);
@@ -133,7 +133,7 @@ public class ItemCollecting : MonoBehaviour
         {
             Money money = moneys.Pop();
             money.transform.parent = null;
-            SceneManager.MoveGameObjectToScene(money.gameObject, Game.ItemsScene);
+            ObjectsPool<Money>.MoveObjectToScene(money);
             Vector3 force = new Vector3(Random.Range(0f, 1f), 1, Random.Range(0f, 1f)) * forceScalar;
             money.Drop(force);
         }

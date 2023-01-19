@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 23000012256943474}
   - component: {fileID: 7145336026204301639}
   m_Layer: 3
-  m_Name: crystal
+  m_Name: base crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb91f9b04e3d4a4ba891bfda5100824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealthPoints: 100
+  maxHealthPoints: 1
 --- !u!114 &3816633415357249334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,12 +63,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 5203258588667499559, guid: c3c0707254334a64ca8198f7486e977d,
     type: 3}
-  forceScalar: 3
+  forceScalar: 0
   itemsCount:
     minLimit: 0
     maxLimit: 100
-    minValue: 15
-    maxValue: 30
+    minValue: 0
+    maxValue: 0
 --- !u!33 &33000010521464520
 MeshFilter:
   m_ObjectHideFlags: 0
