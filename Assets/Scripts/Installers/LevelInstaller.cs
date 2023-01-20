@@ -5,9 +5,12 @@ public class LevelInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
+        Container.Bind<Game>().FromComponentInHierarchy().AsSingle();
         Container.Bind<PlayerCharacter>().FromComponentInHierarchy().AsSingle();
-        Container.BindFactory<UnityEngine.Object, Transform[], EnemyCharacter, EnemyCharacter.Factory>().
-            FromFactory<PrefabFactory<Transform[], EnemyCharacter>>();
+        Container.BindFactory<Object, EnemyCharacter, EnemyCharacter.Factory>().
+            FromFactory<PrefabFactory<EnemyCharacter>>();
+        Container.BindFactory<Object, EnemyFactory, EnemyFactory.Factory>().
+            FromFactory<PrefabFactory<EnemyFactory>>();
 
         Container.Bind<DisplayingUI>().FromComponentInHierarchy().AsSingle();
         Container.Bind<Shop>().FromComponentInHierarchy().AsSingle();

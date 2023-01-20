@@ -37,7 +37,7 @@ public class EnemyStation : MonoBehaviour, IAttackable
             currentHealthPoints = value;
             currentHealthPoints = Mathf.Clamp(currentHealthPoints, 0, maxHealthPoints);
             if (currentHealthPoints == 0)
-                DestroyBase();
+                Destroy();
         }
     }
 
@@ -58,9 +58,10 @@ public class EnemyStation : MonoBehaviour, IAttackable
 
     void OnDrawGizmosSelected()
     {
+        if (centerOfSpawn == null)
+            return;
         Gizmos.color = Color.green;
-        if (centerOfSpawn != null)
-            Gizmos.DrawWireSphere(centerOfSpawn.position, radiusSpawn);
+        Gizmos.DrawWireSphere(centerOfSpawn.position, radiusSpawn);
     }
 
     public EnemyCharacter SpawnEnemy(Transform[] targetPoints)
@@ -68,8 +69,8 @@ public class EnemyStation : MonoBehaviour, IAttackable
         Vector3 position = centerOfSpawn.position + Random.insideUnitSphere * radiusSpawn;
         position.y = 0;
         Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360f), 0);
-        EnemyCharacter enemy = ObjectsPool<EnemyCharacter>.GetEqual<Transform[]>(enemyFactory, enemyPrefab, targetPoints);
-        enemy.Spawn(position, rotation);
+        EnemyCharacter enemy = ObjectsPool<EnemyCharacter>.GetEqual(enemyFactory, enemyPrefab);
+        enemy.Spawn(targetPoints, position, rotation);
         
         return enemy;
     }
@@ -80,7 +81,7 @@ public class EnemyStation : MonoBehaviour, IAttackable
         displayHealthPoints.UpdateView((int)CurrentHealthPoints);
     }
 
-    void DestroyBase()
+    void Destroy()
     {
         Instantiate(destroyEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);

@@ -42,7 +42,7 @@ public class Shop : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            UI.OpenShop();
+            UI.OpenShop(this);
     }
     void OnTriggerExit(Collider other)
     {

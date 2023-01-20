@@ -28,6 +28,7 @@ public class DisplayingUI : MonoBehaviour
     [SerializeField] Canvas playerUpgradesWindow;
     [SerializeField] UpgradeValues upgradeValues;
     [Inject] PlayerCharacter player;
+    Shop currentShop;
 
     void Start()
     {
@@ -57,9 +58,13 @@ public class DisplayingUI : MonoBehaviour
     public void SelectGun(GunSlot slot)
     {
         frame.localPosition = slot.transform.localPosition;
-        player.SelectGun(slot.GunName);
+        player.SelectGun(currentShop, slot.GunName);
     }
-    public void OpenShop() => shopWindow.enabled = true;
+    public void OpenShop(Shop currentShop)
+    {
+        shopWindow.enabled = true;
+        this.currentShop = currentShop;
+    }
     public void CloseShop() => shopWindow.enabled = false;
 
     public void UpgradePlayer(PlayerUpgradesUI playerUpgrades)

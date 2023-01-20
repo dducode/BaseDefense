@@ -311,7 +311,7 @@ PrefabInstance:
     - target: {fileID: 1511686883647684906, guid: 0064a240e9f3e744481a355312f93102,
         type: 3}
       propertyPath: m_Name
-      value: Enemy_base_2
+      value: Enemy_station_2
       objectReference: {fileID: 0}
     - target: {fileID: 1511686883647684911, guid: 0064a240e9f3e744481a355312f93102,
         type: 3}
@@ -504,6 +504,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+        type: 3}
+      propertyPath: timeSpawn
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+        type: 3}
+      propertyPath: enemyStations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+        type: 3}
+      propertyPath: enemyStations.Array.data[0]
+      value: 
+      objectReference: {fileID: 4074613949142228981}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb1fb5fa14ac234db22fa43421f92d7, type: 3}
 --- !u!4 &4264643340975779492 stripped

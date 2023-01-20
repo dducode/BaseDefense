@@ -35,7 +35,7 @@ PrefabInstance:
     - target: {fileID: 1511686883647684906, guid: 0064a240e9f3e744481a355312f93102,
         type: 3}
       propertyPath: m_Name
-      value: Enemy_base_2
+      value: Enemy_station_2
       objectReference: {fileID: 0}
     - target: {fileID: 1511686883647684911, guid: 0064a240e9f3e744481a355312f93102,
         type: 3}
@@ -289,7 +289,7 @@ PrefabInstance:
     - target: {fileID: 1511686883647684906, guid: 0064a240e9f3e744481a355312f93102,
         type: 3}
       propertyPath: m_Name
-      value: Enemy_base_2
+      value: Enemy_station_2
       objectReference: {fileID: 0}
     - target: {fileID: 1511686883647684911, guid: 0064a240e9f3e744481a355312f93102,
         type: 3}
@@ -556,6 +556,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+        type: 3}
+      propertyPath: timeSpawn
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+        type: 3}
+      propertyPath: maxEnemiesCount
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+        type: 3}
+      propertyPath: startEnemiesCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+        type: 3}
+      propertyPath: enemyStations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+        type: 3}
+      propertyPath: enemyStations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1626850435835693515}
+    - target: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+        type: 3}
+      propertyPath: enemyStations.Array.data[1]
+      value: 
+      objectReference: {fileID: 6565736712799272241}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bb1fb5fa14ac234db22fa43421f92d7, type: 3}
 --- !u!4 &1372780524545962191 stripped

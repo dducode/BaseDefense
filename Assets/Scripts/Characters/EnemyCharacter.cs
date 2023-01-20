@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 using Zenject;
 
@@ -47,32 +49,31 @@ public class EnemyCharacter : BaseCharacter
 
     Transform[] targetPoints;
     PlayerCharacter player;
-    State State;
+    State state;
     ItemDrop itemDrop;
     Ragdoll ragdoll;
 
     [Inject]
-    public void Initialize(Transform[] targetPoints, PlayerCharacter player)
+    public void Initialize(PlayerCharacter player)
     {
         itemDrop = GetComponent<ItemDrop>();
         ragdoll = GetComponent<Ragdoll>();
-        this.targetPoints = targetPoints;
         this.player = player;
         hand.Damage = damage;
-        State = new Walking(this, player.transform);
     }
 
     ///<summary>Вызывается как для порождения нового врага, так и для респавна умершего</summary>
     ///<param name="position">Точка спавна врага</param>
     ///<param name="rotation">Поворот, принимаемый во время спавна</param>
-    public void Spawn(Vector3 position, Quaternion rotation)
+    public void Spawn(Transform[] targetPoints, Vector3 position, Quaternion rotation)
     {
+        this.targetPoints = targetPoints;
         CurrentHealthPoints = maxHealthPoints;
         ragdoll.enabled = false;
         enabled = false;
         transform.SetLocalPositionAndRotation(position, rotation);
         enabled = true;
-        State = new Walking(this, player.transform);
+        state = new Walking(this, player.transform);
     }
 
     ///<summary>Заменяет обычный Update метод</summary>
@@ -84,8 +85,8 @@ public class EnemyCharacter : BaseCharacter
     {
         if (IsAlive)
         {
-            State = State.Process();
-            if (State is Attack)
+            state = state.Process();
+            if (state is Attack)
             {
                 AnimatorStateInfo info = Animator.GetCurrentAnimatorStateInfo(0);
                 int cycle = (int)info.normalizedTime;
@@ -96,7 +97,7 @@ public class EnemyCharacter : BaseCharacter
             else
                 hand.enabled = false;
 
-            if (State is Walking) // Восстановление здоровья при патруле
+            if (state is Walking) // Восстановление здоровья при патруле
                 CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 20;
         }
         
@@ -113,7 +114,7 @@ public class EnemyCharacter : BaseCharacter
     ///<param name="value">Значение устанавливаемого триггера</param>
     public void SetTrigger(bool value)
     {
-        State.SetTrigger(value);
+        state.SetTrigger(value);
     }
 
     public override void Hit(float damage)
@@ -139,5 +140,5 @@ public class EnemyCharacter : BaseCharacter
         ObjectsPool<EnemyCharacter>.Push(this);
     }
 
-    public class Factory : PlaceholderFactory<UnityEngine.Object, Transform[], EnemyCharacter> {}
+    public class Factory : PlaceholderFactory<UnityEngine.Object, EnemyCharacter> {}
 }

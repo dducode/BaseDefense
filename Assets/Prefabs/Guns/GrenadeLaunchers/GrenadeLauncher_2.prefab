@@ -53,7 +53,7 @@ MonoBehaviour:
   intervalOfShots: 2.5
   muzzles:
   - {fileID: 1655006443053680918}
-  damageRadius: 4
+  damageRadius: 3.5
   maxDamage: 150
 --- !u!33 &179224322542775519
 MeshFilter:

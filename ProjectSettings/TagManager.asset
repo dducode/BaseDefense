@@ -4,8 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - EnemyBase
-  - PlayerBase
   - Enemy
   - Undefined
   - Gem
@@ -13,6 +11,8 @@ TagManager:
   - Shop
   - ship
   - asteroid
+  - target point
+  - enemy field
   layers:
   - Default
   - TransparentFX

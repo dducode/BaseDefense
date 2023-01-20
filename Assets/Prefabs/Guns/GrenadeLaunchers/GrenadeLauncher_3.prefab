@@ -81,10 +81,10 @@ MonoBehaviour:
   gunName: 8
   projectilePrefab: {fileID: 4813531904856078078, guid: 2041318d9adc59a42a2a37ec09cf081c,
     type: 3}
-  intervalOfShots: 3
+  intervalOfShots: 2
   muzzles:
   - {fileID: 265813701693272732}
-  damageRadius: 5
+  damageRadius: 4
   maxDamage: 200
 --- !u!33 &4904769044371392297
 MeshFilter:

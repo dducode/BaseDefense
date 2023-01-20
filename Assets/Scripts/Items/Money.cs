@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using BroadcastMessages;
 using UnityEngine;
 
 public class Money : Item
@@ -8,6 +8,12 @@ public class Money : Item
     ///<value>[0, infinity]</value>
     [Tooltip("Время, необходимое для проигрывания анимации сброса предмета на базу. [0, infinity]")]
     [SerializeField, Min(0)] float collectionTime = 3;
+
+    public override void Awake()
+    {
+        base.Awake();
+        Messenger.AddListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
+    }
 
     public override void Destroy()
     {
@@ -29,5 +35,12 @@ public class Money : Item
         yield return Collapse();
         ObjectsPool<Money>.Push(this);
         transform.localScale = Vector3.one;
+    }
+
+    // Удаляет неиспользованные деньги со сцены
+    void Remove()
+    {
+        enabled = false;
+        ObjectsPool<Money>.Push(this);
     }
 }

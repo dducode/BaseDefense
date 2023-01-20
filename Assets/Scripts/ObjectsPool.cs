@@ -3,11 +3,13 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Zenject;
 
-///<summary>Реализует простой пул для компонентов MonoBehaviour</summary>
+///<summary>Реализует простой пул для компонентов Unity</summary>
 ///<typeparam name="T">Тип объекта, добавляемого в пул</typeparam>
-public static class ObjectsPool<T> where T : MonoBehaviour
+public static class ObjectsPool<T> where T : Component
 {
     static List<T> pool = new List<T>();
+
+    ///<summary>Сцена со всеми объектами типа "Т". Для каждого типа объекта создаётся своя сцена</summary>
     static Scene scene;
 
     ///<summary>Добавляет объект в пул</summary>
@@ -43,8 +45,7 @@ public static class ObjectsPool<T> where T : MonoBehaviour
     ///</remarks>
     ///<param name="factory">Фабрика, из которой создаётся объект</param>
     ///<param name="prefab">Префаб объекта, который нужно создать, если идентичный объект не найден</param>
-    ///<param name="param">Параметр, который передаётся создаваемому объекту</param>
-    public static T GetEqual<K>(PlaceholderFactory<Object, K, T> factory, T prefab, K param)
+    public static T GetEqual(PlaceholderFactory<Object, T> factory, T prefab)
     {
         T value;
         foreach (T o in pool)
@@ -56,15 +57,14 @@ public static class ObjectsPool<T> where T : MonoBehaviour
                 return value;
             }
 
-        value = factory.Create(prefab, param);
+        value = factory.Create(prefab);
         value.gameObject.name = prefab.name;
         MoveObjectToScene(value);
         return value;
     }
 
     ///<summary>Вспомогательный метод для сортировки игровых объектов в разные сцены</summary>
-    ///<remarks>Для каждого типа "Т" объекта создаётся своя сцена</remarks>
-    ///<param name="gameObject">Игровой объект, переносимый в сцену</param>
+    ///<param name="obj">Объект, переносимый в сцену</param>
     public static void MoveObjectToScene(T obj)
     {
         if (scene == default)

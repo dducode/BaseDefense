@@ -1,9 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
+using BroadcastMessages;
 using UnityEngine;
 
 public class Gem : Item
 {
+    public override void Awake()
+    {
+        base.Awake();
+        Messenger.AddListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
+    }
+
     public override void Destroy()
     {
         StartCoroutine(DestroyGem());
@@ -22,5 +28,12 @@ public class Gem : Item
         yield return Collapse();
         ObjectsPool<Gem>.Push(this);
         transform.localScale = Vector3.one;
+    }
+
+    // Удаляет неиспользованные кристаллы со сцены
+    void Remove()
+    {
+        enabled = false;
+        ObjectsPool<Gem>.Push(this);
     }
 }

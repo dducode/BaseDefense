@@ -50,7 +50,7 @@ MonoBehaviour:
   gunName: 10
   projectilePrefab: {fileID: -8665760363649465150, guid: 187827457a8491e45a37b7aa50f5b418,
     type: 3}
-  intervalOfShots: 1.5
+  intervalOfShots: 1
   muzzles:
   - {fileID: 1660109210559786832}
   poisonDamage: 40

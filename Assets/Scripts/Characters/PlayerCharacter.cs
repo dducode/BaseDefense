@@ -44,17 +44,9 @@ public class PlayerCharacter : BaseCharacter
     Vector3 lookToAttackable;
     Vector3 move;
 
-    JoystickController joystick;
-    Shop shop;
+    [Inject] JoystickController joystick;
     Gun gun;
     bool inEnemyBase;
-
-    [Inject]
-    public void Construct(Shop shop, JoystickController joystick)
-    {
-        this.shop = shop;
-        this.joystick = joystick;
-    }
 
     public override void Awake()
     {
@@ -127,7 +119,7 @@ public class PlayerCharacter : BaseCharacter
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyBase"))
+        if (other.CompareTag("enemy field"))
             SetParams(true);
         if (other.GetComponent<Gem>() is Gem gem)
             itemCollecting.PutGem(gem);
@@ -136,7 +128,7 @@ public class PlayerCharacter : BaseCharacter
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("EnemyBase"))
+        if (other.CompareTag("enemy field"))
         {
             SetParams(false);
             lookToAttackable = Vector3.zero;
@@ -146,8 +138,9 @@ public class PlayerCharacter : BaseCharacter
     }
 
     ///<summary>Вызывается при выборе оружия из магазина</summary>
+    ///<param name="shop">Магазин с оружием</param>
     ///<param name="gunName">Выбранное оружие</param>
-    public void SelectGun(GunName gunName)
+    public void SelectGun(Shop shop, GunName gunName)
     {
         gun = shop.TakeGun(gunName, gun);
         gun.transform.parent = gunSlot;
