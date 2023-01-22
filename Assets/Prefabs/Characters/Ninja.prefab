@@ -118,10 +118,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gizmosView: {r: 0, g: 0, b: 1, a: 1}
   maxHealthPoints: 100
+  deathColor: {r: 0.33333334, g: 0.3333333, b: 0.3333333, a: 1}
   maxSpeed: 6
   attackDistance: 12.5
   gunSlot: {fileID: 1804538561354731679}
-  recoveryPoint: {fileID: 0}
   upgrades:
     speed:
       maxValue: 9

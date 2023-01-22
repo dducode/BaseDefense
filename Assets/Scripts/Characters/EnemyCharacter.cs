@@ -74,6 +74,7 @@ public class EnemyCharacter : BaseCharacter
         transform.SetLocalPositionAndRotation(position, rotation);
         enabled = true;
         state = new Walking(this, player.transform);
+        MeshRenderer.material.color = DefaultColor;
     }
 
     ///<summary>Заменяет обычный Update метод</summary>
@@ -100,6 +101,8 @@ public class EnemyCharacter : BaseCharacter
             if (state is Walking) // Восстановление здоровья при патруле
                 CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 60;
         }
+        else
+            hand.enabled = false;
         
         return IsAlive;
     }
@@ -131,12 +134,22 @@ public class EnemyCharacter : BaseCharacter
         ragdoll.enabled = true;
         ragdoll.AddImpulse((transform.forward * -25) + Vector3.up);
         itemDrop.DropItems();
-        StartCoroutine(AwaitRagdoll());
+        MeshRenderer.material.color = deathColor;
+        StartCoroutine(Disappearance());
     }
 
-    IEnumerator AwaitRagdoll()
+    IEnumerator Disappearance()
     {
         yield return new WaitForSeconds(2);
+        Color startColor = MeshRenderer.material.color;
+        Color targetColor = startColor;
+        targetColor.a = 0;
+        float time = Time.time;
+        while (MeshRenderer.material.color.a > 0)
+        {
+            MeshRenderer.material.color = Color.Lerp(startColor, targetColor, (Time.time - time) * 2);
+            yield return null;
+        }
         ObjectsPool<EnemyCharacter>.Push(this);
     }
 

@@ -188,6 +188,7 @@ public class PlayerCharacter : BaseCharacter
         Animator.SetBool("alive", false);
         gun.gameObject.SetActive(false);
         enabled = false;
+        MeshRenderer.material.color = deathColor;
         Messenger.SendMessage(MessageType.DEATH_PLAYER);
     }
 
@@ -202,6 +203,7 @@ public class PlayerCharacter : BaseCharacter
         enabled = true;
         CurrentHealthPoints = maxHealthPoints;
         inEnemyBase = false;
+        MeshRenderer.material.color = DefaultColor;
     }
 
     ///<returns>Возвращает ближайшую к игроку атакуемую сущность. Если рядом таких нет - возвращает null</returns>

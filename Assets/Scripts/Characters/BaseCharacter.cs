@@ -15,6 +15,10 @@ public abstract class BaseCharacter : MonoBehaviour, IAttackable
     [Tooltip("Максимально возможное количество очков здоровья для данного персонажа. [1, infinity]")] 
     [SerializeField, Min(1)] protected float maxHealthPoints = 100;
 
+    ///<summary>Цвет, который персонаж принимает после смерти</summary>
+    [Tooltip("Цвет, который персонаж принимает после смерти")]
+    [SerializeField] protected Color deathColor;
+
     ///<summary>Максимально развиваемая персонажем скорость</summary>
     ///<value>[0, infinity]</value>
     [Tooltip("Максимально развиваемая персонажем скорость. [0, infinity]")] 
@@ -28,8 +32,12 @@ public abstract class BaseCharacter : MonoBehaviour, IAttackable
     ///<summary>Анимация, проигрываемая при получении урона персонажем</summary>
     public ParticleSystem HitEffect { get; protected set; }
 
+    ///<summary>Стандартный цвет персонажа. Выставляется при респавне вместо deathColor</summary>
+    public Color DefaultColor { get; protected set; }
+
     public CharacterController Controller { get; protected set; }
     public Animator Animator { get; protected set; }
+    public SkinnedMeshRenderer MeshRenderer { get; protected set; }
 
     ///<summary>При включении поведения персонажа также включается его контроллёр</summary>
     bool _enabledCharacter;
@@ -77,7 +85,9 @@ public abstract class BaseCharacter : MonoBehaviour, IAttackable
         Controller = GetComponent<CharacterController>();
         Animator = GetComponent<Animator>();
         HitEffect = GetComponent<ParticleSystem>();
+        MeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         CurrentHealthPoints = maxHealthPoints;
+        DefaultColor = MeshRenderer.material.color;
     }
 
     void OnDrawGizmosSelected()

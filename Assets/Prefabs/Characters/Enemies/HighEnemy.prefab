@@ -731,6 +731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gizmosView: {r: 1, g: 0, b: 0.75, a: 1}
   maxHealthPoints: 200
+  deathColor: {r: 0.33333334, g: 0.3333333, b: 0.3333333, a: 1}
   maxSpeed: 7
   attackDistance: 1.25
   walkingSpeed: 3
