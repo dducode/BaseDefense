@@ -15,7 +15,7 @@ public class GrenadeLauncher : Gun
 
     public float DamageRadius => damageRadius;
 
-    public override void Shot(Vector3 target)
+    public override void Shot()
     {
         if (timeOfLastShot + intervalOfShots < Time.time)
         {
@@ -27,8 +27,9 @@ public class GrenadeLauncher : Gun
                 );
                 grenade.DamageRadius = damageRadius;
                 grenade.MaxDamage = maxDamage;
-                Vector3 path = (target - muzzles[i].transform.position).normalized;
-                grenade.AddImpulse(path * 1000);
+                Vector3 path = muzzles[i].transform.forward;
+                path.y = 0;
+                grenade.AddImpulse(path.normalized * 1000);
             }
             timeOfLastShot = Time.time;
         }

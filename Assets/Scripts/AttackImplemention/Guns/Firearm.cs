@@ -15,7 +15,7 @@ public class Firearm : Gun
     [Tooltip("Сила выстрела оружия - определяет, с какой скоростью будет лететь пуля после выстрела")]
     [SerializeField] MinMaxSliderFloat shotPower = new MinMaxSliderFloat(0, 25);
 
-    public override void Shot(Vector3 target)
+    public override void Shot()
     {
         if (timeOfLastShot + intervalOfShots < Time.time)
         {
@@ -31,7 +31,8 @@ public class Firearm : Gun
                     0
                 );
                 Vector3 path = muzzles[i].transform.forward;
-                Vector3 force = (path + dispertion) * Random.Range(shotPower.minValue, shotPower.maxValue);
+                path.y = 0;
+                Vector3 force = (path.normalized + dispertion) * Random.Range(shotPower.minValue, shotPower.maxValue);
                 bullet.AddImpulse(force);
             }
             timeOfLastShot = Time.time;

@@ -98,7 +98,7 @@ public class EnemyCharacter : BaseCharacter
                 hand.enabled = false;
 
             if (state is Walking) // Восстановление здоровья при патруле
-                CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 20;
+                CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 60;
         }
         
         return IsAlive;

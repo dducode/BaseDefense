@@ -106,6 +106,8 @@ public class ItemCollecting : MonoBehaviour
     ///<summary>Реализует анимацию сброса денег и кладёт их в инвентарь</summary>
     public IEnumerator DropMoney()
     {
+        if (moneys.Count == 0)
+            yield break;
         DropIsInProcess = true;
         int moneysCount = moneys.Count;
         for (int i = 0; i < moneysCount; i++)

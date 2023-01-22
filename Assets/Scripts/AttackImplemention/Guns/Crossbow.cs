@@ -17,7 +17,7 @@ public class Crossbow : Gun
     [Tooltip("Сила выстрела арбалета - определяет, с какой скоростью будет лететь стрела после выстрела")]
     [SerializeField] MinMaxSliderFloat shotPower = new MinMaxSliderFloat(0, 25);
 
-    public override void Shot(Vector3 target)
+    public override void Shot()
     {
         if (timeOfLastShot + intervalOfShots < Time.time)
         {
@@ -30,7 +30,8 @@ public class Crossbow : Gun
                 arrow.PoisonDamage = poisonDamage;
                 arrow.DamageTime = damageTime;
                 Vector3 path = muzzles[i].transform.forward;
-                Vector3 force = path * Random.Range(shotPower.minValue, shotPower.maxValue);
+                path.y = 0;
+                Vector3 force = path.normalized * Random.Range(shotPower.minValue, shotPower.maxValue);
                 arrow.AddImpulse(force);
             }
             timeOfLastShot = Time.time;

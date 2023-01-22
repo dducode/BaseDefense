@@ -68,9 +68,10 @@ namespace BroadcastMessages
         {
             if (dict.ContainsKey(message))
             {
-                for (int i = 0; i < dict[message].Count; i++)
-                    dict[message][i]?.Invoke();
-            }  
+                List<Action> listeners = new List<Action>(dict[message]);
+                foreach (Action listener in listeners)
+                    listener.Invoke();
+            }
         }
     }
 }

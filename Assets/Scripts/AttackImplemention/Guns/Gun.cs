@@ -23,7 +23,7 @@ public abstract class Gun : MonoBehaviour
 
     ///<summary>Производит выстрел из оружия</summary>
     ///<param name="target">Позиция цели, в которую необходимо выстрелить</param>
-    public abstract void Shot(Vector3 target);
+    public abstract void Shot();
 
     public virtual void Awake()
     {

@@ -50,10 +50,11 @@ public class Grenade : Projectile
         {
             if (collider.GetComponent<IAttackable>() is IAttackable attackable)
             {
-                float distance = 0;
+                float distance = damageRadius;
                 float damage = 0;
-                if (attackable is MonoBehaviour behaviour)
-                    distance = (behaviour.transform.position - transform.position).magnitude;
+                Vector3 direction = collider.transform.position - transform.position;
+                if (Physics.Raycast(transform.position, direction, out RaycastHit raycastHit))
+                    distance = raycastHit.distance;
                 damage = maxDamage * (1 - distance / damageRadius);
                 if (damage < 0)
                     damage = 0;
@@ -64,7 +65,7 @@ public class Grenade : Projectile
         colliders = Physics.OverlapSphere(transform.position, damageRadius);
         foreach (Collider collider in colliders)
             if (collider.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
-                rigidbody.AddExplosionForce(maxDamage, transform.position, damageRadius, 1);
+                rigidbody.AddExplosionForce(maxDamage, transform.position, damageRadius);
         ObjectsPool<Grenade>.Push(this);
         rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
     }

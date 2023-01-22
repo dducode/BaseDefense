@@ -9,11 +9,8 @@ public class Money : Item
     [Tooltip("Время, необходимое для проигрывания анимации сброса предмета на базу. [0, infinity]")]
     [SerializeField, Min(0)] float collectionTime = 3;
 
-    public override void Awake()
-    {
-        base.Awake();
-        Messenger.AddListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
-    }
+    void OnEnable() => Messenger.AddListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
+    void OnDisable() => Messenger.RemoveListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
 
     public override void Destroy()
     {

@@ -50,11 +50,11 @@ MonoBehaviour:
   gunName: 7
   projectilePrefab: {fileID: 4813531904856078078, guid: 2041318d9adc59a42a2a37ec09cf081c,
     type: 3}
-  intervalOfShots: 2.5
+  intervalOfShots: 1.75
   muzzles:
   - {fileID: 1655006443053680918}
-  damageRadius: 3.5
-  maxDamage: 150
+  damageRadius: 4
+  maxDamage: 250
 --- !u!33 &179224322542775519
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -52,12 +52,12 @@ public abstract class Item : MonoBehaviour
     ///</summary>
     protected IEnumerator Collapse()
     {
-        Vector3 scale = transform.localScale;
+        Vector3 startScale = transform.localScale;
+        Vector3 targetScale = Vector3.one * 0.001f;
         float time = Time.time;
-        while (transform.localScale != Vector3.zero)
+        while (transform.localScale != targetScale)
         {
-            scale = Vector3.Lerp(Vector3.one, Vector3.zero, (Time.time - time) * collapseSpeed);
-            transform.localScale = scale;
+            transform.localScale = Vector3.Lerp(startScale, targetScale, (Time.time - time) * collapseSpeed);
             yield return null;
         }
     }

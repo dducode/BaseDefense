@@ -13,10 +13,6 @@ public class PlayerCharacter : BaseCharacter
     [Header("Связанные объекты")]
     [SerializeField] Transform gunSlot;
 
-    ///<summary>Точка респавна игрока</summary>
-    [Tooltip("Точка респавна игрока")]
-    [SerializeField] Transform recoveryPoint;
-
     ///<inheritdoc cref="Upgrades"/>
     [Tooltip("Хранит в себе информацию о прокачиваемых характеристиках игрока")]
     [SerializeField] Upgrades upgrades = new Upgrades();
@@ -88,17 +84,17 @@ public class PlayerCharacter : BaseCharacter
                     // Стреляет из гранатомёта только на безопасном расстоянии
                     {
                         if (lookToAttackable.magnitude > grenade.DamageRadius + 1)
-                            grenade.Shot(attackable.transform.position + Vector3.up);
+                            grenade.Shot();
                     }
                     else
-                        gun.Shot(attackable.transform.position + Vector3.up);
+                        gun.Shot();
                 }
             }
         }
         else 
         // Восстановление здоровья на своей базе
         {
-            CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 20;
+            CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 30;
             displayHealthPoints.UpdateView((int)CurrentHealthPoints);
         }
 
@@ -198,10 +194,11 @@ public class PlayerCharacter : BaseCharacter
     [Listener(MessageType.RESTART)]
     public void Resurrection()
     {
+        Transform respawn = GameObject.FindGameObjectWithTag("Respawn").transform;
         Animator.SetBool("alive", true);
         Animator.SetBool("inEnemyBase", false);
         lookToAttackable = Vector3.zero;
-        transform.SetPositionAndRotation(recoveryPoint.position, Quaternion.identity);
+        transform.SetPositionAndRotation(respawn.position, Quaternion.identity);
         enabled = true;
         CurrentHealthPoints = maxHealthPoints;
         inEnemyBase = false;
