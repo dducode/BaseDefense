@@ -1,82 +1,85 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(MinMaxSliderFloat))]
-[CustomPropertyDrawer(typeof(MinMaxSliderInt))]
-public class MinMaxSliderEditor : PropertyDrawer
+namespace BaseDefense
 {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    [CustomPropertyDrawer(typeof(MinMaxSliderFloat))]
+    [CustomPropertyDrawer(typeof(MinMaxSliderInt))]
+    public class MinMaxSliderEditor : PropertyDrawer
     {
-        var minValueProperty = property.FindPropertyRelative("minValue");
-        var maxValueProperty = property.FindPropertyRelative("maxValue");
-
-        var minLimitProperty = property.FindPropertyRelative("minLimit");
-        var maxLimitProperty = property.FindPropertyRelative("maxLimit");
-
-        using (var propertyScope = new EditorGUI.PropertyScope(position, label, property))
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var sliderRect = EditorGUI.PrefixLabel(position, label);
-            sliderRect.width /= 2.0f;
+            var minValueProperty = property.FindPropertyRelative("minValue");
+            var maxValueProperty = property.FindPropertyRelative("maxValue");
 
-            var valuesRect = sliderRect;
-            valuesRect.width /= 2.5f;
+            var minLimitProperty = property.FindPropertyRelative("minLimit");
+            var maxLimitProperty = property.FindPropertyRelative("maxLimit");
 
-            var minValueRect = valuesRect;
-            var maxValueRect = valuesRect;
-            sliderRect.x += valuesRect.width * 1.25f;
-            maxValueRect.x += valuesRect.width * 1.5f + sliderRect.width;
-
-            if (minValueProperty.propertyType == SerializedPropertyType.Float)
+            using (var propertyScope = new EditorGUI.PropertyScope(position, label, property))
             {
-                var minValueFloat = minValueProperty.floatValue;
-                var maxValueFloat = maxValueProperty.floatValue;
+                var sliderRect = EditorGUI.PrefixLabel(position, label);
+                sliderRect.width /= 2.0f;
 
-                EditorGUI.BeginChangeCheck();
+                var valuesRect = sliderRect;
+                valuesRect.width /= 2.5f;
 
-                EditorGUI.MinMaxSlider(
-                    sliderRect,
-                    ref minValueFloat,
-                    ref maxValueFloat,
-                    minLimitProperty.floatValue,
-                    maxLimitProperty.floatValue
-                );
+                var minValueRect = valuesRect;
+                var maxValueRect = valuesRect;
+                sliderRect.x += valuesRect.width * 1.25f;
+                maxValueRect.x += valuesRect.width * 1.5f + sliderRect.width;
 
-                minValueFloat = EditorGUI.FloatField(minValueRect, minValueFloat);
-                maxValueFloat = EditorGUI.FloatField(maxValueRect, maxValueFloat);
-
-                if (EditorGUI.EndChangeCheck())
+                if (minValueProperty.propertyType == SerializedPropertyType.Float)
                 {
-                    minValueProperty.floatValue = minValueFloat;
-                    maxValueProperty.floatValue = maxValueFloat;
+                    var minValueFloat = minValueProperty.floatValue;
+                    var maxValueFloat = maxValueProperty.floatValue;
+
+                    EditorGUI.BeginChangeCheck();
+
+                    EditorGUI.MinMaxSlider(
+                        sliderRect,
+                        ref minValueFloat,
+                        ref maxValueFloat,
+                        minLimitProperty.floatValue,
+                        maxLimitProperty.floatValue
+                    );
+
+                    minValueFloat = EditorGUI.FloatField(minValueRect, minValueFloat);
+                    maxValueFloat = EditorGUI.FloatField(maxValueRect, maxValueFloat);
+
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        minValueProperty.floatValue = minValueFloat;
+                        maxValueProperty.floatValue = maxValueFloat;
+                    }
                 }
-            }
 
-            if (minValueProperty.propertyType == SerializedPropertyType.Integer)
-            {
-                var minValueInt = (float)minValueProperty.intValue;
-                var maxValueInt = (float)maxValueProperty.intValue;
-
-                EditorGUI.BeginChangeCheck();
-
-                EditorGUI.MinMaxSlider(
-                    sliderRect,
-                    ref minValueInt,
-                    ref maxValueInt,
-                    minLimitProperty.intValue,
-                    maxLimitProperty.intValue
-                );
-
-                minValueInt = EditorGUI.IntField(minValueRect, (int)minValueInt);
-                maxValueInt = EditorGUI.IntField(maxValueRect, (int)maxValueInt);
-
-                if (EditorGUI.EndChangeCheck())
+                if (minValueProperty.propertyType == SerializedPropertyType.Integer)
                 {
-                    minValueProperty.intValue = (int)minValueInt;
-                    maxValueProperty.intValue = (int)maxValueInt;
+                    var minValueInt = (float)minValueProperty.intValue;
+                    var maxValueInt = (float)maxValueProperty.intValue;
+
+                    EditorGUI.BeginChangeCheck();
+
+                    EditorGUI.MinMaxSlider(
+                        sliderRect,
+                        ref minValueInt,
+                        ref maxValueInt,
+                        minLimitProperty.intValue,
+                        maxLimitProperty.intValue
+                    );
+
+                    minValueInt = EditorGUI.IntField(minValueRect, (int)minValueInt);
+                    maxValueInt = EditorGUI.IntField(maxValueRect, (int)maxValueInt);
+
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        minValueProperty.intValue = (int)minValueInt;
+                        maxValueProperty.intValue = (int)maxValueInt;
+                    }
                 }
             }
         }
     }
 }
+
+

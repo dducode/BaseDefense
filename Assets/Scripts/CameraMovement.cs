@@ -1,23 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class CameraMovement : MonoBehaviour
+namespace BaseDefense
 {
-    Vector3 startPos;
-    Vector3 movement;
-    [Inject] PlayerCharacter player;
-
-    void Start()
+    public class CameraMovement : MonoBehaviour
     {
-        startPos = transform.position;
-        movement = startPos;
-    }
+        Vector3 startPos;
+        Vector3 movement;
+        [Inject] PlayerCharacter player;
 
-    void LateUpdate()
-    {
-        movement = player.transform.position + startPos;
-        transform.position = movement;
+        void Start()
+        {
+            startPos = transform.position;
+            movement = startPos;
+        }
+
+        void LateUpdate()
+        {
+            movement = player.transform.position + startPos;
+            transform.position = movement;
+        }
     }
 }
+
+

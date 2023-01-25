@@ -1,13 +1,18 @@
 using UnityEngine;
 using UnityEditor;
 
-public class PostprocessPrefab : AssetPostprocessor
+namespace BaseDefense
 {
-    void OnPostprocessPrefab(GameObject o)
+    public class PostprocessPrefab : AssetPostprocessor
     {
-        o.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        void OnPostprocessPrefab(GameObject o)
+        {
+            o.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
-        if (o.layer == 3 && o.GetComponent<Collider>() == null)
-            o.AddComponent<BoxCollider>();
+            if (o.layer == 3 && o.GetComponent<Collider>() == null)
+                o.AddComponent<BoxCollider>();
+        }
     }
 }
+
+

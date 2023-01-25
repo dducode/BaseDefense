@@ -732,7 +732,7 @@ MonoBehaviour:
   gizmosView: {r: 1, g: 0.5, b: 0, a: 1}
   maxHealthPoints: 150
   deathColor: {r: 0.33333334, g: 0.3333333, b: 0.3333333, a: 1}
-  maxSpeed: 6
+  maxSpeed: 5.5
   attackDistance: 1.25
   walkingSpeed: 3
   damage:

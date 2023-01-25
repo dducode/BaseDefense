@@ -2,35 +2,40 @@ using System.Collections;
 using BroadcastMessages;
 using UnityEngine;
 
-public class Gem : Item
+namespace BaseDefense
 {
-    void OnEnable() => Messenger.AddListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
-    void OnDisable() => Messenger.RemoveListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
-
-    public override void Destroy()
+    public class Gem : Item
     {
-        StartCoroutine(DestroyGem());
-    }
+        void OnEnable() => Messenger.AddListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
+        void OnDisable() => Messenger.RemoveListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
 
-    public override void Drop(Vector3 force, Vector3 torque = default)
-    {
-        enabled = true;
-        rb.AddForce(force, ForceMode.Impulse);
-        rb.AddTorque(torque, ForceMode.Impulse);
-    }
+        public override void Destroy()
+        {
+            StartCoroutine(DestroyGem());
+        }
 
-    IEnumerator DestroyGem()
-    {
-        enabled = false;
-        yield return Collapse();
-        ObjectsPool<Gem>.Push(this);
-        transform.localScale = Vector3.one;
-    }
+        public override void Drop(Vector3 force, Vector3 torque = default)
+        {
+            enabled = true;
+            rb.AddForce(force, ForceMode.Impulse);
+            rb.AddTorque(torque, ForceMode.Impulse);
+        }
 
-    // Удаляет неиспользованные кристаллы со сцены
-    void Remove()
-    {
-        enabled = false;
-        ObjectsPool<Gem>.Push(this);
+        IEnumerator DestroyGem()
+        {
+            enabled = false;
+            yield return Collapse();
+            ObjectsPool<Gem>.Push(this);
+            transform.localScale = Vector3.one;
+        }
+
+        // Удаляет неиспользованные кристаллы со сцены
+        void Remove()
+        {
+            enabled = false;
+            ObjectsPool<Gem>.Push(this);
+        }
     }
 }
+
+

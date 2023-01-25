@@ -1,7 +1,12 @@
 using UnityEngine;
 
-public class PlayerUpgradesUI : MonoBehaviour
+namespace BaseDefense
 {
-    [SerializeField] UpgradeTypes upgradeType;
-    public UpgradeTypes UpgradeType => upgradeType;
+    public class PlayerUpgradesUI : MonoBehaviour
+    {
+        [SerializeField] UpgradableProperties upgradableProperty;
+        public UpgradableProperties UpgradableProperty => upgradableProperty;
+    }
 }
+
+

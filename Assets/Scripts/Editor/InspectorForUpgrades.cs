@@ -1,15 +1,19 @@
 using UnityEditor;
-using UnityEngine;
 
-[CustomEditor(typeof(Upgrades))]
-public class InspectorForUpgrades : Editor
+namespace BaseDefense
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(Upgrades))]
+    public class InspectorForUpgrades : Editor
     {
-        EditorGUILayout.HelpBox(
-            "Значения ниже устанавливают максимально возможные свойства игрока при прокачке",
-            MessageType.Info
-        );
-        DrawDefaultInspector();
+        public override void OnInspectorGUI()
+        {
+            EditorGUILayout.HelpBox(
+                "Значения ниже устанавливают максимально возможные свойства игрока при прокачке",
+                MessageType.Info
+            );
+            DrawDefaultInspector();
+        }
     }
 }
+
+

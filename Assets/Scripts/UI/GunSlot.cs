@@ -1,7 +1,12 @@
 using UnityEngine;
 
-public class GunSlot : MonoBehaviour
+namespace BaseDefense
 {
-    [SerializeField] GunName gunName;
-    public GunName GunName => gunName;
+    public class GunSlot : MonoBehaviour
+    {
+        [SerializeField] Gun gun;
+        public string GunName => gun.name;
+    }
 }
+
+

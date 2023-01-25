@@ -1,45 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Object;
 
-public class Inventory
+namespace BaseDefense
 {
-    int moneys;
-    int gems;
-    DisplayingUI UI;
-
-    public Inventory(DisplayingUI UI)
+    public class Inventory
     {
-        this.UI = UI;
-        moneys = PlayerPrefs.GetInt("Money", 0);
-        gems = PlayerPrefs.GetInt("Gem", 0);
-        UI.UpdateUI(moneys, gems);
-    }
+        int moneys;
+        int gems;
+        DisplayingUI UI;
 
-    ///<summary>Кладёт предмет в инвентарь и сохраняет значение в PlayerPrefs</summary>
-    ///<remarks>
-    ///Если тип предмета неизвестен - выводится сообщение в консоль с ошибкой. Сохранение значения не происходит
-    ///</remarks>
-    public void PutItem(Item item)
-    {
-        if (item is Money)
+        public Inventory(DisplayingUI UI)
         {
-            moneys += 5;
-            PlayerPrefs.SetInt("Money", moneys);
+            this.UI = UI;
+            moneys = PlayerPrefs.GetInt("Money", 0);
+            gems = PlayerPrefs.GetInt("Gem", 0);
+            UI.UpdateUI(moneys, gems);
         }
-        else if (item is Gem)
+
+        ///<summary>Кладёт предмет в инвентарь и сохраняет значение в PlayerPrefs</summary>
+        ///<remarks>
+        ///Если тип предмета неизвестен - выводится сообщение в консоль с ошибкой. Сохранение значения не происходит
+        ///</remarks>
+        public void PutItem(Item item)
         {
-            gems++;
-            PlayerPrefs.SetInt("Gem", gems);
+            if (item is Money)
+            {
+                moneys += 5;
+                PlayerPrefs.SetInt("Money", moneys);
+            }
+            else if (item is Gem)
+            {
+                gems++;
+                PlayerPrefs.SetInt("Gem", gems);
+            }
+            else
+            {
+                Debug.LogError($"Unknow item {item}");
+                return;
+            }
+            item.Destroy();
+            PlayerPrefs.Save();
+            UI.UpdateUI(moneys, gems);
         }
-        else
-        {
-            Debug.LogError($"Unknow item {item}");
-            return;
-        }
-        item.Destroy();
-        PlayerPrefs.Save();
-        UI.UpdateUI(moneys, gems);
     }
 }
+
+
