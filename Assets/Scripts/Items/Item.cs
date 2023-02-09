@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace BaseDefense
+namespace BaseDefense.Items
 {
     ///<summary>Базовый класс для всех видов выпадаемых предметов</summary>
     [RequireComponent(typeof(SphereCollider), typeof(Rigidbody))]

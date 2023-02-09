@@ -1,5 +1,7 @@
 using UnityEngine;
 using Zenject;
+using BaseDefense.UI;
+using BaseDefense.Characters;
 
 namespace BaseDefense
 {

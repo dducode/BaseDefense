@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace BaseDefense
+namespace BaseDefense.Extensions
 {
     public static class GameExtensions
     {

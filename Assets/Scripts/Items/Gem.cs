@@ -2,7 +2,7 @@ using System.Collections;
 using BroadcastMessages;
 using UnityEngine;
 
-namespace BaseDefense
+namespace BaseDefense.Items
 {
     public class Gem : Item
     {

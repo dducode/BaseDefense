@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BaseDefense
+namespace BaseDefense.AttackImplemention.Projectiles
 {
     ///<summary>Базовый класс для всех видов патронов</summary>
     [RequireComponent(typeof(Rigidbody), typeof(TrailRenderer))]

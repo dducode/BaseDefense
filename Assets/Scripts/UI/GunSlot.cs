@@ -1,6 +1,7 @@
 using UnityEngine;
+using BaseDefense.AttackImplemention.Guns;
 
-namespace BaseDefense
+namespace BaseDefense.UI
 {
     public class GunSlot : MonoBehaviour
     {

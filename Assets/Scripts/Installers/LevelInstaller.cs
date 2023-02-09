@@ -1,7 +1,9 @@
 using UnityEngine;
 using Zenject;
+using BaseDefense.Characters;
+using BaseDefense.UI;
 
-namespace BaseDefense
+namespace BaseDefense.Installers
 {
     public class LevelInstaller : MonoInstaller
     {

@@ -1,6 +1,7 @@
 using UnityEngine;
+using BaseDefense.Characters;
 
-namespace BaseDefense
+namespace BaseDefense.StateMachine
 {
     public class Walking : State
     {

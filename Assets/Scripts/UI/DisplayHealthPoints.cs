@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using BaseDefense.Extensions;
 
-namespace BaseDefense
+namespace BaseDefense.UI
 {
     ///<summary>Реализует отображение полосы здоровья</summary>
     public class DisplayHealthPoints : MonoBehaviour

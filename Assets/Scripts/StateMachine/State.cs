@@ -1,7 +1,8 @@
 using UnityEngine;
 using System;
+using BaseDefense.Characters;
 
-namespace BaseDefense
+namespace BaseDefense.StateMachine
 {
     public abstract class State
     {   

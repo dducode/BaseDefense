@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BaseDefense
+namespace BaseDefense.UI
 {
     public class BillboardHealthPointsBar : MonoBehaviour
     {

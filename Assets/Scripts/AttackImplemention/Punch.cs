@@ -1,6 +1,7 @@
 using UnityEngine;
+using BaseDefense.Characters;
 
-namespace BaseDefense
+namespace BaseDefense.AttackImplemention
 {
     [RequireComponent(typeof(SphereCollider))]
     public class Punch : MonoBehaviour

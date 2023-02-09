@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BaseDefense
+namespace BaseDefense.Items
 {
     public class ItemDrop : MonoBehaviour
     {

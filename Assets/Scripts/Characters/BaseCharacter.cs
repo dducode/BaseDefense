@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BaseDefense
+namespace BaseDefense.Characters
 {
     ///<summary>Базовый класс для всех типов персонажей</summary>
     [RequireComponent(typeof(CharacterController), typeof(Animator), typeof(ParticleSystem))]

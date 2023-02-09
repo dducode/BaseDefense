@@ -1,6 +1,7 @@
 using UnityEngine;
+using BaseDefense.Extensions;
 
-namespace BaseDefense
+namespace BaseDefense.AttackImplemention.Projectiles
 {
     public class Grenade : Projectile
     {

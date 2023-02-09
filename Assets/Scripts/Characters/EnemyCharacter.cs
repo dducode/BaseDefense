@@ -1,8 +1,11 @@
 using System.Collections;
 using UnityEngine;
 using Zenject;
+using BaseDefense.AttackImplemention;
+using BaseDefense.StateMachine;
+using BaseDefense.Items;
 
-namespace BaseDefense
+namespace BaseDefense.Characters
 {
     [RequireComponent(typeof(ItemDrop), typeof(Ragdoll))]
     public sealed class EnemyCharacter : BaseCharacter

@@ -1,8 +1,11 @@
 using UnityEngine;
 using Zenject;
 using BroadcastMessages;
+using BaseDefense.AttackImplemention.Guns;
+using BaseDefense.Items;
+using BaseDefense.UI;
 
-namespace BaseDefense
+namespace BaseDefense.Characters
 {
     [RequireComponent(typeof(ItemCollecting), typeof(DisplayHealthPoints))]
     public sealed class PlayerCharacter : BaseCharacter

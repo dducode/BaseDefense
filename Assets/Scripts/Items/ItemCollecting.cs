@@ -4,7 +4,7 @@ using UnityEngine;
 using Zenject;
 using BroadcastMessages;
 
-namespace BaseDefense
+namespace BaseDefense.Items
 {
     ///<summary>Обеспечивает сбор предметов с игрового поля, сброшенных с врагов</summary>
     public class ItemCollecting : MonoBehaviour

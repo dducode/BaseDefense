@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using BaseDefense.Characters;
+using BaseDefense.Extensions;
 
-namespace BaseDefense
+namespace BaseDefense.AttackImplemention.Projectiles
 {
     public class Arrow : Projectile
     {

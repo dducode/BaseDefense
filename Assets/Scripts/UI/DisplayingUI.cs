@@ -4,8 +4,10 @@ using UnityEngine.UI;
 using TMPro;
 using Zenject;
 using BroadcastMessages;
+using BaseDefense.Characters;
+using BaseDefense.Extensions;
 
-namespace BaseDefense
+namespace BaseDefense.UI
 {
     public class DisplayingUI : MonoBehaviour
     {

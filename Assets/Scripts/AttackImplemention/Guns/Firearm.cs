@@ -1,6 +1,7 @@
 using UnityEngine;
+using BaseDefense.AttackImplemention.Projectiles;
 
-namespace BaseDefense
+namespace BaseDefense.AttackImplemention.Guns
 {
     public class Firearm : Gun
     {

@@ -1,6 +1,7 @@
 using UnityEngine;
+using BaseDefense.AttackImplemention.Projectiles;
 
-namespace BaseDefense
+namespace BaseDefense.AttackImplemention.Guns
 {
     ///<summary>Базовый класс для всех видов оружия</summary>
     public abstract class Gun : MonoBehaviour
