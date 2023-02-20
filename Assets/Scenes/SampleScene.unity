@@ -541,8 +541,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.25}
+  m_SizeDelta: {x: -10, y: -7.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &107389072
 MonoBehaviour:
@@ -591,10 +591,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 20.1
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -729,12 +729,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 121494092}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -876,10 +876,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 36.25
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1344,10 +1344,10 @@ RectTransform:
   m_Father: {fileID: 1013284358}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 30.31202}
-  m_SizeDelta: {x: 86.3052, y: 14.3755}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -7.6879807}
+  m_SizeDelta: {x: -160, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &389230241
 MonoBehaviour:
@@ -1396,12 +1396,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
+  m_fontSize: 11.95
   m_fontSizeBase: 12
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 4
+  m_fontSizeMax: 12
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2567,12 +2567,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 536711760}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2806,10 +2806,10 @@ RectTransform:
   m_Father: {fileID: 865474380}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &550450828
 MonoBehaviour:
@@ -2860,12 +2860,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 18
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -3299,12 +3299,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: UpgradePlayer
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 90854673}
-          m_ObjectArgumentAssemblyTypeName: PlayerUpgradesUI, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.PlayerUpgradesUI, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3436,12 +3436,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 707045962}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3586,12 +3586,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 722743146}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3818,8 +3818,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.25}
+  m_SizeDelta: {x: -10, y: -7.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &796893575
 MonoBehaviour:
@@ -3868,10 +3868,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 20.1
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -4132,12 +4132,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 838743974}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4468,12 +4468,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 865474384}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4611,10 +4611,10 @@ RectTransform:
   m_Father: {fileID: 1445345052}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &866985896
 MonoBehaviour:
@@ -4665,12 +4665,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 18
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -4803,11 +4803,11 @@ MonoBehaviour:
   m_fontSize: 30
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 30
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4938,12 +4938,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 907224257}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6101,10 +6101,10 @@ RectTransform:
   m_Father: {fileID: 536711756}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1262621166
 MonoBehaviour:
@@ -6153,12 +6153,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 27.05
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -6367,11 +6367,11 @@ MonoBehaviour:
   m_fontSize: 30
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 30
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -6447,10 +6447,10 @@ RectTransform:
   m_Father: {fileID: 707045958}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1321928072
 MonoBehaviour:
@@ -6499,12 +6499,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -6866,12 +6866,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1424875353}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7016,12 +7016,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1445345056}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7198,10 +7198,10 @@ RectTransform:
   m_Father: {fileID: 1494464455}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1473174114
 MonoBehaviour:
@@ -7250,12 +7250,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 27.05
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -7425,12 +7425,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1494464459}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7520,10 +7520,10 @@ RectTransform:
   m_Father: {fileID: 121494088}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1500947316
 MonoBehaviour:
@@ -7572,12 +7572,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -7784,12 +7784,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: UpgradePlayer
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 983445169}
-          m_ObjectArgumentAssemblyTypeName: PlayerUpgradesUI, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.PlayerUpgradesUI, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8030,10 +8030,10 @@ RectTransform:
   m_Father: {fileID: 722743142}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1595926536
 MonoBehaviour:
@@ -8082,12 +8082,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -8165,10 +8165,10 @@ RectTransform:
   m_Father: {fileID: 1424875349}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1628579122
 MonoBehaviour:
@@ -8217,12 +8217,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -8355,12 +8355,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1638050744}
-          m_ObjectArgumentAssemblyTypeName: GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8947,11 +8947,11 @@ MonoBehaviour:
   m_fontSize: 30
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 30
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -9077,7 +9077,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1101823694}
   m_HandleRect: {fileID: 1101823693}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1
   m_Size: 0.36363637
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9230,10 +9230,10 @@ RectTransform:
   m_Father: {fileID: 907224253}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1778929622
 MonoBehaviour:
@@ -9284,12 +9284,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 18
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -9829,10 +9829,10 @@ RectTransform:
   m_Father: {fileID: 1638050740}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1841955075
 MonoBehaviour:
@@ -9881,12 +9881,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -10314,12 +10314,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 411886279}
-        m_TargetAssemblyTypeName: DisplayingUI, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.DisplayingUI, GameAssembly
         m_MethodName: UpgradePlayer
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2074187377}
-          m_ObjectArgumentAssemblyTypeName: PlayerUpgradesUI, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.PlayerUpgradesUI, GameAssembly
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10517,7 +10517,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926540548}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -10566,8 +10566,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.25}
+  m_SizeDelta: {x: -10, y: -7.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1973825880
 MonoBehaviour:
@@ -10616,10 +10616,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 20.1
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -11154,10 +11154,10 @@ RectTransform:
   m_Father: {fileID: 838743970}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -92.20001, y: 0}
-  m_SizeDelta: {x: 184.4, y: 76}
+  m_AnchoredPosition: {x: 35, y: 0}
+  m_SizeDelta: {x: -80, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2086915374
 MonoBehaviour:
@@ -11206,12 +11206,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

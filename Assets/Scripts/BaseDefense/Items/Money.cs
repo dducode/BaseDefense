@@ -1,5 +1,6 @@
 using System.Collections;
 using BroadcastMessages;
+using DG.Tweening;
 using UnityEngine;
 
 namespace BaseDefense.Items
@@ -16,30 +17,34 @@ namespace BaseDefense.Items
 
         public override void Destroy()
         {
-            StartCoroutine(DestroyMoney());
+            DestroyMoney();
         }
 
         public override void Drop(Vector3 force, Vector3 torque = default)
         {
             enabled = true;
-            rb.AddForce(force, ForceMode.Impulse);
-            rb.AddTorque(torque, ForceMode.Impulse);
+            Rigidbody.AddForce(force, ForceMode.Impulse);
+            Rigidbody.AddTorque(torque, ForceMode.Impulse);
         }
 
-        IEnumerator DestroyMoney()
+        private void DestroyMoney()
         {
             // Заранее делаем отписку для того, чтобы анимация сброса денег не прерывалась
             Messenger.RemoveListener(MessageType.PUSH_UNUSED_ITEMS, Remove);
             trigger.enabled = false;
-            yield return new WaitForSeconds(collectionTime);
-            enabled = false;
-            yield return Collapse();
-            ObjectsPool<Money>.Push(this);
-            transform.localScale = Vector3.one;
+            var sequence = DOTween.Sequence();
+            sequence.AppendInterval(collectionTime);
+            sequence.AppendCallback(() => enabled = false);
+            sequence.Append(Collapse());
+            sequence.OnComplete(() =>
+            {
+                ObjectsPool<Money>.Push(this);
+                transform.localScale = Vector3.one;
+            });
         }
 
         // Удаляет неиспользованные деньги со сцены
-        void Remove()
+        private void Remove()
         {
             enabled = false;
             ObjectsPool<Money>.Push(this);

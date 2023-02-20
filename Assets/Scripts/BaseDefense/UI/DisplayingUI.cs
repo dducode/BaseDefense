@@ -30,9 +30,9 @@ namespace BaseDefense.UI
         [SerializeField] Canvas shopWindow;
         [SerializeField] Canvas playerUpgradesWindow;
         [SerializeField] UpgradeValues upgradeValues;
-        [Inject] PlayerCharacter player;
+        [Inject] PlayerCharacter m_player;
 
-        void Start()
+        private void Start()
         {
             deathWindow.enabled = false;
             shopWindow.enabled = false;
@@ -47,7 +47,7 @@ namespace BaseDefense.UI
 
         [Listener(MessageType.DEATH_PLAYER)]
         public void DisplayDeathWindow() => StartCoroutine(Await());
-        IEnumerator Await()
+        private IEnumerator Await()
         {
             yield return new WaitForSeconds(2);
             deathWindow.enabled = true;
@@ -60,20 +60,20 @@ namespace BaseDefense.UI
         public void SelectGun(GunSlot slot)
         {
             frame.localPosition = slot.transform.localPosition;
-            player.SelectGun(slot.GunName);
+            m_player.SelectGun(slot.GunName);
         }
         public void OpenShop() => shopWindow.enabled = true;
         public void CloseShop() => shopWindow.enabled = false;
 
         public void UpgradePlayer(PlayerUpgradesUI playerUpgrades)
         {
-            player.Upgrade(playerUpgrades.UpgradableProperty);
-            upgradeValues.SetValues(player);
+            m_player.Upgrade(playerUpgrades.UpgradableProperty);
+            upgradeValues.SetValues(m_player);
         }
         public void OpenUpgrades()
         {
             playerUpgradesWindow.enabled = true;
-            upgradeValues.SetValues(player);
+            upgradeValues.SetValues(m_player);
         }
         public void CloseUpgrades() => playerUpgradesWindow.enabled = false;
 

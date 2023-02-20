@@ -9,30 +9,30 @@ namespace BaseDefense
         ///<summary>Максимально возможное количество очков "здоровья" для кристалла</summary>
         ///<value>[1, infinity]</value>
         [Tooltip("Максимально возможное количество очков 'здоровья' для кристалла. [1, infinity]")]
-        [SerializeField, Min(1)] float maxHealthPoints = 100;
+        [SerializeField, Min(1)] private float maxHealthPoints = 100;
 
         ///<summary>Текущее количество очков "здоровья" кристалла</summary>
         ///<value>[0, maxHealthPoints]</value>
-        float currentHealthPoints;
-        ///<inheritdoc cref="currentHealthPoints"/>
+        private float m_currentHealthPoints;
+        ///<inheritdoc cref="m_currentHealthPoints"/>
         public float CurrentHealthPoints
         {
-            get => currentHealthPoints;
+            get => m_currentHealthPoints;
             private set
             {
-                currentHealthPoints = value;
-                currentHealthPoints = Mathf.Clamp(currentHealthPoints, 0, maxHealthPoints);
-                if (currentHealthPoints == 0)
+                m_currentHealthPoints = value;
+                m_currentHealthPoints = Mathf.Clamp(m_currentHealthPoints, 0, maxHealthPoints);
+                if (m_currentHealthPoints == 0)
                     Destroy();
             }
         }
 
-        ItemDrop itemDrop;
+        private ItemDrop m_itemDrop;
 
-        void Awake()
+        private void Awake()
         {
             CurrentHealthPoints = maxHealthPoints;
-            itemDrop = GetComponent<ItemDrop>();
+            m_itemDrop = GetComponent<ItemDrop>();
         }
 
         ///<summary>Вызывается для нанесения повреждений кристаллу</summary>
@@ -42,9 +42,9 @@ namespace BaseDefense
             CurrentHealthPoints -= damage;
         }
 
-        void Destroy()
+        private void Destroy()
         {
-            itemDrop.DropItems();
+            m_itemDrop.DropItems();
             Destroy(gameObject);
         }
     }

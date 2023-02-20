@@ -1,9 +1,13 @@
+using System;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 using BroadcastMessages;
 using BaseDefense.AttackImplemention.Guns;
 using BaseDefense.Items;
 using BaseDefense.UI;
+using UnityEngine.Profiling;
 
 namespace BaseDefense.Characters
 {
@@ -11,19 +15,19 @@ namespace BaseDefense.Characters
     public sealed class PlayerCharacter : BaseCharacter
     {
         ///<summary>Transform руки, в которой игрок держит оружие</summary>
-        [Tooltip("Transform руки, в которой игрок держит оружие")]
         [Header("Связанные объекты")]
-        [SerializeField] Transform gunSlot;
-
+        [Tooltip("Transform руки, в которой игрок держит оружие")]
+        [SerializeField] private Transform gunSlot;
+        
         ///<inheritdoc cref="Upgrades"/>
         [Tooltip("Хранит в себе информацию о прокачиваемых характеристиках игрока")]
-        [SerializeField] Upgrades upgrades = new Upgrades();
-
+        [SerializeField] private Upgrades upgrades;
+        
         ///<inheritdoc cref="DisplayHealthPoints"/>
-        DisplayHealthPoints displayHealthPoints;
+        private DisplayHealthPoints m_displayHealthPoints;
 
         ///<inheritdoc cref="ItemCollecting"/>
-        ItemCollecting itemCollecting;
+        private ItemCollecting m_itemCollecting;
 
         ///<inheritdoc cref="BaseCharacter.maxHealthPoints"/>
         public float MaxHealthPoints => maxHealthPoints;
@@ -32,127 +36,218 @@ namespace BaseDefense.Characters
         public float MaxSpeed => maxSpeed;
 
         ///<inheritdoc cref="ItemCollecting.Capacity"/>
-        public int Capacity => itemCollecting.Capacity;
-
-        public bool IsNotMaxForSpeed => maxSpeed < upgrades.Speed.maxValue;
-        public bool IsNotMaxForMaxHealth => maxHealthPoints < upgrades.MaxHealth.maxValue;
-        public bool IsNotMaxForCapacity => Capacity < upgrades.Capacity.maxValue;
-
-        ///<summary>Направление взгляда в сторону атакуемой сущности</summary>
-        Vector3 lookToAttackable;
-        Vector3 move;
-
-        JoystickController joystick;
-        Shop shop;
-        Gun gun;
-        bool inEnemyBase;
+        public int Capacity => m_itemCollecting.Capacity;
+        
+        private Gun m_gun;
+        private bool m_inEnemyBase;
 
         [Inject]
         public void Constructor(JoystickController joystick, Shop shop)
         {
-            this.joystick = joystick;
-            this.shop = shop;
+            m_joystick = joystick;
+            m_shop = shop;
         }
 
         public override void Awake()
         {
             base.Awake();
-            itemCollecting = GetComponent<ItemCollecting>();
-            displayHealthPoints = GetComponent<DisplayHealthPoints>();
-            gun = gunSlot.GetChild(0).GetComponent<Gun>();
+            m_itemCollecting = GetComponent<ItemCollecting>();
+            m_displayHealthPoints = GetComponent<DisplayHealthPoints>();
+            m_gun = gunSlot.GetChild(0).GetComponent<Gun>();
         }
 
-        void Start()
+        private void Start()
         {
-            displayHealthPoints.SetMaxValue((int)maxHealthPoints);
-            displayHealthPoints.UpdateView((int)CurrentHealthPoints);
-            gun.gameObject.SetActive(false);
+            m_displayHealthPoints.SetMaxValue((int)maxHealthPoints);
+            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+            m_gun.gameObject.SetActive(false);
+            m_gazeDirection = transform.forward;
         }
+        
+        #region PlayerUpdate
 
-        void Update()
+        private static readonly int SpeedId = Animator.StringToHash("speed");
+        ///<summary>Направление взгляда в сторону атакуемой сущности</summary>
+        private Vector3 m_gazeDirection;
+        private Vector3 m_move;
+        private JoystickController m_joystick;
+
+        private void Update()
         {
-            if (lookToAttackable != Vector3.zero)
-                LookToTarget(lookToAttackable, 15);
-            else if (move != Vector3.zero)
-                LookToTarget(move, 15);
+            LookToTarget(m_gazeDirection, 15);
 
-            if (inEnemyBase && !Animator.IsInTransition(0)) // Ожидание перехода для предотвращения преждевременной стрельбы
-            // Поиск ближайшего врага на вражеской базе и атака
+            Movement();
+            
+            if (m_inEnemyBase)
             {
-                GameObject attackable = GetNearestAttackable();
-                if (attackable is null)
-                    lookToAttackable = Vector3.zero;
-                else
-                {
-                    Vector3 attackablePosition = attackable.transform.position;
-                    Vector3 playerPosition = transform.position;
-                    attackablePosition.y = playerPosition.y = 0;
-                    lookToAttackable = attackablePosition - playerPosition;
-                    if (Vector3.Dot(lookToAttackable.normalized, transform.forward) > .95f) // Прицеливание
-                    {
-                        if (gun is GrenadeLauncher grenade)
-                        // Стреляет из гранатомёта только на безопасном расстоянии
-                        {
-                            if (lookToAttackable.magnitude > grenade.DamageRadius + 1)
-                                grenade.Shot();
-                        }
-                        else
-                            gun.Shot();
-                    }
-                }
+                // Ожидание перехода анимации для предотвращения преждевременной атаки
+                if (!Animator.IsInTransition(0))
+                    Attack();
+                // Если анимация ещё проигрывается - ничего не делаем
+                else { }
             }
             else 
-            // Восстановление здоровья на своей базе
-            {
-                CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / 30;
-                displayHealthPoints.UpdateView((int)CurrentHealthPoints);
-            }
-
-            // Перемещение игрока с помощью джойстика
-            move = joystick.GetInput();
-            Animator.SetFloat("speed", move.magnitude * maxSpeed);
-            move = move * maxSpeed;
-            Controller.Move(move * Time.smoothDeltaTime);
-
+                HealthRecovery();
+            
             // Реализует плавный поворот к цели с определённой скоростью
-            void LookToTarget(Vector3 target, float speed)
+            void LookToTarget(Vector3 target, float rotationSpeed)
             {
                 transform.rotation = Quaternion.Slerp(
-                    transform.rotation, Quaternion.LookRotation(target), Time.smoothDeltaTime * speed
+                    transform.rotation, Quaternion.LookRotation(target), Time.smoothDeltaTime * rotationSpeed
                 );
             }
         }
+        
+        private void Movement()
+        {
+            m_move = m_joystick.GetInput();
+            Animator.SetFloat(SpeedId, m_move.magnitude * maxSpeed);
+            m_move *= maxSpeed;
+            Controller.Move(m_move * Time.smoothDeltaTime);
+            m_gazeDirection = m_move == Vector3.zero ? transform.forward : m_move;
+        }
 
-        void OnTriggerEnter(Collider other)
+        private void Attack()
+        {
+            Profiler.BeginSample("Attack");
+            
+            var attackable = GetNearestAttackable();
+            
+            // Если поблизости нет врагов - выходим из метода
+            if (attackable is null)
+                return;
+            
+            var attackablePosition = attackable.transform.position;
+            var playerPosition = transform.position;
+            attackablePosition.y = playerPosition.y = 0;
+            m_gazeDirection = attackablePosition - playerPosition;
+            
+            // Прицеливание
+            const float aimingAccuracy = 0.95f;
+            if (Vector3.Dot(m_gazeDirection.normalized, transform.forward) > aimingAccuracy) 
+            {
+                if (m_gun is GrenadeLauncher grenade)
+                {
+                    // ReSharper disable once Unity.InefficientPropertyAccess
+                    var ray = new Ray(transform.position + Vector3.up, transform.forward);
+                    // Стреляем из гранатомёта только на безопасном расстоянии
+                    if (Physics.Raycast(ray, out var hit) && hit.distance > grenade.DamageRadius)
+                        grenade.Shot();
+                    // Если ещё находимся слишком близко к цели - не стреляем
+                    else { }
+                }
+                else
+                    m_gun.Shot();
+            }
+            // Если ещё не прицелились - ничего не делаем
+            else { }
+            
+            Profiler.EndSample();
+        }
+        
+        ///<returns>Возвращает ближайшую к игроку атакуемую сущность. Если рядом таких нет - возвращает null</returns>
+        private GameObject GetNearestAttackable()
+        {
+            // ReSharper disable once Unity.PreferNonAllocApi
+            var attackables = Physics.OverlapSphere(
+                transform.position, attackDistance, 1 << 3
+            ); // 1 << 3 - маска слоя атакуемой сущности (3: AttackableLayer)
+            var enemies = attackables.Where((e) => e.GetComponent<EnemyCharacter>()).ToArray();
+            
+            // Приоритет отдаётся врагам. Если они не найдены - атакуем другие сущности
+            return FindTarget(enemies.Any() ? enemies : attackables);
+
+            GameObject FindTarget(IEnumerable targets)
+            {
+                GameObject target = null;
+                
+                float dist = Mathf.Infinity;
+                foreach (Collider coll in targets)
+                {
+                    var distance = coll.transform.position - transform.position;
+                    if (distance.magnitude < dist)
+                    {
+                        target = coll.gameObject;
+                        dist = distance.magnitude;
+                    }
+                }
+                
+                return target;
+            }
+        }
+
+        private void HealthRecovery()
+        {
+            const float recoveryTime = 30;
+            CurrentHealthPoints += maxHealthPoints * Time.smoothDeltaTime / recoveryTime;
+            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+        }
+
+        #endregion
+        
+        #region GunSelection
+
+        private Shop m_shop;
+        
+        ///<summary>Вызывается при выборе оружия из магазина</summary>
+        ///<param name="gunName">Выбранное оружие</param>
+        public void SelectGun(string gunName)
+        {
+            m_gun = m_shop.TakeGun(gunName, m_gun);
+            m_gun.transform.parent = gunSlot;
+            m_gun.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        }
+
+        #endregion
+
+        #region TriggerEvents
+        
+        private static readonly int InEnemyBase = Animator.StringToHash("inEnemyBase");
+        private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("enemy field"))
                 SetParams(true);
-            if (other.GetComponent<Gem>() is Gem gem)
-                itemCollecting.PutGem(gem);
-            if (other.GetComponent<Money>() is Money money)
-                itemCollecting.StackMoney(money);
+
+            if (other.GetComponent<Item>() is { } item)
+                switch (item)
+                {
+                    case Gem gem:
+                        m_itemCollecting.PutGem(gem);
+                        break;
+                    case Money money:
+                        m_itemCollecting.StackMoney(money);
+                        break;
+                    default:
+                        throw new NotImplementedException($"Обработка объекта {item} не реализована");
+                }
         }
-        void OnTriggerExit(Collider other)
+        
+        private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("enemy field"))
             {
                 SetParams(false);
-                lookToAttackable = Vector3.zero;
-                if (!itemCollecting.DropIsInProcess)
-                    StartCoroutine(itemCollecting.DropMoney());
+                if (!m_itemCollecting.DropIsInProcess)
+                    StartCoroutine(m_itemCollecting.DropMoney());
             }
         }
-
-        ///<summary>Вызывается при выборе оружия из магазина</summary>
-        ///<param name="shop">Магазин с оружием</param>
-        ///<param name="gunName">Выбранное оружие</param>
-        public void SelectGun(string gunName)
+        
+        ///<summary>Устанавливает параметры, связанные с нахождением на вражеской базе</summary>
+        ///<param name="value">Значение, устанавливаемое необходимым параметрам</param>
+        private void SetParams(bool value)
         {
-            gun = shop.TakeGun(gunName, gun);
-            gun.transform.parent = gunSlot;
-            gun.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            m_inEnemyBase = value;
+            m_gun.gameObject.SetActive(value);
+            Animator.SetBool(InEnemyBase, value);
         }
+        
+        #endregion
 
+        #region PlayerUpgrades
+        
+        public bool IsNotMaxForSpeed => maxSpeed < upgrades.Speed.maxValue;
+        public bool IsNotMaxForMaxHealth => maxHealthPoints < upgrades.MaxHealth.maxValue;
+        public bool IsNotMaxForCapacity => Capacity < upgrades.Capacity.maxValue;
         ///<summary>Прокачивает характеристики игрока</summary>
         ///<param name="upgradeType">Определяет прокачиваемую характеристику</param>
         public void Upgrade(UpgradableProperties upgradeType)
@@ -160,43 +255,62 @@ namespace BaseDefense.Characters
             switch (upgradeType)
             {
                 case UpgradableProperties.Speed:
-                    if (maxSpeed < upgrades.Speed.maxValue)
-                    {
-                        maxSpeed += upgrades.Speed.step;
-                        if (maxSpeed > upgrades.Speed.maxValue)
-                            maxSpeed = upgrades.Speed.maxValue;
-                    }
+                    UpgradeSpeed();
                     break;
                 case UpgradableProperties.Max_Health:
-                    if (maxHealthPoints < upgrades.MaxHealth.maxValue)
-                    {
-                        maxHealthPoints += upgrades.MaxHealth.step;
-                        if (maxHealthPoints > upgrades.MaxHealth.maxValue)
-                            maxHealthPoints = upgrades.MaxHealth.maxValue;
-                        CurrentHealthPoints = maxHealthPoints;
-                        displayHealthPoints.UpdateView((int)CurrentHealthPoints);
-                        displayHealthPoints.SetMaxValue((int)maxHealthPoints);
-                    }
+                    UpgradeMaxHealth();
                     break;
                 case UpgradableProperties.Capacity:
-                    itemCollecting.UpgradeCapacity(upgrades.Capacity.step, upgrades);
+                    m_itemCollecting.UpgradeCapacity(upgrades);
                     break;
             }
         }
 
+        private void UpgradeSpeed()
+        {
+            if (IsNotMaxForSpeed)
+            {
+                maxSpeed += upgrades.Speed.step;
+                if (maxSpeed > upgrades.Speed.maxValue)
+                    maxSpeed = upgrades.Speed.maxValue;
+            }
+            else
+                Debug.LogWarning("Достигнут предел в прокачке максимальной скорости");
+        }
+
+        private void UpgradeMaxHealth()
+        {
+            if (IsNotMaxForMaxHealth)
+            {
+                maxHealthPoints += upgrades.MaxHealth.step;
+                if (maxHealthPoints > upgrades.MaxHealth.maxValue)
+                    maxHealthPoints = upgrades.MaxHealth.maxValue;
+                CurrentHealthPoints = maxHealthPoints;
+                m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+                m_displayHealthPoints.SetMaxValue((int)maxHealthPoints);
+            }
+            else
+                Debug.LogWarning("Достигнут предел в прокачке максимального здоровья");
+        }
+        
+        #endregion
+
+        #region PlayerLifecycle
+        
+        private static readonly int Alive = Animator.StringToHash("alive");
         public override void Hit(float damage)
         {
             CurrentHealthPoints -= damage;
-            displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
             var emission = HitEffect.emission;
             emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
             HitEffect.Play();
         }
 
-        protected override void DestroyCharacter()
+        protected override void Death()
         {
-            Animator.SetBool("alive", false);
-            gun.gameObject.SetActive(false);
+            Animator.SetBool(Alive, false);
+            m_gun.gameObject.SetActive(false);
             enabled = false;
             MeshRenderer.material.color = deathColor;
             Messenger.SendMessage(MessageType.DEATH_PLAYER);
@@ -205,46 +319,17 @@ namespace BaseDefense.Characters
         [Listener(MessageType.RESTART)]
         public void Resurrection()
         {
-            Transform respawn = GameObject.FindGameObjectWithTag("Respawn").transform;
-            Animator.SetBool("alive", true);
-            Animator.SetBool("inEnemyBase", false);
-            lookToAttackable = Vector3.zero;
+            var respawn = GameObject.FindGameObjectWithTag("Respawn").transform;
+            Animator.SetBool(Alive, true);
+            Animator.SetBool(InEnemyBase, false);
             transform.SetPositionAndRotation(respawn.position, Quaternion.identity);
             enabled = true;
             CurrentHealthPoints = maxHealthPoints;
-            inEnemyBase = false;
+            m_inEnemyBase = false;
             MeshRenderer.material.color = DefaultColor;
         }
-
-        ///<returns>Возвращает ближайшую к игроку атакуемую сущность. Если рядом таких нет - возвращает null</returns>
-        GameObject GetNearestAttackable()
-        {
-            GameObject target = null;
-            Collider[] attackables = Physics.OverlapSphere(
-                transform.position, attackDistance, 1 << 3
-            ); // 1 << 3 - маска слоя атакуемой сущности (3: AttackableLayer)
-            float dist = Mathf.Infinity;
-            foreach (Collider attackable in attackables)
-            {
-                Vector3 distance = attackable.transform.position - transform.position;
-                if (distance.magnitude < dist)
-                {
-                    target = attackable.gameObject;
-                    dist = distance.magnitude;
-                }
-            }
-
-            return target;
-        }
-
-        ///<summary>Устанавливает параметры, связанные с нахождением на вражеской базе</summary>
-        ///<param name="value">Значение, устанавливаемое необходимым параметрам</param>
-        void SetParams(bool value)
-        {
-            inEnemyBase = value;
-            gun.gameObject.SetActive(value);
-            Animator.SetBool("inEnemyBase", value);
-        }
+        
+        #endregion
     }
 }
 

@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
+using UnityEngine.Serialization;
 
 namespace BaseDefense.Items
 {
@@ -10,27 +12,27 @@ namespace BaseDefense.Items
         ///<summary>Скорость анимации исчезания предмета</summary>
         ///<value>[0, infinity]</value>
         [Tooltip("Скорость анимации исчезания предмета. [0, infinity]")]
-        [SerializeField, Min(0)] float collapseSpeed = 2;
+        [SerializeField, Min(0)] private float collapseSpeed = 2;
+        [SerializeField] protected Collider trigger;
+        [SerializeField] protected Collider meshCollider;
 
         ///<summary>При включении предмета также включается его триггер, физика жёсткого тела и коллайдер</summary>
-        bool _enabled;
-        ///<inheritdoc cref="_enabled"/>
+        bool m_enabled;
+        ///<inheritdoc cref="m_enabled"/>
         public new bool enabled
         {
-            get => _enabled;
+            get => m_enabled;
             set
             {
-                _enabled = value;
-                base.enabled = _enabled;
-                trigger.enabled = _enabled;
-                meshCollider.enabled = _enabled;
-                rb.isKinematic = !_enabled;
+                m_enabled = value;
+                base.enabled = m_enabled;
+                trigger.enabled = m_enabled;
+                meshCollider.enabled = m_enabled;
+                Rigidbody.isKinematic = !m_enabled;
             }
         }
 
-        protected Collider trigger;
-        protected Collider meshCollider;
-        protected Rigidbody rb;
+        protected Rigidbody Rigidbody;
 
         ///<summary>Вызывается для выброса предмета</summary>
         ///<param name="force">Направление силы, в котором нужно выбросить предмет</param>
@@ -45,29 +47,22 @@ namespace BaseDefense.Items
 
         public virtual void Awake()
         {
-            Collider[] colliders = GetComponents<Collider>();
-            foreach (Collider collider in colliders)
-                if (collider.isTrigger)
-                    trigger = collider;
-                else
-                    meshCollider = collider;
-            rb = GetComponent<Rigidbody>();
+            Rigidbody = GetComponent<Rigidbody>();
             enabled = true;
         }
 
-        ///<summary>
-        ///Вспомогательная сопрограмма для реализации анимации исчезания предмета в производных классах
-        ///</summary>
-        protected IEnumerator Collapse()
+        protected Sequence Collapse()
         {
-            Vector3 startScale = transform.localScale;
-            Vector3 targetScale = Vector3.one * 0.001f;
-            float time = Time.time;
-            while (transform.localScale != targetScale)
-            {
-                transform.localScale = Vector3.Lerp(startScale, targetScale, (Time.time - time) * collapseSpeed);
-                yield return null;
-            }
+            const float punchScaleScalar = 0.5f;
+            const float smallScaleScalar = 0.001f;
+            var punchScale = new Vector3(punchScaleScalar, punchScaleScalar, punchScaleScalar);
+            var smallScale = new Vector3(smallScaleScalar, smallScaleScalar, smallScaleScalar);
+            var sequence = DOTween.Sequence();
+            sequence.Append(transform.DOPunchScale(punchScale, 1 / collapseSpeed, 1, 0));
+            sequence.Append(transform.DOScale(smallScale, 1 / collapseSpeed));
+            sequence.OnComplete(() => sequence.Kill());
+
+            return sequence;
         }
     }
 }

@@ -2,54 +2,57 @@ using UnityEngine;
 using System.Collections.Generic;
 using Zenject;
 using BroadcastMessages;
+using DG.Tweening;
 
 namespace BaseDefense
 {
     public class Game : MonoBehaviour
     {
-        [SerializeField] EnemyFactory[] basePrefabs;
-        [Inject] EnemyFactory.Factory enemyFactory;
-        List<EnemyFactory> bases;
-        int currentLevel;
+        [SerializeField] private EnemyFactory[] basePrefabs;
+        [Inject] private EnemyFactory.Factory m_enemyFactory;
+        private List<EnemyFactory> m_bases;
+        private int m_currentLevel;
+        private const int FIRST_BASE = 0;
 
-        void Awake()
+        private void Awake()
         {
             // currentLevel = Load();
             Application.targetFrameRate = Screen.currentResolution.refreshRate;
-            bases = new List<EnemyFactory>();
-            EnemyFactory enemyBase = FindObjectOfType<EnemyFactory>();
+            DOTween.SetTweensCapacity(200, 100);
+            m_bases = new List<EnemyFactory>();
+            var enemyBase = FindObjectOfType<EnemyFactory>();
             if (enemyBase == null)
             {
-                enemyBase = Instantiate(basePrefabs[currentLevel], new Vector3(0, 0, 20), Quaternion.identity);
-                enemyBase.name = basePrefabs[currentLevel].name;
+                var initialPosition = new Vector3(0, 0, 20);
+                enemyBase = Instantiate(basePrefabs[m_currentLevel], initialPosition, Quaternion.identity);
+                enemyBase.name = basePrefabs[m_currentLevel].name;
             }
-            bases.Add(enemyBase);
+            m_bases.Add(enemyBase);
         }
 
         public void NextLevel()
         {
-            currentLevel++;
-            if (currentLevel == basePrefabs.Length)
-                currentLevel = 0;
-            Transform backTransition;
-            Transform frontTransition;
-            EnemyFactory newBase = enemyFactory.Create(basePrefabs[currentLevel]);
-            newBase.name = basePrefabs[currentLevel].name;
+            m_currentLevel++;
+            if (m_currentLevel == basePrefabs.Length)
+                m_currentLevel = 0;
 
-            backTransition = newBase.transitions.backTransition;
+            var newBase = m_enemyFactory.Create(basePrefabs[m_currentLevel]);
+            newBase.name = basePrefabs[m_currentLevel].name;
+
+            var backTransition = newBase.transitions.backTransition;
             backTransition.gameObject.SetActive(false);
-
-            frontTransition = bases[0].transitions.frontTransition;
+            
+            var frontTransition = m_bases[FIRST_BASE].transitions.frontTransition;
             frontTransition.gameObject.SetActive(false);
 
             newBase.transform.position = frontTransition.position - backTransition.localPosition;
-            bases.Add(newBase);
+            m_bases.Add(newBase);
         }
 
         public void DestroyOldBase()
         {
-            Destroy(bases[0].gameObject);
-            bases.RemoveAt(0);
+            Destroy(m_bases[FIRST_BASE].gameObject);
+            m_bases.RemoveAt(FIRST_BASE);
             Messenger.SendMessage(MessageType.PUSH_UNUSED_ITEMS);
         }
     }

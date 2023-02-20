@@ -49,6 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60bfb0053f30b424d9f7f1e8bdcd2dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collapseSpeed: 2
+  trigger: {fileID: 4421689399408442848}
+  meshCollider: {fileID: 1131559567225302555}
   collectionTime: 2
 --- !u!33 &493306233073439952
 MeshFilter:
@@ -140,5 +143,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}

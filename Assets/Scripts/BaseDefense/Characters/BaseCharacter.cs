@@ -40,45 +40,45 @@ namespace BaseDefense.Characters
         public SkinnedMeshRenderer MeshRenderer { get; protected set; }
 
         ///<summary>При включении поведения персонажа также включается его контроллёр</summary>
-        bool _enabledCharacter;
-        ///<inheritdoc cref="_enabledCharacter"/>
+        private bool m_enabledCharacter;
+        ///<inheritdoc cref="m_enabledCharacter"/>
         public new bool enabled
         {
-            get => _enabledCharacter;
+            get => m_enabledCharacter;
             set
             {
-                _enabledCharacter = value;
-                base.enabled = _enabledCharacter;
-                Controller.enabled = _enabledCharacter;
+                m_enabledCharacter = value;
+                base.enabled = m_enabledCharacter;
+                Controller.enabled = m_enabledCharacter;
             }
         }
 
         ///<summary>Текущее количество здоровья персонажа</summary>
         ///<value>[0, maxHealthPoints]</value>
-        float currentHealthPoints;
-        ///<inheritdoc cref="currentHealthPoints"/>
+        float m_currentHealthPoints;
+        ///<inheritdoc cref="m_currentHealthPoints"/>
         public float CurrentHealthPoints
         {
-            get => currentHealthPoints;
+            get => m_currentHealthPoints;
             protected set
             {
-                currentHealthPoints = value;
-                currentHealthPoints = Mathf.Clamp(currentHealthPoints, 0, maxHealthPoints);
+                m_currentHealthPoints = value;
+                m_currentHealthPoints = Mathf.Clamp(m_currentHealthPoints, 0, maxHealthPoints);
                 if (!IsAlive)
-                    DestroyCharacter();
+                    Death();
             }
         }
 
         ///<summary>Состояние персонажа "жив/мёртв"</summary>
         ///<returns>Возвращает true, если текущий показатель здоровья больше 0, иначе false</returns>
-        public bool IsAlive => currentHealthPoints > 0;
+        public bool IsAlive => m_currentHealthPoints > 0;
 
         ///<summary>Вызывается для нанесения урона персонажу</summary>
         ///<param name ="damage">Количество нанесённого урона</param>
         public abstract void Hit(float damage);
 
         ///<summary>Вызывается автоматически, когда персонаж мёртв</summary>
-        protected abstract void DestroyCharacter();
+        protected abstract void Death();
 
         public virtual void Awake()
         {
@@ -90,7 +90,7 @@ namespace BaseDefense.Characters
             DefaultColor = MeshRenderer.material.color;
         }
 
-        void OnDrawGizmosSelected()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.color = gizmosView;
             Gizmos.DrawWireSphere(transform.position + (Vector3.up * transform.localScale.y), attackDistance);
