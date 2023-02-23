@@ -4,7 +4,7 @@ using BaseDefense.AttackImplemention.Projectiles;
 namespace BaseDefense.AttackImplemention.Guns
 {
     ///<summary>Базовый класс для всех видов оружия</summary>
-    public abstract class Gun : MonoBehaviour
+    public abstract class Gun : Object
     {
         ///<summary>Префаб патрона. Каждому оружию соответствует свой патрон</summary>
         [Header("Общие характеристики оружия")]
@@ -25,8 +25,9 @@ namespace BaseDefense.AttackImplemention.Guns
         ///<param name="target">Позиция цели, в которую необходимо выстрелить</param>
         public abstract void Shot();
 
-        public virtual void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             timeOfLastShot = Time.time;
         }
     }

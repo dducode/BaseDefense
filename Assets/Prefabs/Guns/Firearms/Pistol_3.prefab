@@ -110,15 +110,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc05aeed2bdbce4e91763b8fc6be2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunName: 2
   projectilePrefab: {fileID: 1183884636868395896, guid: 04a988901021f3b429b687293b33b6f5,
     type: 3}
   intervalOfShots: 0.4
   muzzles:
   - {fileID: 2459957708264632604}
   - {fileID: 2459957708802607918}
-  dispertionScalar: 0.1
-  shotPower:
+  dispersionScalar: 0.1
+  shotPowerRange:
     minLimit: 0
     maxLimit: 25
     minValue: 10

@@ -7,7 +7,7 @@ namespace BaseDefense.Items
 {
     ///<summary>Базовый класс для всех видов выпадаемых предметов</summary>
     [RequireComponent(typeof(SphereCollider), typeof(Rigidbody))]
-    public abstract class Item : MonoBehaviour
+    public abstract class Item : Object
     {
         ///<summary>Скорость анимации исчезания предмета</summary>
         ///<value>[0, infinity]</value>
@@ -43,10 +43,11 @@ namespace BaseDefense.Items
         ///<remarks>
         ///Рекомендуется вместо вызова метода Object.Destroy() в данном методе использовать ObjectsPool.Push()
         ///</remarks>
-        public abstract void Destroy();
+        public abstract void DestroyItem();
 
-        public virtual void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             Rigidbody = GetComponent<Rigidbody>();
             enabled = true;
         }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using BaseDefense.Items;
 using BaseDefense.UI;
@@ -6,42 +7,37 @@ namespace BaseDefense
 {
     public class Inventory
     {
-        int moneys;
-        int gems;
-        DisplayingUI UI;
+        private int m_moneys;
+        private int m_gems;
+        private readonly DisplayingUI m_ui;
 
-        public Inventory(DisplayingUI UI)
+        public Inventory(DisplayingUI ui)
         {
-            this.UI = UI;
-            moneys = PlayerPrefs.GetInt("Money", 0);
-            gems = PlayerPrefs.GetInt("Gem", 0);
-            UI.UpdateUI(moneys, gems);
+            m_ui = ui;
+            m_moneys = PlayerPrefs.GetInt("Money", 0);
+            m_gems = PlayerPrefs.GetInt("Gem", 0);
+            ui.UpdateUI(m_moneys, m_gems);
         }
 
         ///<summary>Кладёт предмет в инвентарь и сохраняет значение в PlayerPrefs</summary>
-        ///<remarks>
-        ///Если тип предмета неизвестен - выводится сообщение в консоль с ошибкой. Сохранение значения не происходит
-        ///</remarks>
         public void PutItem(Item item)
         {
-            if (item is Money)
+            switch (item)
             {
-                moneys += 5;
-                PlayerPrefs.SetInt("Money", moneys);
+                case Money:
+                    m_moneys += 5;
+                    PlayerPrefs.SetInt("Money", m_moneys);
+                    break;
+                case Gem:
+                    m_gems++;
+                    PlayerPrefs.SetInt("Gem", m_gems);
+                    break;
+                default:
+                    throw new NotImplementedException($"Предмет {item} не реализован");
             }
-            else if (item is Gem)
-            {
-                gems++;
-                PlayerPrefs.SetInt("Gem", gems);
-            }
-            else
-            {
-                Debug.LogError($"Unknow item {item}");
-                return;
-            }
-            item.Destroy();
+            item.DestroyItem();
             PlayerPrefs.Save();
-            UI.UpdateUI(moneys, gems);
+            m_ui.UpdateUI(m_moneys, m_gems);
         }
     }
 }

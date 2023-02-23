@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using BaseDefense.Broadcast_messages;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,25 +14,24 @@ namespace BaseDefense.UI
     public class DisplayingUI : MonoBehaviour
     {
         ///<summary>Отображает количество денег у игрока</summary>
-        [SerializeField, Tooltip("Отображает количество денег у игрока")] 
-        TextMeshProUGUI moneys;
+        [SerializeField, Tooltip("Отображает количество денег у игрока")]
+        private TextMeshProUGUI moneys;
 
         ///<summary>Отображает количество кристаллов у игрока</summary>
-        [SerializeField, Tooltip("Отображает количество кристаллов у игрока")] 
-        TextMeshProUGUI gems;
+        [SerializeField, Tooltip("Отображает количество кристаллов у игрока")]
+        private TextMeshProUGUI gems;
 
         ///<summary>Окно, выводимое при смерти игрока</summary>
-        [SerializeField, Tooltip("Окно, выводимое при смерти игрока")] 
-        Canvas deathWindow;
+        [SerializeField, Tooltip("Окно, выводимое при смерти игрока")]
+        private Canvas deathWindow;
 
         ///<summary>Рамка для выбранного игроком оружия</summary>
-        [SerializeField, Tooltip("Рамка для выбранного игроком оружия")] 
-        RectTransform frame;
+        [SerializeField, Tooltip("Рамка для выбранного игроком оружия")]
+        private RectTransform frame;
 
-        [SerializeField] Canvas shopWindow;
-        [SerializeField] Canvas playerUpgradesWindow;
-        [SerializeField] UpgradeValues upgradeValues;
-        [Inject] PlayerCharacter m_player;
+        [SerializeField] private Canvas shopWindow;
+        [SerializeField] private Canvas playerUpgradesWindow;
+        [SerializeField] private UpgradeValues upgradeValues;
 
         private void Start()
         {
@@ -44,19 +45,15 @@ namespace BaseDefense.UI
             this.moneys.text = moneys.ToStringWithSeparator();
             this.gems.text = gems.ToStringWithSeparator();
         }
-
-        [Listener(MessageType.DEATH_PLAYER)]
-        public void DisplayDeathWindow() => StartCoroutine(Await());
-        private IEnumerator Await()
-        {
-            yield return new WaitForSeconds(2);
-            deathWindow.enabled = true;
-        }
+        
         public void Restart()
         {
             Messenger.SendMessage(MessageType.RESTART);
             deathWindow.enabled = false;
         }
+        
+        [Inject] private PlayerCharacter m_player;
+        
         public void SelectGun(GunSlot slot)
         {
             frame.localPosition = slot.transform.localPosition;
@@ -77,7 +74,17 @@ namespace BaseDefense.UI
         }
         public void CloseUpgrades() => playerUpgradesWindow.enabled = false;
 
-        [System.Serializable]
+        private void OnEnable() => Messenger.AddListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
+        private void OnDisable() => Messenger.RemoveListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
+
+        private void DisplayDeathWindow() => StartCoroutine(Await());
+        private IEnumerator Await()
+        {
+            yield return new WaitForSeconds(2);
+            deathWindow.enabled = true;
+        }
+
+        [Serializable]
         public struct UpgradeValues
         {
             public UpgradeableProperty speed;
@@ -95,7 +102,7 @@ namespace BaseDefense.UI
                 capacity.textField.text = $"Capacity: {player.Capacity}";
                 capacity.button.interactable = player.IsNotMaxForCapacity;
             }
-            [System.Serializable]
+            [Serializable]
             public struct UpgradeableProperty
             {
                 public TextMeshProUGUI textField;

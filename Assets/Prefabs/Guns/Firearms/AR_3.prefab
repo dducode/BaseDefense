@@ -80,7 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc05aeed2bdbce4e91763b8fc6be2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunName: 5
   projectilePrefab: {fileID: 1183884636868395896, guid: 04a988901021f3b429b687293b33b6f5,
     type: 3}
   intervalOfShots: 0.25
@@ -88,8 +87,8 @@ MonoBehaviour:
   - {fileID: 1577867291894751026}
   - {fileID: 727379910944781466}
   - {fileID: 567851906310650263}
-  dispertionScalar: 0.2
-  shotPower:
+  dispersionScalar: 0.2
+  shotPowerRange:
     minLimit: 0
     maxLimit: 25
     minValue: 6

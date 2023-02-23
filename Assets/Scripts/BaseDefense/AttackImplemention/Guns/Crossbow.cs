@@ -1,5 +1,6 @@
 using UnityEngine;
 using BaseDefense.AttackImplemention.Projectiles;
+using UnityEngine.Assertions;
 
 namespace BaseDefense.AttackImplemention.Guns
 {
@@ -22,23 +23,27 @@ namespace BaseDefense.AttackImplemention.Guns
 
         public override void Shot()
         {
-            if (timeOfLastShot + intervalOfShots < Time.time)
+            if (!(timeOfLastShot + intervalOfShots < Time.time)) return;
+            
+            foreach (var muzzle in muzzles)
             {
-                for (int i = 0; i < muzzles.Length; i++)
-                {
-                    Arrow arrow = ObjectsPool<Arrow>.Get(projectilePrefab as Arrow);
-                    arrow.transform.SetLocalPositionAndRotation(
-                        muzzles[i].transform.position, muzzles[i].transform.rotation
-                    );
-                    arrow.PoisonDamage = poisonDamage;
-                    arrow.DamageTime = damageTime;
-                    Vector3 path = muzzles[i].transform.forward;
-                    path.y = 0;
-                    Vector3 force = path.normalized * Random.Range(shotPower.minValue, shotPower.maxValue);
-                    arrow.AddImpulse(force);
-                }
-                timeOfLastShot = Time.time;
+                var arrow = Create(projectilePrefab) as Arrow;
+
+                const string message = "Стрела не была создана";
+                Assert.IsNotNull(arrow, message);
+
+                var muzzleTransform = muzzle.transform;
+                arrow.transform.SetLocalPositionAndRotation(
+                    muzzleTransform.position, muzzleTransform.rotation
+                );
+                arrow.PoisonDamage = poisonDamage;
+                arrow.DamageTime = damageTime;
+                var path = muzzle.transform.forward;
+                path.y = 0;
+                var force = path.normalized * Random.Range(shotPower.minValue, shotPower.maxValue);
+                arrow.AddImpulse(force);
             }
+            timeOfLastShot = Time.time;
         }
     }
 }

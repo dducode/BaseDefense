@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using NUnit.Framework;
 using System.Reflection;
+using BaseDefense.Broadcast_messages;
 using BroadcastMessages;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -15,8 +16,8 @@ public class TestsInEditMode
         typeof(Messenger).
             GetMethod("AddAllListeners", BindingFlags.NonPublic | BindingFlags.Static).
             Invoke(obj: null, parameters: null);
-        Assert.Greater(Messenger.dict[MessageType.DEATH_PLAYER].Count, 0);
-        Assert.Greater(Messenger.dict[MessageType.RESTART].Count, 0);
-        Messenger.dict.Clear();
+        Assert.Greater(Messenger.Dict[MessageType.DEATH_PLAYER].Count, 0);
+        Assert.Greater(Messenger.Dict[MessageType.RESTART].Count, 0);
+        Messenger.Dict.Clear();
     }
 }

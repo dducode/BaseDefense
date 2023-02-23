@@ -70,6 +70,16 @@ PrefabInstance:
       propertyPath: itemsCount.minValue
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 3816633415357249334, guid: 465c505844950da499dcf096a6da4409,
+        type: 3}
+      propertyPath: itemsCountRange.maxValue
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3816633415357249334, guid: 465c505844950da499dcf096a6da4409,
+        type: 3}
+      propertyPath: itemsCountRange.minValue
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 9139265418893649169, guid: 465c505844950da499dcf096a6da4409,
         type: 3}
       propertyPath: maxHealthPoints

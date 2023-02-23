@@ -1,7 +1,9 @@
+using BaseDefense.AttackImplemention;
 using UnityEngine;
 using Zenject;
 using BaseDefense.UI;
 using BaseDefense.Characters;
+using UnityEngine.Assertions;
 
 namespace BaseDefense
 {
@@ -11,52 +13,74 @@ namespace BaseDefense
         ///<summary>Максимальное количество здоровья станции</summary>
         ///<value>[1, infinity]</value>
         [Tooltip("Максимальное количество здоровья станции. [1, infinity]")]
-        [SerializeField, Min(1)] float maxHealthPoints = 300;
+        [SerializeField, Min(1)] private float maxHealthPoints = 300;
 
         ///<summary>Анимация, воспроизводимая при уничтожении станции</summary>
         [Tooltip("Анимация, воспроизводимая при уничтожении станции")]
-        [SerializeField] ParticleSystem destroyEffect;
+        [SerializeField] private ParticleSystem destroyEffect;
 
         ///<summary>Максимальное расстояние от центра спавна для порождения новых врагов</summary>
         ///<value>[0, infinity]</value>
         [Tooltip("Максимальное расстояние от центра спавна для порождения новых врагов. [0, infinity]")]
-        [SerializeField, Min(0)] float radiusSpawn = 10f;
+        [SerializeField, Min(0)] private float radiusSpawn = 10f;
 
-        [SerializeField] EnemyCharacter enemyPrefab;
-        [SerializeField] Transform[] spawnPoints;
+        [SerializeField] private EnemyCharacter enemyPrefab;
+        [SerializeField] private Transform[] spawnPoints;
 
+        [Inject] private EnemyCharacter.Factory m_enemyFactory;
+        
+        public EnemyCharacter SpawnEnemy(Transform[] targetPoints)
+        {
+            var index = Random.Range(0, spawnPoints.Length - 1);
+            var position = spawnPoints[index].position + Random.insideUnitSphere * radiusSpawn;
+            position.y = 0;
+            var rotation = Quaternion.Euler(0, Random.Range(0, 360f), 0);
+            var enemy = Object.CreateFromFactory(enemyPrefab, m_enemyFactory) as EnemyCharacter;
+
+            const string message = "Враг не был создан";
+            Assert.IsNotNull(enemy, message);
+            
+            enemy.Spawn(targetPoints, position, rotation);
+
+            return enemy;
+        }
+        
+        private DisplayHealthPoints m_displayHealthPoints;
         ///<summary>Текущее количество здоровья базы</summary>
         ///<value>[0, maxHealthPoints]</value>
-        float currentHealthPoints;
-        ///<inheritdoc cref="currentHealthPoints"/>
+        private float m_currentHealthPoints;
+        ///<inheritdoc cref="m_currentHealthPoints"/>
         public float CurrentHealthPoints
         {
-            get => currentHealthPoints;
-            set
+            get => m_currentHealthPoints;
+            private set
             {
-                currentHealthPoints = value;
-                currentHealthPoints = Mathf.Clamp(currentHealthPoints, 0, maxHealthPoints);
-                if (currentHealthPoints == 0)
-                    Destroy();
+                m_currentHealthPoints = value;
+                m_currentHealthPoints = Mathf.Clamp(m_currentHealthPoints, 0, maxHealthPoints);
+                if (m_currentHealthPoints == 0)
+                    DestroyStation();
             }
         }
 
-        DisplayHealthPoints displayHealthPoints;
-        [Inject] EnemyCharacter.Factory enemyFactory;
+        public void Hit(float damage)
+        {
+            CurrentHealthPoints -= damage;
+            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+        }
 
-        void Awake()
+        private void Awake()
         {
             CurrentHealthPoints = maxHealthPoints;
-            displayHealthPoints = GetComponent<DisplayHealthPoints>();
+            m_displayHealthPoints = GetComponent<DisplayHealthPoints>();
         }
 
-        void Start()
+        private void Start()
         {
-            displayHealthPoints.SetMaxValue((int)maxHealthPoints);
-            displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+            m_displayHealthPoints.SetMaxValue((int)maxHealthPoints);
+            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
         }
 
-        void OnDrawGizmosSelected()
+        private void OnDrawGizmosSelected()
         {
             if (spawnPoints == null || spawnPoints.Length == 0)
                 return;
@@ -65,25 +89,7 @@ namespace BaseDefense
                 Gizmos.DrawWireSphere(spawnPoints[i].position, radiusSpawn);
         }
 
-        public EnemyCharacter SpawnEnemy(Transform[] targetPoints)
-        {
-            int index = Random.Range(0, spawnPoints.Length - 1);
-            Vector3 position = spawnPoints[index].position + Random.insideUnitSphere * radiusSpawn;
-            position.y = 0;
-            Quaternion rotation = Quaternion.Euler(0, Random.Range(0, 360f), 0);
-            EnemyCharacter enemy = ObjectsPool<EnemyCharacter>.GetEqual(enemyFactory, enemyPrefab);
-            enemy.Spawn(targetPoints, position, rotation);
-            
-            return enemy;
-        }
-
-        public void Hit(float damage)
-        {
-            CurrentHealthPoints -= damage;
-            displayHealthPoints.UpdateView((int)CurrentHealthPoints);
-        }
-
-        void Destroy()
+        private void DestroyStation()
         {
             Instantiate(destroyEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);

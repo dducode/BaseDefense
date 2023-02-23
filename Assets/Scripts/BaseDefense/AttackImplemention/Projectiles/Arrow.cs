@@ -9,82 +9,80 @@ namespace BaseDefense.AttackImplemention.Projectiles
     {
         ///<summary>Урон от яда наносится врагу в течение определённого времени</summary>
         ///<value>[0, infinity]</value>
-        float poisonDamage;
+        private float m_poisonDamage;
 
         ///<summary>Время, в течение которого яд наносит урон врагу</summary>
         ///<value>[0, infinity]</value>
-        float damageTime;
+        private float m_damageTime;
 
-        ///<inheritdoc cref="poisonDamage"/>
+        ///<inheritdoc cref="m_poisonDamage"/>
         public float PoisonDamage
         {
-            get { return poisonDamage; }
+            get => m_poisonDamage;
             set
             {
-                poisonDamage = value;
-                if (poisonDamage < 0) poisonDamage = 0;
+                m_poisonDamage = value;
+                if (m_poisonDamage < 0) m_poisonDamage = 0;
             }
         }
 
-        ///<inheritdoc cref="damageTime"/>
+        ///<inheritdoc cref="m_damageTime"/>
         public float DamageTime
         {
-            get { return damageTime; }
+            get => m_damageTime;
             set
             {
-                damageTime = value;
-                if (damageTime < 0) damageTime = 0;
+                m_damageTime = value;
+                if (m_damageTime < 0) m_damageTime = 0;
             }
         }
 
         ///<summary>Обычный урон при попадании. Зависит от скорости стрелы</summary>
-        float damage;
+        private float m_damage;
 
-        Collider coll;
+        private Collider m_coll;
 
-        public override void Awake()
+        protected override void Awake()
         {
             base.Awake();
-            coll = GetComponent<Collider>();
-            Vector3 position = new Vector3(0, 0, 0.25f);
+            m_coll = GetComponent<Collider>();
         }
 
         public override void AddImpulse(Vector3 force)
         {
-            trailRenderer.Clear();
-            rb.AddForce(force);
-            damage = force.magnitude;
+            TrailRenderer.Clear();
+            Rb.AddForce(force);
+            m_damage = force.magnitude;
         }
 
-        public override void OnCollisionEnter(Collision collision)
+        protected override void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.GetComponent<IAttackable>() is IAttackable attackable)
+            if (collision.gameObject.GetComponent<IAttackable>() is { } attackable)
             {
-                attackable.Hit(damage);
+                attackable.Hit(m_damage);
                 if (attackable is EnemyCharacter enemy)
-                    StartCoroutine(HitEnemyWithPoison(enemy));
+                    Destroy(HitEnemyWithPoison(enemy));
                 else
-                    ObjectsPool<Arrow>.Push(this);
+                    Destroy();
             }
             else
-                ObjectsPool<Arrow>.Push(this);
-            rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
+                Destroy();
+            Rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
         }
 
-        IEnumerator HitEnemyWithPoison(EnemyCharacter enemy)
+        private IEnumerator HitEnemyWithPoison(EnemyCharacter enemy)
         {
             SetParams(true);
-            float time = Time.time + damageTime;
+            float time = Time.time + m_damageTime;
             while (time > Time.time)
             {
                 if (!enemy.IsAlive)
                     break;
-                enemy.Hit(poisonDamage);
+                enemy.Hit(m_poisonDamage);
                 yield return new WaitForSeconds(1);
             }
             SetParams(false);
-            ObjectsPool<Arrow>.MoveObjectToScene(this);
-            ObjectsPool<Arrow>.Push(this);
+            ObjectsPool.MoveObjectToScene(this);
 
             /*
             Устанавливает параметры для нормальной работы сопрограммы.
@@ -94,9 +92,9 @@ namespace BaseDefense.AttackImplemention.Projectiles
             void SetParams(bool value)
             {
                 transform.parent = value ? enemy.transform : null;
-                trailRenderer.emitting = !value;
-                rb.isKinematic = value;
-                coll.enabled = !value;
+                TrailRenderer.emitting = !value;
+                Rb.isKinematic = value;
+                m_coll.enabled = !value;
             }
         }
     }

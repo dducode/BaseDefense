@@ -1,3 +1,5 @@
+using System;
+using BaseDefense.Broadcast_messages;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using BroadcastMessages;
@@ -6,15 +8,16 @@ namespace BaseDefense
 {
     public class JoystickController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        [SerializeField] RectTransform joystick;
-        [SerializeField] RectTransform circle;
+        [SerializeField] private RectTransform joystick;
+        [SerializeField] private RectTransform circle;
 
-        public Vector2 JoystickPosition { get; private set; }
-
-        void Start()
+        private Vector2 m_joystickPosition;
+        
+        public Vector3 GetInput()
         {
-            circle.gameObject.SetActive(false);
-            JoystickPosition = Vector2.zero;
+            var vector2 = m_joystickPosition;
+            var move = new Vector3(vector2.x, 0, vector2.y);
+            return move;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -25,34 +28,43 @@ namespace BaseDefense
         public void OnDrag(PointerEventData eventData)
         {
             var size = circle.rect.size;
-            JoystickPosition = circle.InverseTransformPoint(eventData.position);
-            JoystickPosition = Vector2.ClampMagnitude(JoystickPosition, size.x / 2);
-            joystick.localPosition = JoystickPosition;
-            JoystickPosition = JoystickPosition.normalized * (JoystickPosition.magnitude / (size.x / 2));
+            m_joystickPosition = circle.InverseTransformPoint(eventData.position);
+            m_joystickPosition = Vector2.ClampMagnitude(m_joystickPosition, size.x / 2);
+            joystick.localPosition = m_joystickPosition;
+            m_joystickPosition = m_joystickPosition.normalized * (m_joystickPosition.magnitude / (size.x / 2));
         }
         public void OnEndDrag(PointerEventData eventData)
         {
             circle.gameObject.SetActive(false);
             joystick.localPosition = Vector2.zero;
-            JoystickPosition = Vector2.zero;
+            m_joystickPosition = Vector2.zero;
         }
-
-        [Listener(MessageType.RESTART)]
-        void EnableJoystick() => this.enabled = true;
-
-        [Listener(MessageType.DEATH_PLAYER)]
-        public void DisableJoystick()
+        
+        private void Start()
         {
-            this.enabled = false;
             circle.gameObject.SetActive(false);
-            JoystickPosition = Vector3.zero;
+            m_joystickPosition = Vector2.zero;
         }
 
-        public Vector3 GetInput()
+        private void OnEnable()
         {
-            Vector2 m = JoystickPosition;
-            Vector3 move = new Vector3(m.x, 0, m.y);
-            return move;
+            Messenger.AddListener(MessageType.RESTART, EnableJoystick);
+            Messenger.AddListener(MessageType.DEATH_PLAYER, DisableJoystick);
+        }
+
+        private void OnDisable()
+        {
+            Messenger.RemoveListener(MessageType.RESTART, EnableJoystick);
+            Messenger.RemoveListener(MessageType.DEATH_PLAYER, DisableJoystick);
+        }
+
+        private void EnableJoystick() => enabled = true;
+        
+        private void DisableJoystick()
+        {
+            enabled = false;
+            circle.gameObject.SetActive(false);
+            m_joystickPosition = Vector3.zero;
         }
     }
 }

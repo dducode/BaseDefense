@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using BaseDefense.Broadcast_messages;
 using UnityEngine;
 using Zenject;
 using BroadcastMessages;
 using DG.Tweening;
+using Random = UnityEngine.Random;
 
 namespace BaseDefense.Items
 {
@@ -58,12 +61,6 @@ namespace BaseDefense.Items
         private int m_stacksCount;
         [Inject] private Inventory m_inventory;
 
-        private void Awake()
-        {
-            m_firstPosition = stackForMoneys.localPosition;
-            m_moneys = new Stack<Money>();
-        }
-
         public void UpgradeCapacity(Upgrades upgrades)
         {
             if (capacity < upgrades.Capacity.maxValue)
@@ -72,13 +69,11 @@ namespace BaseDefense.Items
                 if (capacity > upgrades.Capacity.maxValue)
                     capacity = upgrades.Capacity.maxValue;
             }
+            else Debug.LogWarning("Достигнут предел в прокачке вместимости");
         }
 
         ///<summary>Кладёт кристалл в инвентарь</summary>
-        public void PutGem(Gem gem)
-        {
-            m_inventory.PutItem(gem);
-        }
+        public void PutGem(Gem gem) => m_inventory.PutItem(gem);
 
         ///<summary>Укладывает пачку денег на верх стека</summary>
         public void StackMoney(Money money)
@@ -126,7 +121,7 @@ namespace BaseDefense.Items
                 const float torqueScalar = 0.5f;
                 var money = m_moneys.Pop();
                 money.transform.parent = null;
-                ObjectsPool<Money>.MoveObjectToScene(money);
+                ObjectsPool.MoveObjectToScene(money);
                 var force = new Vector3(
                     Random.Range(0f, 1f), 
                     1, 
@@ -144,8 +139,16 @@ namespace BaseDefense.Items
             m_stacksCount = 0;
             DropIsInProcess = false;
         }
+        
+        private void Awake()
+        {
+            m_firstPosition = stackForMoneys.localPosition;
+            m_moneys = new Stack<Money>();
+        }
 
-        [Listener(MessageType.DEATH_PLAYER)]
+        private void OnEnable() => Messenger.AddListener(MessageType.DEATH_PLAYER, LossMoney);
+        private void OnDisable() => Messenger.RemoveListener(MessageType.DEATH_PLAYER, LossMoney);
+
         private void LossMoney()
         {
             var moneysCount = m_moneys.Count;
@@ -153,7 +156,7 @@ namespace BaseDefense.Items
             {
                 var money = m_moneys.Pop();
                 money.transform.parent = null;
-                ObjectsPool<Money>.MoveObjectToScene(money);
+                ObjectsPool.MoveObjectToScene(money);
                 var force = new Vector3(Random.Range(0f, 1f), 1, Random.Range(0f, 1f)) * forceScalar;
                 money.Drop(force);
             }

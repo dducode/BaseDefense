@@ -4,6 +4,7 @@ using Zenject;
 using BaseDefense.AttackImplemention;
 using BaseDefense.StateMachine;
 using BaseDefense.Items;
+using UnityEngine.Assertions;
 
 namespace BaseDefense.Characters
 {
@@ -117,11 +118,16 @@ namespace BaseDefense.Characters
             return m_targetPoints[Random.Range(0, m_targetPoints.Length)].position;
         }
 
-        ///<summary>Устанавливает триггер для атаки на игрока</summary>
-        ///<param name="value">Значение устанавливаемого триггера</param>
-        public void SetTrigger(bool value)
+        ///<summary>Вызывается для атаки на игрока</summary>
+        public void AttackPlayer()
         {
-            m_state.SetTrigger(value);
+            m_state.SetTrigger(true);
+        }
+
+        /// <summary>Вызывается для патруля</summary>
+        public void Patrol()
+        {
+            m_state.SetTrigger(false);
         }
 
         public override void Hit(float damage)
@@ -132,15 +138,15 @@ namespace BaseDefense.Characters
             HitEffect.Play();
         }
 
-        protected override void Death()
+        protected override void OnDeath()
         {
             enabled = false;
             m_ragdoll.enabled = true;
-            var punchDirection = (transform.forward * -25) + Vector3.up;
+            var punchDirection = transform.forward * -25 + Vector3.up;
             m_ragdoll.AddImpulse(punchDirection);
             m_itemDrop.DropItems();
             MeshRenderer.material.color = deathColor;
-            StartCoroutine(Disappearance());
+            Destroy(Disappearance());
         }
 
         private IEnumerator Disappearance()
@@ -155,7 +161,6 @@ namespace BaseDefense.Characters
                 MeshRenderer.material.color = Color.Lerp(startColor, targetColor, (Time.time - time) * 2);
                 yield return null;
             }
-            ObjectsPool<EnemyCharacter>.Push(this);
         }
 
         public class Factory : PlaceholderFactory<UnityEngine.Object, EnemyCharacter> {}

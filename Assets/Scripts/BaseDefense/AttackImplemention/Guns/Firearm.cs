@@ -1,5 +1,7 @@
 using UnityEngine;
 using BaseDefense.AttackImplemention.Projectiles;
+using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 namespace BaseDefense.AttackImplemention.Guns
 {
@@ -9,34 +11,38 @@ namespace BaseDefense.AttackImplemention.Guns
         ///<value>[0, 1]</value>
         [Header("Характеристики огнестрельного оружия")]
         [Tooltip("Разброс пуль при выстреле. Чем меньше - тем точнее выстрел. [0, 1]")]
-        [SerializeField, Range(0, 1)] float dispertionScalar = 0.1f;
+        [SerializeField, Range(0, 1)] private float dispersionScalar = 0.1f;
 
         ///<summary>Сила выстрела оружия - определяет, с какой скоростью будет лететь пуля после выстрела</summary>
         [Tooltip("Сила выстрела оружия - определяет, с какой скоростью будет лететь пуля после выстрела")]
-        [SerializeField] MinMaxSliderFloat shotPower = new MinMaxSliderFloat(0, 25);
+        [SerializeField] private MinMaxSliderFloat shotPowerRange = new MinMaxSliderFloat(0, 25);
 
         public override void Shot()
         {
-            if (timeOfLastShot + intervalOfShots < Time.time)
+            if (!(timeOfLastShot + intervalOfShots < Time.time)) return;
+            
+            foreach (var muzzle in muzzles)
             {
-                for (int i = 0; i < muzzles.Length; i++)
-                {
-                    Bullet bullet = ObjectsPool<Bullet>.Get(projectilePrefab as Bullet);
-                    bullet.transform.SetLocalPositionAndRotation(
-                        muzzles[i].transform.position, muzzles[i].transform.rotation
-                    );
-                    Vector3 dispertion = new Vector3(
-                        Random.Range(-dispertionScalar, dispertionScalar), 
-                        Random.Range(-dispertionScalar, dispertionScalar), 
-                        0
-                    );
-                    Vector3 path = muzzles[i].transform.forward;
-                    path.y = 0;
-                    Vector3 force = (path.normalized + dispertion) * Random.Range(shotPower.minValue, shotPower.maxValue);
-                    bullet.AddImpulse(force);
-                }
-                timeOfLastShot = Time.time;
+                var bullet = Create(projectilePrefab) as Bullet;
+
+                const string message = "Пуля не была создана";
+                Assert.IsNotNull(bullet, message);
+
+                var muzzleTransform = muzzle.transform;
+                bullet.transform.SetLocalPositionAndRotation(
+                    muzzleTransform.position, muzzleTransform.rotation
+                );
+                var dispersion = new Vector3(
+                    Random.Range(-dispersionScalar, dispersionScalar), 
+                    Random.Range(-dispersionScalar, dispersionScalar), 
+                    0
+                );
+                var path = muzzle.transform.forward;
+                path.y = 0;
+                var force = (path.normalized + dispersion) * Random.Range(shotPowerRange.minValue, shotPowerRange.maxValue);
+                bullet.AddImpulse(force);
             }
+            timeOfLastShot = Time.time;
         }
     }
 }

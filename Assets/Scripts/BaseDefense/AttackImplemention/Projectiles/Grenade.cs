@@ -41,11 +41,11 @@ namespace BaseDefense.AttackImplemention.Projectiles
 
         public override void AddImpulse(Vector3 force)
         {
-            trailRenderer.Clear();
-            rb.AddForce(force);
+            TrailRenderer.Clear();
+            Rb.AddForce(force);
         }
 
-        public override void OnCollisionEnter(Collision collision)
+        protected override void OnCollisionEnter(Collision collision)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, damageRadius);
             Instantiate(explosion, transform.position, Quaternion.identity);
@@ -69,8 +69,8 @@ namespace BaseDefense.AttackImplemention.Projectiles
             foreach (Collider collider in colliders)
                 if (collider.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
                     rigidbody.AddExplosionForce(maxDamage, transform.position, damageRadius);
-            ObjectsPool<Grenade>.Push(this);
-            rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
+            Destroy();
+            Rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
         }
     }
 }

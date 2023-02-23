@@ -5,6 +5,7 @@ using UnityEngine;
 using Zenject;
 using BroadcastMessages;
 using BaseDefense.AttackImplemention.Guns;
+using BaseDefense.Broadcast_messages;
 using BaseDefense.Items;
 using BaseDefense.UI;
 using UnityEngine.Profiling;
@@ -38,7 +39,6 @@ namespace BaseDefense.Characters
         ///<inheritdoc cref="ItemCollecting.Capacity"/>
         public int Capacity => m_itemCollecting.Capacity;
         
-        private Gun m_gun;
         private bool m_inEnemyBase;
 
         [Inject]
@@ -48,7 +48,50 @@ namespace BaseDefense.Characters
             m_shop = shop;
         }
 
-        public override void Awake()
+        public override void Hit(float damage)
+        {
+            CurrentHealthPoints -= damage;
+            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+            var emission = HitEffect.emission;
+            emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
+            HitEffect.Play();
+        }
+        
+        ///<summary>Прокачивает характеристики игрока</summary>
+        ///<param name="upgradeType">Определяет прокачиваемую характеристику</param>
+        public void Upgrade(UpgradableProperties upgradeType)
+        {
+            switch (upgradeType)
+            {
+                case UpgradableProperties.Speed:
+                    UpgradeSpeed();
+                    break;
+                case UpgradableProperties.Max_Health:
+                    UpgradeMaxHealth();
+                    break;
+                case UpgradableProperties.Capacity:
+                    m_itemCollecting.UpgradeCapacity(upgrades);
+                    break;
+                default:
+                    throw new NotImplementedException($"Тип прокачки {upgradeType} не реализован");
+            }
+        }
+        
+        private Shop m_shop;
+        private Gun m_gun;
+        
+        ///<summary>Вызывается при выборе оружия из магазина</summary>
+        ///<param name="gunName">Выбранное оружие</param>
+        public void SelectGun(string gunName)
+        {
+            m_gun = m_shop.TakeGun(gunName, m_gun);
+            m_gun.transform.parent = gunSlot;
+            m_gun.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        }
+
+        #region PlayerInitialization
+
+        protected override void Awake()
         {
             base.Awake();
             m_itemCollecting = GetComponent<ItemCollecting>();
@@ -63,7 +106,9 @@ namespace BaseDefense.Characters
             m_gun.gameObject.SetActive(false);
             m_gazeDirection = transform.forward;
         }
-        
+
+        #endregion
+
         #region PlayerUpdate
 
         private static readonly int SpeedId = Animator.StringToHash("speed");
@@ -74,6 +119,7 @@ namespace BaseDefense.Characters
 
         private void Update()
         {
+            // Реализует плавный поворот к цели с определённой скоростью
             LookToTarget(m_gazeDirection, 15);
 
             Movement();
@@ -86,10 +132,8 @@ namespace BaseDefense.Characters
                 // Если анимация ещё проигрывается - ничего не делаем
                 else { }
             }
-            else 
-                HealthRecovery();
+            else HealthRecovery();
             
-            // Реализует плавный поворот к цели с определённой скоростью
             void LookToTarget(Vector3 target, float rotationSpeed)
             {
                 transform.rotation = Quaternion.Slerp(
@@ -112,32 +156,31 @@ namespace BaseDefense.Characters
             Profiler.BeginSample("Attack");
             
             var attackable = GetNearestAttackable();
-            
-            // Если поблизости нет врагов - выходим из метода
-            if (attackable is null)
-                return;
+            if (attackable is null) return;
             
             var attackablePosition = attackable.transform.position;
             var playerPosition = transform.position;
             attackablePosition.y = playerPosition.y = 0;
             m_gazeDirection = attackablePosition - playerPosition;
             
-            // Прицеливание
+            // Прицеливаемся
             const float aimingAccuracy = 0.95f;
             if (Vector3.Dot(m_gazeDirection.normalized, transform.forward) > aimingAccuracy) 
             {
+                // Если стреляем из гранатомёта - определяем безопасное расстояние
                 if (m_gun is GrenadeLauncher grenade)
                 {
-                    // ReSharper disable once Unity.InefficientPropertyAccess
-                    var ray = new Ray(transform.position + Vector3.up, transform.forward);
-                    // Стреляем из гранатомёта только на безопасном расстоянии
+                    var playerTransform = transform;
+                    var ray = new Ray(playerTransform.position + Vector3.up, playerTransform.forward);
+                    
+                    // Если расстояние до цели безопасно - стреляем
                     if (Physics.Raycast(ray, out var hit) && hit.distance > grenade.DamageRadius)
                         grenade.Shot();
-                    // Если ещё находимся слишком близко к цели - не стреляем
+                    // Иначе не стреляем
                     else { }
                 }
-                else
-                    m_gun.Shot();
+                // Иначе стреляем сразу
+                else m_gun.Shot();
             }
             // Если ещё не прицелились - ничего не делаем
             else { }
@@ -181,21 +224,6 @@ namespace BaseDefense.Characters
             const float recoveryTime = 30;
             CurrentHealthPoints += maxHealthPoints * Time.smoothDeltaTime / recoveryTime;
             m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
-        }
-
-        #endregion
-        
-        #region GunSelection
-
-        private Shop m_shop;
-        
-        ///<summary>Вызывается при выборе оружия из магазина</summary>
-        ///<param name="gunName">Выбранное оружие</param>
-        public void SelectGun(string gunName)
-        {
-            m_gun = m_shop.TakeGun(gunName, m_gun);
-            m_gun.transform.parent = gunSlot;
-            m_gun.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
 
         #endregion
@@ -248,23 +276,6 @@ namespace BaseDefense.Characters
         public bool IsNotMaxForSpeed => maxSpeed < upgrades.Speed.maxValue;
         public bool IsNotMaxForMaxHealth => maxHealthPoints < upgrades.MaxHealth.maxValue;
         public bool IsNotMaxForCapacity => Capacity < upgrades.Capacity.maxValue;
-        ///<summary>Прокачивает характеристики игрока</summary>
-        ///<param name="upgradeType">Определяет прокачиваемую характеристику</param>
-        public void Upgrade(UpgradableProperties upgradeType)
-        {
-            switch (upgradeType)
-            {
-                case UpgradableProperties.Speed:
-                    UpgradeSpeed();
-                    break;
-                case UpgradableProperties.Max_Health:
-                    UpgradeMaxHealth();
-                    break;
-                case UpgradableProperties.Capacity:
-                    m_itemCollecting.UpgradeCapacity(upgrades);
-                    break;
-            }
-        }
 
         private void UpgradeSpeed()
         {
@@ -298,16 +309,11 @@ namespace BaseDefense.Characters
         #region PlayerLifecycle
         
         private static readonly int Alive = Animator.StringToHash("alive");
-        public override void Hit(float damage)
-        {
-            CurrentHealthPoints -= damage;
-            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
-            var emission = HitEffect.emission;
-            emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
-            HitEffect.Play();
-        }
 
-        protected override void Death()
+        private void OnEnable() => Messenger.AddListener(MessageType.RESTART, Resurrection);
+        private void OnDisable() => Messenger.RemoveListener(MessageType.RESTART, Resurrection);
+
+        protected override void OnDeath()
         {
             Animator.SetBool(Alive, false);
             m_gun.gameObject.SetActive(false);
@@ -315,9 +321,8 @@ namespace BaseDefense.Characters
             MeshRenderer.material.color = deathColor;
             Messenger.SendMessage(MessageType.DEATH_PLAYER);
         }
-
-        [Listener(MessageType.RESTART)]
-        public void Resurrection()
+        
+        private void Resurrection()
         {
             var respawn = GameObject.FindGameObjectWithTag("Respawn").transform;
             Animator.SetBool(Alive, true);

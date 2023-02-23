@@ -1,4 +1,4 @@
-namespace BaseDefense
+namespace BaseDefense.AttackImplemention
 {
     ///<summary>Интерфейс для реализации жизненного цикла атакуемого объекта</summary>
     public interface IAttackable

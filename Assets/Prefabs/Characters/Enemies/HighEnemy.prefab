@@ -756,7 +756,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 2360663159339950683, guid: 0aaf42ad268c86b44b3bae94bfebfa5a,
     type: 3}
   forceScalar: 5
-  itemsCount:
+  itemsCountRange:
     minLimit: 0
     maxLimit: 100
     minValue: 4

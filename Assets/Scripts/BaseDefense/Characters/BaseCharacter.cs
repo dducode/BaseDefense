@@ -1,10 +1,11 @@
+using BaseDefense.AttackImplemention;
 using UnityEngine;
 
 namespace BaseDefense.Characters
 {
     ///<summary>Базовый класс для всех типов персонажей</summary>
     [RequireComponent(typeof(CharacterController), typeof(Animator), typeof(ParticleSystem))]
-    public abstract class BaseCharacter : MonoBehaviour, IAttackable
+    public abstract class BaseCharacter : Object, IAttackable
     {
         [Tooltip("Отображает в сцене радиус атаки персонажа")]
         [SerializeField] Color gizmosView = Color.white;
@@ -65,7 +66,7 @@ namespace BaseDefense.Characters
                 m_currentHealthPoints = value;
                 m_currentHealthPoints = Mathf.Clamp(m_currentHealthPoints, 0, maxHealthPoints);
                 if (!IsAlive)
-                    Death();
+                    OnDeath();
             }
         }
 
@@ -78,10 +79,11 @@ namespace BaseDefense.Characters
         public abstract void Hit(float damage);
 
         ///<summary>Вызывается автоматически, когда персонаж мёртв</summary>
-        protected abstract void Death();
+        protected abstract void OnDeath();
 
-        public virtual void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             Controller = GetComponent<CharacterController>();
             Animator = GetComponent<Animator>();
             HitEffect = GetComponent<ParticleSystem>();

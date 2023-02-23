@@ -10,107 +10,130 @@ namespace BaseDefense
         ///<summary>Максимально возможное количество врагов на базе</summary>
         ///<value>[1, 100]</value>
         [Tooltip("Максимально возможное количество врагов на базе. [1, 100]")]
-        [SerializeField, Range(1, 100)] int maxEnemiesCount = 10;
+        [SerializeField, Range(1, 100)]
+        private int maxEnemiesCount = 10;
 
         ///<summary>Начальное количество врагов на базе</summary>
         ///<value>[0, 100]</value>
         [Tooltip("Начальное количество врагов на базе. [0, 100]")]
-        [SerializeField, Range(0, 100)] int startEnemiesCount = 5;
+        [SerializeField, Range(0, 100)]
+        private int startEnemiesCount = 5;
 
         ///<summary>Временной интервал между порождением новых врагов</summary>
         ///<value>[0, infinity]</value>
         [Tooltip("Временной интервал между порождением новых врагов. [0, infinity]")]
-        [SerializeField, Min(0)] float timeSpawn = 3f;
+        [SerializeField, Min(0)]
+        private float timeSpawn = 3f;
 
         ///<summary>Вражеские станции, находящиеся на базе</summary>
         [Tooltip("Вражеские станции, находящиеся на базе")]
-        [SerializeField] List<EnemyStation> enemyStations;
+        [SerializeField]
+        private List<EnemyStation> enemyStations;
 
         ///<summary>Целевые точки для патруля врагами</summary>
         [Tooltip("Целевые точки для патруля врагами")]
-        [SerializeField] Transform[] targetPoints;
+        [SerializeField]
+        private Transform[] targetPoints;
 
         ///<summary>Переходы между уровнями</summary>
         [Tooltip("Переходы между уровнями")]
-        [SerializeField] Transitions _transitions;
+        [SerializeField]
+        private Transitions _transitions;
 
         ///<inheritdoc cref="_transitions"/>
+        // ReSharper disable once InconsistentNaming
         public Transitions transitions => _transitions;
 
         ///<summary>Содержит всех врагов, находящихся на базе</summary>
         ///<remarks>Мёртвые враги удаляются из списка</remarks>
-        List<EnemyCharacter> enemies;
+        private List<EnemyCharacter> m_enemies;
 
-        ///<summary>Время, прошедшее с момента последнего порождения врага</summary>
-        float timeOfLastSpawn;
-        int stationIndex;
-        [Inject] Game game;
-
-        void Start()
+        private void Start()
         {
-            enemies = new List<EnemyCharacter>();
+            m_enemies = new List<EnemyCharacter>();
             for (int i = 0; i < startEnemiesCount; i++)
                 SpawnEnemy();
         }
 
-        void Update()
+        #region FactoryUpdate
+
+        ///<summary>Время, прошедшее с момента последнего порождения врага</summary>
+        private float m_timeOfLastSpawn;
+        
+        [Inject] private Game m_game;
+
+        private void Update()
         {
-            // Удаление уничтоженных станций
-            for (int i = 0; i < enemyStations.Count; i++)
-                if (enemyStations[i] == null)
-                    enemyStations.RemoveAt(i--);
+            RemoveDestroyedStations();
+            UpdateEnemies();
 
             if (enemyStations.Count != 0)
             {
-                if (enemies.Count < maxEnemiesCount && timeOfLastSpawn + (timeSpawn / enemyStations.Count) < Time.time)
+                if (m_enemies.Count < maxEnemiesCount && m_timeOfLastSpawn + (timeSpawn / enemyStations.Count) < Time.time)
                 {
                     SpawnEnemy();
-                    timeOfLastSpawn = Time.time;
+                    m_timeOfLastSpawn = Time.time;
                 }
             }
-            else if (enemies.Count == 0)
-            // Уровень завершён только когда все вражеские базы и все враги уничтожены
+            else if (m_enemies.Count == 0)
             {
-                game.NextLevel();
+                // Уровень завершён только когда все вражеские базы и все враги уничтожены
+                m_game.NextLevel();
                 enabled = false;
             }
-
-            // Обновление всех имеющихся врагов. Удаление мёртвых врагов
-            for (int i = 0; i < enemies.Count; i++)
-                if (!enemies[i].EnemyUpdate())
-                    enemies.RemoveAt(i--);
+        }
+        
+        private void RemoveDestroyedStations()
+        {
+            for (int i = 0; i < enemyStations.Count; i++)
+                if (enemyStations[i] == null)
+                    enemyStations.RemoveAt(i--);
         }
 
-        void OnTriggerStay(Collider other)
+        private void UpdateEnemies()
         {
-            if (other.CompareTag("Player"))
+            for (int i = 0; i < m_enemies.Count; i++)
+                if (!m_enemies[i].EnemyUpdate())
+                    m_enemies.RemoveAt(i--);
+        }
+        
+        private int m_stationIndex;
+        
+        private void SpawnEnemy()
+        {
+            m_stationIndex++;
+            if (m_stationIndex >= enemyStations.Count)
+                m_stationIndex = 0;
+            m_enemies.Add(enemyStations[m_stationIndex].SpawnEnemy(targetPoints));
+        }
+
+        #endregion
+
+        #region TriggerEvents
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (!other.CompareTag("Player")) return;
+            
+            if (!transitions.backTransition.gameObject.activeSelf)
             {
-                if (!transitions.backTransition.gameObject.activeSelf)
-                {
-                    transitions.backTransition.gameObject.SetActive(true);
-                    game.DestroyOldBase();
-                }
-                foreach (EnemyCharacter enemy in enemies)
-                    enemy.SetTrigger(true);
+                transitions.backTransition.gameObject.SetActive(true);
+                m_game.DestroyOldBase();
             }
-        }
-        void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                foreach (EnemyCharacter enemy in enemies)
-                    enemy.SetTrigger(false);
-            }
+            foreach (var enemy in m_enemies)
+                enemy.AttackPlayer();
         }
 
-        void SpawnEnemy()
+        private void OnTriggerExit(Collider other)
         {
-            stationIndex++;
-            if (stationIndex >= enemyStations.Count)
-                stationIndex = 0;
-            enemies.Add(enemyStations[stationIndex].SpawnEnemy(targetPoints));
+            if (!other.CompareTag("Player")) return;
+            
+            foreach (var enemy in m_enemies)
+                enemy.Patrol();
         }
 
+        #endregion
+        
         [System.Serializable]
         public struct Transitions
         {
@@ -118,7 +141,7 @@ namespace BaseDefense
             public Transform frontTransition;
         }
 
-        public class Factory : PlaceholderFactory<Object, EnemyFactory> {}
+        public class Factory : PlaceholderFactory<UnityEngine.Object, EnemyFactory> {}
     }
 }
 

@@ -6,80 +6,53 @@ using Zenject;
 namespace BaseDefense
 {
     ///<summary>Реализует простой пул для компонентов Unity</summary>
-    ///<typeparam name="T">Тип объекта, добавляемого в пул</typeparam>
-    public static class ObjectsPool<T> where T : Component
+    public static class ObjectsPool
     {
-        static List<T> pool = new List<T>();
-
-        ///<summary>Сцена со всеми объектами типа "Т". Для каждого типа объекта создаётся своя сцена</summary>
-        static Scene scene;
+        private static readonly List<Object> Pool = new List<Object>();
+        private static readonly List<Scene> Scenes = new List<Scene>();
 
         ///<summary>Добавляет объект в пул</summary>
-        ///<remarks>
-        ///При добавлении объекта в пул автоматически отключается его GameObject и сбрасываются значения Transform
-        ///</remarks>
         ///<param name="value">Объект, который добавляется в пул</param>
-        public static void Push(T value)
+        public static void Push(in Object value)
         {
-            value.gameObject.SetActive(false);
-            value.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-            pool.Add(value);
+            Pool.Add(value);
+            value.transform.SetParent(null);
+            MoveObjectToScene(value);
         }
 
-        ///<summary>Извлекает объект из пула при его наличии. В ином случае создаёт новый</summary>
-        ///<param name="prefab">Префаб объекта, который нужно создать, если пул пустой</param>
-        public static T Get(T prefab)
+        /// <summary>Извлекает объект из пула по имени</summary>
+        /// <param name="name">Имя объекта, который нужно найти в пуле</param>
+        /// <param name="obj">Объект, передаваемый вызывающему методу</param>
+        /// <returns> Возвращает true, если объект найден. Иначе возвращает false </returns>
+        public static bool Get(in string name, out Object obj)
         {
-            if (pool.Count == 0)
-                return CreateAndMoveObject(prefab);
-            else
-            {
-                T value = pool[pool.Count - 1];
-                pool.RemoveAt(pool.Count - 1);
-                value.gameObject.SetActive(true);
-                return value;
-            }
-        }
-
-        ///<summary>Извлекает объект, идентичный передаваемому в метод. Если такого нет - создаёт новый из фабрики</summary>
-        ///<remarks>
-        ///Объекты сравниваются по их именам. Предполагается, что идентичные объекты также имеют идентичные имена
-        ///</remarks>
-        ///<param name="factory">Фабрика, из которой создаётся объект</param>
-        ///<param name="prefab">Префаб объекта, который нужно создать, если идентичный объект не найден</param>
-        public static T GetEqual(PlaceholderFactory<Object, T> factory, T prefab)
-        {
-            T value;
-            foreach (T o in pool)
-                if (o.name == prefab.name)
+            foreach (var o in Pool)
+                if (o.name == name)
                 {
-                    value = o;
-                    pool.Remove(o);
-                    value.gameObject.SetActive(true);
-                    return value;
+                    obj = o;
+                    Pool.Remove(o);
+                    SceneManager.MoveGameObjectToScene(obj.gameObject, SceneManager.GetActiveScene());
+                    return true;
                 }
 
-            value = factory.Create(prefab);
-            value.gameObject.name = prefab.name;
-            MoveObjectToScene(value);
-            return value;
+            obj = null;
+            return false;
         }
 
         ///<summary>Вспомогательный метод для сортировки игровых объектов в разные сцены</summary>
         ///<param name="obj">Объект, переносимый в сцену</param>
-        public static void MoveObjectToScene(T obj)
+        public static void MoveObjectToScene(in Object obj)
         {
-            if (scene == default)
-                scene = SceneManager.CreateScene($"{obj.GetType()} Scene");
-            SceneManager.MoveGameObjectToScene(obj.gameObject, scene);
-        }
+            foreach (var scene in Scenes)
+            {
+                if (!scene.name.Contains(obj.name)) continue;
+                SceneManager.MoveGameObjectToScene(obj.gameObject, scene);
+                return;
+            }
 
-        static T CreateAndMoveObject(T obj)
-        {
-            T value = Object.Instantiate(obj);
-            value.gameObject.name = obj.name;
-            MoveObjectToScene(value);
-            return value;
+            var newScene = SceneManager.CreateScene($"{obj.name} Pool");
+            SceneManager.MoveGameObjectToScene(obj.gameObject, newScene);
+            Scenes.Add(newScene);
         }
     }
 }
