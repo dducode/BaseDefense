@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Zenject;
@@ -23,7 +24,7 @@ namespace BaseDefense.Characters
         ///<inheritdoc cref="Upgrades"/>
         [Tooltip("Хранит в себе информацию о прокачиваемых характеристиках игрока")]
         [SerializeField] private Upgrades upgrades;
-        
+
         ///<inheritdoc cref="DisplayHealthPoints"/>
         private DisplayHealthPoints m_displayHealthPoints;
 

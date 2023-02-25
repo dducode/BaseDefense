@@ -3,6 +3,7 @@ using UnityEngine;
 namespace BaseDefense.AttackImplemention.Projectiles
 {
     ///<summary>Базовый класс для всех видов патронов</summary>
+    [Icon("Assets/EditorUI/ammo.png")]
     [RequireComponent(typeof(Rigidbody), typeof(TrailRenderer))]
     public abstract class Projectile : Object
     {

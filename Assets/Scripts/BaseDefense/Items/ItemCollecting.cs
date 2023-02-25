@@ -121,7 +121,7 @@ namespace BaseDefense.Items
                 const float torqueScalar = 0.5f;
                 var money = m_moneys.Pop();
                 money.transform.parent = null;
-                ObjectsPool.MoveObjectToScene(money);
+                ObjectsPool.MoveObjectToHisScene(money);
                 var force = new Vector3(
                     Random.Range(0f, 1f), 
                     1, 
@@ -156,7 +156,7 @@ namespace BaseDefense.Items
             {
                 var money = m_moneys.Pop();
                 money.transform.parent = null;
-                ObjectsPool.MoveObjectToScene(money);
+                ObjectsPool.MoveObjectToHisScene(money);
                 var force = new Vector3(Random.Range(0f, 1f), 1, Random.Range(0f, 1f)) * forceScalar;
                 money.Drop(force);
             }

@@ -78,7 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1258c329ebf9baf49b904acdd0484141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunName: 6
+  objectId:
+    id: -2017365906
   projectilePrefab: {fileID: 4813531904856078078, guid: 2041318d9adc59a42a2a37ec09cf081c,
     type: 3}
   intervalOfShots: 2

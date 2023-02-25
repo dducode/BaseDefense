@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 namespace BaseDefense.Items
 {
     ///<summary>Базовый класс для всех видов выпадаемых предметов</summary>
+    [Icon("Assets/EditorUI/item.png")]
     [RequireComponent(typeof(SphereCollider), typeof(Rigidbody))]
     public abstract class Item : Object
     {

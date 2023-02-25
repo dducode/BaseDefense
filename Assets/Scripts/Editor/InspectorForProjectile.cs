@@ -1,28 +1,29 @@
-using UnityEditor;
+using System;
 using BaseDefense.AttackImplemention.Projectiles;
+using UnityEditor;
 
-namespace BaseDefense
+namespace Editor
 {
     [CustomEditor(typeof(Projectile), true)]
-    public class InspectorForProjectile : Editor
+    public class InspectorForProjectile : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
-            if (target is Bullet)
-                EditorGUILayout.HelpBox(
-                    "Урон от пули зависит от её массы и скорости", 
-                    MessageType.Info
-                );
-            if (target is Grenade)
-                EditorGUILayout.HelpBox(
-                    "Урон от гранаты и радиус поражения устанавливаются в инспекторе гранатомёта", 
-                    MessageType.Info
-                );
-            if (target is Arrow)
-                EditorGUILayout.HelpBox(
-                    "Урон от яда стрелы и его длительность устанавливаются в инспекторе арбалета", 
-                    MessageType.Info
-                );
+            var message = string.Empty;
+            switch (target)
+            {
+                case Bullet:
+                    message = "Урон от пули зависит от её массы и скорости";
+                    break;
+                case Grenade:
+                    message = "Урон от гранаты и радиус поражения устанавливаются в инспекторе гранатомёта";
+                    break;
+                case Arrow:
+                    message = "Урон от яда стрелы и его длительность устанавливаются в инспекторе арбалета";
+                    break;
+            }
+            EditorGUILayout.HelpBox(message, MessageType.Info);
+
             DrawDefaultInspector();
         }
     }

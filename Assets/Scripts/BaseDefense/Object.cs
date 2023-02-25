@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using BaseDefense.Exceptions;
+using BaseDefense.Properties;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
@@ -8,8 +9,16 @@ using Zenject;
 namespace BaseDefense
 {
     /// <summary>Базовый класс для всех игровых объектов</summary>
+    [Icon("Assets/EditorUI/object.png")]
     public abstract class Object : MonoBehaviour
     {
+        /// <inheritdoc cref="ObjectId"/>
+        [Tooltip("Идентификатор объекта является уникальным только для объектов разных видов. " + 
+                 "Объекты одного вида (напр. LowEnemy) имеют одинаковый id")]
+        [SerializeField] private ObjectId objectId;
+
+        public int Id => objectId.id;
+        
         /// <summary>
         /// Создаёт новый объект
         /// </summary>
@@ -24,7 +33,7 @@ namespace BaseDefense
             in Quaternion rotation = default,
             in Transform parent = null)
         {
-            if (ObjectsPool.Get(original.name, out var obj))
+            if (ObjectsPool.Get(original, out var obj))
             {
                 obj.gameObject.SetActive(true);
                 obj.transform.SetPositionAndRotation(position, rotation);
@@ -56,7 +65,7 @@ namespace BaseDefense
             in Quaternion rotation = default,
             in Transform parent = null) where T : Object
         {
-            if (ObjectsPool.Get(original.name, out var obj))
+            if (ObjectsPool.Get(original, out var obj))
             {
                 obj.gameObject.SetActive(true);
                 obj.transform.SetPositionAndRotation(position, rotation);
@@ -72,6 +81,17 @@ namespace BaseDefense
                 return newObj;
             }
         }
+        
+        /// <returns>Возвращает true, если объекты имеют одинаковый id, иначе возвращает false</returns>
+        public override bool Equals(object other)
+        {
+            return other is Object otherObject && Id == otherObject.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
 
         /// <summary>
         /// Уничтожает объект
@@ -81,6 +101,15 @@ namespace BaseDefense
             gameObject.SetActive(false);
             transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             ObjectsPool.Push(this);
+        }
+        
+        /// <summary>
+        /// Уничтожает объект
+        /// </summary>
+        /// <param name="tweenTask">Анимация, которая должна проиграть перед уничтожением объекта</param>
+        public void Destroy(Tween tweenTask)
+        {
+            tweenTask.OnComplete(Destroy);
         }
 
         /// <summary>
@@ -100,28 +129,19 @@ namespace BaseDefense
         {
             StartCoroutine(Await(StartCoroutine(task), Destroy));
         }
-
-        /// <summary>
-        /// Уничтожает объект
-        /// </summary>
-        /// <param name="tweenTask">Анимация, которая должна проиграть перед уничтожением объекта</param>
-        public void Destroy(Tween tweenTask)
-        {
-            tweenTask.OnComplete(Destroy);
-        }
-
+        
         private static IEnumerator Await(YieldInstruction task, Action callback)
         {
             yield return task;
             callback();
         }
-        
+
         /*
          Разрешение на полное уничтожение объекта. Устанавливается только при выходе из игры,
          тем самым не будет выбрасываться исключение, когда Unity уничтожит объекты
         */ 
         private bool m_permissionDestroy;
-
+        
         protected virtual void Awake()
         {
             Application.wantsToQuit += () => m_permissionDestroy = true;

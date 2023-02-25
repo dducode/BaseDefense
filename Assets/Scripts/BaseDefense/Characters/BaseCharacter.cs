@@ -4,7 +4,10 @@ using UnityEngine;
 namespace BaseDefense.Characters
 {
     ///<summary>Базовый класс для всех типов персонажей</summary>
-    [RequireComponent(typeof(CharacterController), typeof(Animator), typeof(ParticleSystem))]
+    [Icon("Assets/EditorUI/ghost.png")]
+    [RequireComponent(typeof(CharacterController), 
+        typeof(Animator), 
+        typeof(ParticleSystem))]
     public abstract class BaseCharacter : Object, IAttackable
     {
         [Tooltip("Отображает в сцене радиус атаки персонажа")]

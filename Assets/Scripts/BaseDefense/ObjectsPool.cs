@@ -5,7 +5,7 @@ using Zenject;
 
 namespace BaseDefense
 {
-    ///<summary>Реализует простой пул для компонентов Unity</summary>
+    ///<summary>Реализует простой пул для объектов, наследуемых от BaseDefense.Object</summary>
     public static class ObjectsPool
     {
         private static readonly List<Object> Pool = new List<Object>();
@@ -17,37 +17,39 @@ namespace BaseDefense
         {
             Pool.Add(value);
             value.transform.SetParent(null);
-            MoveObjectToScene(value);
+            MoveObjectToHisScene(value);
         }
 
-        /// <summary>Извлекает объект из пула по имени</summary>
-        /// <param name="name">Имя объекта, который нужно найти в пуле</param>
-        /// <param name="obj">Объект, передаваемый вызывающему методу</param>
+        /// <summary>Извлекает объект из пула</summary>
+        /// <param name="targetObject">Искомый в пуле объект</param>
+        /// <param name="foundObject">Найденный объект, передаваемый вызывающему методу</param>
         /// <returns> Возвращает true, если объект найден. Иначе возвращает false </returns>
-        public static bool Get(in string name, out Object obj)
+        public static bool Get(in Object targetObject, out Object foundObject)
         {
-            foreach (var o in Pool)
-                if (o.name == name)
+            foreach (var obj in Pool)
+                if (obj.Equals(targetObject))
                 {
-                    obj = o;
-                    Pool.Remove(o);
-                    SceneManager.MoveGameObjectToScene(obj.gameObject, SceneManager.GetActiveScene());
+                    foundObject = obj;
+                    Pool.Remove(obj);
+                    SceneManager.MoveGameObjectToScene(foundObject.gameObject, SceneManager.GetActiveScene());
                     return true;
                 }
 
-            obj = null;
+            foundObject = null;
             return false;
         }
 
         ///<summary>Вспомогательный метод для сортировки игровых объектов в разные сцены</summary>
         ///<param name="obj">Объект, переносимый в сцену</param>
-        public static void MoveObjectToScene(in Object obj)
+        public static void MoveObjectToHisScene(in Object obj)
         {
             foreach (var scene in Scenes)
             {
-                if (!scene.name.Contains(obj.name)) continue;
-                SceneManager.MoveGameObjectToScene(obj.gameObject, scene);
-                return;
+                if (scene.name.Contains(obj.name))
+                {
+                    SceneManager.MoveGameObjectToScene(obj.gameObject, scene);
+                    return;
+                }
             }
 
             var newScene = SceneManager.CreateScene($"{obj.name} Pool");

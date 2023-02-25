@@ -82,7 +82,7 @@ namespace BaseDefense.AttackImplemention.Projectiles
                 yield return new WaitForSeconds(1);
             }
             SetParams(false);
-            ObjectsPool.MoveObjectToScene(this);
+            ObjectsPool.MoveObjectToHisScene(this);
 
             /*
             Устанавливает параметры для нормальной работы сопрограммы.

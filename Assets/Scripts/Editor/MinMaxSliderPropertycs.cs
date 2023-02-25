@@ -1,11 +1,12 @@
-using UnityEngine;
+using BaseDefense;
 using UnityEditor;
+using UnityEngine;
 
-namespace BaseDefense
+namespace Editor
 {
     [CustomPropertyDrawer(typeof(MinMaxSliderFloat))]
     [CustomPropertyDrawer(typeof(MinMaxSliderInt))]
-    public class MinMaxSliderEditor : PropertyDrawer
+    public class MinMaxSliderProperty : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

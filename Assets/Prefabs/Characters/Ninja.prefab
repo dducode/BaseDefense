@@ -116,6 +116,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08055fa7c01d25e44bc0d528771c71e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectId:
+    id: 2052560645
   gizmosView: {r: 0, g: 0, b: 1, a: 1}
   maxHealthPoints: 100
   deathColor: {r: 0.33333334, g: 0.3333333, b: 0.3333333, a: 1}

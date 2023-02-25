@@ -4,6 +4,7 @@ using BaseDefense.AttackImplemention.Projectiles;
 namespace BaseDefense.AttackImplemention.Guns
 {
     ///<summary>Базовый класс для всех видов оружия</summary>
+    [Icon("Assets/EditorUI/gun.png")]
     public abstract class Gun : Object
     {
         ///<summary>Префаб патрона. Каждому оружию соответствует свой патрон</summary>
