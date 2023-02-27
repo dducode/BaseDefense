@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using BaseDefense.Exceptions;
 using BaseDefense.Properties;
+using BaseDefense.SaveSystem;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
@@ -93,6 +94,18 @@ namespace BaseDefense
             return base.GetHashCode();
         }
 
+        public virtual void Save(GameDataWriter writer)
+        {
+            writer.Write(transform.position);
+            writer.Write(transform.rotation);
+        }
+
+        public virtual void Load(GameDataReader reader)
+        {
+            transform.position = reader.ReadPosition();
+            transform.rotation = reader.ReadRotation();
+        }
+
         /// <summary>
         /// Уничтожает объект
         /// </summary>
@@ -151,8 +164,8 @@ namespace BaseDefense
         {
             if (m_permissionDestroy) return;
             
-            const string message = 
-                "Попытка уничтожить объект во время игры через UnityEngine.Object.Destroy. " +
+            var message = 
+                $"Попытка уничтожить объект {name} во время игры через UnityEngine.Object.Destroy. " +
                 "Для уничтожения объекта используйте BaseDefense.Object.Destroy";
             throw new AttemptDestroyObjectException(message);
         }

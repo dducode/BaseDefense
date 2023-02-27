@@ -4,7 +4,7 @@ using UnityEngine;
 namespace BaseDefense.Characters
 {
     ///<summary>Базовый класс для всех типов персонажей</summary>
-    [Icon("Assets/EditorUI/ghost.png")]
+    [Icon("Assets/EditorUI/character.png")]
     [RequireComponent(typeof(CharacterController), 
         typeof(Animator), 
         typeof(ParticleSystem))]

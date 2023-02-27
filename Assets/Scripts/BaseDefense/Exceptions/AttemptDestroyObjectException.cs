@@ -1,8 +1,9 @@
 using System;
+using UnityEngine;
 
 namespace BaseDefense.Exceptions
 {
-    public class AttemptDestroyObjectException : Exception
+    public class AttemptDestroyObjectException : UnityException
     {
         public AttemptDestroyObjectException() {}
         public AttemptDestroyObjectException(string message) : base(message) {}
