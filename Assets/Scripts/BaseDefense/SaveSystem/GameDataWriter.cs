@@ -31,5 +31,15 @@ namespace BaseDefense.SaveSystem
         {
             m_writer.Write(value);
         }
+
+        public void Write(string value)
+        {
+            m_writer.Write(value);
+        }
+
+        public void Write(float value)
+        {
+            m_writer.Write(value);
+        }
     }
 }

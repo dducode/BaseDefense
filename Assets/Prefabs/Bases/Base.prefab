@@ -2091,10 +2091,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c60ff3d70db187c4a8d6c541256b2fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectId:
+    id: -1737148860
+  enemyField: {fileID: 5115758178177214942}
+  baseName: {fileID: 5115758177583290584}
   maxEnemiesCount: 10
-  startEnemiesCount: 5
   timeSpawn: 10
-  enemyStations: []
   targetPoints:
   - {fileID: 5115758177356299738}
   - {fileID: 5115758176605668743}

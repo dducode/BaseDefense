@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Zenject;
-using BroadcastMessages;
 using BaseDefense.AttackImplemention.Guns;
-using BaseDefense.Broadcast_messages;
+using BaseDefense.BroadcastMessages;
 using BaseDefense.Items;
 using BaseDefense.UI;
 using UnityEngine.Profiling;
@@ -318,7 +316,7 @@ namespace BaseDefense.Characters
         {
             Animator.SetBool(Alive, false);
             m_gun.gameObject.SetActive(false);
-            enabled = false;
+            Enabled = false;
             MeshRenderer.material.color = deathColor;
             Messenger.SendMessage(MessageType.DEATH_PLAYER);
         }
@@ -329,7 +327,7 @@ namespace BaseDefense.Characters
             Animator.SetBool(Alive, true);
             Animator.SetBool(InEnemyBase, false);
             transform.SetPositionAndRotation(respawn.position, Quaternion.identity);
-            enabled = true;
+            Enabled = true;
             CurrentHealthPoints = maxHealthPoints;
             m_inEnemyBase = false;
             MeshRenderer.material.color = DefaultColor;

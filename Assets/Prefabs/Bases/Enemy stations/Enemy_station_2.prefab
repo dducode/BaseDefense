@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5283b3f6b0eab9b46b727d80d1e2fc74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectId:
+    id: 444334628
   maxHealthPoints: 1000
   destroyEffect: {fileID: 5130858438603600220, guid: 11d2aee669534394d95be21f45653605,
     type: 3}

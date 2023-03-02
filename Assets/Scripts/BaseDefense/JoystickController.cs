@@ -1,8 +1,7 @@
 using System;
-using BaseDefense.Broadcast_messages;
+using BaseDefense.BroadcastMessages;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using BroadcastMessages;
 
 namespace BaseDefense
 {

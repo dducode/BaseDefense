@@ -1,10 +1,14 @@
 using System;
 using System.Collections;
+using System.Linq;
 using BaseDefense.Exceptions;
 using BaseDefense.Properties;
 using BaseDefense.SaveSystem;
 using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.Windows;
 using Zenject;
 
 namespace BaseDefense
@@ -19,6 +23,7 @@ namespace BaseDefense
         [SerializeField] private ObjectId objectId;
 
         public int Id => objectId.id;
+        public bool IsDestroyed { get; private set; }
         
         /// <summary>
         /// Создаёт новый объект
@@ -27,7 +32,6 @@ namespace BaseDefense
         /// <param name="position">Позиция объекта при создании</param>
         /// <param name="rotation">Ориентация объекта при создании</param>
         /// <param name="parent">Родительский transform создаваемого объекта</param>
-        /// <returns></returns>
         public static Object Create(
             in Object original, 
             in Vector3 position = default, 
@@ -39,6 +43,7 @@ namespace BaseDefense
                 obj.gameObject.SetActive(true);
                 obj.transform.SetPositionAndRotation(position, rotation);
                 obj.transform.SetParent(parent);
+                obj.IsDestroyed = false;
                 return obj;
             }
             else
@@ -50,6 +55,54 @@ namespace BaseDefense
         }
 
         /// <summary>
+        /// Создаёт новый объект
+        /// </summary>
+        /// <param name="id">Идентификатор создаваемого объекта</param>
+        /// <param name="position">Позиция объекта при создании</param>
+        /// <param name="rotation">Ориентация объекта при создании</param>
+        /// <param name="parent">Родительский transform создаваемого объекта</param>
+        public static Object Create(
+            int id, 
+            Vector3 position = default, 
+            Quaternion rotation = default, 
+            Transform parent = null)
+        {
+            const string prefabsPath = "Assets/Prefabs";
+            const string messageNotFoundDirectory = "Путь Assets/Prefabs не существует";
+            Assert.IsTrue(Directory.Exists(prefabsPath), messageNotFoundDirectory);
+            
+            var prefabsGuids = AssetDatabase.FindAssets("t:Prefab", new []{ prefabsPath });
+
+            foreach (var guid in prefabsGuids)
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                var original = PrefabUtility.LoadPrefabContents(path);
+                
+                if (original.GetComponent<Object>() is { } originalObject && originalObject.Id != id)
+                {
+                    if (ObjectsPool.Get(originalObject, out var obj))
+                    {
+                        obj.gameObject.SetActive(true);
+                        obj.transform.SetPositionAndRotation(position, rotation);
+                        obj.transform.SetParent(parent);
+                        obj.IsDestroyed = false;
+                        return obj;
+                    }
+                    else
+                    {
+                        var newObj = Instantiate(originalObject, position, rotation, parent);
+                        newObj.name = original.name;
+                        return newObj;
+                    }    
+                }
+            }
+            
+            const string messageIncorrectId = "Некорректный id";
+            Debug.LogError(messageIncorrectId);
+            return null;
+        }
+
+        /// <summary>
         /// Создаёт новый объект, используя фабрику
         /// </summary>
         /// <param name="original">Префаб, из которого создаётся объект</param>
@@ -58,7 +111,6 @@ namespace BaseDefense
         /// <param name="rotation">Ориентация объекта при создании</param>
         /// <param name="parent">Родительский transform создаваемого объекта</param>
         /// <typeparam name="T">Тип создаваемого объекта</typeparam>
-        /// <returns></returns>
         public static Object CreateFromFactory<T>(
             in Object original,
             in PlaceholderFactory<UnityEngine.Object, T> factory,
@@ -71,6 +123,7 @@ namespace BaseDefense
                 obj.gameObject.SetActive(true);
                 obj.transform.SetPositionAndRotation(position, rotation);
                 obj.transform.SetParent(parent);
+                obj.IsDestroyed = false;
                 return obj;
             }
             else
@@ -81,6 +134,59 @@ namespace BaseDefense
                 newObj.transform.SetParent(parent);
                 return newObj;
             }
+        }
+
+        /// <summary>
+        /// Создаёт новый объект, используя фабрику
+        /// </summary>
+        /// <param name="id">Идентификатор создаваемого объекта</param>
+        /// <param name="factory">Фабрика, с помощью которой создаётся объект</param>
+        /// <param name="position">Позиция объекта при создании</param>
+        /// <param name="rotation">Ориентация объекта при создании</param>
+        /// <param name="parent">Родительский transform создаваемого объекта</param>
+        /// <typeparam name="T">Тип создаваемого объекта</typeparam>
+        public Object CreateFromFactory<T>(
+            int id,
+            PlaceholderFactory<UnityEngine.Object, T> factory,
+            Vector3 position = default,
+            Quaternion rotation = default,
+            Transform parent = null) where T : Object
+        {
+            const string prefabsPath = "Assets/Prefabs";
+            const string messageNotFoundDirectory = "Путь Assets/Prefabs не существует";
+            Assert.IsTrue(Directory.Exists(prefabsPath), messageNotFoundDirectory);
+            
+            var prefabsGuids = AssetDatabase.FindAssets("t:Prefab", new []{ prefabsPath });
+
+            foreach (var guid in prefabsGuids)
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                var original = PrefabUtility.LoadPrefabContents(path);
+
+                if (original.GetComponent<Object>() is { } originalObject && originalObject.Id == id)
+                {
+                    if (ObjectsPool.Get(originalObject, out var obj))
+                    {
+                        obj.gameObject.SetActive(true);
+                        obj.transform.SetPositionAndRotation(position, rotation);
+                        obj.transform.SetParent(parent);
+                        obj.IsDestroyed = false;
+                        return obj;
+                    }
+                    else
+                    {
+                        var newObj = factory.Create(original);
+                        newObj.name = original.name;
+                        newObj.transform.SetPositionAndRotation(position, rotation);
+                        newObj.transform.SetParent(parent);
+                        return newObj;
+                    }
+                }
+            }
+            
+            const string messageIncorrectId = "Некорректный id";
+            Debug.LogError(messageIncorrectId);
+            return null;
         }
         
         /// <returns>Возвращает true, если объекты имеют одинаковый id, иначе возвращает false</returns>
@@ -114,6 +220,7 @@ namespace BaseDefense
             gameObject.SetActive(false);
             transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             ObjectsPool.Push(this);
+            IsDestroyed = true;
         }
         
         /// <summary>

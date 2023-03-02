@@ -45,7 +45,7 @@ namespace BaseDefense.Characters
             set
             {
                 m_enabled = value;
-                base.enabled = m_enabled;
+                base.Enabled = m_enabled;
                 Animator.enabled = m_enabled;
             }
         }

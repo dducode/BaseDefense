@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System;
 using NUnit.Framework;
 using System.Reflection;
-using BaseDefense.Broadcast_messages;
-using BroadcastMessages;
+using BaseDefense.BroadcastMessages;
 using UnityEngine;
 using UnityEngine.TestTools;
 

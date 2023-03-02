@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb91f9b04e3d4a4ba891bfda5100824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectId:
+    id: 440116061
   maxHealthPoints: 1
 --- !u!114 &3816633415357249334
 MonoBehaviour:
@@ -66,7 +68,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 5203258588667499559, guid: c3c0707254334a64ca8198f7486e977d,
     type: 3}
   forceScalar: 0
-  itemsCount:
+  itemsCountRange:
     minLimit: 0
     maxLimit: 100
     minValue: 0

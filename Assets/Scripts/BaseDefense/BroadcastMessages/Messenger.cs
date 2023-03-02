@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
-using BroadcastMessages;
-using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace BaseDefense.Broadcast_messages
+namespace BaseDefense.BroadcastMessages
 {
     ///<summary>Мессенджер используется для рассылки сообщений всем подписавшимся на рассылку</summary>
     public static class Messenger

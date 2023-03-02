@@ -1,4 +1,5 @@
 using BaseDefense.AttackImplemention;
+using BaseDefense.SaveSystem;
 using UnityEngine;
 
 namespace BaseDefense.Characters
@@ -34,25 +35,25 @@ namespace BaseDefense.Characters
         [SerializeField, Min(0)] protected float attackDistance;
 
         ///<summary>Анимация, проигрываемая при получении урона персонажем</summary>
-        public ParticleSystem HitEffect { get; protected set; }
+        protected ParticleSystem HitEffect { get; set; }
 
         ///<summary>Стандартный цвет персонажа. Выставляется при респавне вместо deathColor</summary>
-        public Color DefaultColor { get; protected set; }
+        protected Color DefaultColor { get; set; }
 
-        public CharacterController Controller { get; protected set; }
-        public Animator Animator { get; protected set; }
-        public SkinnedMeshRenderer MeshRenderer { get; protected set; }
+        public CharacterController Controller { get; private set; }
+        public Animator Animator { get; private set; }
+        protected SkinnedMeshRenderer MeshRenderer { get; set; }
 
         ///<summary>При включении поведения персонажа также включается его контроллёр</summary>
         private bool m_enabledCharacter;
         ///<inheritdoc cref="m_enabledCharacter"/>
-        public new bool enabled
+        protected bool Enabled
         {
             get => m_enabledCharacter;
             set
             {
                 m_enabledCharacter = value;
-                base.enabled = m_enabledCharacter;
+                enabled = m_enabledCharacter;
                 Controller.enabled = m_enabledCharacter;
             }
         }
@@ -84,6 +85,20 @@ namespace BaseDefense.Characters
         ///<summary>Вызывается автоматически, когда персонаж мёртв</summary>
         protected abstract void OnDeath();
 
+        public override void Save(GameDataWriter writer)
+        {
+            base.Save(writer);
+            writer.Write(CurrentHealthPoints);
+        }
+
+        public override void Load(GameDataReader reader)
+        {
+            Enabled = false;
+            base.Load(reader);
+            CurrentHealthPoints = reader.ReadFloat();
+            Enabled = true;
+        }
+
         protected override void Awake()
         {
             base.Awake();
@@ -98,7 +113,8 @@ namespace BaseDefense.Characters
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = gizmosView;
-            Gizmos.DrawWireSphere(transform.position + (Vector3.up * transform.localScale.y), attackDistance);
+            var thisTransform = transform;
+            Gizmos.DrawWireSphere(thisTransform.position + (Vector3.up * thisTransform.localScale.y), attackDistance);
         }
     }
 }

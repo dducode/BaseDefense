@@ -3,12 +3,13 @@ using UnityEngine;
 using Zenject;
 using BaseDefense.UI;
 using BaseDefense.Characters;
+using BaseDefense.SaveSystem;
 using UnityEngine.Assertions;
 
 namespace BaseDefense
 {
     [RequireComponent(typeof(DisplayHealthPoints))]
-    public class EnemyStation : MonoBehaviour, IAttackable
+    public class EnemyStation : Object, IAttackable
     {
         ///<summary>Максимальное количество здоровья станции</summary>
         ///<value>[1, infinity]</value>
@@ -28,14 +29,26 @@ namespace BaseDefense
         [SerializeField] private Transform[] spawnPoints;
 
         [Inject] private EnemyCharacter.Factory m_enemyFactory;
-        
+
+        public override void Save(GameDataWriter writer)
+        {
+            base.Save(writer);
+            writer.Write(CurrentHealthPoints);
+        }
+
+        public override void Load(GameDataReader reader)
+        {
+            base.Load(reader);
+            CurrentHealthPoints = reader.ReadFloat();
+        }
+
         public EnemyCharacter SpawnEnemy(Transform[] targetPoints)
         {
             var index = Random.Range(0, spawnPoints.Length - 1);
             var position = spawnPoints[index].position + Random.insideUnitSphere * radiusSpawn;
             position.y = 0;
             var rotation = Quaternion.Euler(0, Random.Range(0, 360f), 0);
-            var enemy = Object.CreateFromFactory(enemyPrefab, m_enemyFactory) as EnemyCharacter;
+            var enemy = CreateFromFactory(enemyPrefab, m_enemyFactory) as EnemyCharacter;
 
             const string message = "Враг не был создан";
             Assert.IsNotNull(enemy, message);
@@ -49,6 +62,7 @@ namespace BaseDefense
         ///<summary>Текущее количество здоровья базы</summary>
         ///<value>[0, maxHealthPoints]</value>
         private float m_currentHealthPoints;
+
         ///<inheritdoc cref="m_currentHealthPoints"/>
         public float CurrentHealthPoints
         {
@@ -68,8 +82,9 @@ namespace BaseDefense
             m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             CurrentHealthPoints = maxHealthPoints;
             m_displayHealthPoints = GetComponent<DisplayHealthPoints>();
         }
@@ -85,8 +100,8 @@ namespace BaseDefense
             if (spawnPoints == null || spawnPoints.Length == 0)
                 return;
             Gizmos.color = Color.green;
-            for (int i = 0; i < spawnPoints.Length; i++)
-                Gizmos.DrawWireSphere(spawnPoints[i].position, radiusSpawn);
+            foreach (var spawnPoint in spawnPoints)
+                Gizmos.DrawWireSphere(spawnPoint.position, radiusSpawn);
         }
 
         private void DestroyStation()
@@ -94,6 +109,8 @@ namespace BaseDefense
             Instantiate(destroyEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+        
+        public class Factory : PlaceholderFactory<UnityEngine.Object, EnemyStation> {}
     }
 }
 

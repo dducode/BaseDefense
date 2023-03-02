@@ -14,8 +14,10 @@ namespace BaseDefense.Installers
             
             Container.BindFactory<UnityEngine.Object, EnemyCharacter, EnemyCharacter.Factory>().
                 FromFactory<PrefabFactory<EnemyCharacter>>();
-            Container.BindFactory<UnityEngine.Object, EnemyFactory, EnemyFactory.Factory>().
-                FromFactory<PrefabFactory<EnemyFactory>>();
+            Container.BindFactory<UnityEngine.Object, EnemyBase, EnemyBase.Factory>().
+                FromFactory<PrefabFactory<EnemyBase>>();
+            Container.BindFactory<UnityEngine.Object, EnemyStation, EnemyStation.Factory>()
+                .FromFactory<PrefabFactory<EnemyStation>>();
 
             Container.Bind<DisplayingUI>().FromComponentInHierarchy().AsSingle();
             Container.Bind<Shop>().FromComponentInHierarchy().AsSingle();

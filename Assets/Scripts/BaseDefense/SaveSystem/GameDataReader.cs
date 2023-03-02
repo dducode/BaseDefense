@@ -41,5 +41,15 @@ namespace BaseDefense.SaveSystem
         {
             return m_reader.ReadInt32();
         }
+
+        public string ReadString()
+        {
+            return m_reader.ReadString();
+        }
+
+        public float ReadFloat()
+        {
+            return m_reader.ReadSingle();
+        }
     }
 }
