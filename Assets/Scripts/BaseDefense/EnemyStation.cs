@@ -53,7 +53,7 @@ namespace BaseDefense
             const string message = "Враг не был создан";
             Assert.IsNotNull(enemy, message);
             
-            enemy.Spawn(targetPoints, position, rotation);
+            enemy.Initialize(targetPoints, position, rotation);
 
             return enemy;
         }
@@ -107,7 +107,7 @@ namespace BaseDefense
         private void DestroyStation()
         {
             Instantiate(destroyEffect, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            Destroy();
         }
         
         public class Factory : PlaceholderFactory<UnityEngine.Object, EnemyStation> {}

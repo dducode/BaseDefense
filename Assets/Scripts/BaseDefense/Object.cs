@@ -34,9 +34,9 @@ namespace BaseDefense
         /// <param name="parent">Родительский transform создаваемого объекта</param>
         public static Object Create(
             in Object original, 
-            in Vector3 position = default, 
-            in Quaternion rotation = default,
-            in Transform parent = null)
+            Transform parent = null,
+            Vector3 position = default, 
+            Quaternion rotation = default)
         {
             if (ObjectsPool.Get(original, out var obj))
             {
@@ -63,9 +63,9 @@ namespace BaseDefense
         /// <param name="parent">Родительский transform создаваемого объекта</param>
         public static Object Create(
             int id, 
+            Transform parent = null,
             Vector3 position = default, 
-            Quaternion rotation = default, 
-            Transform parent = null)
+            Quaternion rotation = default)
         {
             const string prefabsPath = "Assets/Prefabs";
             const string messageNotFoundDirectory = "Путь Assets/Prefabs не существует";
@@ -78,7 +78,7 @@ namespace BaseDefense
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var original = PrefabUtility.LoadPrefabContents(path);
                 
-                if (original.GetComponent<Object>() is { } originalObject && originalObject.Id != id)
+                if (original.GetComponent<Object>() is { } originalObject && originalObject.Id == id)
                 {
                     if (ObjectsPool.Get(originalObject, out var obj))
                     {
@@ -86,15 +86,18 @@ namespace BaseDefense
                         obj.transform.SetPositionAndRotation(position, rotation);
                         obj.transform.SetParent(parent);
                         obj.IsDestroyed = false;
+                        PrefabUtility.UnloadPrefabContents(original);
                         return obj;
                     }
                     else
                     {
                         var newObj = Instantiate(originalObject, position, rotation, parent);
                         newObj.name = original.name;
+                        PrefabUtility.UnloadPrefabContents(original);
                         return newObj;
                     }    
                 }
+                PrefabUtility.UnloadPrefabContents(original);
             }
             
             const string messageIncorrectId = "Некорректный id";
@@ -114,9 +117,9 @@ namespace BaseDefense
         public static Object CreateFromFactory<T>(
             in Object original,
             in PlaceholderFactory<UnityEngine.Object, T> factory,
-            in Vector3 position = default, 
-            in Quaternion rotation = default,
-            in Transform parent = null) where T : Object
+            Transform parent = null,
+            Vector3 position = default, 
+            Quaternion rotation = default) where T : Object
         {
             if (ObjectsPool.Get(original, out var obj))
             {
@@ -148,9 +151,9 @@ namespace BaseDefense
         public Object CreateFromFactory<T>(
             int id,
             PlaceholderFactory<UnityEngine.Object, T> factory,
-            Vector3 position = default,
-            Quaternion rotation = default,
-            Transform parent = null) where T : Object
+            Transform parent = null,
+            Vector3 position = default, 
+            Quaternion rotation = default) where T : Object
         {
             const string prefabsPath = "Assets/Prefabs";
             const string messageNotFoundDirectory = "Путь Assets/Prefabs не существует";
@@ -171,6 +174,7 @@ namespace BaseDefense
                         obj.transform.SetPositionAndRotation(position, rotation);
                         obj.transform.SetParent(parent);
                         obj.IsDestroyed = false;
+                        PrefabUtility.UnloadPrefabContents(original);
                         return obj;
                     }
                     else
@@ -179,9 +183,11 @@ namespace BaseDefense
                         newObj.name = original.name;
                         newObj.transform.SetPositionAndRotation(position, rotation);
                         newObj.transform.SetParent(parent);
+                        PrefabUtility.UnloadPrefabContents(original);
                         return newObj;
                     }
                 }
+                PrefabUtility.UnloadPrefabContents(original);
             }
             
             const string messageIncorrectId = "Некорректный id";
@@ -217,8 +223,12 @@ namespace BaseDefense
         /// </summary>
         public void Destroy()
         {
+            if (IsDestroyed)
+                return;
+            
             gameObject.SetActive(false);
             transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            transform.SetParent(null);
             ObjectsPool.Push(this);
             IsDestroyed = true;
         }

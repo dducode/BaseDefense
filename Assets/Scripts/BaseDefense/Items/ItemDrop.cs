@@ -30,7 +30,7 @@ namespace BaseDefense.Items
             {
                 var position = transform.position + Vector3.up;
                 var rotation = Random.rotation;
-                var item = Object.Create(itemPrefab, position, rotation) as Item;
+                var item = Object.Create(itemPrefab, null, position, rotation) as Item;
                 var force = new Vector3(Random.Range(0f, 1f), 1, Random.Range(0f, 1f)) * forceScalar;
 
                 const string message = "Предмет не был создан";

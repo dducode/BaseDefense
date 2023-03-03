@@ -15,27 +15,25 @@ namespace BaseDefense
     {
         [SerializeField] private Transform enemyField;
         [SerializeField] private TextMeshPro baseName;
-        
+
         ///<summary>Максимально возможное количество врагов на базе</summary>
         ///<value>[1, 100]</value>
-        [Tooltip("Максимально возможное количество врагов на базе. [1, 100]")]
-        [SerializeField, Range(1, 100)]
+        [Tooltip("Максимально возможное количество врагов на базе. [1, 100]")] [SerializeField, Range(1, 100)]
         private int maxEnemiesCount = 10;
+
+        [SerializeField] private int startEnemiesCount = 5;
 
         ///<summary>Временной интервал между порождением новых врагов</summary>
         ///<value>[0, infinity]</value>
-        [Tooltip("Временной интервал между порождением новых врагов. [0, infinity]")]
-        [SerializeField, Min(0)]
+        [Tooltip("Временной интервал между порождением новых врагов. [0, infinity]")] [SerializeField, Min(0)]
         private float timeSpawn = 3f;
 
         ///<summary>Целевые точки для патруля врагами</summary>
-        [Tooltip("Целевые точки для патруля врагами")]
-        [SerializeField]
+        [Tooltip("Целевые точки для патруля врагами")] [SerializeField]
         private Transform[] targetPoints;
 
         ///<summary>Переходы между уровнями</summary>
-        [Tooltip("Переходы между уровнями")]
-        [SerializeField]
+        [Tooltip("Переходы между уровнями")] [SerializeField]
         private Transitions _transitions;
 
         ///<inheritdoc cref="_transitions"/>
@@ -43,6 +41,8 @@ namespace BaseDefense
         public Transitions transitions => _transitions;
 
         [Inject] private EnemyStation.Factory m_enemyStationFactory;
+        [Inject] private EnemyCharacter.Factory m_enemyFactory;
+
 
         ///<summary>Содержит всех врагов, находящихся на базе</summary>
         ///<remarks>Мёртвые враги удаляются из списка</remarks>
@@ -51,10 +51,12 @@ namespace BaseDefense
         private List<EnemyStation> m_enemyStations;
         private List<Crystal> m_crystals;
 
+
         public override void Save(GameDataWriter writer)
         {
             base.Save(writer);
             
+            writer.Write(enabled);
             writer.Write(baseName.text);
             SaveEnemies(writer);
             SaveEnemyStations(writer);
@@ -102,6 +104,7 @@ namespace BaseDefense
         {
             base.Load(reader);
 
+            enabled = reader.ReadBool();
             baseName.text = reader.ReadString();
             LoadEnemies(reader);
             LoadEnemyStations(reader);
@@ -112,27 +115,31 @@ namespace BaseDefense
 
         private void LoadEnemies(GameDataReader reader)
         {
+            m_enemies = new List<EnemyCharacter>();
             var enemiesCount = reader.ReadInteger();
 
             for (int i = 0; i < enemiesCount; i++)
             {
                 var enemyId = reader.ReadInteger();
-                var enemy = Create(enemyId) as EnemyCharacter;
+                var enemy = CreateFromFactory(enemyId, m_enemyFactory) as EnemyCharacter;
                 const string message = "Враг не был загружен";
                 Assert.IsNotNull(enemy, message);
                 enemy.Load(reader);
+                var enemyTransform = enemy.transform;
+                enemy.Initialize(targetPoints, enemyTransform.position, enemyTransform.rotation);
                 m_enemies.Add(enemy);
             }
         }
 
         private void LoadEnemyStations(GameDataReader reader)
         {
+            m_enemyStations = new List<EnemyStation>();
             var enemyStationsCount = reader.ReadInteger();
 
             for (int i = 0; i < enemyStationsCount; i++)
             {
                 var enemyStationId = reader.ReadInteger();
-                var enemyStation = CreateFromFactory(enemyStationId, m_enemyStationFactory) as EnemyStation;
+                var enemyStation = CreateFromFactory(enemyStationId, m_enemyStationFactory, enemyField) as EnemyStation;
                 const string message = "Вражеская станция не была загружена";
                 Assert.IsNotNull(enemyStation, message);
                 enemyStation.Load(reader);
@@ -142,12 +149,13 @@ namespace BaseDefense
 
         private void LoadCrystals(GameDataReader reader)
         {
+            m_crystals = new List<Crystal>();
             var crystalsCount = reader.ReadInteger();
 
             for (int i = 0; i < crystalsCount; i++)
             {
                 var crystalId = reader.ReadInteger();
-                var crystal = Create(crystalId) as Crystal;
+                var crystal = Create(crystalId, enemyField) as Crystal;
                 const string message = "Кристалл не был загружен";
                 Assert.IsNotNull(crystal, message);
                 crystal.Load(reader);
@@ -163,7 +171,7 @@ namespace BaseDefense
             m_enemyStations = CreateStations(baseTemplate.EnemyStations.ToList());
             m_crystals = CreateCrystals(baseTemplate.Crystals.ToList());
             m_enemies = new List<EnemyCharacter>();
-            for (int i = 0; i < maxEnemiesCount; i++)
+            for (int i = 0; i < startEnemiesCount; i++)
                 m_enemies.Add(SpawnEnemy());
         }
 
@@ -174,9 +182,8 @@ namespace BaseDefense
             foreach (var station in stationsOriginal)
             {
                 var position = station.transform.position + transform.position;
-                var parent = enemyField;
                 stations.Add(CreateFromFactory(
-                    station, m_enemyStationFactory, position, Quaternion.identity, parent) as EnemyStation);
+                    station, m_enemyStationFactory, enemyField, position, Quaternion.identity) as EnemyStation);
             }
 
             return stations;
@@ -189,8 +196,7 @@ namespace BaseDefense
             foreach (var crystal in crystalsOriginal)
             {
                 var position = crystal.transform.position + transform.position;
-                var parent = enemyField;
-                crystals.Add(Create(crystal, position, Quaternion.identity, parent) as Crystal);
+                crystals.Add(Create(crystal, enemyField, position, Quaternion.identity) as Crystal);
             }
 
             return crystals;
@@ -200,8 +206,9 @@ namespace BaseDefense
 
         ///<summary>Время, прошедшее с момента последнего порождения врага</summary>
         private float m_timeOfLastSpawn;
-        
+
         [Inject] private Game m_game;
+
 
         private void Update()
         {
@@ -224,7 +231,7 @@ namespace BaseDefense
                 enabled = false;
             }
         }
-        
+
         private void RemoveDestroyedStations()
         {
             for (int i = 0; i < m_enemyStations.Count; i++)
@@ -243,7 +250,7 @@ namespace BaseDefense
         {
             return m_enemyStations.Count != 0;
         }
-        
+
         private void UpdateEnemies()
         {
             for (int i = 0; i < m_enemies.Count; i++)
@@ -255,9 +262,9 @@ namespace BaseDefense
         {
             return m_enemies.Count == 0;
         }
-        
+
         private int m_stationIndex;
-        
+
         private EnemyCharacter SpawnEnemy()
         {
             m_stationIndex++;

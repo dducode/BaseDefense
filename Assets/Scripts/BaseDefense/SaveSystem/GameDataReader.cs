@@ -51,5 +51,10 @@ namespace BaseDefense.SaveSystem
         {
             return m_reader.ReadSingle();
         }
+
+        public bool ReadBool()
+        {
+            return m_reader.ReadBoolean();
+        }
     }
 }

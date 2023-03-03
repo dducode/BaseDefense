@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 9119659082574663709}
   - component: {fileID: 9119659082574663708}
   - component: {fileID: 2239933666830806770}
+  - component: {fileID: 8604601584627469048}
   m_Layer: 3
   m_Name: Enemy_station_1
   m_TagString: Untagged
@@ -601,6 +602,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &8604601584627469048
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5534312740367148012}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.3664618, y: 3.0932627, z: 3.7291274}
+  m_Center: {x: 0.000000834465, y: 1.3957894, z: 0.007350683}
 --- !u!1 &6090814794210151160
 GameObject:
   m_ObjectHideFlags: 0

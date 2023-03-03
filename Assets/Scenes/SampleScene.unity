@@ -464,14 +464,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85993eb6ec0fbd141b73ccd1dc518632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basePrefab: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
+    type: 3}
+  saving: 0
   baseTemplates:
   - {fileID: -3481491134207826726, guid: ce514dfb938ff2945951101a711f7542, type: 3}
   - {fileID: 3044983512176526655, guid: f6660933e2b86e64bb58d80f22b8e6eb, type: 3}
   - {fileID: -1020194701402002838, guid: 9eee23109778b4c4383a1695921d0d28, type: 3}
   - {fileID: 5948473969183200558, guid: c98647b2e295fa14a943321b730cd3bf, type: 3}
   - {fileID: 3991599924033379902, guid: 823733def9419854f82614e10745a20e, type: 3}
-  basePrefab: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
-    type: 3}
 --- !u!4 &85841908
 Transform:
   m_ObjectHideFlags: 0

@@ -57,7 +57,7 @@ namespace BaseDefense.Characters
         private Ragdoll m_ragdoll;
 
         [Inject]
-        public void Initialize(PlayerCharacter player)
+        public void Constructor(PlayerCharacter player)
         {
             m_itemDrop = GetComponent<ItemDrop>();
             m_ragdoll = GetComponent<Ragdoll>();
@@ -69,7 +69,7 @@ namespace BaseDefense.Characters
         /// <param name="targetPoints">Целевые точки для патруля</param>
         /// <param name="position">Точка спавна врага</param>
         /// <param name="rotation">Поворот, принимаемый во время спавна</param>
-        public void Spawn(Transform[] targetPoints, Vector3 position, Quaternion rotation)
+        public void Initialize(Transform[] targetPoints, Vector3 position, Quaternion rotation)
         {
             m_targetPoints = targetPoints;
             CurrentHealthPoints = maxHealthPoints;

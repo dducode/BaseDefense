@@ -41,5 +41,10 @@ namespace BaseDefense.SaveSystem
         {
             m_writer.Write(value);
         }
+
+        public void Write(bool value)
+        {
+            m_writer.Write(value);
+        }
     }
 }

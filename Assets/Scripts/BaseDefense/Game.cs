@@ -6,13 +6,13 @@ using BaseDefense.SaveSystem;
 using Zenject;
 using DG.Tweening;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 
 namespace BaseDefense
 {
     public class Game : MonoBehaviour
     {
         [SerializeField] private EnemyBase basePrefab;
+        [SerializeField] private bool saving;
         [SerializeField] private BaseTemplate[] baseTemplates;
         [Inject] private EnemyBase.Factory m_enemyFactory;
         private List<EnemyBase> m_bases;
@@ -36,12 +36,13 @@ namespace BaseDefense
 
             Application.targetFrameRate = Screen.currentResolution.refreshRate;
             DOTween.SetTweensCapacity(300, 150);
-
-            Application.wantsToQuit += () =>
-            {
-                SaveGame();
-                return true;
-            };
+            
+            if (saving)
+                Application.wantsToQuit += () =>
+                {
+                    SaveGame();
+                    return true;
+                };
             
             Messenger.AddListener(MessageType.NEXT_LEVEL, NextLevel);
         }

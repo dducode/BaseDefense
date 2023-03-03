@@ -16,7 +16,6 @@ namespace BaseDefense
         public static void Push(in Object value)
         {
             Pool.Add(value);
-            value.transform.SetParent(null);
             MoveObjectToHisScene(value);
         }
 
