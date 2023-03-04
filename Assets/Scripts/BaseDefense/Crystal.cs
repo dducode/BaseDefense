@@ -41,7 +41,10 @@ namespace BaseDefense
             CurrentHealthPoints = reader.ReadFloat();
         }
 
-        private ItemDrop m_itemDrop;
+        public void Initialize()
+        {
+            CurrentHealthPoints = maxHealthPoints;
+        }
 
         ///<summary>Вызывается для нанесения повреждений кристаллу</summary>
         ///<param name="damage">Количество нанесённых повреждений</param>
@@ -49,6 +52,8 @@ namespace BaseDefense
         {
             CurrentHealthPoints -= damage;
         }
+
+        private ItemDrop m_itemDrop;
 
         protected override void Awake()
         {
@@ -59,6 +64,9 @@ namespace BaseDefense
 
         private void DestroyCrystal()
         {
+            if (IsDestroyed)
+                return;
+            
             m_itemDrop.DropItems();
             Destroy();
         }

@@ -40,10 +40,10 @@ namespace BaseDefense
         {
             if (ObjectsPool.Get(original, out var obj))
             {
-                obj.gameObject.SetActive(true);
                 obj.transform.SetPositionAndRotation(position, rotation);
                 obj.transform.SetParent(parent);
                 obj.IsDestroyed = false;
+                obj.gameObject.SetActive(true);
                 return obj;
             }
             else
@@ -82,10 +82,10 @@ namespace BaseDefense
                 {
                     if (ObjectsPool.Get(originalObject, out var obj))
                     {
-                        obj.gameObject.SetActive(true);
                         obj.transform.SetPositionAndRotation(position, rotation);
                         obj.transform.SetParent(parent);
                         obj.IsDestroyed = false;
+                        obj.gameObject.SetActive(true);
                         PrefabUtility.UnloadPrefabContents(original);
                         return obj;
                     }
@@ -123,10 +123,10 @@ namespace BaseDefense
         {
             if (ObjectsPool.Get(original, out var obj))
             {
-                obj.gameObject.SetActive(true);
                 obj.transform.SetPositionAndRotation(position, rotation);
                 obj.transform.SetParent(parent);
                 obj.IsDestroyed = false;
+                obj.gameObject.SetActive(true);
                 return obj;
             }
             else
@@ -148,7 +148,7 @@ namespace BaseDefense
         /// <param name="rotation">Ориентация объекта при создании</param>
         /// <param name="parent">Родительский transform создаваемого объекта</param>
         /// <typeparam name="T">Тип создаваемого объекта</typeparam>
-        public Object CreateFromFactory<T>(
+        public static Object CreateFromFactory<T>(
             int id,
             PlaceholderFactory<UnityEngine.Object, T> factory,
             Transform parent = null,
@@ -170,10 +170,10 @@ namespace BaseDefense
                 {
                     if (ObjectsPool.Get(originalObject, out var obj))
                     {
-                        obj.gameObject.SetActive(true);
                         obj.transform.SetPositionAndRotation(position, rotation);
                         obj.transform.SetParent(parent);
                         obj.IsDestroyed = false;
+                        obj.gameObject.SetActive(true);
                         PrefabUtility.UnloadPrefabContents(original);
                         return obj;
                     }
@@ -224,7 +224,10 @@ namespace BaseDefense
         public void Destroy()
         {
             if (IsDestroyed)
-                return;
+            {
+                var message = $"Попытка повторного уничтожения объекта - объект {name} уже уничтожен";
+                throw new RepeatedDestructionObjectException(message);
+            }
             
             gameObject.SetActive(false);
             transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);

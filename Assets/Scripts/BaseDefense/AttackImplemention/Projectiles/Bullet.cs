@@ -1,3 +1,4 @@
+using BaseDefense.Exceptions;
 using UnityEngine;
 using BaseDefense.Extensions;
 
@@ -12,11 +13,15 @@ namespace BaseDefense.AttackImplemention.Projectiles
         {
             TrailRenderer.Clear();
             Rb.AddForce(force);
+            transform.rotation = Quaternion.LookRotation(force);
             m_damage = force.magnitude;
         }
 
         protected override void OnCollisionEnter(Collision collision)
         {
+            if (IsDestroyed)
+                return;
+            
             if (collision.gameObject.GetComponent<IAttackable>() is { } attackable)
                 attackable.Hit(m_damage);
             Destroy();

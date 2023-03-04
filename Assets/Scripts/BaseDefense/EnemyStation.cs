@@ -49,10 +49,8 @@ namespace BaseDefense
             position.y = 0;
             var rotation = Quaternion.Euler(0, Random.Range(0, 360f), 0);
             var enemy = CreateFromFactory(enemyPrefab, m_enemyFactory) as EnemyCharacter;
-
             const string message = "Враг не был создан";
             Assert.IsNotNull(enemy, message);
-            
             enemy.Initialize(targetPoints, position, rotation);
 
             return enemy;
@@ -76,10 +74,16 @@ namespace BaseDefense
             }
         }
 
+        public void Initialize()
+        {
+            CurrentHealthPoints = maxHealthPoints;
+            UpdateHealthPointsView();
+        }
+        
         public void Hit(float damage)
         {
             CurrentHealthPoints -= damage;
-            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+            UpdateHealthPointsView();
         }
 
         protected override void Awake()
@@ -92,6 +96,11 @@ namespace BaseDefense
         private void Start()
         {
             m_displayHealthPoints.SetMaxValue((int)maxHealthPoints);
+            UpdateHealthPointsView();
+        }
+
+        private void UpdateHealthPointsView()
+        {
             m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
         }
 
@@ -106,6 +115,9 @@ namespace BaseDefense
 
         private void DestroyStation()
         {
+            if (IsDestroyed)
+                return;
+            
             Instantiate(destroyEffect, transform.position, Quaternion.identity);
             Destroy();
         }

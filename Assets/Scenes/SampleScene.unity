@@ -466,7 +466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePrefab: {fileID: 5144730351215636206, guid: 4bb1fb5fa14ac234db22fa43421f92d7,
     type: 3}
-  saving: 0
+  saving: 1
   baseTemplates:
   - {fileID: -3481491134207826726, guid: ce514dfb938ff2945951101a711f7542, type: 3}
   - {fileID: 3044983512176526655, guid: f6660933e2b86e64bb58d80f22b8e6eb, type: 3}

@@ -28,10 +28,7 @@ namespace BaseDefense.AttackImplemention.Guns
                 const string message = "Пуля не была создана";
                 Assert.IsNotNull(bullet, message);
 
-                var muzzleTransform = muzzle.transform;
-                bullet.transform.SetLocalPositionAndRotation(
-                    muzzleTransform.position, muzzleTransform.rotation
-                );
+                bullet.transform.localPosition = muzzle.transform.position;
                 var dispersion = new Vector3(
                     Random.Range(-dispersionScalar, dispersionScalar), 
                     Random.Range(-dispersionScalar, dispersionScalar), 

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using BaseDefense.BroadcastMessages;
+using BaseDefense.Characters;
 using BaseDefense.SaveSystem;
 using Zenject;
 using DG.Tweening;
@@ -14,11 +15,19 @@ namespace BaseDefense
         [SerializeField] private EnemyBase basePrefab;
         [SerializeField] private bool saving;
         [SerializeField] private BaseTemplate[] baseTemplates;
-        [Inject] private EnemyBase.Factory m_enemyFactory;
+        private EnemyBase.Factory m_enemyFactory;
         private List<EnemyBase> m_bases;
         private int m_currentLevel;
         private Vector3 m_initialPosition = new(0, 0, 20);
+        private PlayerCharacter m_playerCharacter;
         private const int FIRST_BASE = 0;
+
+        [Inject]
+        public void Constructor(EnemyBase.Factory enemyFactory, PlayerCharacter playerCharacter)
+        {
+            m_enemyFactory = enemyFactory;
+            m_playerCharacter = playerCharacter;
+        }
 
         public void DestroyOldBase()
         {
@@ -32,7 +41,12 @@ namespace BaseDefense
             m_bases = new List<EnemyBase>();
             LoadGame();
             if (m_bases.Count == 0)
-                m_bases.Add(CreateNewBase());
+            {
+                var newBase = CreateNewBase();
+                newBase.transform.position = m_initialPosition;
+                newBase.Initialize(baseTemplates[m_currentLevel]);
+                m_bases.Add(newBase);
+            }
 
             Application.targetFrameRate = Screen.currentResolution.refreshRate;
             DOTween.SetTweensCapacity(300, 150);
@@ -62,6 +76,7 @@ namespace BaseDefense
             frontTransition.gameObject.SetActive(false);
 
             newBase.transform.position = frontTransition.position - backTransition.localPosition;
+            newBase.Initialize(baseTemplates[m_currentLevel]);
             m_bases.Add(newBase);
         }
 
@@ -70,8 +85,6 @@ namespace BaseDefense
             var newBase = Object.CreateFromFactory(basePrefab, m_enemyFactory) as EnemyBase;
             const string message = "Не удалось создать базу";
             Assert.IsNotNull(newBase, message);
-            newBase.Initialize(baseTemplates[m_currentLevel]);
-            newBase.transform.position = m_initialPosition;
             return newBase;
         }
 
@@ -83,6 +96,7 @@ namespace BaseDefense
             using var binaryWriter = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate));
             var writer = new GameDataWriter(binaryWriter);
             writer.Write(m_currentLevel);
+            m_playerCharacter.Save(writer);
             SaveBase(writer);
         }
 
@@ -96,14 +110,12 @@ namespace BaseDefense
         private void LoadGame()
         {
             var path = Path.Combine(Application.persistentDataPath, DATA_FILE_NAME);
-            if (!File.Exists(path))
+            var reader = GameDataStorage.GetDataReader(path);
+            if (reader is null)
                 return;
 
-            var data = File.ReadAllBytes(path);
-            var binaryReader = new BinaryReader(new MemoryStream(data));
-            var reader = new GameDataReader(binaryReader);
-
             m_currentLevel = reader.ReadInteger();
+            m_playerCharacter.Load(reader);
             LoadBase(reader);
         }
 

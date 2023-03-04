@@ -50,17 +50,41 @@ namespace BaseDefense
 
         private List<EnemyStation> m_enemyStations;
         private List<Crystal> m_crystals;
-
-
+        
         public override void Save(GameDataWriter writer)
         {
             base.Save(writer);
             
             writer.Write(enabled);
             writer.Write(baseName.text);
+            writer.Write(transitions.frontTransition.gameObject.activeSelf);
+            writer.Write(transitions.backTransition.gameObject.activeSelf);
             SaveEnemies(writer);
             SaveEnemyStations(writer);
             SaveCrystals(writer);
+        }
+
+        public override void Load(GameDataReader reader)
+        {
+            base.Load(reader);
+
+            enabled = reader.ReadBool();
+            baseName.text = reader.ReadString();
+            transitions.frontTransition.gameObject.SetActive(reader.ReadBool());
+            transitions.backTransition.gameObject.SetActive(reader.ReadBool());
+            LoadEnemies(reader);
+            LoadEnemyStations(reader);
+            LoadCrystals(reader);
+        }
+
+        public void Initialize(BaseTemplate baseTemplate)
+        {
+            baseName.text = baseTemplate.name;
+            m_enemyStations = CreateStations(baseTemplate.EnemyStations.ToList());
+            m_crystals = CreateCrystals(baseTemplate.Crystals.ToList());
+            m_enemies = new List<EnemyCharacter>();
+            for (int i = 0; i < startEnemiesCount; i++)
+                m_enemies.Add(SpawnEnemy());
         }
 
         #region SavingObjects
@@ -99,17 +123,6 @@ namespace BaseDefense
         }
 
         #endregion
-
-        public override void Load(GameDataReader reader)
-        {
-            base.Load(reader);
-
-            enabled = reader.ReadBool();
-            baseName.text = reader.ReadString();
-            LoadEnemies(reader);
-            LoadEnemyStations(reader);
-            LoadCrystals(reader);
-        }
 
         #region LoadingObjects
 
@@ -165,25 +178,21 @@ namespace BaseDefense
 
         #endregion
 
-        public void Initialize(BaseTemplate baseTemplate)
-        {
-            baseName.text = baseTemplate.name;
-            m_enemyStations = CreateStations(baseTemplate.EnemyStations.ToList());
-            m_crystals = CreateCrystals(baseTemplate.Crystals.ToList());
-            m_enemies = new List<EnemyCharacter>();
-            for (int i = 0; i < startEnemiesCount; i++)
-                m_enemies.Add(SpawnEnemy());
-        }
+        #region Initialization
 
         private List<EnemyStation> CreateStations(List<EnemyStation> stationsOriginal)
         {
             var stations = new List<EnemyStation>(stationsOriginal.Count);
             
-            foreach (var station in stationsOriginal)
+            foreach (var stationOriginal in stationsOriginal)
             {
-                var position = station.transform.position + transform.position;
-                stations.Add(CreateFromFactory(
-                    station, m_enemyStationFactory, enemyField, position, Quaternion.identity) as EnemyStation);
+                var position = stationOriginal.transform.position + transform.position;
+                var station = CreateFromFactory(
+                    stationOriginal, m_enemyStationFactory, enemyField, position, Quaternion.identity) as EnemyStation;
+                const string message = "Вражеская станция не была создана";
+                Assert.IsNotNull(station, message);
+                station.Initialize();
+                stations.Add(station);
             }
 
             return stations;
@@ -193,14 +202,20 @@ namespace BaseDefense
         {
             var crystals = new List<Crystal>(crystalsOriginal.Count);
 
-            foreach (var crystal in crystalsOriginal)
+            foreach (var crystalOriginal in crystalsOriginal)
             {
-                var position = crystal.transform.position + transform.position;
-                crystals.Add(Create(crystal, enemyField, position, Quaternion.identity) as Crystal);
+                var position = crystalOriginal.transform.position + transform.position;
+                var crystal = Create(crystalOriginal, enemyField, position, Quaternion.identity) as Crystal;
+                const string message = "Кристалл не был создан";
+                Assert.IsNotNull(crystal, message);
+                crystal.Initialize();
+                crystals.Add(crystal);
             }
 
             return crystals;
         }
+
+        #endregion
 
         #region FactoryUpdate
 
@@ -208,7 +223,6 @@ namespace BaseDefense
         private float m_timeOfLastSpawn;
 
         [Inject] private Game m_game;
-
 
         private void Update()
         {

@@ -37,7 +37,7 @@ namespace BaseDefense.Characters
 
         ///<inheritdoc cref="ItemCollecting.Capacity"/>
         public int Capacity => m_itemCollecting.Capacity;
-        
+
         private bool m_inEnemyBase;
 
         [Inject]
@@ -55,7 +55,7 @@ namespace BaseDefense.Characters
             emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
             HitEffect.Play();
         }
-        
+
         ///<summary>Прокачивает характеристики игрока</summary>
         ///<param name="upgradeType">Определяет прокачиваемую характеристику</param>
         public void Upgrade(UpgradableProperties upgradeType)
@@ -75,10 +75,11 @@ namespace BaseDefense.Characters
                     throw new NotImplementedException($"Тип прокачки {upgradeType} не реализован");
             }
         }
-        
+
+
         private Shop m_shop;
         private Gun m_gun;
-        
+
         ///<summary>Вызывается при выборе оружия из магазина</summary>
         ///<param name="gunName">Выбранное оружие</param>
         public void SelectGun(string gunName)
@@ -96,6 +97,7 @@ namespace BaseDefense.Characters
             m_itemCollecting = GetComponent<ItemCollecting>();
             m_displayHealthPoints = GetComponent<DisplayHealthPoints>();
             m_gun = gunSlot.GetChild(0).GetComponent<Gun>();
+            Messenger.AddListener(MessageType.RESTART, Resurrection);
         }
 
         private void Start()
@@ -106,15 +108,20 @@ namespace BaseDefense.Characters
             m_gazeDirection = transform.forward;
         }
 
+        private void OnDestroy() => Messenger.RemoveListener(MessageType.RESTART, Resurrection);
+
         #endregion
 
         #region PlayerUpdate
 
         private static readonly int SpeedId = Animator.StringToHash("speed");
+
         ///<summary>Направление взгляда в сторону атакуемой сущности</summary>
         private Vector3 m_gazeDirection;
+
         private Vector3 m_move;
         private JoystickController m_joystick;
+
 
         private void Update()
         {
@@ -140,7 +147,7 @@ namespace BaseDefense.Characters
                 );
             }
         }
-        
+
         private void Movement()
         {
             m_move = m_joystick.GetInput();
@@ -186,7 +193,7 @@ namespace BaseDefense.Characters
             
             Profiler.EndSample();
         }
-        
+
         ///<returns>Возвращает ближайшую к игроку атакуемую сущность. Если рядом таких нет - возвращает null</returns>
         private GameObject GetNearestAttackable()
         {
@@ -228,8 +235,9 @@ namespace BaseDefense.Characters
         #endregion
 
         #region TriggerEvents
-        
+
         private static readonly int InEnemyBase = Animator.StringToHash("inEnemyBase");
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("enemy field"))
@@ -248,7 +256,7 @@ namespace BaseDefense.Characters
                         throw new NotImplementedException($"Обработка объекта {item} не реализована");
                 }
         }
-        
+
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("enemy field"))
@@ -258,7 +266,7 @@ namespace BaseDefense.Characters
                     StartCoroutine(m_itemCollecting.DropMoney());
             }
         }
-        
+
         ///<summary>Устанавливает параметры, связанные с нахождением на вражеской базе</summary>
         ///<param name="value">Значение, устанавливаемое необходимым параметрам</param>
         private void SetParams(bool value)
@@ -267,14 +275,15 @@ namespace BaseDefense.Characters
             m_gun.gameObject.SetActive(value);
             Animator.SetBool(InEnemyBase, value);
         }
-        
+
         #endregion
 
         #region PlayerUpgrades
-        
+
         public bool IsNotMaxForSpeed => maxSpeed < upgrades.Speed.maxValue;
         public bool IsNotMaxForMaxHealth => maxHealthPoints < upgrades.MaxHealth.maxValue;
         public bool IsNotMaxForCapacity => Capacity < upgrades.Capacity.maxValue;
+
 
         private void UpgradeSpeed()
         {
@@ -302,15 +311,13 @@ namespace BaseDefense.Characters
             else
                 Debug.LogWarning("Достигнут предел в прокачке максимального здоровья");
         }
-        
+
         #endregion
 
         #region PlayerLifecycle
-        
+
         private static readonly int Alive = Animator.StringToHash("alive");
 
-        private void OnEnable() => Messenger.AddListener(MessageType.RESTART, Resurrection);
-        private void OnDisable() => Messenger.RemoveListener(MessageType.RESTART, Resurrection);
 
         protected override void OnDeath()
         {
