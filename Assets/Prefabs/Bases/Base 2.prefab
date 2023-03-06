@@ -967,12 +967,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3166320778157269724}
-  - component: {fileID: 584416842726527950}
   - component: {fileID: 3166320778157269714}
   - component: {fileID: 4069522414426864845}
   m_Layer: 0
   m_Name: gun shop platform
-  m_TagString: Untagged
+  m_TagString: gun shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -994,19 +993,6 @@ Transform:
   m_Father: {fileID: 3166320777039343261}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &584416842726527950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3166320778157269725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a454c3af96da340a8740be6404a73c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformType: 0
 --- !u!135 &3166320778157269714
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2582,12 +2568,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2751587112409592799}
-  - component: {fileID: 2987008119716726430}
   - component: {fileID: 3755154756630483843}
   - component: {fileID: 3364404241749274735}
   m_Layer: 0
   m_Name: player upgrades platform
-  m_TagString: Untagged
+  m_TagString: player upgrades
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2609,19 +2594,6 @@ Transform:
   m_Father: {fileID: 3166320777039343261}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2987008119716726430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8080859281145880282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a454c3af96da340a8740be6404a73c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformType: 1
 --- !u!135 &3755154756630483843
 SphereCollider:
   m_ObjectHideFlags: 0

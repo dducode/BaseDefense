@@ -41,10 +41,11 @@ namespace BaseDefense.Characters
         private bool m_inEnemyBase;
 
         [Inject]
-        public void Constructor(JoystickController joystick, Shop shop)
+        public void Constructor(JoystickController joystick, Shop shop, DisplayingUI displayingUI)
         {
             m_joystick = joystick;
             m_shop = shop;
+            m_displayingUI = displayingUI;
         }
 
         public override void Hit(float damage)
@@ -75,8 +76,7 @@ namespace BaseDefense.Characters
                     throw new NotImplementedException($"Тип прокачки {upgradeType} не реализован");
             }
         }
-
-
+        
         private Shop m_shop;
         private Gun m_gun;
 
@@ -121,7 +121,6 @@ namespace BaseDefense.Characters
 
         private Vector3 m_move;
         private JoystickController m_joystick;
-
 
         private void Update()
         {
@@ -238,11 +237,10 @@ namespace BaseDefense.Characters
 
         private static readonly int InEnemyBase = Animator.StringToHash("inEnemyBase");
 
+        private DisplayingUI m_displayingUI;
+
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("enemy field"))
-                SetParams(true);
-
             if (other.GetComponent<Item>() is { } item)
                 switch (item)
                 {
@@ -255,11 +253,21 @@ namespace BaseDefense.Characters
                     default:
                         throw new NotImplementedException($"Обработка объекта {item} не реализована");
                 }
+            else if (other.CompareTag("gun shop"))
+                m_displayingUI.OpenShop();
+            else if (other.CompareTag("player upgrades"))
+                m_displayingUI.OpenUpgrades();
+            else if (other.CompareTag("enemy field"))
+                SetParams(true);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("enemy field"))
+            if (other.CompareTag("gun shop"))
+                m_displayingUI.CloseShop();
+            else if (other.CompareTag("player upgrades"))
+                m_displayingUI.CloseUpgrades();
+            else if (other.CompareTag("enemy field"))
             {
                 SetParams(false);
                 if (!m_itemCollecting.DropIsInProcess)
@@ -317,7 +325,6 @@ namespace BaseDefense.Characters
         #region PlayerLifecycle
 
         private static readonly int Alive = Animator.StringToHash("alive");
-
 
         protected override void OnDeath()
         {

@@ -1,31 +1,32 @@
+using BaseDefense.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using BaseDefense.Extensions;
+using UnityEngine.Assertions;
 
 namespace BaseDefense.UI
 {
     ///<summary>Реализует отображение полосы здоровья</summary>
     public class DisplayHealthPoints : MonoBehaviour
     {
-        [SerializeField] Slider healthPointsBar;
-        TextMeshProUGUI healthPointsView;
-
-        void Awake()
-        {
-            healthPointsView = healthPointsBar.GetComponentInChildren<TextMeshProUGUI>();
-        }
+        [SerializeField] private Slider healthPointsBar;
+        private TextMeshProUGUI m_healthPointsView;
 
         public void UpdateView(int currentHealthPoints)
         {
             healthPointsBar.value = currentHealthPoints;
-            if (healthPointsView != null)
-                healthPointsView.text = currentHealthPoints.ToStringWithSeparator();
+            Assert.IsNotNull(m_healthPointsView);
+            m_healthPointsView.text = currentHealthPoints.ToStringWithSeparator();
         }
 
         public void SetMaxValue(int maxHealthPoints)
         {
             healthPointsBar.maxValue = maxHealthPoints;
+        }
+
+        private void Awake()
+        {
+            m_healthPointsView = healthPointsBar.GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 }

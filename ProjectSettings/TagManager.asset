@@ -13,6 +13,8 @@ TagManager:
   - asteroid
   - target point
   - enemy field
+  - gun shop
+  - player upgrades
   layers:
   - Default
   - TransparentFX

@@ -1,11 +1,8 @@
-using System;
 using System.Collections;
 using BaseDefense.BroadcastMessages;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using Zenject;
-using BaseDefense.Characters;
+using BaseDefense.Currencies;
 using BaseDefense.Extensions;
 
 namespace BaseDefense.UI
@@ -24,13 +21,33 @@ namespace BaseDefense.UI
         [SerializeField, Tooltip("Окно, выводимое при смерти игрока")]
         private Canvas deathWindow;
 
-        ///<summary>Рамка для выбранного игроком оружия</summary>
-        [SerializeField, Tooltip("Рамка для выбранного игроком оружия")]
-        private RectTransform frame;
-
         [SerializeField] private Canvas shopWindow;
         [SerializeField] private Canvas playerUpgradesWindow;
-        [SerializeField] private UpgradeValues upgradeValues;
+
+        public void Restart()
+        {
+            Messenger.SendMessage(MessageType.RESTART);
+            deathWindow.enabled = false;
+        }
+
+        public void OpenShop() => shopWindow.enabled = true;
+        public void CloseShop() => shopWindow.enabled = false;
+        public void OpenUpgrades() => playerUpgradesWindow.enabled = true;
+        public void CloseUpgrades() => playerUpgradesWindow.enabled = false;
+
+        private void OnEnable()
+        {
+            Messenger.AddListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
+            Messenger<GemCurrency>.AddListener(MessageType.UPDATE_CURRENCY, UpdateGems);
+            Messenger<MoneyCurrency>.AddListener(MessageType.UPDATE_CURRENCY, UpdateMoneys);
+        }
+
+        private void OnDisable()
+        {
+            Messenger.RemoveListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
+            Messenger<GemCurrency>.RemoveListener(MessageType.UPDATE_CURRENCY, UpdateGems);
+            Messenger<MoneyCurrency>.RemoveListener(MessageType.UPDATE_CURRENCY, UpdateMoneys);
+        }
 
         private void Start()
         {
@@ -38,74 +55,22 @@ namespace BaseDefense.UI
             shopWindow.enabled = false;
             playerUpgradesWindow.enabled = false;
         }
-        
-        public void UpdateUI(int moneys, int gems)
-        {
-            this.moneys.text = moneys.ToStringWithSeparator();
-            this.gems.text = gems.ToStringWithSeparator();
-        }
-        
-        public void Restart()
-        {
-            Messenger.SendMessage(MessageType.RESTART);
-            deathWindow.enabled = false;
-        }
-        
-        [Inject] private PlayerCharacter m_player;
-        
-        public void SelectGun(GunSlot slot)
-        {
-            frame.localPosition = slot.transform.localPosition;
-            m_player.SelectGun(slot.GunName);
-        }
-        public void OpenShop() => shopWindow.enabled = true;
-        public void CloseShop() => shopWindow.enabled = false;
-
-        public void UpgradePlayer(PlayerUpgradesUI playerUpgrades)
-        {
-            m_player.Upgrade(playerUpgrades.UpgradableProperty);
-            upgradeValues.SetValues(m_player);
-        }
-        public void OpenUpgrades()
-        {
-            playerUpgradesWindow.enabled = true;
-            upgradeValues.SetValues(m_player);
-        }
-        public void CloseUpgrades() => playerUpgradesWindow.enabled = false;
-
-        private void OnEnable() => Messenger.AddListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
-        private void OnDisable() => Messenger.RemoveListener(MessageType.DEATH_PLAYER, DisplayDeathWindow);
 
         private void DisplayDeathWindow() => StartCoroutine(Await());
+        private void UpdateMoneys(Currency currency) => gems.text = currency.Value.ToStringWithSeparator();
+        private void UpdateGems(Currency currency) => moneys.text = currency.Value.ToStringWithSeparator();
         private IEnumerator Await()
         {
-            yield return new WaitForSeconds(2);
+            const float awaitTime = 2;
+            yield return new WaitForSeconds(awaitTime);
             deathWindow.enabled = true;
-        }
-
-        [Serializable]
-        public struct UpgradeValues
-        {
-            public UpgradeableProperty speed;
-            public UpgradeableProperty capacity;
-            public UpgradeableProperty maxHealth;
-
-            public void SetValues(PlayerCharacter player)
+            var canvasGroup = deathWindow.GetComponent<CanvasGroup>();
+            canvasGroup.alpha = 0;
+            const float speed = 2f;
+            while (canvasGroup.alpha < 1)
             {
-                speed.textField.text = $"Speed: {player.MaxSpeed}";
-                speed.button.interactable = player.IsNotMaxForSpeed;
-
-                maxHealth.textField.text = $"Max health: {player.MaxHealthPoints}";
-                maxHealth.button.interactable = player.IsNotMaxForMaxHealth;
-
-                capacity.textField.text = $"Capacity: {player.Capacity}";
-                capacity.button.interactable = player.IsNotMaxForCapacity;
-            }
-            [Serializable]
-            public struct UpgradeableProperty
-            {
-                public TextMeshProUGUI textField;
-                public Button button;
+                canvasGroup.alpha += Time.smoothDeltaTime * speed;
+                yield return null;
             }
         }
     }

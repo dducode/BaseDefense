@@ -6,6 +6,7 @@
         DEATH_PLAYER, 
         RESTART, 
         PUSH_UNUSED_ITEMS,
-        NEXT_LEVEL
+        NEXT_LEVEL,
+        UPDATE_CURRENCY
     }
 }

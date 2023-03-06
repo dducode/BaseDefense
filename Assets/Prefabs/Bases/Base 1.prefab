@@ -607,12 +607,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420530991092824214}
-  - component: {fileID: 2754871773569321348}
   - component: {fileID: 420530991092824216}
   - component: {fileID: 1611963617086203527}
   m_Layer: 0
   m_Name: gun shop platform
-  m_TagString: Untagged
+  m_TagString: gun shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -634,19 +633,6 @@ Transform:
   m_Father: {fileID: 420530990042035415}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2754871773569321348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420530991092824215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a454c3af96da340a8740be6404a73c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformType: 0
 --- !u!135 &420530991092824216
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2331,12 +2317,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 578880416310012309}
-  - component: {fileID: 528325518413372628}
   - component: {fileID: 1890381642711026121}
   - component: {fileID: 42716681728535077}
   m_Layer: 0
   m_Name: player upgrades platform
-  m_TagString: Untagged
+  m_TagString: player upgrades
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2358,19 +2343,6 @@ Transform:
   m_Father: {fileID: 420530990042035415}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &528325518413372628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6774535333552817296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a454c3af96da340a8740be6404a73c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformType: 1
 --- !u!135 &1890381642711026121
 SphereCollider:
   m_ObjectHideFlags: 0

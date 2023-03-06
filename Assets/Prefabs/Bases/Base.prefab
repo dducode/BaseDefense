@@ -749,12 +749,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5413411327200857792}
-  - component: {fileID: 4934864383541590913}
   - component: {fileID: 6418518247502605980}
   - component: {fileID: 4881645641301560688}
   m_Layer: 0
   m_Name: player upgrades platform
-  m_TagString: Untagged
+  m_TagString: player upgrades
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -776,19 +775,6 @@ Transform:
   m_Father: {fileID: 5115758177908626306}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4934864383541590913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2101826145997235141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a454c3af96da340a8740be6404a73c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformType: 1
 --- !u!135 &6418518247502605980
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1556,12 +1542,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5115758176789454787}
-  - component: {fileID: 7283324487950216913}
   - component: {fileID: 5115758176789454797}
   - component: {fileID: 6158122866722357714}
   m_Layer: 0
   m_Name: gun shop platform
-  m_TagString: Untagged
+  m_TagString: gun shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1583,19 +1568,6 @@ Transform:
   m_Father: {fileID: 5115758177908626306}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7283324487950216913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5115758176789454786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a454c3af96da340a8740be6404a73c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformType: 0
 --- !u!135 &5115758176789454797
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2096,6 +2068,7 @@ MonoBehaviour:
   enemyField: {fileID: 5115758178177214942}
   baseName: {fileID: 5115758177583290584}
   maxEnemiesCount: 10
+  startEnemiesCount: 5
   timeSpawn: 10
   targetPoints:
   - {fileID: 5115758177356299738}

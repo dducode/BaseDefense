@@ -7,22 +7,15 @@ namespace BaseDefense
     {
         ///<summary>Хранит всё оружие, имеющееся в магазине</summary>
         [Tooltip("Хранит всё оружие, имеющееся в магазине")]
-        [SerializeField] Gun[] guns;
+        [SerializeField]
+        private Gun[] guns;
 
-        void Start()
-        {
-            if (guns.Length == 0)
-            {
-                Debug.LogWarning("No guns installed in shop");
-                return;
-            }
-        }
-
-        ///<summary>Вызывается для взятия оружия из магазина</summary>
-        ///<param name="gunName">Оружие, которое необходимо забрать из магазина</param>
-        ///<returns>
-        ///Если в магазине нет запрашиваемого оружия - возвращается оружие игрока
-        ///</returns>
+        /// <summary>Вызывается для взятия оружия из магазина</summary>
+        /// <param name="gunName">Оружие, которое необходимо забрать из магазина</param>
+        /// <param name="playerGun">Оружие игрока</param>
+        /// <returns>
+        /// Если в магазине нет запрашиваемого оружия - возвращается оружие игрока
+        /// </returns>
         public Gun TakeGun(string gunName, Gun playerGun)
         {
             if (playerGun.name == gunName)
@@ -38,6 +31,12 @@ namespace BaseDefense
                 }
             Debug.LogError($"Not found gun of type {gunName}");
             return playerGun;
+        }
+
+        private void Start()
+        {
+            if (guns.Length == 0)
+                Debug.LogWarning("No guns installed in shop");
         }
     }
 }

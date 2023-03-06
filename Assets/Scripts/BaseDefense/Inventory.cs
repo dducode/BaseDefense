@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using BaseDefense.BroadcastMessages;
+using BaseDefense.Currencies;
 using UnityEngine;
 using BaseDefense.Items;
 using BaseDefense.SaveSystem;
@@ -25,7 +27,8 @@ namespace BaseDefense
                 gems = PlayerPrefs.GetInt("Gem", 0)
             };
             m_inventoryData = EncodeData(data);
-            ui.UpdateUI(data.moneys, data.gems);
+            Messenger<GemCurrency>.SendMessage(MessageType.UPDATE_CURRENCY, new GemCurrency(data.gems));
+            Messenger<MoneyCurrency>.SendMessage(MessageType.UPDATE_CURRENCY, new MoneyCurrency(data.moneys));
             Application.wantsToQuit += () =>
             {
                 SaveInventory();
@@ -33,7 +36,7 @@ namespace BaseDefense
             };
         }
 
-        ///<summary>Кладёт предмет в инвентарь и сохраняет значение в PlayerPrefs</summary>
+        ///<summary>Кладёт предмет в инвентарь</summary>
         public void PutItem(Item item)
         {
             var data = DecodeData(m_inventoryData);
@@ -41,11 +44,11 @@ namespace BaseDefense
             {
                 case Money:
                     data.moneys += 5;
-                    PlayerPrefs.SetInt("Money", data.moneys);
+                    Messenger<MoneyCurrency>.SendMessage(MessageType.UPDATE_CURRENCY, new MoneyCurrency(data.moneys));
                     break;
                 case Gem:
                     data.gems++;
-                    PlayerPrefs.SetInt("Gem", data.gems);
+                    Messenger<GemCurrency>.SendMessage(MessageType.UPDATE_CURRENCY, new GemCurrency(data.gems));
                     break;
                 default:
                     throw new NotImplementedException($"Предмет {item} не реализован");
@@ -54,7 +57,6 @@ namespace BaseDefense
             m_inventoryData = EncodeData(data);
             item.DestroyItem();
             PlayerPrefs.Save();
-            m_ui.UpdateUI(data.moneys, data.gems);
         }
 
         private void SaveInventory()
