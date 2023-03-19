@@ -1,54 +1,57 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace BaseDefense
-{
-    public sealed class Ragdoll : MonoBehaviour
-    {
-        Collider[] colliders;
-        Rigidbody[] rigidbodies;
-        Rigidbody mainRigidbody;
+namespace BaseDefense {
 
-        bool _enabled;
-        public new bool enabled
-        {
-            get => _enabled;
-            set
-            {
-                _enabled = value;
-                base.enabled = _enabled;
-                foreach (Collider collider in colliders)
-                    collider.enabled = _enabled;
-                foreach (Rigidbody rigidbody in rigidbodies)
-                    rigidbody.isKinematic = !_enabled;
+    public sealed class Ragdoll : MonoBehaviour {
+
+        private Collider[] m_colliders;
+        private Rigidbody[] m_rigidbodies;
+        private Rigidbody m_mainRigidbody;
+
+        private bool m_enabled;
+
+        public bool Enabled {
+            get => m_enabled;
+            set {
+                m_enabled = value;
+                enabled = m_enabled;
+                foreach (var ragdollPart in m_colliders)
+                    ragdollPart.enabled = m_enabled;
+                foreach (var rb in m_rigidbodies)
+                    rb.isKinematic = !m_enabled;
             }
         }
 
-        void Awake()
-        {
-            List<Collider> colliders = new List<Collider>(GetComponentsInChildren<Collider>());
-            foreach (Collider collider in colliders)
-                if (collider is CharacterController)
-                {
-                    colliders.Remove(collider);
-                    this.colliders = colliders.ToArray();
+
+        private void Awake () {
+            var colliders = new List<Collider>(GetComponentsInChildren<Collider>());
+
+            foreach (var ragdollPart in colliders)
+                if (ragdollPart is CharacterController) {
+                    colliders.Remove(ragdollPart);
+                    m_colliders = colliders.ToArray();
+
                     break;
                 }
-            rigidbodies = GetComponentsInChildren<Rigidbody>();
-            foreach (Rigidbody rigidbody in rigidbodies)
-                if (rigidbody.gameObject.name.ToLower().Contains("pelvis"))
-                {
-                    mainRigidbody = rigidbody;
+
+            m_rigidbodies = GetComponentsInChildren<Rigidbody>();
+
+            foreach (var rb in m_rigidbodies)
+                if (rb.gameObject.name.ToLower().Contains("pelvis")) {
+                    m_mainRigidbody = rb;
+
                     break;
                 }
-            enabled = false;
+
+            Enabled = false;
         }
 
-        public void AddImpulse(Vector3 force)
-        {
-            mainRigidbody.AddForce(force, ForceMode.VelocityChange);
+
+        public void AddImpulse (Vector3 force) {
+            m_mainRigidbody.AddForce(force, ForceMode.VelocityChange);
         }
+
     }
+
 }
-
-

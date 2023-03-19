@@ -2,36 +2,38 @@ using UnityEngine;
 using System;
 using BaseDefense.Characters;
 
-namespace BaseDefense.StateMachine
-{
-    public abstract class State
-    {   
-        protected Action stage;
-        protected State nextState;
-        protected EnemyCharacter agent;
-        protected Animator animator;
-        protected CharacterController controller;
-        protected Transform player;
-        protected Transform transform;
-        protected bool attackTrigger;
+namespace BaseDefense.StateMachine {
 
-        protected abstract void Enter();
-        protected abstract void Update();
-        protected abstract void Exit();
+    public abstract class State {
 
-        public void SetTrigger(bool value) => attackTrigger = value;
+        protected Action Stage;
+        protected State NextState;
+        protected EnemyCharacter Agent;
+        protected Animator Animator;
+        protected CharacterController Controller;
+        protected Transform Player;
+        protected Transform Transform;
+        protected bool AttackTrigger;
 
-        public State Process()
-        {
-            stage();
-            if (stage == Exit)
-            {
-                stage();
-                return nextState;
+        protected abstract void Enter ();
+        protected abstract void Update ();
+        protected abstract void Exit ();
+
+        public void SetTrigger (bool value) => AttackTrigger = value;
+
+
+        public State Process () {
+            Stage();
+
+            if (Stage == Exit) {
+                Stage();
+
+                return NextState;
             }
+
             return this;
         }
+
     }
+
 }
-
-

@@ -1,49 +1,52 @@
 using UnityEngine;
 using BaseDefense.Characters;
 
-namespace BaseDefense.StateMachine
-{
-    public class Walking : State
-    {
-        float speed;
-        Vector3 targetPoint;
+namespace BaseDefense.StateMachine {
 
-        public Walking (EnemyCharacter agent, Transform player)
-        {
-            stage = Enter;
-            this.agent = agent;
-            this.player = player;
-            animator = agent.Animator;
-            controller = agent.Controller;
-            speed = agent.WalkingSpeed;
-            targetPoint = agent.GetRandomPoint();
-            transform = agent.transform;
+    public class Walking : State {
+
+        private readonly float m_speed;
+        private readonly Vector3 m_targetPoint;
+        private static readonly int WalkingID = Animator.StringToHash("walking");
+
+
+        public Walking (EnemyCharacter agent, Transform player) {
+            Stage = Enter;
+            Agent = agent;
+            Player = player;
+            Animator = agent.Animator;
+            Controller = agent.Controller;
+            m_speed = agent.WalkingSpeed;
+            m_targetPoint = agent.GetRandomPoint();
+            Transform = agent.transform;
         }
-        protected override void Enter()
-        {
-            animator.SetBool("walking", true);
-            stage = Update;
+
+
+        protected override void Enter () {
+            Animator.SetBool(WalkingID, true);
+            Stage = Update;
         }
-        protected override void Update()
-        {
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation, 
-                Quaternion.LookRotation(targetPoint - transform.position), 
+
+
+        protected override void Update () {
+            Transform.rotation = Quaternion.Slerp(
+                Transform.rotation,
+                Quaternion.LookRotation(m_targetPoint - Transform.position),
                 Time.smoothDeltaTime * 15f
             );
-            controller.Move(transform.forward * speed * Time.smoothDeltaTime);
-            
-            if (attackTrigger)
-            {
-                nextState = new Running(agent, player);
-                stage = Exit;
+            Controller.Move(Transform.forward * (m_speed * Time.smoothDeltaTime));
+
+            if (AttackTrigger) {
+                NextState = new Running(Agent, Player);
+                Stage = Exit;
             }
         }
-        protected override void Exit()
-        {
-            animator.SetBool("walking", false);
+
+
+        protected override void Exit () {
+            Animator.SetBool(WalkingID, false);
         }
+
     }
+
 }
-
-

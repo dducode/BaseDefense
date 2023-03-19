@@ -1,63 +1,65 @@
 using UnityEngine;
 using BaseDefense.Characters;
 
-namespace BaseDefense.StateMachine
-{
-    public class Attack : State
-    {
-        float attackDistance;
+namespace BaseDefense.StateMachine {
 
-        public Attack(EnemyCharacter agent, Transform player)
-        {
-            stage = Enter;
-            this.agent = agent;
-            this.player = player;
-            animator = agent.Animator;
-            controller = agent.Controller;
-            attackDistance = agent.AttackDistance;
-            transform = agent.transform;
+    public class Attack : State {
+
+        private readonly float m_attackDistance;
+        private static readonly int AttackID = Animator.StringToHash("attack");
+
+
+        public Attack (EnemyCharacter agent, Transform player) {
+            Stage = Enter;
+            Agent = agent;
+            Player = player;
+            Animator = agent.Animator;
+            Controller = agent.Controller;
+            m_attackDistance = agent.AttackDistance;
+            Transform = agent.transform;
         }
-        protected override void Enter()
-        {
-            animator.SetBool("attack", true);
-            stage = Update;
+
+
+        protected override void Enter () {
+            Animator.SetBool(AttackID, true);
+            Stage = Update;
         }
-        protected override void Update()
-        {
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation, 
-                Quaternion.LookRotation(player.position - transform.position), 
+
+
+        protected override void Update () {
+            var position = Transform.position;
+            var playerPosition = Player.position;
+            Transform.rotation = Quaternion.Slerp(
+                Transform.rotation,
+                Quaternion.LookRotation(playerPosition - position),
                 Time.smoothDeltaTime * 15f
             );
 
-            RaycastHit hit;
-            int layerMask = 1<<6;
+            const int layerMask = 1 << 6;
             Physics.Raycast(
-                transform.position + (Vector3.up * agent.transform.localScale.y), 
-                player.position - transform.position,
-                out hit,
+                position + (Vector3.up * Agent.transform.localScale.y),
+                playerPosition - position,
+                out var hit,
                 Mathf.Infinity,
                 layerMask);
 
-            if (hit.transform && hit.transform.CompareTag("Player"))
-            {   
-                if (hit.distance > attackDistance + 0.5f)
-                {
-                    nextState = new Running(agent, player);
-                    stage = Exit;
+            if (hit.transform && hit.transform.CompareTag("Player")) {
+                if (hit.distance > m_attackDistance + 0.5f) {
+                    NextState = new Running(Agent, Player);
+                    Stage = Exit;
                 }
             }
-            else
-            {
-                nextState = new Walking(agent, player);
-                stage = Exit;
+            else {
+                NextState = new Walking(Agent, Player);
+                Stage = Exit;
             }
         }
-        protected override void Exit()
-        {
-            animator.SetBool("attack", false);
+
+
+        protected override void Exit () {
+            Animator.SetBool(AttackID, false);
         }
+
     }
+
 }
-
-

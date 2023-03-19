@@ -1,54 +1,52 @@
 using System;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
 using BaseDefense.BroadcastMessages;
-using BaseDefense.Currencies;
+using BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages;
 using UnityEngine;
 using BaseDefense.Items;
 using BaseDefense.SaveSystem;
-using BaseDefense.UI;
 
-namespace BaseDefense
-{
-    public class Inventory
-    {
+namespace BaseDefense {
+
+    public class Inventory : MonoBehaviour {
+
         private string m_inventoryData;
-        private readonly DisplayingUI m_ui;
         private const string INVENTORY_DATA_FILE_NAME = "inventoryData.dat";
         private const string PASSWORD = "4u7b8O-0j2lvGHtTZrQ.cV3aN?ydosUwWE9z,ShYkACm6InBgJRi!K_DMep1XLxq";
 
-        public Inventory(DisplayingUI ui)
-        {
-            m_ui = ui;
-            var data = LoadInventory() ?? new InventoryData
-            {
+
+        private void Awake () {
+            var data = LoadInventory() ?? new InventoryData {
                 moneys = PlayerPrefs.GetInt("Money", 0),
                 gems = PlayerPrefs.GetInt("Gem", 0)
             };
             m_inventoryData = EncodeData(data);
-            Messenger<GemCurrency>.SendMessage(MessageType.UPDATE_CURRENCY, new GemCurrency(data.gems));
-            Messenger<MoneyCurrency>.SendMessage(MessageType.UPDATE_CURRENCY, new MoneyCurrency(data.moneys));
-            Application.wantsToQuit += () =>
-            {
+            Application.wantsToQuit += () => {
                 SaveInventory();
                 return true;
             };
         }
 
-        ///<summary>Кладёт предмет в инвентарь</summary>
-        public void PutItem(Item item)
-        {
+
+        private void Start () {
             var data = DecodeData(m_inventoryData);
-            switch (item)
-            {
+            Messenger.SendMessage(new UpdateMoneysMessage(data.moneys));
+            Messenger.SendMessage(new UpdateGemsMessage(data.gems));
+        }
+
+
+        ///<summary>Кладёт предмет в инвентарь</summary>
+        public void PutItem (Item item) {
+            var data = DecodeData(m_inventoryData);
+
+            switch (item) {
                 case Money:
                     data.moneys += 5;
-                    Messenger<MoneyCurrency>.SendMessage(MessageType.UPDATE_CURRENCY, new MoneyCurrency(data.moneys));
+                    Messenger.SendMessage(new UpdateMoneysMessage(data.moneys));
                     break;
                 case Gem:
                     data.gems++;
-                    Messenger<GemCurrency>.SendMessage(MessageType.UPDATE_CURRENCY, new GemCurrency(data.gems));
+                    Messenger.SendMessage(new UpdateGemsMessage(data.gems));
                     break;
                 default:
                     throw new NotImplementedException($"Предмет {item} не реализован");
@@ -59,59 +57,53 @@ namespace BaseDefense
             PlayerPrefs.Save();
         }
 
-        private void SaveInventory()
-        {
+
+        private void SaveInventory () {
             var path = Path.Combine(Application.persistentDataPath, INVENTORY_DATA_FILE_NAME);
             using var binaryWriter = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate));
             var writer = new GameDataWriter(binaryWriter);
             var data = JsonUtility.ToJson(DecodeData(m_inventoryData));
-            var encryptData = AES.Encrypt(data, PASSWORD);
+            var encryptData = Aes.Encrypt(data, PASSWORD);
             writer.Write(encryptData);
         }
 
-        private InventoryData? LoadInventory()
-        {
+
+        private InventoryData? LoadInventory () {
             var path = Path.Combine(Application.persistentDataPath, INVENTORY_DATA_FILE_NAME);
             var reader = GameDataStorage.GetDataReader(path);
+
             if (reader is null)
                 return null;
 
-            var data = AES.Decrypt(reader.ReadString(), PASSWORD);
+            var data = Aes.Decrypt(reader.ReadString(), PASSWORD);
+
             return JsonUtility.FromJson<InventoryData>(data);
         }
 
-        private static string EncodeData(InventoryData data)
-        {
+
+        private static string EncodeData (InventoryData data) {
             var jsonData = JsonUtility.ToJson(data);
+
             return B64X.Encode(jsonData);
         }
 
-        private static InventoryData DecodeData(string jsonData)
-        {
+
+        private static InventoryData DecodeData (string jsonData) {
             var data = B64X.Decode(jsonData);
+
             return JsonUtility.FromJson<InventoryData>(data);
         }
 
+
+
         [Serializable]
-        public struct InventoryData
-        {
+        public struct InventoryData {
+
             public int moneys;
             public int gems;
 
-            public byte[] GetBytes()
-            {
-                var moneysBytes = BitConverter.GetBytes(moneys);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(moneysBytes);
-
-                var gemsBytes = BitConverter.GetBytes(gems);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(gemsBytes);
-
-                return moneysBytes.Concat(gemsBytes).ToArray();
-            }
         }
+
     }
+
 }
-
-

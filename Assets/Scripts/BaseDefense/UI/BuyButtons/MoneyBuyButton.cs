@@ -1,19 +1,27 @@
+using System;
 using BaseDefense.BroadcastMessages;
-using BaseDefense.Currencies;
+using BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages;
+using BaseDefense.Extensions;
 
-namespace BaseDefense.UI.BuyButtons
-{
-    public class MoneyBuyButton : BuyButton
-    {
-        protected override void Awake()
-        {
+namespace BaseDefense.UI.BuyButtons {
+
+    public class MoneyBuyButton : BuyButton {
+
+        protected override void Awake () {
             base.Awake();
-            Messenger<MoneyCurrency>.AddListener(MessageType.UPDATE_CURRENCY, Check);
+            Messenger.SubscribeTo<UpdateMoneysMessage>(Check);
         }
 
-        private void OnDestroy()
-        {
-            Messenger<MoneyCurrency>.RemoveListener(MessageType.UPDATE_CURRENCY, Check);
+
+        private void Start () {
+            priceView.text = "Buy " + price.ToStringWithSeparator();
         }
+
+
+        private void OnDestroy () {
+            Messenger.UnsubscribeFrom<UpdateMoneysMessage>(Check);
+        }
+
     }
+
 }

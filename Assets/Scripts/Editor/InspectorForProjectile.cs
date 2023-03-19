@@ -1,17 +1,15 @@
-using System;
 using BaseDefense.AttackImplemention.Projectiles;
 using UnityEditor;
 
-namespace Editor
-{
+namespace Editor {
+
     [CustomEditor(typeof(Projectile), true)]
-    public class InspectorForProjectile : UnityEditor.Editor
-    {
-        public override void OnInspectorGUI()
-        {
+    public class InspectorForProjectile : UnityEditor.Editor {
+
+        public override void OnInspectorGUI () {
             var message = string.Empty;
-            switch (target)
-            {
+
+            switch (target) {
                 case Bullet:
                     message = "Урон от пули зависит от её массы и скорости";
                     break;
@@ -22,11 +20,12 @@ namespace Editor
                     message = "Урон от яда стрелы и его длительность устанавливаются в инспекторе арбалета";
                     break;
             }
+
             EditorGUILayout.HelpBox(message, MessageType.Info);
 
             DrawDefaultInspector();
         }
+
     }
+
 }
-
-

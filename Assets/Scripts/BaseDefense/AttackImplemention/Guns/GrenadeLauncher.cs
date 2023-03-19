@@ -2,29 +2,30 @@ using UnityEngine;
 using BaseDefense.AttackImplemention.Projectiles;
 using UnityEngine.Assertions;
 
-namespace BaseDefense.AttackImplemention.Guns
-{
-    public class GrenadeLauncher : Gun
-    {
+namespace BaseDefense.AttackImplemention.Guns {
+
+    public class GrenadeLauncher : Gun {
+
         ///<summary>Определяет радиус поражения при взрыве гранаты</summary>
         ///<value>[0.001, infinity]</value>
         [Header("Характеристики гранатомёта")]
         [Tooltip("Определяет радиус поражения при взрыве гранаты. [0.001, infinity]")]
-        [SerializeField, Min(0.001f)] private float damageRadius;
+        [SerializeField, Min(0.001f)]
+        private float damageRadius;
 
         ///<summary>Урон зависит от дальности от эпицентра взрыва</summary>
         ///<value>[0, infinity]</value>
         [Tooltip("Урон зависит от дальности от эпицентра взрыва. [0, infinity]")]
-        [SerializeField, Min(0)] private float maxDamage;
+        [SerializeField, Min(0)]
+        private float maxDamage;
 
         public float DamageRadius => damageRadius;
 
-        public override void Shot()
-        {
-            if (!(timeOfLastShot + intervalOfShots < Time.time)) return;
-            
-            foreach (var muzzle in muzzles)
-            {
+
+        public override void Shot () {
+            if (!(TimeOfLastShot + intervalOfShots < Time.time)) return;
+
+            foreach (var muzzle in muzzles) {
                 var grenade = Create(projectilePrefab) as Grenade;
 
                 const string message = "Граната не была создана";
@@ -41,9 +42,9 @@ namespace BaseDefense.AttackImplemention.Guns
                 grenade.AddImpulse(path.normalized * 1000);
             }
 
-            timeOfLastShot = Time.time;
+            TimeOfLastShot = Time.time;
         }
+
     }
+
 }
-
-

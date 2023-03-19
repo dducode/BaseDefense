@@ -2,26 +2,28 @@ using UnityEngine;
 using Zenject;
 using BaseDefense.Characters;
 
-namespace BaseDefense
-{
-    public class CameraMovement : MonoBehaviour
-    {
-        Vector3 startPos;
-        Vector3 movement;
-        [Inject] PlayerCharacter player;
+namespace BaseDefense {
 
-        void Start()
-        {
-            startPos = transform.position;
-            movement = startPos;
+    public class CameraMovement : MonoBehaviour {
+
+        private Vector3 m_startPos;
+        private Vector3 m_movement;
+
+        [Inject]
+        private PlayerCharacter m_player;
+
+
+        private void Start () {
+            m_startPos = transform.position;
+            m_movement = m_startPos;
         }
 
-        void LateUpdate()
-        {
-            movement = player.transform.position + startPos;
-            transform.position = movement;
+
+        private void LateUpdate () {
+            m_movement = m_player.transform.position + m_startPos;
+            transform.position = m_movement;
         }
+
     }
+
 }
-
-

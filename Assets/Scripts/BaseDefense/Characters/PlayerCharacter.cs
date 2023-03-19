@@ -5,23 +5,26 @@ using UnityEngine;
 using Zenject;
 using BaseDefense.AttackImplemention.Guns;
 using BaseDefense.BroadcastMessages;
+using BaseDefense.BroadcastMessages.Messages;
 using BaseDefense.Items;
 using BaseDefense.UI;
 using UnityEngine.Profiling;
 
-namespace BaseDefense.Characters
-{
+namespace BaseDefense.Characters {
+
     [RequireComponent(typeof(ItemCollecting), typeof(DisplayHealthPoints))]
-    public sealed class PlayerCharacter : BaseCharacter
-    {
+    public sealed class PlayerCharacter : BaseCharacter {
+
         ///<summary>Transform руки, в которой игрок держит оружие</summary>
         [Header("Связанные объекты")]
         [Tooltip("Transform руки, в которой игрок держит оружие")]
-        [SerializeField] private Transform gunSlot;
-        
+        [SerializeField]
+        private Transform gunSlot;
+
         ///<inheritdoc cref="Upgrades"/>
         [Tooltip("Хранит в себе информацию о прокачиваемых характеристиках игрока")]
-        [SerializeField] private Upgrades upgrades;
+        [SerializeField]
+        private Upgrades upgrades;
 
         ///<inheritdoc cref="DisplayHealthPoints"/>
         private DisplayHealthPoints m_displayHealthPoints;
@@ -40,77 +43,82 @@ namespace BaseDefense.Characters
 
         private bool m_inEnemyBase;
 
+
         [Inject]
-        public void Constructor(JoystickController joystick, Shop shop, DisplayingUI displayingUI)
-        {
+        public void Constructor (JoystickController joystick, Shop shop, DisplayingUI displayingUI) {
             m_joystick = joystick;
             m_shop = shop;
             m_displayingUI = displayingUI;
         }
 
-        public override void Hit(float damage)
-        {
+
+        public override void Hit (float damage) {
             CurrentHealthPoints -= damage;
-            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+            m_displayHealthPoints.UpdateView((int) CurrentHealthPoints);
             var emission = HitEffect.emission;
-            emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
+            emission.SetBurst(0,
+                new ParticleSystem.Burst(0, (int) damage * 100 / maxHealthPoints));
             HitEffect.Play();
         }
 
+
         ///<summary>Прокачивает характеристики игрока</summary>
         ///<param name="upgradeType">Определяет прокачиваемую характеристику</param>
-        public void Upgrade(UpgradableProperties upgradeType)
-        {
-            switch (upgradeType)
-            {
-                case UpgradableProperties.Speed:
+        public void Upgrade (UpgradableProperties upgradeType) {
+            switch (upgradeType) {
+                case UpgradableProperties.SPEED:
                     UpgradeSpeed();
                     break;
-                case UpgradableProperties.Max_Health:
+                case UpgradableProperties.MAX_HEALTH:
                     UpgradeMaxHealth();
                     break;
-                case UpgradableProperties.Capacity:
+                case UpgradableProperties.CAPACITY:
                     m_itemCollecting.UpgradeCapacity(upgrades);
                     break;
                 default:
                     throw new NotImplementedException($"Тип прокачки {upgradeType} не реализован");
             }
         }
-        
+
+
         private Shop m_shop;
         private Gun m_gun;
 
+
         ///<summary>Вызывается при выборе оружия из магазина</summary>
         ///<param name="gunName">Выбранное оружие</param>
-        public void SelectGun(string gunName)
-        {
+        public void SelectGun (string gunName) {
             m_gun = m_shop.TakeGun(gunName, m_gun);
             m_gun.transform.parent = gunSlot;
             m_gun.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
 
+
+
         #region PlayerInitialization
 
-        protected override void Awake()
-        {
+        protected override void Awake () {
             base.Awake();
             m_itemCollecting = GetComponent<ItemCollecting>();
             m_displayHealthPoints = GetComponent<DisplayHealthPoints>();
             m_gun = gunSlot.GetChild(0).GetComponent<Gun>();
-            Messenger.AddListener(MessageType.RESTART, Resurrection);
+            Messenger.SubscribeTo<RestartMessage>(Resurrection);
         }
 
-        private void Start()
-        {
-            m_displayHealthPoints.SetMaxValue((int)maxHealthPoints);
-            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+
+        private void OnDestroy () => Messenger.UnsubscribeFrom<RestartMessage>(Resurrection);
+
+
+        private void Start () {
+            m_displayHealthPoints.SetMaxValue((int) maxHealthPoints);
+            m_displayHealthPoints.UpdateView((int) CurrentHealthPoints);
             m_gun.gameObject.SetActive(false);
             m_gazeDirection = transform.forward;
         }
 
-        private void OnDestroy() => Messenger.RemoveListener(MessageType.RESTART, Resurrection);
-
         #endregion
+
+
 
         #region PlayerUpdate
 
@@ -122,15 +130,14 @@ namespace BaseDefense.Characters
         private Vector3 m_move;
         private JoystickController m_joystick;
 
-        private void Update()
-        {
+
+        private void Update () {
             // Реализует плавный поворот к цели с определённой скоростью
             LookToTarget(m_gazeDirection, 15);
 
             Movement();
-            
-            if (m_inEnemyBase)
-            {
+
+            if (m_inEnemyBase) {
                 // Ожидание перехода анимации для предотвращения преждевременной атаки
                 if (!Animator.IsInTransition(0))
                     Attack();
@@ -138,17 +145,16 @@ namespace BaseDefense.Characters
                 else { }
             }
             else HealthRecovery();
-            
-            void LookToTarget(Vector3 target, float rotationSpeed)
-            {
+
+            void LookToTarget (Vector3 target, float rotationSpeed) {
                 transform.rotation = Quaternion.Slerp(
                     transform.rotation, Quaternion.LookRotation(target), Time.smoothDeltaTime * rotationSpeed
                 );
             }
         }
 
-        private void Movement()
-        {
+
+        private void Movement () {
             m_move = m_joystick.GetInput();
             Animator.SetFloat(SpeedId, m_move.magnitude * maxSpeed);
             m_move *= maxSpeed;
@@ -156,28 +162,28 @@ namespace BaseDefense.Characters
             m_gazeDirection = m_move == Vector3.zero ? transform.forward : m_move;
         }
 
-        private void Attack()
-        {
+
+        private void Attack () {
             Profiler.BeginSample("Attack");
-            
+
             var attackable = GetNearestAttackable();
+
             if (attackable is null) return;
-            
+
             var attackablePosition = attackable.transform.position;
             var playerPosition = transform.position;
             attackablePosition.y = playerPosition.y = 0;
             m_gazeDirection = attackablePosition - playerPosition;
-            
+
             // Прицеливаемся
             const float aimingAccuracy = 0.95f;
-            if (Vector3.Dot(m_gazeDirection.normalized, transform.forward) > aimingAccuracy) 
-            {
+
+            if (Vector3.Dot(m_gazeDirection.normalized, transform.forward) > aimingAccuracy) {
                 // Если стреляем из гранатомёта - определяем безопасное расстояние
-                if (m_gun is GrenadeLauncher grenade)
-                {
+                if (m_gun is GrenadeLauncher grenade) {
                     var playerTransform = transform;
                     var ray = new Ray(playerTransform.position + Vector3.up, playerTransform.forward);
-                    
+
                     // Если расстояние до цели безопасно - стреляем
                     if (Physics.Raycast(ray, out var hit) && hit.distance > grenade.DamageRadius)
                         grenade.Shot();
@@ -189,49 +195,50 @@ namespace BaseDefense.Characters
             }
             // Если ещё не прицелились - ничего не делаем
             else { }
-            
+
             Profiler.EndSample();
         }
 
+
         ///<returns>Возвращает ближайшую к игроку атакуемую сущность. Если рядом таких нет - возвращает null</returns>
-        private GameObject GetNearestAttackable()
-        {
+        private GameObject GetNearestAttackable () {
             // ReSharper disable once Unity.PreferNonAllocApi
             var attackables = Physics.OverlapSphere(
                 transform.position, attackDistance, 1 << 3
             ); // 1 << 3 - маска слоя атакуемой сущности (3: AttackableLayer)
             var enemies = attackables.Where((e) => e.GetComponent<EnemyCharacter>()).ToArray();
-            
+
             // Приоритет отдаётся врагам. Если они не найдены - атакуем другие сущности
             return FindTarget(enemies.Any() ? enemies : attackables);
 
-            GameObject FindTarget(IEnumerable targets)
-            {
+            GameObject FindTarget (IEnumerable targets) {
                 GameObject target = null;
-                
+
                 float dist = Mathf.Infinity;
-                foreach (Collider coll in targets)
-                {
+
+                foreach (Collider coll in targets) {
                     var distance = coll.transform.position - transform.position;
-                    if (distance.magnitude < dist)
-                    {
+
+                    if (distance.magnitude < dist) {
                         target = coll.gameObject;
                         dist = distance.magnitude;
                     }
                 }
-                
+
                 return target;
             }
         }
 
-        private void HealthRecovery()
-        {
+
+        private void HealthRecovery () {
             const float recoveryTime = 30;
             CurrentHealthPoints += maxHealthPoints * Time.smoothDeltaTime / recoveryTime;
-            m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
+            m_displayHealthPoints.UpdateView((int) CurrentHealthPoints);
         }
 
         #endregion
+
+
 
         #region TriggerEvents
 
@@ -239,16 +246,17 @@ namespace BaseDefense.Characters
 
         private DisplayingUI m_displayingUI;
 
-        private void OnTriggerEnter(Collider other)
-        {
+
+        private void OnTriggerEnter (Collider other) {
             if (other.GetComponent<Item>() is { } item)
-                switch (item)
-                {
+                switch (item) {
                     case Gem gem:
                         m_itemCollecting.PutGem(gem);
+
                         break;
                     case Money money:
                         m_itemCollecting.StackMoney(money);
+
                         break;
                     default:
                         throw new NotImplementedException($"Обработка объекта {item} не реализована");
@@ -261,30 +269,31 @@ namespace BaseDefense.Characters
                 SetParams(true);
         }
 
-        private void OnTriggerExit(Collider other)
-        {
+
+        private void OnTriggerExit (Collider other) {
             if (other.CompareTag("gun shop"))
                 m_displayingUI.CloseShop();
             else if (other.CompareTag("player upgrades"))
                 m_displayingUI.CloseUpgrades();
-            else if (other.CompareTag("enemy field"))
-            {
+            else if (other.CompareTag("enemy field")) {
                 SetParams(false);
                 if (!m_itemCollecting.DropIsInProcess)
                     StartCoroutine(m_itemCollecting.DropMoney());
             }
         }
 
+
         ///<summary>Устанавливает параметры, связанные с нахождением на вражеской базе</summary>
         ///<param name="value">Значение, устанавливаемое необходимым параметрам</param>
-        private void SetParams(bool value)
-        {
+        private void SetParams (bool value) {
             m_inEnemyBase = value;
             m_gun.gameObject.SetActive(value);
             Animator.SetBool(InEnemyBase, value);
         }
 
         #endregion
+
+
 
         #region PlayerUpgrades
 
@@ -293,10 +302,8 @@ namespace BaseDefense.Characters
         public bool IsNotMaxForCapacity => Capacity < upgrades.Capacity.maxValue;
 
 
-        private void UpgradeSpeed()
-        {
-            if (IsNotMaxForSpeed)
-            {
+        private void UpgradeSpeed () {
+            if (IsNotMaxForSpeed) {
                 maxSpeed += upgrades.Speed.step;
                 if (maxSpeed > upgrades.Speed.maxValue)
                     maxSpeed = upgrades.Speed.maxValue;
@@ -305,16 +312,15 @@ namespace BaseDefense.Characters
                 Debug.LogWarning("Достигнут предел в прокачке максимальной скорости");
         }
 
-        private void UpgradeMaxHealth()
-        {
-            if (IsNotMaxForMaxHealth)
-            {
+
+        private void UpgradeMaxHealth () {
+            if (IsNotMaxForMaxHealth) {
                 maxHealthPoints += upgrades.MaxHealth.step;
                 if (maxHealthPoints > upgrades.MaxHealth.maxValue)
                     maxHealthPoints = upgrades.MaxHealth.maxValue;
                 CurrentHealthPoints = maxHealthPoints;
-                m_displayHealthPoints.UpdateView((int)CurrentHealthPoints);
-                m_displayHealthPoints.SetMaxValue((int)maxHealthPoints);
+                m_displayHealthPoints.UpdateView((int) CurrentHealthPoints);
+                m_displayHealthPoints.SetMaxValue((int) maxHealthPoints);
             }
             else
                 Debug.LogWarning("Достигнут предел в прокачке максимального здоровья");
@@ -322,21 +328,23 @@ namespace BaseDefense.Characters
 
         #endregion
 
+
+
         #region PlayerLifecycle
 
         private static readonly int Alive = Animator.StringToHash("alive");
 
-        protected override void OnDeath()
-        {
+
+        protected override void OnDeath () {
             Animator.SetBool(Alive, false);
             m_gun.gameObject.SetActive(false);
             Enabled = false;
             MeshRenderer.material.color = deathColor;
-            Messenger.SendMessage(MessageType.DEATH_PLAYER);
+            Messenger.SendMessage<DeathPlayerMessage>();
         }
-        
-        private void Resurrection()
-        {
+
+
+        private void Resurrection () {
             var respawn = GameObject.FindGameObjectWithTag("Respawn").transform;
             Animator.SetBool(Alive, true);
             Animator.SetBool(InEnemyBase, false);
@@ -346,9 +354,9 @@ namespace BaseDefense.Characters
             m_inEnemyBase = false;
             MeshRenderer.material.color = DefaultColor;
         }
-        
+
         #endregion
+
     }
+
 }
-
-

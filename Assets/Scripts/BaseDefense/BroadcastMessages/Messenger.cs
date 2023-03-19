@@ -1,81 +1,147 @@
 ﻿using System;
 using System.Collections.Generic;
+using BaseDefense.BroadcastMessages.Messages;
+using UnityEngine;
+using UnityEngine.Assertions;
 
-namespace BaseDefense.BroadcastMessages
-{
-    ///<summary>Мессенджер используется для рассылки сообщений всем подписавшимся на рассылку</summary>
-    public static class Messenger
-    {
-        public static readonly Dictionary<MessageType, List<Action>> Dict = 
-            new Dictionary<MessageType, List<Action>>();
+namespace BaseDefense.BroadcastMessages {
 
-        ///<summary>Добавляет подписчика на рассылку сообщений</summary>
-        ///<param name="message">Тип отправляемого сообщения</param>
-        ///<param name="listener">Подписчик, которого необходимо подписать</param>
-        public static void AddListener(MessageType message, Action listener)
-        {
-            if (!Dict.ContainsKey(message))
-                Dict.Add(message, new List<Action>());
-            Dict[message].Add(listener);
+    /// <summary>
+    /// Мессенджер для рассылки сообщений всем подписавшимся на рассылку
+    /// </summary>
+    public static class Messenger {
+
+        #region Subscription
+
+        /// <summary>
+        /// Добавляет подписчика к рассылке
+        /// </summary>
+        /// <param name="subscriber">Подписчик с параметрами</param>
+        /// <typeparam name="T">Тип сообщения, рассылаемого подписчикам</typeparam>
+        public static void SubscribeTo<T> (Action<T> subscriber) where T : Message {
+            Subscribers<T>.Container.Add(subscriber);
         }
 
-        ///<summary>Удаляет подписчика с рассылки сообщений</summary>
-        ///<param name="message">Тип отправляемого сообщения</param>
-        ///<param name="listener">Подписчик, которого необходимо удалить</param>
-        public static void RemoveListener(MessageType message, Action listener)
-        {
-            if (!Dict.ContainsKey(message)) return;
 
-            Dict[message].Remove(listener);
+        /// <summary>
+        /// Добавляет подписчика к рассылке
+        /// </summary>
+        /// <param name="subscriber">Подписчик без параметров</param>
+        /// <typeparam name="T">Тип сообщения, рассылаемого подписчикам</typeparam>
+        public static void SubscribeTo<T> (Action subscriber) where T : Message {
+            var messageType = typeof(T);
+            if (!Subscribers.Container.ContainsKey(messageType))
+                Subscribers.Container.Add(messageType, new List<Action>());
+            Subscribers.Container[messageType].Add(subscriber);
         }
 
-        ///<summary>Отправляет сообщение всем подписчикам</summary>
-        ///<param name="message">Тип отправляемого сообщения</param>
-        public static void SendMessage(MessageType message)
-        {
-            if (!Dict.ContainsKey(message)) return;
-            
-            var listeners = new List<Action>(Dict[message]);
-            foreach (var listener in listeners)
-                listener.Invoke();
+        #endregion
+
+
+
+        #region Unsubscription
+
+        /// <summary>
+        /// Отписывает подписчика от рассылки
+        /// </summary>
+        /// <param name="subscriber">Подписчик с параметрами</param>
+        /// <typeparam name="T">Тип сообщения, рассылаемого подписчикам</typeparam>
+        public static void UnsubscribeFrom<T> (Action<T> subscriber) where T : Message {
+            Assert.IsTrue(Subscribers<T>.Container.Contains(subscriber));
+            Subscribers<T>.Container.Remove(subscriber);
         }
+
+
+        /// <summary>
+        /// Отписывает подписчика от рассылки
+        /// </summary>
+        /// <param name="subscriber">Подписчик без параметров</param>
+        /// <typeparam name="T">Тип сообщения, рассылаемого подписчикам</typeparam>
+        public static void UnsubscribeFrom<T> (Action subscriber) where T : Message {
+            var messageType = typeof(T);
+            Assert.IsTrue(Subscribers.Container.ContainsKey(messageType));
+            Assert.IsTrue(Subscribers.Container[messageType].Contains(subscriber));
+            Subscribers.Container[messageType].Remove(subscriber);
+        }
+
+        #endregion
+
+
+
+        #region Sending
+
+        /// <summary>
+        /// Рассылает сообщение всем подписчикам
+        /// </summary>
+        /// <param name="message"></param>
+        public static void SendMessage<T> (T message) where T : Message {
+            if (Subscribers<T>.Container.Count == 0) {
+                SendLogInDebugConsole(typeof(T));
+
+                return;
+            }
+
+            var subscribers = new List<Action<T>>(Subscribers<T>.Container);
+            foreach (var subscriber in subscribers)
+                subscriber.Invoke(message);
+        }
+
+
+        /// <summary>
+        /// Рассылает сообщение всем подписчикам
+        /// </summary>
+        public static void SendMessage<T> () where T : Message {
+            var messageType = typeof(T);
+
+            if (!Subscribers.Container.ContainsKey(messageType)) {
+                SendLogInDebugConsole(typeof(T));
+
+                return;
+            }
+
+            if (Subscribers.Container[messageType].Count == 0) {
+                SendLogInDebugConsole(typeof(T));
+
+                return;
+            }
+
+            var subscribers = new List<Action>(Subscribers.Container[messageType]);
+            foreach (var subscriber in subscribers)
+                subscriber.Invoke();
+        }
+
+
+        private static void SendLogInDebugConsole (Type type) {
+            var logMessage = $"Сообщение {type} было отправлено, но его никто не получил";
+            Debug.LogWarning(logMessage);
+        }
+
+        #endregion
+
+
+
+        /// <summary>
+        /// Хранит в себе подписчиков с параметрами
+        /// </summary>
+        /// <typeparam name="T">Тип сообщения, отправляемый подписчикам</typeparam>
+        private static class Subscribers<T> {
+
+            public static readonly List<Action<T>> Container = new List<Action<T>>();
+
+        }
+
+
+
+        /// <summary>
+        /// Хранит в себе подписчиков без параметров
+        /// </summary>
+        private static class Subscribers {
+
+            public static readonly Dictionary<Type, List<Action>> Container =
+                new Dictionary<Type, List<Action>>();
+
+        }
+
     }
-    
-    public static class Messenger<T>
-    {
-        public static readonly Dictionary<MessageType, List<Action<T>>> Dict = 
-            new Dictionary<MessageType, List<Action<T>>>();
 
-        ///<summary>Добавляет подписчика на рассылку сообщений</summary>
-        ///<param name="message">Тип отправляемого сообщения</param>
-        ///<param name="listener">Подписчик, которого необходимо подписать</param>
-        public static void AddListener(MessageType message, Action<T> listener)
-        {
-            if (!Dict.ContainsKey(message))
-                Dict.Add(message, new List<Action<T>>());
-            Dict[message].Add(listener);
-        }
-
-        ///<summary>Удаляет подписчика с рассылки сообщений</summary>
-        ///<param name="message">Тип отправляемого сообщения</param>
-        ///<param name="listener">Подписчик, которого необходимо удалить</param>
-        public static void RemoveListener(MessageType message, Action<T> listener)
-        {
-            if (!Dict.ContainsKey(message)) return;
-
-            Dict[message].Remove(listener);
-        }
-
-        /// <summary>Отправляет сообщение всем подписчикам</summary>
-        /// <param name="message">Тип отправляемого сообщения</param>
-        /// <param name="param">Параметр, отправляемый подписчикам вместе с сообщением</param>
-        public static void SendMessage(MessageType message, T param)
-        {
-            if (!Dict.ContainsKey(message)) return;
-            
-            var listeners = new List<Action<T>>(Dict[message]);
-            foreach (var listener in listeners)
-                listener.Invoke(param);
-        }
-    }
 }

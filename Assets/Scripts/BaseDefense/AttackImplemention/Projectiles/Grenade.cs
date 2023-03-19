@@ -1,77 +1,76 @@
 using UnityEngine;
 using BaseDefense.Extensions;
 
-namespace BaseDefense.AttackImplemention.Projectiles
-{
-    public class Grenade : Projectile
-    {
+// ReSharper disable Unity.PreferNonAllocApi
+
+namespace BaseDefense.AttackImplemention.Projectiles {
+
+    public class Grenade : Projectile {
+
         ///<summary>Эффект, который необходимо воспроизвести после попадания гранаты</summary>
         [Tooltip("Эффект, который необходимо воспроизвести после попадания гранаты")]
-        [SerializeField] ParticleSystem explosion;
+        [SerializeField]
+        private ParticleSystem explosion;
 
         ///<summary>Определяет радиус поражения при взрыве гранаты</summary>
         ///<value>[0.001, infinity]</value>
-        float damageRadius;
+        private float m_damageRadius;
 
         ///<summary>Урон зависит от дальности от эпицентра взрыва</summary>
         ///<value>[0, infinity]</value>
-        float maxDamage;
+        private float m_maxDamage;
 
-        ///<inheritdoc cref="damageRadius"/>
-        public float DamageRadius
-        {
-            get { return damageRadius; }
-            set
-            {
-                damageRadius = value;
-                if (damageRadius < 0.001f) damageRadius = 0.001f;
+        ///<inheritdoc cref="m_damageRadius"/>
+        public float DamageRadius {
+            get => m_damageRadius;
+            set {
+                m_damageRadius = value;
+                if (m_damageRadius < 0.001f) m_damageRadius = 0.001f;
             }
         }
 
-        ///<inheritdoc cref="maxDamage"/>
-        public float MaxDamage
-        {
-            get { return maxDamage; }
-            set
-            {
-                maxDamage = value;
-                if (maxDamage < 0) maxDamage = 0;
+        ///<inheritdoc cref="m_maxDamage"/>
+        public float MaxDamage {
+            get => m_maxDamage;
+            set {
+                m_maxDamage = value;
+                if (m_maxDamage < 0) m_maxDamage = 0;
             }
         }
 
-        public override void AddImpulse(Vector3 force)
-        {
+
+        public override void AddImpulse (Vector3 force) {
             TrailRenderer.Clear();
             Rb.AddForce(force);
         }
 
-        protected override void OnCollisionEnter(Collision collision)
-        {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, damageRadius);
-            Instantiate(explosion, transform.position, Quaternion.identity);
-            foreach (Collider collider in colliders)
-            {
-                if (collider.GetComponent<IAttackable>() is IAttackable attackable)
-                {
-                    float distance = damageRadius;
-                    float damage = 0;
-                    Vector3 direction = collider.transform.position - transform.position;
+
+        protected override void OnCollisionEnter (Collision collision) {
+            var position = transform.position;
+            var colliders = Physics.OverlapSphere(position, m_damageRadius);
+            Instantiate(explosion, position, Quaternion.identity);
+
+            foreach (var attackableCollider in colliders) {
+                if (attackableCollider.GetComponent<IAttackable>() is { } attackable) {
+                    var distance = m_damageRadius;
+                    var direction = attackableCollider.transform.position - transform.position;
                     if (Physics.Raycast(transform.position, direction, out RaycastHit raycastHit))
                         distance = raycastHit.distance;
-                    damage = maxDamage * (1 - distance / damageRadius);
+                    var damage = m_maxDamage * (1 - distance / m_damageRadius);
                     if (damage < 0)
                         damage = 0;
                     attackable.Hit(damage);
                 }
             }
 
-            colliders = Physics.OverlapSphere(transform.position, damageRadius);
-            foreach (Collider collider in colliders)
-                if (collider.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
-                    rigidbody.AddExplosionForce(maxDamage, transform.position, damageRadius);
+            colliders = Physics.OverlapSphere(transform.position, m_damageRadius);
+            foreach (var attackableCollider in colliders)
+                if (attackableCollider.TryGetComponent(out Rigidbody rb))
+                    rb.AddExplosionForce(m_maxDamage, transform.position, m_damageRadius);
             Destroy();
             Rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);
         }
-    }
-}
 
+    }
+
+}

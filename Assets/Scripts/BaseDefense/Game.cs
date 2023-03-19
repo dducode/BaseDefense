@@ -2,46 +2,53 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using BaseDefense.BroadcastMessages;
+using BaseDefense.BroadcastMessages.Messages;
 using BaseDefense.Characters;
 using BaseDefense.SaveSystem;
 using Zenject;
 using DG.Tweening;
 using UnityEngine.Assertions;
 
-namespace BaseDefense
-{
-    public class Game : MonoBehaviour
-    {
-        [SerializeField] private EnemyBase basePrefab;
-        [SerializeField] private bool saving;
-        [SerializeField] private BaseTemplate[] baseTemplates;
+namespace BaseDefense {
+
+    public class Game : MonoBehaviour {
+
+        [SerializeField]
+        private EnemyBase basePrefab;
+
+        [SerializeField]
+        private bool saving;
+
+        [SerializeField]
+        private BaseTemplate[] baseTemplates;
+
         private EnemyBase.Factory m_enemyFactory;
         private List<EnemyBase> m_bases;
         private int m_currentLevel;
-        private Vector3 m_initialPosition = new(0, 0, 20);
         private PlayerCharacter m_playerCharacter;
+        private readonly Vector3 m_initialPosition = new(0, 0, 20);
         private const int FIRST_BASE = 0;
 
+
         [Inject]
-        public void Constructor(EnemyBase.Factory enemyFactory, PlayerCharacter playerCharacter)
-        {
+        public void Constructor (EnemyBase.Factory enemyFactory, PlayerCharacter playerCharacter) {
             m_enemyFactory = enemyFactory;
             m_playerCharacter = playerCharacter;
         }
 
-        public void DestroyOldBase()
-        {
+
+        public void DestroyOldBase () {
             m_bases[FIRST_BASE].Destroy();
             m_bases.RemoveAt(FIRST_BASE);
-            Messenger.SendMessage(MessageType.PUSH_UNUSED_ITEMS);
+            Messenger.SendMessage<DestroyUnusedItemsMessage>();
         }
 
-        private void Awake()
-        {
+
+        private void Awake () {
             m_bases = new List<EnemyBase>();
             LoadGame();
-            if (m_bases.Count == 0)
-            {
+
+            if (m_bases.Count == 0) {
                 var newBase = CreateNewBase();
                 newBase.transform.position = m_initialPosition;
                 newBase.Initialize(baseTemplates[m_currentLevel]);
@@ -50,29 +57,32 @@ namespace BaseDefense
 
             Application.targetFrameRate = Screen.currentResolution.refreshRate;
             DOTween.SetTweensCapacity(300, 150);
-            
+
             if (saving)
-                Application.wantsToQuit += () =>
-                {
+                Application.wantsToQuit += () => {
                     SaveGame();
+
                     return true;
                 };
-            
-            Messenger.AddListener(MessageType.NEXT_LEVEL, NextLevel);
+
+            Messenger.SubscribeTo<NextLevelMessage>(NextLevel);
         }
 
-        private void NextLevel()
-        {
+
+        private void OnDestroy () => Messenger.UnsubscribeFrom<NextLevelMessage>(NextLevel);
+
+
+        private void NextLevel () {
             m_currentLevel++;
             if (m_currentLevel == baseTemplates.Length)
                 m_currentLevel = 0;
 
             var newBase = CreateNewBase();
 
-            var backTransition = newBase.transitions.backTransition;
+            var backTransition = newBase.TransitionsBetweenBases.backTransition;
             backTransition.gameObject.SetActive(false);
 
-            var frontTransition = m_bases[FIRST_BASE].transitions.frontTransition;
+            var frontTransition = m_bases[FIRST_BASE].TransitionsBetweenBases.frontTransition;
             frontTransition.gameObject.SetActive(false);
 
             newBase.transform.position = frontTransition.position - backTransition.localPosition;
@@ -80,18 +90,20 @@ namespace BaseDefense
             m_bases.Add(newBase);
         }
 
-        private EnemyBase CreateNewBase()
-        {
-            var newBase = Object.CreateFromFactory(basePrefab, m_enemyFactory) as EnemyBase;
+
+        private EnemyBase CreateNewBase () {
+            var newBase = Object.CreateFromFactory(basePrefab, m_enemyFactory);
             const string message = "Не удалось создать базу";
             Assert.IsNotNull(newBase, message);
+
             return newBase;
         }
 
+
         private const string DATA_FILE_NAME = "saveData.dat";
 
-        private void SaveGame()
-        {
+
+        private void SaveGame () {
             var path = Path.Combine(Application.persistentDataPath, DATA_FILE_NAME);
             using var binaryWriter = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate));
             var writer = new GameDataWriter(binaryWriter);
@@ -100,17 +112,18 @@ namespace BaseDefense
             SaveBase(writer);
         }
 
-        private void SaveBase(GameDataWriter writer)
-        {
+
+        private void SaveBase (GameDataWriter writer) {
             writer.Write(m_bases.Count);
             foreach (var enemyBase in m_bases)
                 enemyBase.Save(writer);
         }
 
-        private void LoadGame()
-        {
+
+        private void LoadGame () {
             var path = Path.Combine(Application.persistentDataPath, DATA_FILE_NAME);
             var reader = GameDataStorage.GetDataReader(path);
+
             if (reader is null)
                 return;
 
@@ -119,17 +132,19 @@ namespace BaseDefense
             LoadBase(reader);
         }
 
-        private void LoadBase(GameDataReader reader)
-        {
+
+        private void LoadBase (GameDataReader reader) {
             var basesCount = reader.ReadInteger();
-            for (int i = 0; i < basesCount; i++)
-            {
-                var enemyBase = Object.CreateFromFactory(basePrefab, m_enemyFactory) as EnemyBase;
+
+            for (int i = 0; i < basesCount; i++) {
+                var enemyBase = Object.CreateFromFactory(basePrefab, m_enemyFactory);
                 const string message = "Не удалось загрузить базу";
                 Assert.IsNotNull(enemyBase, message);
                 enemyBase.Load(reader);
                 m_bases.Add(enemyBase);
             }
         }
+
     }
+
 }

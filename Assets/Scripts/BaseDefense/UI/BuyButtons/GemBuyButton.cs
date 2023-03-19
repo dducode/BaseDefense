@@ -1,20 +1,26 @@
-using System;
 using BaseDefense.BroadcastMessages;
-using BaseDefense.Currencies;
+using BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages;
+using BaseDefense.Extensions;
 
-namespace BaseDefense.UI.BuyButtons
-{
-    public class GemBuyButton : BuyButton
-    {
-        protected override void Awake()
-        {
+namespace BaseDefense.UI.BuyButtons {
+
+    public class GemBuyButton : BuyButton {
+
+        protected override void Awake () {
             base.Awake();
-            Messenger<GemCurrency>.AddListener(MessageType.UPDATE_CURRENCY, Check);
+            Messenger.SubscribeTo<UpdateGemsMessage>(Check);
         }
 
-        private void OnDestroy()
-        {
-            Messenger<GemCurrency>.RemoveListener(MessageType.UPDATE_CURRENCY, Check);
+
+        private void Start () {
+            priceView.text = "Upgrade " + price.ToStringWithSeparator();
         }
+
+
+        private void OnDestroy () {
+            Messenger.UnsubscribeFrom<UpdateGemsMessage>(Check);
+        }
+
     }
+
 }

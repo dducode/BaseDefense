@@ -1,30 +1,31 @@
-using BaseDefense.Currencies;
+using BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BaseDefense.UI.BuyButtons
-{
+namespace BaseDefense.UI.BuyButtons {
+
     [RequireComponent(typeof(Button))]
-    public abstract class BuyButton : MonoBehaviour
-    {
-        [SerializeField] private int price;
-        [SerializeField] private TextMeshProUGUI priceView;
+    public abstract class BuyButton : MonoBehaviour {
+
+        [SerializeField]
+        protected int price;
+
+        [SerializeField]
+        protected TextMeshProUGUI priceView;
+
         private Button m_thisButton;
 
-        protected virtual void Awake()
-        {
+
+        protected virtual void Awake () {
             m_thisButton = GetComponent<Button>();
         }
 
-        private void Start()
-        {
-            priceView.text = price.ToString();
+
+        protected void Check (UpdateCurrencyMessage message) {
+            m_thisButton.interactable = message.Value > price;
         }
 
-        protected void Check(Currency currency)
-        {
-            m_thisButton.interactable = currency.Value > price;
-        }
     }
+
 }

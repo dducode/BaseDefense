@@ -4,28 +4,31 @@ using Zenject;
 using BaseDefense.AttackImplemention;
 using BaseDefense.StateMachine;
 using BaseDefense.Items;
-using UnityEngine.Assertions;
+using BaseDefense.Properties;
 
-namespace BaseDefense.Characters
-{
+namespace BaseDefense.Characters {
+
     [RequireComponent(typeof(ItemDrop), typeof(Ragdoll))]
-    public sealed class EnemyCharacter : BaseCharacter
-    {
+    public sealed class EnemyCharacter : BaseCharacter {
+
         ///<summary>Скорость, развиваемая врагом при патруле</summary>
         ///<value>[0, infinity]</value>
         [Header("Характеристики врага")]
         [Tooltip("Скорость, развиваемая врагом при патруле. [0, infinity]")]
-        [SerializeField, Min(0)] private float walkingSpeed;
+        [SerializeField, Min(0)]
+        private float walkingSpeed;
 
         ///<summary>Урон, наносимый врагом игроку</summary>
         ///<value>Диапазон значений на отрезке [0, 100]</value>
         [Tooltip("Урон, наносимый врагом игроку")]
-        [SerializeField] private MinMaxSliderFloat damage = new MinMaxSliderFloat(0, 100);
+        [SerializeField]
+        private MinMaxSliderFloat damage = new MinMaxSliderFloat(0, 100);
 
         ///<summary>Атакующая рука врага</summary>
         [Header("Связанные объекты")]
         [Tooltip("Атакующая рука врага")]
-        [SerializeField] private Punch hand;
+        [SerializeField]
+        private Punch hand;
 
         ///<inheritdoc cref="walkingSpeed"/>
         public float WalkingSpeed => walkingSpeed;
@@ -38,12 +41,10 @@ namespace BaseDefense.Characters
 
         ///<summary>При включении поведения врага также включаются его аниматор и контроллёр</summary>
         private bool m_enabled;
+
         ///<inheritdoc cref="m_enabled"/>
-        public new bool enabled
-        {
-            get => m_enabled;
-            set
-            {
+        private new bool Enabled {
+            set {
                 m_enabled = value;
                 base.Enabled = m_enabled;
                 Animator.enabled = m_enabled;
@@ -56,92 +57,91 @@ namespace BaseDefense.Characters
         private ItemDrop m_itemDrop;
         private Ragdoll m_ragdoll;
 
+
         [Inject]
-        public void Constructor(PlayerCharacter player)
-        {
+        public void Constructor (PlayerCharacter player) {
             m_itemDrop = GetComponent<ItemDrop>();
             m_ragdoll = GetComponent<Ragdoll>();
             m_player = player;
             hand.Damage = damage;
         }
 
+
         /// <summary>Вызывается как для порождения нового врага, так и для респавна умершего</summary>
         /// <param name="targetPoints">Целевые точки для патруля</param>
         /// <param name="position">Точка спавна врага</param>
         /// <param name="rotation">Поворот, принимаемый во время спавна</param>
-        public void Initialize(Transform[] targetPoints, Vector3 position, Quaternion rotation)
-        {
+        public void Initialize (Transform[] targetPoints, Vector3 position, Quaternion rotation) {
             m_targetPoints = targetPoints;
             CurrentHealthPoints = maxHealthPoints;
-            m_ragdoll.enabled = false;
-            enabled = false;
+            m_ragdoll.Enabled = false;
+            Enabled = false;
             transform.SetLocalPositionAndRotation(position, rotation);
-            enabled = true;
+            Enabled = true;
             m_state = new Walking(this, m_player.transform);
             MeshRenderer.material.color = DefaultColor;
         }
+
 
         ///<summary>Заменяет обычный Update метод</summary>
         ///<remarks>
         ///Должен вызываться из другого сценария. Обычно это сценарий, который порождает персонажей данного типа
         ///</remarks>
         ///<returns>Возвращает false, если персонаж мёртв</returns>
-        public bool EnemyUpdate()
-        {
-            if (IsAlive)
-            {
+        public bool EnemyUpdate () {
+            if (IsAlive) {
                 m_state = m_state.Process();
-                if (m_state is Attack)
-                {
+
+                if (m_state is Attack) {
                     var info = Animator.GetCurrentAnimatorStateInfo(0);
-                    int cycle = (int)info.normalizedTime;
-                    hand.enabled = info.IsName("Base.Attack") && 
-                        info.normalizedTime - cycle > 0.5f &&
-                        info.normalizedTime - cycle < 0.75f;
+                    int cycle = (int) info.normalizedTime;
+                    hand.Enabled = info.IsName("Base.Attack") &&
+                                   info.normalizedTime - cycle > 0.5f &&
+                                   info.normalizedTime - cycle < 0.75f;
                 }
                 else
-                    hand.enabled = false;
+                    hand.Enabled = false;
 
                 const float recoveryTime = 60;
                 if (m_state is Walking) // Восстановление здоровья при патруле
                     CurrentHealthPoints += Time.smoothDeltaTime * maxHealthPoints / recoveryTime;
             }
             else
-                hand.enabled = false;
-            
+                hand.Enabled = false;
+
             return IsAlive;
         }
 
+
         ///<summary>Вызывается для получения случайной целевой точки патруля</summary>
-        public Vector3 GetRandomPoint()
-        {
+        public Vector3 GetRandomPoint () {
             return m_targetPoints[Random.Range(0, m_targetPoints.Length)].position;
         }
 
+
         ///<summary>Вызывается для атаки на игрока</summary>
-        public void AttackPlayer()
-        {
+        public void AttackPlayer () {
             m_state.SetTrigger(true);
         }
 
+
         /// <summary>Вызывается для патруля</summary>
-        public void Patrol()
-        {
+        public void Patrol () {
             m_state.SetTrigger(false);
         }
 
-        public override void Hit(float damage)
-        {
+
+        public override void Hit (float damage) {
             CurrentHealthPoints -= damage;
             var emission = HitEffect.emission;
-            emission.SetBurst(0, new ParticleSystem.Burst(0, (int)damage * 100 / maxHealthPoints));
+            emission.SetBurst(0, new ParticleSystem.Burst(0, (int) damage * 100 / maxHealthPoints));
             HitEffect.Play();
         }
 
-        protected override void OnDeath()
-        {
-            enabled = false;
-            m_ragdoll.enabled = true;
+
+        protected override void OnDeath () {
+            Enabled = false;
+            m_ragdoll.Enabled = true;
             var punchDirection = transform.forward * -25 + Vector3.up;
             m_ragdoll.AddImpulse(punchDirection);
             m_itemDrop.DropItems();
@@ -149,22 +149,24 @@ namespace BaseDefense.Characters
             Destroy(Disappearance());
         }
 
-        private IEnumerator Disappearance()
-        {
+
+        private IEnumerator Disappearance () {
             yield return new WaitForSeconds(2);
             var startColor = MeshRenderer.material.color;
             var targetColor = startColor;
             targetColor.a = 0;
             var time = Time.time;
-            while (MeshRenderer.material.color.a > 0)
-            {
+
+            while (MeshRenderer.material.color.a > 0) {
                 MeshRenderer.material.color = Color.Lerp(startColor, targetColor, (Time.time - time) * 2);
+
                 yield return null;
             }
         }
 
-        public class Factory : PlaceholderFactory<UnityEngine.Object, EnemyCharacter> {}
+
+        public class Factory : PlaceholderFactory<UnityEngine.Object, EnemyCharacter> { }
+
     }
+
 }
-
-
