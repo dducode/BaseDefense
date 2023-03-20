@@ -56,6 +56,8 @@ namespace BaseDefense.Characters {
         protected bool Enabled {
             get => m_enabledCharacter;
             set {
+                if (Controller is null)
+                    return;
                 m_enabledCharacter = value;
                 enabled = m_enabledCharacter;
                 Controller.enabled = m_enabledCharacter;
@@ -64,7 +66,7 @@ namespace BaseDefense.Characters {
 
         ///<summary>Текущее количество здоровья персонажа</summary>
         ///<value>[0, maxHealthPoints]</value>
-        float m_currentHealthPoints;
+        private float m_currentHealthPoints;
 
         ///<inheritdoc cref="m_currentHealthPoints"/>
         public float CurrentHealthPoints {

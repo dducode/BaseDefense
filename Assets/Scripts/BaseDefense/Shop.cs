@@ -12,17 +12,17 @@ namespace BaseDefense {
 
 
         /// <summary>Вызывается для взятия оружия из магазина</summary>
-        /// <param name="gunName">Оружие, которое необходимо забрать из магазина</param>
+        /// <param name="gunId">Оружие, которое необходимо забрать из магазина</param>
         /// <param name="playerGun">Оружие игрока</param>
         /// <returns>
         /// Если в магазине нет запрашиваемого оружия - возвращается оружие игрока
         /// </returns>
-        public Gun TakeGun (string gunName, Gun playerGun) {
-            if (playerGun.name == gunName)
+        public Gun TakeGun (int gunId, Gun playerGun) {
+            if (playerGun.Id == gunId)
                 return playerGun;
 
             for (var i = 0; i < guns.Length; i++)
-                if (guns[i].name == gunName) {
+                if (guns[i].Id == gunId) {
                     var gun = guns[i];
                     playerGun.transform.parent = transform;
                     guns[i] = playerGun;
@@ -30,7 +30,7 @@ namespace BaseDefense {
                     return gun;
                 }
 
-            Debug.LogError($"Оружие {gunName} не найдено");
+            Debug.LogError($"Оружие {gunId} не найдено");
 
             return playerGun;
         }

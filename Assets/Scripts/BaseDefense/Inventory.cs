@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using BaseDefense.BroadcastMessages;
+using BaseDefense.BroadcastMessages.Messages;
 using BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages;
 using UnityEngine;
 using BaseDefense.Items;
@@ -13,26 +15,6 @@ namespace BaseDefense {
         private string m_inventoryData;
         private const string INVENTORY_DATA_FILE_NAME = "inventoryData.dat";
         private const string PASSWORD = "4u7b8O-0j2lvGHtTZrQ.cV3aN?ydosUwWE9z,ShYkACm6InBgJRi!K_DMep1XLxq";
-
-
-        private void Awake () {
-            var data = LoadInventory() ?? new InventoryData {
-                moneys = PlayerPrefs.GetInt("Money", 0),
-                gems = PlayerPrefs.GetInt("Gem", 0)
-            };
-            m_inventoryData = EncodeData(data);
-            Application.wantsToQuit += () => {
-                SaveInventory();
-                return true;
-            };
-        }
-
-
-        private void Start () {
-            var data = DecodeData(m_inventoryData);
-            Messenger.SendMessage(new UpdateMoneysMessage(data.moneys));
-            Messenger.SendMessage(new UpdateGemsMessage(data.gems));
-        }
 
 
         ///<summary>Кладёт предмет в инвентарь</summary>
@@ -55,6 +37,53 @@ namespace BaseDefense {
             m_inventoryData = EncodeData(data);
             item.DestroyItem();
             PlayerPrefs.Save();
+        }
+
+
+        public void PurchaseGun (int gunId, int price) {
+            var data = DecodeData(m_inventoryData);
+            data.gunIds.Add(gunId);
+            data.moneys -= price;
+            Messenger.SendMessage(new UpdateMoneysMessage(data.moneys));
+            Messenger.SendMessage(new UnlockedGunsMessage(data.gunIds));
+            m_inventoryData = EncodeData(data);
+        }
+
+
+        private void Awake () {
+            var data = LoadInventory() ?? new InventoryData {
+                moneys = PlayerPrefs.GetInt("Money", 0),
+                gems = PlayerPrefs.GetInt("Gem", 0)
+            };
+            m_inventoryData = EncodeData(data);
+            Application.wantsToQuit += () => {
+                SaveInventory();
+                return true;
+            };
+        }
+
+
+        private void Start () {
+            var data = DecodeData(m_inventoryData);
+            Messenger.SendMessage(new UpdateMoneysMessage(data.moneys));
+            Messenger.SendMessage(new UpdateGemsMessage(data.gems));
+            Messenger.SendMessage(new UnlockedGunsMessage(data.gunIds));
+        }
+
+
+        private void Update () {
+            if (Input.GetKeyDown(KeyCode.M)) {
+                var data = DecodeData(m_inventoryData);
+                data.moneys += 1000;
+                Messenger.SendMessage(new UpdateMoneysMessage(data.moneys));
+                m_inventoryData = EncodeData(data);
+            }
+            else if (Input.GetKeyDown(KeyCode.G)) {
+                var data = DecodeData(m_inventoryData);
+                data.gems += 250;
+                Messenger.SendMessage(new UpdateGemsMessage(data.gems));
+                m_inventoryData = EncodeData(data);
+            }
         }
 
 
@@ -101,6 +130,7 @@ namespace BaseDefense {
 
             public int moneys;
             public int gems;
+            public List<int> gunIds;
 
         }
 

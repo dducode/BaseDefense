@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
@@ -46,6 +47,13 @@ namespace BaseDefense {
 
         private void Awake () {
             m_bases = new List<EnemyBase>();
+            Application.targetFrameRate = Screen.currentResolution.refreshRate;
+            DOTween.SetTweensCapacity(300, 150);
+            Messenger.SubscribeTo<NextLevelMessage>(NextLevel);
+        }
+
+
+        private void Start () {
             LoadGame();
 
             if (m_bases.Count == 0) {
@@ -55,17 +63,12 @@ namespace BaseDefense {
                 m_bases.Add(newBase);
             }
 
-            Application.targetFrameRate = Screen.currentResolution.refreshRate;
-            DOTween.SetTweensCapacity(300, 150);
-
             if (saving)
                 Application.wantsToQuit += () => {
                     SaveGame();
 
                     return true;
                 };
-
-            Messenger.SubscribeTo<NextLevelMessage>(NextLevel);
         }
 
 

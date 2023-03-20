@@ -2,6 +2,7 @@ using BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace BaseDefense.UI.BuyButtons {
 
@@ -13,6 +14,9 @@ namespace BaseDefense.UI.BuyButtons {
 
         [SerializeField]
         protected TextMeshProUGUI priceView;
+
+        [Inject]
+        protected Inventory inventory;
 
         private Button m_thisButton;
 

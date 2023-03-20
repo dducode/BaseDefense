@@ -7,6 +7,7 @@ using BaseDefense.AttackImplemention.Guns;
 using BaseDefense.BroadcastMessages;
 using BaseDefense.BroadcastMessages.Messages;
 using BaseDefense.Items;
+using BaseDefense.SaveSystem;
 using BaseDefense.UI;
 using UnityEngine.Profiling;
 
@@ -52,6 +53,18 @@ namespace BaseDefense.Characters {
         }
 
 
+        public override void Save (GameDataWriter writer) {
+            base.Save(writer);
+            writer.Write(m_gun.Id);
+        }
+
+
+        public override void Load (GameDataReader reader) {
+            base.Load(reader);
+            SelectGun(reader.ReadInteger());
+        }
+
+
         public override void Hit (float damage) {
             CurrentHealthPoints -= damage;
             m_displayHealthPoints.UpdateView((int) CurrentHealthPoints);
@@ -86,9 +99,9 @@ namespace BaseDefense.Characters {
 
 
         ///<summary>Вызывается при выборе оружия из магазина</summary>
-        ///<param name="gunName">Выбранное оружие</param>
-        public void SelectGun (string gunName) {
-            m_gun = m_shop.TakeGun(gunName, m_gun);
+        ///<param name="gunId">Выбранное оружие</param>
+        public void SelectGun (int gunId) {
+            m_gun = m_shop.TakeGun(gunId, m_gun);
             m_gun.transform.parent = gunSlot;
             m_gun.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
