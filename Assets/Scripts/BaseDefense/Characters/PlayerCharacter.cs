@@ -22,25 +22,11 @@ namespace BaseDefense.Characters {
         [SerializeField]
         private Transform gunSlot;
 
-        ///<inheritdoc cref="Upgrades"/>
-        [Tooltip("Хранит в себе информацию о прокачиваемых характеристиках игрока")]
-        [SerializeField]
-        private Upgrades upgrades;
-
         ///<inheritdoc cref="DisplayHealthPoints"/>
         private DisplayHealthPoints m_displayHealthPoints;
 
         ///<inheritdoc cref="ItemCollecting"/>
         private ItemCollecting m_itemCollecting;
-
-        ///<inheritdoc cref="BaseCharacter.maxHealthPoints"/>
-        public float MaxHealthPoints => maxHealthPoints;
-
-        ///<inheritdoc cref="BaseCharacter.maxSpeed"/>
-        public float MaxSpeed => maxSpeed;
-
-        ///<inheritdoc cref="ItemCollecting.Capacity"/>
-        public int Capacity => m_itemCollecting.Capacity;
 
         private bool m_inEnemyBase;
 
@@ -56,12 +42,18 @@ namespace BaseDefense.Characters {
         public override void Save (GameDataWriter writer) {
             base.Save(writer);
             writer.Write(m_gun.Id);
+            writer.Write(maxHealthPoints);
+            writer.Write(maxSpeed);
+            m_itemCollecting.Save(writer);
         }
 
 
         public override void Load (GameDataReader reader) {
             base.Load(reader);
             SelectGun(reader.ReadInteger());
+            maxHealthPoints = reader.ReadFloat();
+            maxSpeed = reader.ReadFloat();
+            m_itemCollecting.Load(reader);
         }
 
 
@@ -72,25 +64,6 @@ namespace BaseDefense.Characters {
             emission.SetBurst(0,
                 new ParticleSystem.Burst(0, (int) damage * 100 / maxHealthPoints));
             HitEffect.Play();
-        }
-
-
-        ///<summary>Прокачивает характеристики игрока</summary>
-        ///<param name="upgradeType">Определяет прокачиваемую характеристику</param>
-        public void Upgrade (UpgradableProperties upgradeType) {
-            switch (upgradeType) {
-                case UpgradableProperties.SPEED:
-                    UpgradeSpeed();
-                    break;
-                case UpgradableProperties.MAX_HEALTH:
-                    UpgradeMaxHealth();
-                    break;
-                case UpgradableProperties.CAPACITY:
-                    m_itemCollecting.UpgradeCapacity(upgrades);
-                    break;
-                default:
-                    throw new NotImplementedException($"Тип прокачки {upgradeType} не реализован");
-            }
         }
 
 
@@ -107,6 +80,46 @@ namespace BaseDefense.Characters {
         }
 
 
+        public void Upgrade (UpgradableProperty property) {
+            switch (property.upgradablePropertyType) {
+                case UpgradablePropertyType.SPEED:
+                    UpgradeSpeed(property.CurrentStep);
+                    break;
+                case UpgradablePropertyType.CAPACITY:
+                    UpgradeMaxCapacity(property.CurrentStep);
+                    break;
+                case UpgradablePropertyType.MAX_HEALTH:
+                    UpgradeMaxHealth(property.CurrentStep);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+
+
+        #region PlayerUpgrades
+
+        private void UpgradeSpeed (UpgradablePropertyStep propertyStep) {
+            maxSpeed = propertyStep.value;
+        }
+
+
+        private void UpgradeMaxCapacity (UpgradablePropertyStep propertyStep) {
+            m_itemCollecting.UpgradeCapacity(propertyStep);
+        }
+
+
+        private void UpgradeMaxHealth (UpgradablePropertyStep propertyStep) {
+            maxHealthPoints = propertyStep.value;
+            CurrentHealthPoints = maxHealthPoints;
+            m_displayHealthPoints.SetMaxValue((int) maxHealthPoints);
+            m_displayHealthPoints.UpdateView((int) CurrentHealthPoints);
+        }
+
+        #endregion
+
+
 
         #region PlayerInitialization
 
@@ -119,7 +132,9 @@ namespace BaseDefense.Characters {
         }
 
 
-        private void OnDestroy () => Messenger.UnsubscribeFrom<RestartMessage>(Resurrection);
+        private void OnDestroy () {
+            Messenger.UnsubscribeFrom<RestartMessage>(Resurrection);
+        }
 
 
         private void Start () {
@@ -137,10 +152,12 @@ namespace BaseDefense.Characters {
 
         private static readonly int SpeedId = Animator.StringToHash("speed");
 
+
         ///<summary>Направление взгляда в сторону атакуемой сущности</summary>
         private Vector3 m_gazeDirection;
 
         private Vector3 m_move;
+
         private JoystickController m_joystick;
 
 
@@ -265,11 +282,9 @@ namespace BaseDefense.Characters {
                 switch (item) {
                     case Gem gem:
                         m_itemCollecting.PutGem(gem);
-
                         break;
                     case Money money:
                         m_itemCollecting.StackMoney(money);
-
                         break;
                     default:
                         throw new NotImplementedException($"Обработка объекта {item} не реализована");
@@ -302,41 +317,6 @@ namespace BaseDefense.Characters {
             m_inEnemyBase = value;
             m_gun.gameObject.SetActive(value);
             Animator.SetBool(InEnemyBase, value);
-        }
-
-        #endregion
-
-
-
-        #region PlayerUpgrades
-
-        public bool IsNotMaxForSpeed => maxSpeed < upgrades.Speed.maxValue;
-        public bool IsNotMaxForMaxHealth => maxHealthPoints < upgrades.MaxHealth.maxValue;
-        public bool IsNotMaxForCapacity => Capacity < upgrades.Capacity.maxValue;
-
-
-        private void UpgradeSpeed () {
-            if (IsNotMaxForSpeed) {
-                maxSpeed += upgrades.Speed.step;
-                if (maxSpeed > upgrades.Speed.maxValue)
-                    maxSpeed = upgrades.Speed.maxValue;
-            }
-            else
-                Debug.LogWarning("Достигнут предел в прокачке максимальной скорости");
-        }
-
-
-        private void UpgradeMaxHealth () {
-            if (IsNotMaxForMaxHealth) {
-                maxHealthPoints += upgrades.MaxHealth.step;
-                if (maxHealthPoints > upgrades.MaxHealth.maxValue)
-                    maxHealthPoints = upgrades.MaxHealth.maxValue;
-                CurrentHealthPoints = maxHealthPoints;
-                m_displayHealthPoints.UpdateView((int) CurrentHealthPoints);
-                m_displayHealthPoints.SetMaxValue((int) maxHealthPoints);
-            }
-            else
-                Debug.LogWarning("Достигнут предел в прокачке максимального здоровья");
         }
 
         #endregion

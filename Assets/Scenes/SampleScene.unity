@@ -132,7 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 12204712}
-  - component: {fileID: 12204716}
   - component: {fileID: 12204715}
   - component: {fileID: 12204713}
   m_Layer: 5
@@ -191,7 +190,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12204711}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -205,28 +204,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
---- !u!114 &12204716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12204711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c55ae1c104a44788accf1724eae893c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeValues:
-    speed:
-      textField: {fileID: 877417966}
-      button: {fileID: 1896030439}
-    capacity:
-      textField: {fileID: 1719582247}
-      button: {fileID: 1528925339}
-    maxHealth:
-      textField: {fileID: 1282531120}
-      button: {fileID: 650706139}
 --- !u!1 &41843974
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48cfd1be95bb8854a9e90fd0231edb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradableProperty: 2
+  upgradablePropertyType: 2
 --- !u!1001 &92362455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -705,7 +682,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 865474384}
+      objectReference: {fileID: 11400000, guid: 0e9f2d948c142f4418723fb8bc80b330,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -716,6 +694,12 @@ PrefabInstance:
       propertyPath: price
       value: 7000
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e9f2d948c142f4418723fb8bc80b330,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -968,12 +952,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 121494092}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: df1316e201c352041a07752937bbaadd,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 121494088}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1029,7 +1026,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 150801778695769661, guid: 6fcb4578b2af555468d2384671f9b652, type: 3}
 --- !u!1 &124715141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,7 +1111,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.75
+  m_fontSize: 41.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2632,7 +2628,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 1424875353}
+      objectReference: {fileID: 11400000, guid: 59d9bfac81cff204697b47e3ab9e3067,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -2643,6 +2640,12 @@ PrefabInstance:
       propertyPath: price
       value: 4000
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: 59d9bfac81cff204697b47e3ab9e3067,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -3048,12 +3051,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 536711760}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: 040f834d0d8fb3741ad405509558ef8f,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 536711756}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3109,7 +3125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: -6217829775677158394, guid: e0c7d4345ee8ba746bc01a72d7617753, type: 3}
 --- !u!1 &538501971
 GameObject:
   m_ObjectHideFlags: 0
@@ -3782,13 +3797,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 12204716}
-        m_TargetAssemblyTypeName: BaseDefense.UI.UpgradesWindow, GameAssembly
-        m_MethodName: UpgradePlayer
-        m_Mode: 2
+      - m_Target: {fileID: 650706142}
+        m_TargetAssemblyTypeName: BaseDefense.UI.BuyButtons.UpgradeBuyButton, GameAssembly
+        m_MethodName: UpgradeProperty
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 90854673}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.PlayerUpgradesUI, GameAssembly
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3844,8 +3859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb6200bada34d199a506b7062aae4d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  price: 100
   priceView: {fileID: 1973825880}
+  property: {fileID: 11400000, guid: 767041e42ad285849be0e4085c1909a8, type: 2}
 --- !u!114 &650706143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3960,12 +3975,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 707045962}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: 3f418e46aa6a65447a7897ca8bbec527,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 707045958}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4021,7 +4049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 1239185256303248091, guid: 467ce6ea229667340a16e06811ac3206, type: 3}
 --- !u!1 &722743141
 GameObject:
   m_ObjectHideFlags: 0
@@ -4111,12 +4138,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 722743146}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: 4996412fb6ab4b14fb4a76970df952ea,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 722743142}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4172,7 +4212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 248032954583647529, guid: e55d6479299ef0a48be12aadd743fba3, type: 3}
 --- !u!1 &751220801
 GameObject:
   m_ObjectHideFlags: 0
@@ -4658,12 +4697,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 838743974}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: 51ef49715ec2d324c88569a04e5bb693,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 838743970}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4719,7 +4771,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 1180684627396691582, guid: eff49c62301951f47aef03693c1e4bcc, type: 3}
 --- !u!1 &853989186
 GameObject:
   m_ObjectHideFlags: 0
@@ -4995,12 +5046,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 865474384}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: 0e9f2d948c142f4418723fb8bc80b330,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 865474380}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5056,7 +5120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 2676174842831628428, guid: 126d5437ab6d33d40a256a0b96ea6684, type: 3}
 --- !u!1 &865694458
 GameObject:
   m_ObjectHideFlags: 0
@@ -5300,7 +5363,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: speed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -5466,12 +5529,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 907224257}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: c454be1c76ca4454da1f9358897567b6,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 907224253}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5527,7 +5603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: -8199618368380851229, guid: 3d7b759923ed7e944a51b7cfee96b192, type: 3}
 --- !u!1 &908626342
 GameObject:
   m_ObjectHideFlags: 0
@@ -5819,7 +5894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48cfd1be95bb8854a9e90fd0231edb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradableProperty: 1
+  upgradablePropertyType: 1
 --- !u!1 &1013284357
 GameObject:
   m_ObjectHideFlags: 0
@@ -6582,7 +6657,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 536711760}
+      objectReference: {fileID: 11400000, guid: 040f834d0d8fb3741ad405509558ef8f,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -6593,6 +6669,12 @@ PrefabInstance:
       propertyPath: price
       value: 5000
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: 040f834d0d8fb3741ad405509558ef8f,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -7045,7 +7127,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: health
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -7398,7 +7480,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 1494464459}
+      objectReference: {fileID: 11400000, guid: 867b51ecada28e049adbe4a6c7743d94,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -7409,6 +7492,12 @@ PrefabInstance:
       propertyPath: price
       value: 8000
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: 867b51ecada28e049adbe4a6c7743d94,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -7755,12 +7844,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1424875353}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: 59d9bfac81cff204697b47e3ab9e3067,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1424875349}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7816,7 +7918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: -5930454836443775746, guid: 916ac7bc1a5a7aa4c9e4adbb095a90ae, type: 3}
 --- !u!1 &1445345051
 GameObject:
   m_ObjectHideFlags: 0
@@ -7906,12 +8007,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1445345056}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: 9e5704970f305f840b8b8ae4017d2c93,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1445345052}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7967,7 +8081,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: -8908756748129662389, guid: 674b48ffe57a53d4a97bf332717c37cc, type: 3}
 --- !u!1 &1452376900
 GameObject:
   m_ObjectHideFlags: 0
@@ -8440,12 +8553,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1494464459}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: 867b51ecada28e049adbe4a6c7743d94,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1494464455}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8501,7 +8627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 6368553113586459709, guid: 5cab3ad9cb563d34b9180ef99e39e2b5, type: 3}
 --- !u!1 &1500947314
 GameObject:
   m_ObjectHideFlags: 0
@@ -8801,13 +8926,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 12204716}
-        m_TargetAssemblyTypeName: BaseDefense.UI.UpgradesWindow, GameAssembly
-        m_MethodName: UpgradePlayer
-        m_Mode: 2
+      - m_Target: {fileID: 1528925342}
+        m_TargetAssemblyTypeName: BaseDefense.UI.BuyButtons.UpgradeBuyButton, GameAssembly
+        m_MethodName: UpgradeProperty
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 983445169}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.PlayerUpgradesUI, GameAssembly
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8863,8 +8988,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb6200bada34d199a506b7062aae4d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  price: 100
   priceView: {fileID: 796893575}
+  property: {fileID: 11400000, guid: ca314363782b136498038b92c8c27eef, type: 2}
 --- !u!114 &1528925343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9566,12 +9691,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.ShopWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1638050744}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.GunSlot, GameAssembly
+          m_ObjectArgument: {fileID: 11400000, guid: 7df21f1d9c24f5741b57daee8fb0e97d,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1926540553}
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_MethodName: OnSelectGun
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1638050740}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9627,7 +9765,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c4b3a67c16814ab2285aafab5835c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 6562638020785846139, guid: a4a77de0ad5e5d24c8469360a5a31e94, type: 3}
 --- !u!1 &1640421417
 GameObject:
   m_ObjectHideFlags: 0
@@ -10172,7 +10309,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: capacity
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -11625,7 +11762,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 1445345056}
+      objectReference: {fileID: 11400000, guid: 9e5704970f305f840b8b8ae4017d2c93,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -11636,6 +11774,12 @@ PrefabInstance:
       propertyPath: price
       value: 10000
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e5704970f305f840b8b8ae4017d2c93,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -11751,13 +11895,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 12204716}
-        m_TargetAssemblyTypeName: BaseDefense.UI.UpgradesWindow, GameAssembly
-        m_MethodName: UpgradePlayer
-        m_Mode: 2
+      - m_Target: {fileID: 1896030442}
+        m_TargetAssemblyTypeName: BaseDefense.UI.BuyButtons.UpgradeBuyButton, GameAssembly
+        m_MethodName: UpgradeProperty
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 2074187377}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.UI.PlayerUpgradesUI, GameAssembly
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11813,8 +11957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb6200bada34d199a506b7062aae4d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  price: 100
   priceView: {fileID: 107389072}
+  property: {fileID: 11400000, guid: dae5230a9c9ce314c902d0154a0df16d, type: 2}
 --- !u!114 &1896030443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11907,7 +12051,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926540548}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -12076,7 +12220,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 838743974}
+      objectReference: {fileID: 11400000, guid: 51ef49715ec2d324c88569a04e5bb693,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -12087,6 +12232,12 @@ PrefabInstance:
       propertyPath: price
       value: 5500
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: 51ef49715ec2d324c88569a04e5bb693,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -12256,7 +12407,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 907224257}
+      objectReference: {fileID: 11400000, guid: c454be1c76ca4454da1f9358897567b6,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -12267,6 +12419,12 @@ PrefabInstance:
       propertyPath: price
       value: 20000
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: c454be1c76ca4454da1f9358897567b6,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -12647,7 +12805,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 1638050744}
+      objectReference: {fileID: 11400000, guid: 7df21f1d9c24f5741b57daee8fb0e97d,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -12658,6 +12817,12 @@ PrefabInstance:
       propertyPath: price
       value: 1500
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: 7df21f1d9c24f5741b57daee8fb0e97d,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -12991,7 +13156,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 722743146}
+      objectReference: {fileID: 11400000, guid: 4996412fb6ab4b14fb4a76970df952ea,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_Enabled
@@ -13002,6 +13168,12 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: 4996412fb6ab4b14fb4a76970df952ea,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -13171,7 +13343,8 @@ PrefabInstance:
         type: 3}
       propertyPath: gunSlot
       value: 
-      objectReference: {fileID: 121494092}
+      objectReference: {fileID: 11400000, guid: df1316e201c352041a07752937bbaadd,
+        type: 2}
     - target: {fileID: 6158055539817934370, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -13182,6 +13355,12 @@ PrefabInstance:
       propertyPath: price
       value: 2500
       objectReference: {fileID: 0}
+    - target: {fileID: 6339137278798941905, guid: d78e66b38ba42ce409db10d2daf26c27,
+        type: 3}
+      propertyPath: gunSlot
+      value: 
+      objectReference: {fileID: 11400000, guid: df1316e201c352041a07752937bbaadd,
+        type: 2}
     - target: {fileID: 6737451489200091134, guid: d78e66b38ba42ce409db10d2daf26c27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -13424,7 +13603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48cfd1be95bb8854a9e90fd0231edb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradableProperty: 0
+  upgradablePropertyType: 0
 --- !u!1 &2086915372
 GameObject:
   m_ObjectHideFlags: 0

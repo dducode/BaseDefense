@@ -7,7 +7,7 @@ using Zenject;
 
 namespace BaseDefense.UI {
 
-    public class ShopWindow : MonoBehaviour {
+    public class GunSelectWindow : MonoBehaviour {
 
         ///<summary>Рамка для выбранного игроком оружия</summary>
         [SerializeField, Tooltip("Рамка для выбранного игроком оружия")]
@@ -22,9 +22,13 @@ namespace BaseDefense.UI {
         private const string FILE_NAME = "uiSave.dat";
 
 
-        public void SelectGun (GunSlot slot) {
-            frame.anchoredPosition = slot.RectTransform.anchoredPosition;
-            m_player.SelectGun(slot.GunId);
+        public void SelectGun (GunSlot gunSlot) {
+            m_player.SelectGun(gunSlot.gun.Id);
+        }
+
+
+        public void OnSelectGun (RectTransform rectTransform) {
+            frame.anchoredPosition = rectTransform.anchoredPosition;
         }
 
 

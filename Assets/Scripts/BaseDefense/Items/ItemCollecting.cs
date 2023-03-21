@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BaseDefense.BroadcastMessages;
 using BaseDefense.BroadcastMessages.Messages;
+using BaseDefense.SaveSystem;
 using UnityEngine;
 using Zenject;
 using DG.Tweening;
@@ -41,9 +42,6 @@ namespace BaseDefense.Items {
         [SerializeField, Min(0)]
         private float spaceBetweenMoneys = 0.15f;
 
-        ///<inheritdoc cref="capacity"/>
-        public int Capacity => capacity;
-
         ///<summary>
         ///Запоминает начальное положение преобразования stackForMoneys, 
         ///т.к. в процессе сбора преобразование стека перемещается
@@ -63,18 +61,25 @@ namespace BaseDefense.Items {
         private Inventory m_inventory;
 
 
-        public void UpgradeCapacity (Upgrades upgrades) {
-            if (capacity < upgrades.Capacity.maxValue) {
-                capacity += upgrades.Capacity.step;
-                if (capacity > upgrades.Capacity.maxValue)
-                    capacity = upgrades.Capacity.maxValue;
-            }
-            else Debug.LogWarning("Достигнут предел в прокачке вместимости");
+        public void Save (GameDataWriter writer) {
+            writer.Write(capacity);
+        }
+
+
+        public void Load (GameDataReader reader) {
+            capacity = reader.ReadInteger();
+        }
+
+
+        public void UpgradeCapacity (UpgradablePropertyStep propertyStep) {
+            capacity += (int) propertyStep.value;
         }
 
 
         ///<summary>Кладёт кристалл в инвентарь</summary>
-        public void PutGem (Gem gem) => m_inventory.PutItem(gem);
+        public void PutGem (Gem gem) {
+            m_inventory.PutItem(gem);
+        }
 
 
         ///<summary>Укладывает пачку денег на верх стека</summary>
@@ -151,8 +156,14 @@ namespace BaseDefense.Items {
         }
 
 
-        private void OnEnable () => Messenger.SubscribeTo<DeathPlayerMessage>(LossMoney);
-        private void OnDisable () => Messenger.UnsubscribeFrom<DeathPlayerMessage>(LossMoney);
+        private void OnEnable () {
+            Messenger.SubscribeTo<DeathPlayerMessage>(LossMoney);
+        }
+
+
+        private void OnDisable () {
+            Messenger.UnsubscribeFrom<DeathPlayerMessage>(LossMoney);
+        }
 
 
         private void LossMoney () {

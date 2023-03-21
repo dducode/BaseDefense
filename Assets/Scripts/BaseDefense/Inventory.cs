@@ -13,8 +13,6 @@ namespace BaseDefense {
     public class Inventory : MonoBehaviour {
 
         private string m_inventoryData;
-        private const string INVENTORY_DATA_FILE_NAME = "inventoryData.dat";
-        private const string PASSWORD = "4u7b8O-0j2lvGHtTZrQ.cV3aN?ydosUwWE9z,ShYkACm6InBgJRi!K_DMep1XLxq";
 
 
         ///<summary>Кладёт предмет в инвентарь</summary>
@@ -71,6 +69,7 @@ namespace BaseDefense {
         }
 
 
+#if UNITY_EDITOR
         private void Update () {
             if (Input.GetKeyDown(KeyCode.M)) {
                 var data = DecodeData(m_inventoryData);
@@ -85,6 +84,10 @@ namespace BaseDefense {
                 m_inventoryData = EncodeData(data);
             }
         }
+#endif
+
+        private const string PASSWORD = "4u7b8O-0j2lvGHtTZrQ.cV3aN?ydosUwWE9z,ShYkACm6InBgJRi!K_DMep1XLxq";
+        private const string INVENTORY_DATA_FILE_NAME = "inventoryData.dat";
 
 
         private void SaveInventory () {
@@ -100,26 +103,22 @@ namespace BaseDefense {
         private InventoryData? LoadInventory () {
             var path = Path.Combine(Application.persistentDataPath, INVENTORY_DATA_FILE_NAME);
             var reader = GameDataStorage.GetDataReader(path);
-
             if (reader is null)
                 return null;
 
             var data = Aes.Decrypt(reader.ReadString(), PASSWORD);
-
             return JsonUtility.FromJson<InventoryData>(data);
         }
 
 
         private static string EncodeData (InventoryData data) {
             var jsonData = JsonUtility.ToJson(data);
-
             return B64X.Encode(jsonData);
         }
 
 
         private static InventoryData DecodeData (string jsonData) {
             var data = B64X.Decode(jsonData);
-
             return JsonUtility.FromJson<InventoryData>(data);
         }
 

@@ -1,13 +1,15 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BaseDefense.UI {
 
     public class PlayerUpgradesUI : MonoBehaviour {
 
+        [FormerlySerializedAs("upgradableProperty")]
         [SerializeField]
-        private UpgradableProperties upgradableProperty;
+        private UpgradablePropertyType upgradablePropertyType;
 
-        public UpgradableProperties UpgradableProperty => upgradableProperty;
+        public UpgradablePropertyType UpgradablePropertyType => upgradablePropertyType;
 
     }
 

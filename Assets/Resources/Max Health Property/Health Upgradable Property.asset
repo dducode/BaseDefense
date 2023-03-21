@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8323df9d3d98b4e87933342a143783, type: 3}
+  m_Name: Health Upgradable Property
+  m_EditorClassIdentifier: 
+  upgradablePropertyType: 2
+  upgradablePropertySteps:
+  - {fileID: 11400000, guid: 356ece11e49f97b46ad13bc4fdf62fe5, type: 2}
+  - {fileID: 11400000, guid: d27c4df9f3a55a146bf57b66d4ff7cc3, type: 2}
+  - {fileID: 11400000, guid: 79795c4f7b29dd742a681a7480cdf9f2, type: 2}
+  - {fileID: 11400000, guid: da713b277f3a2de4d954742f852834cd, type: 2}
+  - {fileID: 11400000, guid: e2267db6b71b6574793356409e799e65, type: 2}
+  - {fileID: 11400000, guid: b5b2dcb9a906ac3459a196de6a58a2ed, type: 2}
+  - {fileID: 11400000, guid: e2496857269fbba448bf3797087ec097, type: 2}
+  - {fileID: 11400000, guid: 6176e7172347fc446aff5736c9509a2c, type: 2}
+  - {fileID: 11400000, guid: b24d3fa7abb31da40a716a308564a890, type: 2}

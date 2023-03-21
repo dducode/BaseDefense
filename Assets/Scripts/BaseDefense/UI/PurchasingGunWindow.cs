@@ -6,26 +6,39 @@ namespace BaseDefense.UI {
 
     public class PurchasingGunWindow : MonoBehaviour {
 
-        private GunSlot m_gunSlot;
+        [SerializeField]
+        private GunSlot gunSlot;
+
+        public GunSlot GunSlot => gunSlot;
+
+        private GunSelectButton m_gunSelectButton;
 
 
-        private void Awake () {
-            m_gunSlot = GetComponentInParent<GunSlot>();
-            Messenger.SubscribeTo<UnlockedGunsMessage>(Check);
+        public void Disable () {
+            m_gunSelectButton.EnableButton();
+            gameObject.SetActive(false);
         }
 
 
-        private void Start () => m_gunSlot.DisableButton();
+        private void Awake () {
+            m_gunSelectButton = GetComponentInParent<GunSelectButton>();
+            Messenger.SubscribeTo<UnlockedGunsMessage>(OnUnlockGun);
+        }
 
 
-        private void Check (UnlockedGunsMessage message) {
-            foreach (var unlockedGunId in message.unlockedGuns)
-                if (unlockedGunId == m_gunSlot.GunId) {
-                    m_gunSlot.EnableButton();
-                    gameObject.SetActive(false);
-                    Messenger.UnsubscribeFrom<UnlockedGunsMessage>(Check);
+        private void Start () {
+            m_gunSelectButton.DisableButton();
+        }
+
+
+        private void OnUnlockGun (UnlockedGunsMessage message) {
+            foreach (var unlockedGunId in message.unlockedGuns) {
+                if (unlockedGunId == gunSlot.gun.Id) {
+                    Disable();
+                    Messenger.UnsubscribeFrom<UnlockedGunsMessage>(OnUnlockGun);
                     return;
                 }
+            }
         }
 
     }

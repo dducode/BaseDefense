@@ -1,6 +1,6 @@
 namespace BaseDefense {
 
-    public enum UpgradableProperties {
+    public enum UpgradablePropertyType {
 
         SPEED,
         CAPACITY,
