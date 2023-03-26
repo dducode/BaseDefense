@@ -38,30 +38,30 @@ Base Defense
 Base Defense - игра, реализованная на основе движка Unity 2021.3.15f1.
 В ней Вам предстоит защитить свою базу от нападения врагов.
 
-![a](Screenshots\Screenshot_1.png)
+![a](Screenshots/Screenshot_1.png)
 
 Уничтожайте врагов и собирайте с них деньги
 
-![b](Screenshots\Screenshot_6.png)
+![b](Screenshots/Screenshot_6.png)
 
 За накопленные деньги Вы можете купить себе новое оружие, чтобы более эффективно расправляться с врагами!
 
-![c](Screenshots\Screenshot_2.png) ![d](Screenshots\Screenshot_3.png)
+![c](Screenshots/Screenshot_2.png) ![d](Screenshots/Screenshot_3.png)
 
 Также Вы можете добывать кристаллы, разбивая их своим оружием
 
-![e](Screenshots\Screenshot_7.png) ![e](Screenshots\Screenshot_8.png)
+![e](Screenshots/Screenshot_7.png) ![e](Screenshots/Screenshot_8.png)
 
 За добытые кристаллы можно прокачать игрока
 
-![a](Screenshots\Screenshot_4.png) ![a](Screenshots\Screenshot_5.png)
+![a](Screenshots/Screenshot_4.png) ![a](Screenshots/Screenshot_5.png)
 
 Уничтожайте вражеские станции, получайте за это награду и защищайте остальные базы!
 
 <b> Правило: </b> чтобы перейти на следующий уровень, необходимо на текущем
 уровне уничтожить все станции и всех врагов
 
-![a](Screenshots\Screenshot_9.png) ![a](Screenshots\Screenshot_10.png)
+![a](Screenshots/Screenshot_9.png) ![a](Screenshots/Screenshot_10.png)
 
 ## Враги в игре
 
