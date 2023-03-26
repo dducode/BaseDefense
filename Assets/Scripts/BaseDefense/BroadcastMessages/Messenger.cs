@@ -47,7 +47,11 @@ namespace BaseDefense.BroadcastMessages {
         /// <param name="subscriber">Подписчик с параметрами</param>
         /// <typeparam name="T">Тип сообщения, рассылаемого подписчикам</typeparam>
         public static void UnsubscribeFrom<T> (Action<T> subscriber) where T : Message {
-            Assert.IsTrue(Subscribers<T>.Container.Contains(subscriber));
+            if (!Subscribers<T>.Container.Contains(subscriber)) {
+                Debug.LogWarning($"Подписчик {subscriber.Method} не подписывался на сообщение {typeof(T)}");
+                return;
+            }
+
             Subscribers<T>.Container.Remove(subscriber);
         }
 
@@ -59,8 +63,17 @@ namespace BaseDefense.BroadcastMessages {
         /// <typeparam name="T">Тип сообщения, рассылаемого подписчикам</typeparam>
         public static void UnsubscribeFrom<T> (Action subscriber) where T : Message {
             var messageType = typeof(T);
-            Assert.IsTrue(Subscribers.Container.ContainsKey(messageType));
-            Assert.IsTrue(Subscribers.Container[messageType].Contains(subscriber));
+
+            if (!Subscribers.Container.ContainsKey(messageType)) {
+                Debug.LogWarning($"На рассылку сообщения {messageType} никто не подписался");
+                return;
+            }
+
+            if (!Subscribers.Container[messageType].Contains(subscriber)) {
+                Debug.LogWarning($"Подписчик {subscriber.Method} не подписывался на сообщение {messageType}");
+                return;
+            }
+
             Subscribers.Container[messageType].Remove(subscriber);
         }
 

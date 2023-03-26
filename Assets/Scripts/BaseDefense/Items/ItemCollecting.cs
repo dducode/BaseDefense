@@ -72,7 +72,7 @@ namespace BaseDefense.Items {
 
 
         public void UpgradeCapacity (UpgradablePropertyStep propertyStep) {
-            capacity += (int) propertyStep.value;
+            capacity = (int) propertyStep.value;
         }
 
 

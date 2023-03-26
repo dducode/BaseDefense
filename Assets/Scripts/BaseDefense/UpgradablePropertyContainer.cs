@@ -15,25 +15,22 @@ namespace BaseDefense {
         private static void Initialize () {
             SpeedProperty = Resources.Load<UpgradableProperty>("Max Speed Property/Speed Upgradable Property");
             MaxHealthProperty = Resources.Load<UpgradableProperty>("Max Health Property/Health Upgradable Property");
-            MaxCapacityProperty = Resources.Load<UpgradableProperty>("Max Capacity Property/Capacity Upgradable Property");
+            MaxCapacityProperty =
+                Resources.Load<UpgradableProperty>("Max Capacity Property/Capacity Upgradable Property");
 
             if (!Load()) {
                 SpeedProperty.CurrentStep = SpeedProperty.upgradablePropertySteps[0];
                 MaxHealthProperty.CurrentStep = MaxHealthProperty.upgradablePropertySteps[0];
                 MaxCapacityProperty.CurrentStep = MaxCapacityProperty.upgradablePropertySteps[0];
             }
-
-            Application.wantsToQuit += () => {
-                Save();
-                return true;
-            };
         }
-        
-        
+
+
         private const string FILE_NAME = "PropertySave.dat";
         private static readonly string Path = System.IO.Path.Combine(Application.persistentDataPath, FILE_NAME);
 
-        private static void Save () {
+
+        public static void Save () {
             using var binaryWriter = new BinaryWriter(File.Open(Path, FileMode.OpenOrCreate));
             var writer = new GameDataWriter(binaryWriter);
             writer.Write(SpeedProperty.CurrentStep.stepCount);
@@ -43,9 +40,12 @@ namespace BaseDefense {
 
 
         private static bool Load () {
-            var reader = GameDataStorage.GetDataReader(Path);
-            if (reader is null)
+            if (!File.Exists(Path))
                 return false;
+
+            var binaryData = File.ReadAllBytes(Path);
+            using var binaryReader = new BinaryReader(new MemoryStream(binaryData));
+            var reader = new GameDataReader(binaryReader);
 
             SpeedProperty.CurrentStep = SpeedProperty.upgradablePropertySteps[reader.ReadInteger()];
             MaxHealthProperty.CurrentStep = MaxHealthProperty.upgradablePropertySteps[reader.ReadInteger()];

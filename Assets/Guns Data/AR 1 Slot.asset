@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AR 1 Slot
   m_EditorClassIdentifier: 
   gun: {fileID: 150801778695769661, guid: 6fcb4578b2af555468d2384671f9b652, type: 3}
-  price: 4000
+  price: 800

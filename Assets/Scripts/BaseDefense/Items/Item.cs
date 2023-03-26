@@ -1,5 +1,3 @@
-using BaseDefense.BroadcastMessages;
-using BaseDefense.BroadcastMessages.Messages;
 using UnityEngine;
 using DG.Tweening;
 
@@ -23,7 +21,7 @@ namespace BaseDefense.Items {
         protected Collider meshCollider;
 
         ///<summary>При включении предмета также включается его триггер, физика жёсткого тела и коллайдер</summary>
-        bool m_enabled;
+        private bool m_enabled;
 
         ///<inheritdoc cref="m_enabled"/>
         public bool Enabled {
@@ -33,11 +31,11 @@ namespace BaseDefense.Items {
                 enabled = m_enabled;
                 trigger.enabled = m_enabled;
                 meshCollider.enabled = m_enabled;
-                Rigidbody.isKinematic = !m_enabled;
+                rb.isKinematic = !m_enabled;
             }
         }
 
-        protected Rigidbody Rigidbody;
+        protected Rigidbody rb;
 
 
         ///<summary>Вызывается для выброса предмета</summary>
@@ -55,7 +53,7 @@ namespace BaseDefense.Items {
 
         protected override void Awake () {
             base.Awake();
-            Rigidbody = GetComponent<Rigidbody>();
+            rb = GetComponent<Rigidbody>();
             Enabled = true;
         }
 

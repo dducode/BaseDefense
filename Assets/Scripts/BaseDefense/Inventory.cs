@@ -48,16 +48,27 @@ namespace BaseDefense {
         }
 
 
+        public void PurchaseUpgrade (int price) {
+            var data = DecodeData(m_inventoryData);
+            data.gems -= price;
+            Messenger.SendMessage(new UpdateGemsMessage(data.gems));
+            m_inventoryData = EncodeData(data);
+        }
+
+
         private void Awake () {
             var data = LoadInventory() ?? new InventoryData {
                 moneys = PlayerPrefs.GetInt("Money", 0),
                 gems = PlayerPrefs.GetInt("Gem", 0)
             };
             m_inventoryData = EncodeData(data);
-            Application.wantsToQuit += () => {
+            Application.quitting += SaveInventory;
+        }
+
+
+        private void OnApplicationPause (bool pauseStatus) {
+            if (pauseStatus)
                 SaveInventory();
-                return true;
-            };
         }
 
 
@@ -102,9 +113,12 @@ namespace BaseDefense {
 
         private InventoryData? LoadInventory () {
             var path = Path.Combine(Application.persistentDataPath, INVENTORY_DATA_FILE_NAME);
-            var reader = GameDataStorage.GetDataReader(path);
-            if (reader is null)
+            if (!File.Exists(path))
                 return null;
+
+            var binaryData = File.ReadAllBytes(path);
+            using var binaryReader = new BinaryReader(new MemoryStream(binaryData));
+            var reader = new GameDataReader(binaryReader);
 
             var data = Aes.Decrypt(reader.ReadString(), PASSWORD);
             return JsonUtility.FromJson<InventoryData>(data);

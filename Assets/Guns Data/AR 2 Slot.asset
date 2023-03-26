@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AR 2 Slot
   m_EditorClassIdentifier: 
   gun: {fileID: -5930454836443775746, guid: 916ac7bc1a5a7aa4c9e4adbb095a90ae, type: 3}
-  price: 7500
+  price: 1500

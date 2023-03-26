@@ -3,6 +3,7 @@ using UnityEngine;
 using Zenject;
 using BaseDefense.UI;
 using BaseDefense.Characters;
+using BaseDefense.Items;
 using BaseDefense.SaveSystem;
 
 namespace BaseDefense {
@@ -35,6 +36,8 @@ namespace BaseDefense {
 
         [Inject]
         private EnemyCharacter.Factory m_enemyFactory;
+
+        private ItemDrop[] m_itemDropComponents;
 
 
         public override void Save (GameDataWriter writer) {
@@ -95,6 +98,7 @@ namespace BaseDefense {
             base.Awake();
             CurrentHealthPoints = maxHealthPoints;
             m_displayHealthPoints = GetComponent<DisplayHealthPoints>();
+            m_itemDropComponents = GetComponents<ItemDrop>();
         }
 
 
@@ -122,6 +126,8 @@ namespace BaseDefense {
             if (IsDestroyed)
                 return;
 
+            foreach (var itemDropComponent in m_itemDropComponents)
+                itemDropComponent.DropItems();
             Instantiate(destroyEffect, transform.position, Quaternion.identity);
             Destroy();
         }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8323df9d3d98b4e87933342a143783, type: 3}
   m_Name: Speed Upgradable Property
   m_EditorClassIdentifier: 
+  viewName: Max speed
   upgradablePropertyType: 0
   upgradablePropertySteps:
   - {fileID: 11400000, guid: 99135b2d17cee7c4ebab51a782450e91, type: 2}

@@ -1,5 +1,3 @@
-using System.IO;
-using BaseDefense.SaveSystem;
 using UnityEngine;
 
 
@@ -8,6 +6,7 @@ namespace BaseDefense {
     [CreateAssetMenu(fileName = "Upgradable Property", menuName = "Upgradable Property", order = 51)]
     public class UpgradableProperty : ScriptableObject {
 
+        public string viewName;
         public UpgradablePropertyType upgradablePropertyType;
         public UpgradablePropertyStep[] upgradablePropertySteps;
         public UpgradablePropertyStep CurrentStep { get; set; }
@@ -18,8 +17,15 @@ namespace BaseDefense {
         }
 
 
-        public UpgradablePropertyStep GetNextStep () {
-            return upgradablePropertySteps[CurrentStep.stepCount + 1];
+        public bool TryGetNextStep (out UpgradablePropertyStep step) {
+            var nextStepIndex = CurrentStep.stepCount + 1;
+
+            if (nextStepIndex >= upgradablePropertySteps.Length) {
+                step = null;
+                return false;
+            }
+            step = upgradablePropertySteps[nextStepIndex];
+            return true;
         }
 
     }

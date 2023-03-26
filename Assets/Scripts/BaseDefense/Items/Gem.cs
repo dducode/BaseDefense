@@ -14,8 +14,8 @@ namespace BaseDefense.Items {
         public override void Drop (Vector3 force, Vector3 torque = default) {
             transform.localScale = Vector3.one;
             Enabled = true;
-            Rigidbody.AddForce(force, ForceMode.Impulse);
-            Rigidbody.AddTorque(torque, ForceMode.Impulse);
+            rb.AddForce(force, ForceMode.Impulse);
+            rb.AddTorque(torque, ForceMode.Impulse);
         }
 
 

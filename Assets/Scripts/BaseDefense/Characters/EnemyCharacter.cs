@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -5,6 +6,7 @@ using BaseDefense.AttackImplemention;
 using BaseDefense.StateMachine;
 using BaseDefense.Items;
 using BaseDefense.Properties;
+using Random = UnityEngine.Random;
 
 namespace BaseDefense.Characters {
 
@@ -29,6 +31,13 @@ namespace BaseDefense.Characters {
         [Tooltip("Атакующая рука врага")]
         [SerializeField]
         private Punch hand;
+
+
+        [SerializeField]
+        private Material opaqueMaterial;
+
+        [SerializeField]
+        private Material transparentMaterial;
 
         ///<inheritdoc cref="walkingSpeed"/>
         public float WalkingSpeed => walkingSpeed;
@@ -56,6 +65,7 @@ namespace BaseDefense.Characters {
         private State m_state;
         private ItemDrop m_itemDrop;
         private Ragdoll m_ragdoll;
+        private static readonly int ColorID = Shader.PropertyToID("_Color");
 
 
         [Inject]
@@ -74,12 +84,9 @@ namespace BaseDefense.Characters {
         public void Initialize (Transform[] targetPoints, Vector3 position, Quaternion rotation) {
             m_targetPoints = targetPoints;
             CurrentHealthPoints = maxHealthPoints;
-            m_ragdoll.Enabled = false;
-            Enabled = false;
             transform.SetLocalPositionAndRotation(position, rotation);
             Enabled = true;
             m_state = new Walking(this, m_player.transform);
-            MeshRenderer.material.color = DefaultColor;
         }
 
 
@@ -94,7 +101,7 @@ namespace BaseDefense.Characters {
 
                 if (m_state is Attack) {
                     var info = Animator.GetCurrentAnimatorStateInfo(0);
-                    int cycle = (int) info.normalizedTime;
+                    var cycle = (int) info.normalizedTime;
                     hand.Enabled = info.IsName("Base.Attack") &&
                                    info.normalizedTime - cycle > 0.5f &&
                                    info.normalizedTime - cycle < 0.75f;
@@ -146,22 +153,28 @@ namespace BaseDefense.Characters {
             m_ragdoll.AddImpulse(punchDirection);
             m_itemDrop.DropItems();
             MeshRenderer.material.color = deathColor;
-            Destroy(Disappearance());
+            Destroy(Disappearance(() => {
+                MeshRenderer.material.color = DefaultColor;
+                m_ragdoll.Enabled = false;
+            }));
         }
 
 
-        private IEnumerator Disappearance () {
+        private IEnumerator Disappearance (Action onComplete) {
             yield return new WaitForSeconds(2);
-            var startColor = MeshRenderer.material.color;
+            MeshRenderer.material = transparentMaterial;
+            var startColor = deathColor;
             var targetColor = startColor;
             targetColor.a = 0;
             var time = Time.time;
 
             while (MeshRenderer.material.color.a > 0) {
                 MeshRenderer.material.color = Color.Lerp(startColor, targetColor, (Time.time - time) * 2);
-
                 yield return null;
             }
+
+            MeshRenderer.material = opaqueMaterial;
+            onComplete();
         }
 
 

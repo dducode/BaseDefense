@@ -69,36 +69,23 @@ namespace BaseDefense {
             Vector3 position = default,
             Quaternion rotation = default
         ) where T : Object {
-            const string prefabsPath = "Assets/Prefabs";
-            const string messageNotFoundDirectory = "Путь Assets/Prefabs не существует";
-            Assert.IsTrue(Directory.Exists(prefabsPath), messageNotFoundDirectory);
-
-            var prefabsGuids = AssetDatabase.FindAssets("t:Prefab", new[] {prefabsPath});
-
-            foreach (var guid in prefabsGuids) {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                var original = PrefabUtility.LoadPrefabContents(path);
-
+            foreach (var original in Resources.FindObjectsOfTypeAll<Object>()) {
                 if (original.GetComponent<T>() is { } originalObject && originalObject.Id == id) {
                     if (ObjectsPool.Get(originalObject, out var obj)) {
                         obj.transform.SetPositionAndRotation(position, rotation);
                         obj.transform.SetParent(parent);
                         obj.IsDestroyed = false;
                         obj.gameObject.SetActive(true);
-                        PrefabUtility.UnloadPrefabContents(original);
 
                         return obj;
                     }
                     else {
                         var newObj = Instantiate(originalObject, position, rotation, parent);
                         newObj.name = original.name;
-                        PrefabUtility.UnloadPrefabContents(original);
 
                         return newObj;
                     }
                 }
-
-                PrefabUtility.UnloadPrefabContents(original);
             }
 
             const string messageIncorrectId = "Некорректный id";
@@ -159,23 +146,13 @@ namespace BaseDefense {
             Vector3 position = default,
             Quaternion rotation = default
         ) where T : Object {
-            const string prefabsPath = "Assets/Prefabs";
-            const string messageNotFoundDirectory = "Путь Assets/Prefabs не существует";
-            Assert.IsTrue(Directory.Exists(prefabsPath), messageNotFoundDirectory);
-
-            var prefabsGuids = AssetDatabase.FindAssets("t:Prefab", new[] {prefabsPath});
-
-            foreach (var guid in prefabsGuids) {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                var original = PrefabUtility.LoadPrefabContents(path);
-
+            foreach (var original in Resources.FindObjectsOfTypeAll<Object>()) {
                 if (original.GetComponent<T>() is { } originalObject && originalObject.Id == id) {
                     if (ObjectsPool.Get(originalObject, out var obj)) {
                         obj.transform.SetPositionAndRotation(position, rotation);
                         obj.transform.SetParent(parent);
                         obj.IsDestroyed = false;
                         obj.gameObject.SetActive(true);
-                        PrefabUtility.UnloadPrefabContents(original);
 
                         return obj;
                     }
@@ -184,13 +161,10 @@ namespace BaseDefense {
                         newObj.name = original.name;
                         newObj.transform.SetPositionAndRotation(position, rotation);
                         newObj.transform.SetParent(parent);
-                        PrefabUtility.UnloadPrefabContents(original);
 
                         return newObj;
                     }
                 }
-
-                PrefabUtility.UnloadPrefabContents(original);
             }
 
             const string messageIncorrectId = "Некорректный id";
@@ -229,8 +203,8 @@ namespace BaseDefense {
         public void Destroy () {
             if (IsDestroyed) {
                 var message = $"Попытка повторного уничтожения объекта - объект {name} уже уничтожен";
-
-                throw new RepeatedDestructionObjectException(message);
+                Debug.LogWarning(message);
+                return;
             }
 
             gameObject.SetActive(false);

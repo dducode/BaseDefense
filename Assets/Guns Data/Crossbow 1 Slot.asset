@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Crossbow 1 Slot
   m_EditorClassIdentifier: 
   gun: {fileID: -6217829775677158394, guid: e0c7d4345ee8ba746bc01a72d7617753, type: 3}
-  price: 5000
+  price: 1000

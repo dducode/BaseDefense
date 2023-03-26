@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Grenade Launcher 3 Slot
   m_EditorClassIdentifier: 
   gun: {fileID: -8199618368380851229, guid: 3d7b759923ed7e944a51b7cfee96b192, type: 3}
-  price: 25000
+  price: 5000

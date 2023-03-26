@@ -679,6 +679,8 @@ GameObject:
   - component: {fileID: 8898212027293174428}
   - component: {fileID: 9121082300347539182}
   - component: {fileID: -6326750084700959469}
+  - component: {fileID: 335799961222845978}
+  - component: {fileID: 2066663210412388639}
   - component: {fileID: 8898212027293174431}
   - component: {fileID: 8898212027293174430}
   - component: {fileID: -1418666740559446582}
@@ -747,6 +749,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPointsBar: {fileID: 8432427345111273516}
+--- !u!114 &335799961222845978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8898212027293174400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e09f110920bcac4c8859318d90ef7c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 5203258588667499559, guid: c3c0707254334a64ca8198f7486e977d,
+    type: 3}
+  forceScalar: 5
+  itemsCountRange:
+    minLimit: 0
+    maxLimit: 100
+    minValue: 10
+    maxValue: 20
+--- !u!114 &2066663210412388639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8898212027293174400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e09f110920bcac4c8859318d90ef7c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 2360663159339950683, guid: 0aaf42ad268c86b44b3bae94bfebfa5a,
+    type: 3}
+  forceScalar: 5
+  itemsCountRange:
+    minLimit: 0
+    maxLimit: 100
+    minValue: 30
+    maxValue: 60
 --- !u!33 &8898212027293174431
 MeshFilter:
   m_ObjectHideFlags: 0

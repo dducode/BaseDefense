@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Grenade Launcher 2 Slot
   m_EditorClassIdentifier: 
   gun: {fileID: -8908756748129662389, guid: 674b48ffe57a53d4a97bf332717c37cc, type: 3}
-  price: 17500
+  price: 3500

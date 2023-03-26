@@ -54,7 +54,7 @@ namespace BaseDefense.AttackImplemention.Projectiles {
                 if (attackableCollider.GetComponent<IAttackable>() is { } attackable) {
                     var distance = m_damageRadius;
                     var direction = attackableCollider.transform.position - transform.position;
-                    if (Physics.Raycast(transform.position, direction, out RaycastHit raycastHit))
+                    if (Physics.Raycast(transform.position, direction, out var raycastHit))
                         distance = raycastHit.distance;
                     var damage = m_maxDamage * (1 - distance / m_damageRadius);
                     if (damage < 0)
@@ -64,8 +64,8 @@ namespace BaseDefense.AttackImplemention.Projectiles {
             }
 
             colliders = Physics.OverlapSphere(transform.position, m_damageRadius);
-            foreach (var attackableCollider in colliders)
-                if (attackableCollider.TryGetComponent(out Rigidbody rb))
+            foreach (var rbCollider in colliders)
+                if (rbCollider.TryGetComponent(out Rigidbody rb))
                     rb.AddExplosionForce(m_maxDamage, transform.position, m_damageRadius);
             Destroy();
             Rb.SetVelocityAndAngularVelocity(Vector3.zero, Vector3.zero);

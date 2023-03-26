@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8323df9d3d98b4e87933342a143783, type: 3}
   m_Name: Capacity Upgradable Property
   m_EditorClassIdentifier: 
+  viewName: Max capacity
   upgradablePropertyType: 1
   upgradablePropertySteps:
   - {fileID: 11400000, guid: 22ca5440573167d47aaffa187a292829, type: 2}

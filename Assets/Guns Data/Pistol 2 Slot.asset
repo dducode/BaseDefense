@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Pistol 2 Slot
   m_EditorClassIdentifier: 
   gun: {fileID: 248032954583647529, guid: e55d6479299ef0a48be12aadd743fba3, type: 3}
-  price: 1500
+  price: 300

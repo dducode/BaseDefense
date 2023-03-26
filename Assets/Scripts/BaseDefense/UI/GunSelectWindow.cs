@@ -7,6 +7,7 @@ using Zenject;
 
 namespace BaseDefense.UI {
 
+    [RequireComponent(typeof(Canvas), typeof(CanvasGroup))]
     public class GunSelectWindow : MonoBehaviour {
 
         ///<summary>Рамка для выбранного игроком оружия</summary>
@@ -18,6 +19,9 @@ namespace BaseDefense.UI {
 
         [Inject]
         private PlayerCharacter m_player;
+        
+        public Canvas Canvas { get; private set; }
+        public CanvasGroup CanvasGroup { get; private set; }
 
         private const string FILE_NAME = "uiSave.dat";
 
@@ -33,11 +37,22 @@ namespace BaseDefense.UI {
 
 
         private void Awake () {
+            Canvas = GetComponent<Canvas>();
+            CanvasGroup = GetComponent<CanvasGroup>();
             Load();
-            Application.wantsToQuit += () => {
+            Application.quitting += Save;
+        }
+
+
+        private void OnApplicationPause (bool pauseStatus) {
+            if (pauseStatus)
                 Save();
-                return true;
-            };
+        }
+
+
+        private void Start () {
+            Canvas.enabled = false;
+            CanvasGroup.alpha = 0;
         }
 
 
@@ -52,11 +67,12 @@ namespace BaseDefense.UI {
 
         private void Load () {
             var path = Path.Combine(Application.persistentDataPath, FILE_NAME);
-            var reader = GameDataStorage.GetDataReader(path);
-
-            if (reader is null)
+            if (!File.Exists(path))
                 return;
 
+            var binaryData = File.ReadAllBytes(path);
+            using var binaryReader = new BinaryReader(new MemoryStream(binaryData));
+            var reader = new GameDataReader(binaryReader);
             frame.anchoredPosition = reader.ReadPosition();
             content.anchoredPosition = reader.ReadPosition();
         }

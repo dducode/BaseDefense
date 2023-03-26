@@ -50,29 +50,35 @@ namespace BaseDefense {
             Application.targetFrameRate = Screen.currentResolution.refreshRate;
             DOTween.SetTweensCapacity(300, 150);
             Messenger.SubscribeTo<NextLevelMessage>(NextLevel);
+
+            if (saving) {
+                Application.quitting += SaveGame;
+                Application.quitting += UpgradablePropertyContainer.Save;
+            }
+        }
+
+
+        private void OnApplicationPause (bool pauseStatus) {
+            if (saving && pauseStatus) {
+                SaveGame();
+                UpgradablePropertyContainer.Save();
+            }
         }
 
 
         private void Start () {
-            LoadGame();
-
-            if (m_bases.Count == 0) {
+            if (!LoadGame()) {
                 var newBase = CreateNewBase();
                 newBase.transform.position = m_initialPosition;
                 newBase.Initialize(baseTemplates[m_currentLevel]);
                 m_bases.Add(newBase);
             }
-
-            if (saving)
-                Application.wantsToQuit += () => {
-                    SaveGame();
-
-                    return true;
-                };
         }
 
 
-        private void OnDestroy () => Messenger.UnsubscribeFrom<NextLevelMessage>(NextLevel);
+        private void OnDestroy () {
+            Messenger.UnsubscribeFrom<NextLevelMessage>(NextLevel);
+        }
 
 
         private void NextLevel () {
@@ -96,9 +102,8 @@ namespace BaseDefense {
 
         private EnemyBase CreateNewBase () {
             var newBase = Object.CreateFromFactory(basePrefab, m_enemyFactory);
-            const string message = "Не удалось создать базу";
-            Assert.IsNotNull(newBase, message);
-
+            newBase.TransitionsBetweenBases.frontTransition.gameObject.SetActive(true);
+            newBase.enabled = true;
             return newBase;
         }
 
@@ -123,23 +128,27 @@ namespace BaseDefense {
         }
 
 
-        private void LoadGame () {
+        private bool LoadGame () {
             var path = Path.Combine(Application.persistentDataPath, DATA_FILE_NAME);
-            var reader = GameDataStorage.GetDataReader(path);
+            if (!File.Exists(path))
+                return false;
 
-            if (reader is null)
-                return;
+            var binaryData = File.ReadAllBytes(path);
+            using var binaryReader = new BinaryReader(new MemoryStream(binaryData));
+            var reader = new GameDataReader(binaryReader);
 
             m_currentLevel = reader.ReadInteger();
             m_playerCharacter.Load(reader);
             LoadBase(reader);
+
+            return true;
         }
 
 
         private void LoadBase (GameDataReader reader) {
             var basesCount = reader.ReadInteger();
 
-            for (int i = 0; i < basesCount; i++) {
+            for (var i = 0; i < basesCount; i++) {
                 var enemyBase = Object.CreateFromFactory(basePrefab, m_enemyFactory);
                 const string message = "Не удалось загрузить базу";
                 Assert.IsNotNull(enemyBase, message);

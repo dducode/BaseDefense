@@ -40,20 +40,20 @@ namespace BaseDefense.Characters {
 
 
         public override void Save (GameDataWriter writer) {
-            base.Save(writer);
             writer.Write(m_gun.Id);
             writer.Write(maxHealthPoints);
             writer.Write(maxSpeed);
             m_itemCollecting.Save(writer);
+            base.Save(writer);
         }
 
 
         public override void Load (GameDataReader reader) {
-            base.Load(reader);
             SelectGun(reader.ReadInteger());
             maxHealthPoints = reader.ReadFloat();
             maxSpeed = reader.ReadFloat();
             m_itemCollecting.Load(reader);
+            base.Load(reader);
         }
 
 
@@ -215,7 +215,11 @@ namespace BaseDefense.Characters {
                     var ray = new Ray(playerTransform.position + Vector3.up, playerTransform.forward);
 
                     // Если расстояние до цели безопасно - стреляем
-                    if (Physics.Raycast(ray, out var hit) && hit.distance > grenade.DamageRadius)
+                    const int attackableLayer = 1 << 3;
+                    if (Physics.SphereCast(
+                            ray, 0.25f, out var hit, Mathf.Infinity, attackableLayer,
+                            QueryTriggerInteraction.Ignore) &&
+                        hit.distance > grenade.DamageRadius)
                         grenade.Shot();
                     // Иначе не стреляем
                     else { }
