@@ -4,6 +4,8 @@ Base Defense
 
 <h2 align="center">
 
+![](Assets/Icons/basedefence_icon.png)
+
 [Base Defense (Demo)](https://play.unity.com/mg/other/base-defense-demo)
 
 </h2>
