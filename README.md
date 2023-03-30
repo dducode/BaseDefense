@@ -4,7 +4,7 @@ Base Defense
 
 <h2 align="center">
 
-![](docs/images/basedefence_icon.png)
+![](Documentation/images/basedefence_icon.png)
 
 [Base Defense (Demo)](https://play.unity.com/mg/other/base-defense-demo)
 
@@ -42,23 +42,23 @@ Base Defense
 Base Defense - игра, реализованная на основе движка Unity 2021.3.15f1.
 В ней Вам предстоит защитить свою базу от нападения врагов.
 
-![](docs/images/Screenshot_1.png)
+![](Documentation/images/Screenshot_1.png)
 
 Уничтожайте врагов и собирайте с них деньги
 
-![](docs/images/Screenshot_6.png)
+![](Documentation/images/Screenshot_6.png)
 
 За накопленные деньги Вы можете купить себе новое оружие, чтобы более эффективно расправляться с врагами!
 
-![](docs/images/Screenshot_2.png) ![](docs/images/Screenshot_3.png)
+![](Documentation/images/Screenshot_2.png) ![](Documentation/images/Screenshot_3.png)
 
 Также Вы можете добывать кристаллы, разбивая их своим оружием
 
-![](docs/images/Screenshot_7.png) ![](docs/images/Screenshot_8.png)
+![](Documentation/images/Screenshot_7.png) ![](Documentation/images/Screenshot_8.png)
 
 За добытые кристаллы можно прокачать игрока
 
-![](docs/images/Screenshot_4.png) ![](docs/images/Screenshot_5.png)
+![](Documentation/images/Screenshot_4.png) ![](Documentation/images/Screenshot_5.png)
 
 Уничтожайте вражеские станции, получайте за это награду и защищайте остальные базы!
 
@@ -66,7 +66,7 @@ Base Defense - игра, реализованная на основе движк
 > необходимо на текущем уровне уничтожить все станции и 
 > всех врагов
 
-![](docs/images/Screenshot_9.png) ![](docs/images/Screenshot_10.png)
+![](Documentation/images/Screenshot_9.png) ![](Documentation/images/Screenshot_10.png)
 
 ## Враги в игре
 
@@ -83,7 +83,7 @@ Base Defense - игра, реализованная на основе движк
 медленные (скорость бега 5 м\сек) и наносят мало урона (10-25 HP).
 Награды за них даётся меньше всего.
 
-![](docs/images/Screenshot_11.png)
+![](Documentation/images/Screenshot_11.png)
 
 ### Жёлтые
 
@@ -92,7 +92,7 @@ Base Defense - игра, реализованная на основе движк
 и могут заметно Вас повредить (урон 15-33 HP). За их уничтожение Вы получите 
 больше награды.
 
-![](docs/images/Screenshot_12.png)
+![](Documentation/images/Screenshot_12.png)
 
 ### Фиолетовые
 
@@ -101,7 +101,7 @@ Base Defense - игра, реализованная на основе движк
 скоростью 6 м\сек (скорость игрока без прокачки). Они наносят много урона (20-50 HP), так что лучше
 не стоять на месте. За них вы получите больше всего награды.
 
-![](docs/images/Screenshot_14.png)
+![](Documentation/images/Screenshot_14.png)
 
 ## Вражеские станции
 
@@ -113,21 +113,21 @@ Base Defense - игра, реализованная на основе движк
 Порождает красных врагов и имеет максимальное здоровье 300 HP. 
 Встречается на 1, 2 и 4 уровнях
 
-![](docs/images/Screenshot_9.png)
+![](Documentation/images/Screenshot_9.png)
 
 ### Средняя станция
 
 Порождает жёлтых врагов и имеет прочность в 1000 HP.
 Встречается на 3 и 4 уровнях
 
-![](docs/images/Screenshot_13.png)
+![](Documentation/images/Screenshot_13.png)
 
 ### Большая станция
 
 Порождает фиолетовых врагов и практически непробиваема - её 
 прочность составляет 3000 HP. Встречается только на 5 уровне
 
-![](docs/images/Screenshot_15.png)
+![](Documentation/images/Screenshot_15.png)
 
 ## Кристаллы
 
@@ -136,7 +136,7 @@ Base Defense - игра, реализованная на основе движк
 размерами, прочностью и количеством маленьких кристаллов, которые можно из
 них добыть.
 
-![](docs/images/Screenshot_17.png)
+![](Documentation/images/Screenshot_17.png)
 
 ## Игровые уровни
 
@@ -148,35 +148,35 @@ Base Defense - игра, реализованная на основе движк
 
 На первом уровне находится всего одна малая вражеская станция и 7 малых кристаллов
 
-![](docs/images/Screenshot_16.png)
+![](Documentation/images/Screenshot_16.png)
 
 ### 2 уровень
 
 На втором уровне уже 2 малых станций, 4 малых кристалла и 3 кристалла
 средних размеров
 
-![](docs/images/Screenshot_18.png)
+![](Documentation/images/Screenshot_18.png)
 
 ### 3 уровень
 
 На третьем уровне находится 1 средняя вражеская станция и 7 средних
 кристаллов
 
-![](docs/images/Screenshot_19.png)
+![](Documentation/images/Screenshot_19.png)
 
 ### 4 уровень
 
 На четвёртом уровне находятся 2 малых вражеских станций, 1 средняя 
 станция, 3 больших кристалла и 4 средних
 
-![](docs/images/Screenshot_20.png)
+![](Documentation/images/Screenshot_20.png)
 
 ### 5 уровень
 
 На последнем, пятом уровне находится 1 большая станция и 7 больших 
 кристаллов
 
-![](docs/images/Screenshot_21.png)
+![](Documentation/images/Screenshot_21.png)
 
 ## Оружие
 
@@ -190,7 +190,7 @@ Base Defense - игра, реализованная на основе движк
 Более точное оружие (пистолеты) подойдёт для атаки на одиночных врагов, 
 оружие с большим разбросом (AR) - для атаки на толпу врагов. 
 
-![](docs/images/Screenshot_22.png) ![](docs/images/Screenshot_23.png)
+![](Documentation/images/Screenshot_22.png) ![](Documentation/images/Screenshot_23.png)
 
 Различные виды огнестрельных орудий также стреляют разным количеством
 патронов за выстрел (от одного до трёх) и имеют разную скорость выстрела
@@ -202,7 +202,7 @@ Base Defense - игра, реализованная на основе движк
 существенный урон в течение определённого времени. Не подходят для добычи кристаллов и уничтожения
 станций
 
-![](docs/images/Screenshot_24.png)
+![](Documentation/images/Screenshot_24.png)
 
 ### Гранатомёты
 
@@ -211,20 +211,20 @@ Base Defense - игра, реализованная на основе движк
 игровой персонаж не стреляет из гранатомёта до тех пор, пока он не отойдёт
 на безопасное расстояние
 
-![](docs/images/Screenshot_25.png)
+![](Documentation/images/Screenshot_25.png)
 
 ## Прокачка игрока
 
 За кристаллы можно прокачивать своего игрового персонажа. Максимальные
 характеристики персонажа после полной прокачки:
 
-![](docs/images/Screenshot_26.png)
+![](Documentation/images/Screenshot_26.png)
 
 ## Немного об игровом персонаже
 
 Управлять персонажем можно с помощью игрового джойстика.
 
-![](docs/images/Screenshot_27.png)
+![](Documentation/images/Screenshot_27.png)
 
 Управление персонажем плавное, т.е. вы можете полностью контролировать
 скорость его перемещения. Анимация также подстраивается под его скорость.
