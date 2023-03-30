@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Зависимости </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Зависимости ">
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="зависимости">Зависимости</h1>
+
+<p>Есть множество способов связки классов между собой -
+можно находить объекты нужных классов через метод
+<a href="https://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html">FindObjectOfType</a>,
+можно использовать паттерн Service Locator. В данном проекте
+для установки зависимостей между классами используется
+DI-фреймворк
+<a href="https://github.com/Mathijs-Bakker/Extenject">Zenject</a>.
+С его помощью создаются специальные установщики, внутри
+которых объекты классов &quot;складываются&quot; в один контейнер.</p>
+<p>Всего в проекте 2 таких установщика -
+<a href="../api/BaseDefense.Installers.LevelInstaller.html">Level Installer</a>
+и
+<a href="../api/BaseDefense.Installers.UserInterfaceInstaller.html">User Interface Installer</a></p>
+<h2 id="простые-зависимости">Простые зависимости</h2>
+<p>Допустим, игрок решил сменить оружие. Для этого ему нужно
+сходить в магазин и выбрать оружие. Объекту игрового
+персонажа изначально неизвестно про объект магазина, но
+мы может написать следующее</p>
+<pre><code class="lang-c#">[Inject]
+private Shop m_shop;
+</code></pre>
+<p>Теперь Zenject при инициализации игры позаботится о том,
+чтобы игрок знал, где находится магазин, и смог
+выбрать оружие</p>
+<pre><code class="lang-c#">m_gun = m_shop.TakeGun(gunId);
+</code></pre>
+<p>Это будет работать, т.к. ранее в LevelInstaller мы
+&quot;сложили&quot; объект магазина в общую кучу (контейнер)</p>
+<pre><code class="lang-c#">Container.Bind&lt;Shop&gt;().FromInstance(shop).AsSingle();
+</code></pre>
+<h2 id="зависимости-для-создаваемых-объектов">Зависимости для создаваемых объектов</h2>
+<p>Ранее писалось, что Zenject заботится об установке
+зависимостей сразу после <b>запуска игры</b>. Это означает,
+что если мы <b>во время игры</b> создадим объект, которому
+нужны какие-то другие объекты, он не будет про них
+знать. Для решения этой проблемы используются фабрики.
+Хороший пример - спавн врага</p>
+<pre><code class="lang-c#">var enemy = Object.CreateFromFactory(enemyPrefab, m_enemyFactory);
+</code></pre>
+<p>Чтобы это работало, спавнеру необходимо знать про фабрику
+врага</p>
+<pre><code class="lang-c#">[Inject]
+private EnemyCharacter.Factory m_enemyFactory;
+</code></pre>
+<p>А чтобы Zenject &quot;рассказал&quot; спавнеру про фабрику, нужно,
+чтобы она в принципе существовала</p>
+<pre><code class="lang-c#">public sealed class EnemyCharacter : BaseCharacter {
+    // ...
+    public class Factory : PlaceholderFactory&lt;UnityEngine.Object, EnemyCharacter&gt; { }
+}
+</code></pre>
+<p>А также необходимо &quot;положить&quot; её в контейнер</p>
+<pre><code class="lang-c#">Container.BindFactory&lt;UnityEngine.Object, EnemyCharacter, EnemyCharacter.Factory&gt;()
+    .FromFactory&lt;PrefabFactory&lt;EnemyCharacter&gt;&gt;();
+</code></pre>
+<p>Теперь, при спавне врага методом Object.CreateFromFactory,
+все зависимости, нужные врагу, будут установлены.</p>
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- Required styles -->
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <!-- Load v9.1.3 of Mermaid -->
+    <!-- Hash obtained via https://www.srihash.org/ -->
+    <script type="text/javascript" src="https://unpkg.com/mermaid@9.1.3/dist/mermaid.min.js" integrity="sha384-LnGjpNDrP4cp7MIk4CpRa/lPNclrf839ryYVFx1T1mPSV3RGAZ7nlBa7pqcyGY/K" crossorigin="anonymous"></script>
+    <!-- Initialize Mermaid -->
+    <script>
+        mermaid.initialize({
+            startOnLoad: false
+        });
+        mermaid.init(undefined, ".lang-mermaid");
+    </script>  </body>
+</html>
