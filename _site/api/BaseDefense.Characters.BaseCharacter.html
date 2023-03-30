@@ -1,0 +1,587 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class BaseCharacter
+ </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class BaseCharacter
+ ">
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="BaseDefense.Characters.BaseCharacter">
+
+
+  <h1 id="BaseDefense_Characters_BaseCharacter" data-uid="BaseDefense.Characters.BaseCharacter" class="text-break">Class BaseCharacter
+</h1>
+  <div class="markdown level0 summary"><p>Базовый класс для всех типов персонажей</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">object</span></div>
+    <div class="level1"><span class="xref">Object</span></div>
+    <div class="level2"><span class="xref">Component</span></div>
+    <div class="level3"><span class="xref">Behaviour</span></div>
+    <div class="level4"><span class="xref">MonoBehaviour</span></div>
+    <div class="level5"><a class="xref" href="BaseDefense.Object.html">Object</a></div>
+    <div class="level6"><span class="xref">BaseCharacter</span></div>
+      <div class="level7"><a class="xref" href="BaseDefense.Characters.EnemyCharacter.html">EnemyCharacter</a></div>
+      <div class="level7"><a class="xref" href="BaseDefense.Characters.PlayerCharacter.html">PlayerCharacter</a></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="BaseDefense.AttackImplemention.IAttackable.html">IAttackable</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="BaseDefense.html">BaseDefense</a>.<a class="xref" href="BaseDefense.Characters.html">Characters</a></h6>
+  <h6><strong>Assembly</strong>: BaseDefense.dll</h6>
+  <h5 id="BaseDefense_Characters_BaseCharacter_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Icon(&quot;Assets/EditorUI/character.png&quot;)]
+[RequireComponent(typeof(CharacterController), typeof(Animator), typeof(ParticleSystem))]
+public abstract class BaseCharacter : Object, IAttackable</code></pre>
+  </div>
+  <h3 id="fields">Fields
+</h3>
+
+
+  <h4 id="BaseDefense_Characters_BaseCharacter_attackDistance" data-uid="BaseDefense.Characters.BaseCharacter.attackDistance">attackDistance</h4>
+  <div class="markdown level1 summary"><p>Расстояние, с которого персонаж начинает атаковать</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Tooltip(&quot;Расстояние, с которого персонаж начинает атаковать. [0, infinity]&quot;)]
+[SerializeField]
+[Min(0)]
+protected float attackDistance</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">float</span></td>
+        <td><p>[0, infinity]</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h4 id="BaseDefense_Characters_BaseCharacter_deathColor" data-uid="BaseDefense.Characters.BaseCharacter.deathColor">deathColor</h4>
+  <div class="markdown level1 summary"><p>Цвет, который персонаж принимает после смерти</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Tooltip(&quot;Цвет, который персонаж принимает после смерти&quot;)]
+[SerializeField]
+protected Color deathColor</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Color</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h4 id="BaseDefense_Characters_BaseCharacter_maxHealthPoints" data-uid="BaseDefense.Characters.BaseCharacter.maxHealthPoints">maxHealthPoints</h4>
+  <div class="markdown level1 summary"><p>Максимально возможное количество очков здоровья для данного персонажа</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Header(&quot;Общие характеристики персонажа&quot;)]
+[Tooltip(&quot;Максимально возможное количество очков здоровья для данного персонажа. [1, infinity]&quot;)]
+[SerializeField]
+[Min(1)]
+protected float maxHealthPoints</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">float</span></td>
+        <td><p>[1, infinity]</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h4 id="BaseDefense_Characters_BaseCharacter_maxSpeed" data-uid="BaseDefense.Characters.BaseCharacter.maxSpeed">maxSpeed</h4>
+  <div class="markdown level1 summary"><p>Максимально развиваемая персонажем скорость</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Tooltip(&quot;Максимально развиваемая персонажем скорость. [0, infinity]&quot;)]
+[SerializeField]
+[Min(0)]
+protected float maxSpeed</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">float</span></td>
+        <td><p>[0, infinity]</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_Animator_" data-uid="BaseDefense.Characters.BaseCharacter.Animator*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_Animator" data-uid="BaseDefense.Characters.BaseCharacter.Animator">Animator</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Animator Animator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Animator</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_Controller_" data-uid="BaseDefense.Characters.BaseCharacter.Controller*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_Controller" data-uid="BaseDefense.Characters.BaseCharacter.Controller">Controller</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CharacterController Controller { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CharacterController</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_CurrentHealthPoints_" data-uid="BaseDefense.Characters.BaseCharacter.CurrentHealthPoints*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_CurrentHealthPoints" data-uid="BaseDefense.Characters.BaseCharacter.CurrentHealthPoints">CurrentHealthPoints</h4>
+  <div class="markdown level1 summary"><p>Текущий показатель здоровья объекта</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float CurrentHealthPoints { get; protected set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">float</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_DefaultColor_" data-uid="BaseDefense.Characters.BaseCharacter.DefaultColor*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_DefaultColor" data-uid="BaseDefense.Characters.BaseCharacter.DefaultColor">DefaultColor</h4>
+  <div class="markdown level1 summary"><p>Стандартный цвет персонажа. Выставляется при респавне вместо deathColor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Color DefaultColor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Color</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_Enabled_" data-uid="BaseDefense.Characters.BaseCharacter.Enabled*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_Enabled" data-uid="BaseDefense.Characters.BaseCharacter.Enabled">Enabled</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool Enabled { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">bool</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_HitEffect_" data-uid="BaseDefense.Characters.BaseCharacter.HitEffect*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_HitEffect" data-uid="BaseDefense.Characters.BaseCharacter.HitEffect">HitEffect</h4>
+  <div class="markdown level1 summary"><p>Анимация, проигрываемая при получении урона персонажем</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ParticleSystem HitEffect { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ParticleSystem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_IsAlive_" data-uid="BaseDefense.Characters.BaseCharacter.IsAlive*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_IsAlive" data-uid="BaseDefense.Characters.BaseCharacter.IsAlive">IsAlive</h4>
+  <div class="markdown level1 summary"><p>Состояние персонажа &quot;жив/мёртв&quot;</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsAlive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">bool</span></td>
+        <td><p>Возвращает true, если текущий показатель здоровья больше 0, иначе false</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_MeshRenderer_" data-uid="BaseDefense.Characters.BaseCharacter.MeshRenderer*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_MeshRenderer" data-uid="BaseDefense.Characters.BaseCharacter.MeshRenderer">MeshRenderer</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected SkinnedMeshRenderer MeshRenderer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SkinnedMeshRenderer</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_Awake_" data-uid="BaseDefense.Characters.BaseCharacter.Awake*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_Awake" data-uid="BaseDefense.Characters.BaseCharacter.Awake">Awake()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Awake()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="BaseDefense.Object.html#BaseDefense_Object_Awake">Object.Awake()</a></div>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_Hit_" data-uid="BaseDefense.Characters.BaseCharacter.Hit*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_Hit_System_Single_" data-uid="BaseDefense.Characters.BaseCharacter.Hit(System.Single)">Hit(float)</h4>
+  <div class="markdown level1 summary"><p>Вызывается для нанесения урона персонажу</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void Hit(float damage)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">float</span></td>
+        <td><span class="parametername">damage</span></td>
+        <td><p>Количество нанесённого урона</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_Load_" data-uid="BaseDefense.Characters.BaseCharacter.Load*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_Load_BaseDefense_SaveSystem_GameDataReader_" data-uid="BaseDefense.Characters.BaseCharacter.Load(BaseDefense.SaveSystem.GameDataReader)">Load(GameDataReader)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Load(GameDataReader reader)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="BaseDefense.SaveSystem.GameDataReader.html">GameDataReader</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="BaseDefense.Object.html#BaseDefense_Object_Load_BaseDefense_SaveSystem_GameDataReader_">Object.Load(GameDataReader)</a></div>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_OnDeath_" data-uid="BaseDefense.Characters.BaseCharacter.OnDeath*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_OnDeath" data-uid="BaseDefense.Characters.BaseCharacter.OnDeath">OnDeath()</h4>
+  <div class="markdown level1 summary"><p>Вызывается автоматически, когда персонаж мёртв</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract void OnDeath()</code></pre>
+  </div>
+
+
+  <a id="BaseDefense_Characters_BaseCharacter_Save_" data-uid="BaseDefense.Characters.BaseCharacter.Save*"></a>
+  <h4 id="BaseDefense_Characters_BaseCharacter_Save_BaseDefense_SaveSystem_GameDataWriter_" data-uid="BaseDefense.Characters.BaseCharacter.Save(BaseDefense.SaveSystem.GameDataWriter)">Save(GameDataWriter)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Save(GameDataWriter writer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="BaseDefense.SaveSystem.GameDataWriter.html">GameDataWriter</a></td>
+        <td><span class="parametername">writer</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="BaseDefense.Object.html#BaseDefense_Object_Save_BaseDefense_SaveSystem_GameDataWriter_">Object.Save(GameDataWriter)</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="BaseDefense.AttackImplemention.IAttackable.html">IAttackable</a>
+  </div>
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- Required styles -->
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <!-- Load v9.1.3 of Mermaid -->
+    <!-- Hash obtained via https://www.srihash.org/ -->
+    <script type="text/javascript" src="https://unpkg.com/mermaid@9.1.3/dist/mermaid.min.js" integrity="sha384-LnGjpNDrP4cp7MIk4CpRa/lPNclrf839ryYVFx1T1mPSV3RGAZ7nlBa7pqcyGY/K" crossorigin="anonymous"></script>
+    <!-- Initialize Mermaid -->
+    <script>
+        mermaid.initialize({
+            startOnLoad: false
+        });
+        mermaid.init(undefined, ".lang-mermaid");
+    </script>  </body>
+</html>
