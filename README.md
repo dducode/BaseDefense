@@ -36,7 +36,6 @@ Base Defense
   * [Немного об игровом персонаже](#немного-об-игровом-персонаже)
   * [Система сохранения](#система-сохранения)
 * [Использованные ассеты](#использованные-ассеты)
-* [Документация](#документация)
 
 # Описание
 Base Defense - игра, реализованная на основе движка Unity 2021.3.15f1.
@@ -254,8 +253,3 @@ Base Defense - игра, реализованная на основе движк
 * [Игровой персонаж](https://assetstore.unity.com/packages/3d/characters/low-character-pack-free-sample-192954)
 * [Gems](https://assetstore.unity.com/packages/3d/props/simple-gems-ultimate-animated-customizable-pack-73764)
 * [Кристаллы](https://assetstore.unity.com/packages/3d/props/stylized-crystal-77275)
-
-# Документация
-
-Чтобы посмотреть документацию к проекту Base Defense см.
-[Документация Base Defense](https://didenis.github.io/BaseDefense/)
