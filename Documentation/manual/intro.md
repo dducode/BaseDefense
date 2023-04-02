@@ -32,3 +32,10 @@
 [Zenject](https://github.com/Mathijs-Bakker/Extenject).
 Подробнее об использовании Zenject в Base Defense см.
 [Зависимости](../manual/dependencies.md)
+
+Иногда классам необходимо реагировать на определённые
+игровые события (например, смерть игрока). Для того, 
+чтобы не связывать множество классов друг с другом 
+напрямую через Zenject, в проекте используется реализация
+паттерна Observer 
+[Broadcast Messages](https://github.com/DIDenis/com.didenis.broadcast-messages)

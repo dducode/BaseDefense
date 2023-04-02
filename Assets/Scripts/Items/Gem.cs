@@ -1,5 +1,5 @@
-using BaseDefense.BroadcastMessages;
-using BaseDefense.BroadcastMessages.Messages;
+using BaseDefense.Messages;
+using BroadcastMessages;
 using UnityEngine;
 
 namespace BaseDefense.Items {

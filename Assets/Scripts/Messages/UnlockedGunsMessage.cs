@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using BroadcastMessages;
 
-namespace BaseDefense.BroadcastMessages.Messages {
+namespace BaseDefense.Messages {
 
     public class UnlockedGunsMessage : Message {
 

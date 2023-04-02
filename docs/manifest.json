@@ -159,149 +159,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Message.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Message.html",
-          "hash": "1PZhKiUl3+DnyOvPtOURi9nO2VQUxSpbdcEz+XlrMPA="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.DeathPlayerMessage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.DeathPlayerMessage.html",
-          "hash": "O0sJkrO7tuf6UhpclvZz705X87YQrz5VFF6T0lCfHMw="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.DestroyUnusedItemsMessage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.DestroyUnusedItemsMessage.html",
-          "hash": "xXIH3LCSp2hwIoAEqoTLGur5+QFQFPdYXJZMSNPrNPY="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.NextLevelMessage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.NextLevelMessage.html",
-          "hash": "4WCkpIQ46EMKGwIH4lws2oCzbECL88tQSJ72mW4FkA8="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.RestartMessage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.RestartMessage.html",
-          "hash": "sizqm6XKXTM7szyXBP9ut5o8pFrFX4ljdhmxdyARrX0="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.UnlockedGunsMessage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.UnlockedGunsMessage.html",
-          "hash": "VG8+r+gSIiVYaqNOgvN6zhxKefbbitrcWUPF1Z3v2bo="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages.UpdateCurrencyMessage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages.UpdateCurrencyMessage.html",
-          "hash": "DSh8P4sflR7aVGJYYkx5l9WSBMflPhwLgCskFBALgqw="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages.UpdateGemsMessage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages.UpdateGemsMessage.html",
-          "hash": "fTm95TO60U+3I4KtcYgbrWEyI4r+VKC+JQGg6lGDPrs="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages.UpdateMoneysMessage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages.UpdateMoneysMessage.html",
-          "hash": "ELxBOamLmmQuQtMVwOSifdab1tSG2+s0rBDOsY/uJT0="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages.html",
-          "hash": "39j2dXlwabWxExIrrodc420y1K4jv0iq1583A/tP6fo="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messages.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messages.html",
-          "hash": "XG+1L5uuDNuY5v9Y953YN1K95Uq56heDD1gRo7RURoU="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.Messenger.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.Messenger.html",
-          "hash": "BIvZFhMoaLAvq5xJJOSiBY4NYr6o8Z/2nW106rBLxHc="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.BroadcastMessages.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.BroadcastMessages.html",
-          "hash": "7/ONSlraNAQvRQUs12jv/ek5fuWNza+wEGrz7oHC5Vo="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/BaseDefense.CameraMovement.yml",
       "output": {
         ".html": {
@@ -362,28 +219,6 @@
         ".html": {
           "relative_path": "api/BaseDefense.Characters.html",
           "hash": "fc5K/l3ZQGHZ4fidHgRuttTk5IB3vw55gByZfbSsv+g="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.Commands.Command.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.Commands.Command.html",
-          "hash": "/WIQYF4pXNnXTzpQ/LzswredmM+iTPc4fcfT9kcxnuo="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.Commands.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.Commands.html",
-          "hash": "XYyHEbL/T6e+CCdi6n1fu4A7rkqILflSHdYRl+sTEbw="
         }
       },
       "version": ""
@@ -659,6 +494,116 @@
         ".html": {
           "relative_path": "api/BaseDefense.JoystickController.html",
           "hash": "zfke6yXXkS2Tlj0mUa0n+95X+FdguMvqSCIpTxiCH0A="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.DeathPlayerMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.DeathPlayerMessage.html",
+          "hash": "OUHnpvK9vEJMbMxQqds2uNyekDqXfwZFgG8pBXI50OE="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.DestroyUnusedItemsMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.DestroyUnusedItemsMessage.html",
+          "hash": "ulU7PE28cY22+Z7E3BrrjYlVKxK/vmxBlDtyp8JebT8="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.NextLevelMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.NextLevelMessage.html",
+          "hash": "UY03Vmc8Wr5loTu1pHAfZ6Fmo64EFGO0FZ+H5fmnXo8="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.RestartMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.RestartMessage.html",
+          "hash": "/+2G0Ooj+LCQc5ng1F+MxgVS+0w88pv5u38UJUYFBzg="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.UnlockedGunsMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.UnlockedGunsMessage.html",
+          "hash": "Om7YLrdszGLvgunGbrlAgtzivduJBZAAHnXnUyZHZ40="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateCurrencyMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateCurrencyMessage.html",
+          "hash": "seueIIRw6MnBd9F9pVBsRA4ZK//aj6Y6Mpr00lOZmk0="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateGemsMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateGemsMessage.html",
+          "hash": "v4QhVQkalZXdBgtEXzlK4xlTSrLY2JwMr3ovOqmlqZQ="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateMoneysMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateMoneysMessage.html",
+          "hash": "BFubo4R23YEO7Q2oodaAIOUeZ1j9+VlTIaxTEFkYsUU="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.html",
+          "hash": "Hnv/QFAOqlfAu/lz5fHbAWhuH27+cUthuy1ry/iZbGc="
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BaseDefense.Messages.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BaseDefense.Messages.html",
+          "hash": "VFyuw22CotvItGfRQF4BWBrVhzNp90U/pPGlI2YSYl8="
         }
       },
       "version": ""
@@ -1021,7 +966,7 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "O0IwKIz/RaqfdgQS+CsLMLddIXQGZK2TUA1pnyC2ljM="
+          "hash": "K9wdpt10/tb+BUEI17zmzuywrVpqGuB+xFDsr7rILhs="
         }
       },
       "version": ""
@@ -1032,7 +977,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "Re8Z5DxtKoV8Aitgdf6YQ6Bk3HDbg4lSlP+pNYJ2Zqg="
+          "hash": "CgWCTIpu84AlISt4zaRqbaVfNGK614dkGUpMt4HRWew="
         }
       },
       "version": ""
@@ -1323,7 +1268,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "Z+ZAUB7Ed8IctwBkgm615rVJC796p7x4d/NBZem+YTM="
+          "hash": "tjbh7VU116J+pKsK2p63RWHUh7P0c0ySXib9ISaR+nI="
         }
       },
       "version": ""
@@ -1356,7 +1301,7 @@
       "output": {
         ".html": {
           "relative_path": "manual/intro.html",
-          "hash": "HgoTIYKsdnSv812iYPmeNmyjHjqCmHyQJ6ThW0uAZZI="
+          "hash": "b6U3NzRjzdewPFfETkVWnyrbVQgrnHgfXthMU8B2szo="
         }
       },
       "version": ""

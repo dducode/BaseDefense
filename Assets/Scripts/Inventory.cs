@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using BaseDefense.BroadcastMessages;
-using BaseDefense.BroadcastMessages.Messages;
-using BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages;
 using UnityEngine;
 using BaseDefense.Items;
+using BaseDefense.Messages;
+using BaseDefense.Messages.UpdateCurrencyMessages;
 using BaseDefense.SaveSystem;
+using BroadcastMessages;
 
 namespace BaseDefense {
 

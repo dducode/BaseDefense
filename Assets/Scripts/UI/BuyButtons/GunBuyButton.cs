@@ -1,6 +1,6 @@
-using BaseDefense.BroadcastMessages;
-using BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages;
 using BaseDefense.Extensions;
+using BaseDefense.Messages.UpdateCurrencyMessages;
+using BroadcastMessages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

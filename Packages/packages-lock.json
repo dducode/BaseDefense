@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.didenis.broadcastmessages": {
+      "version": "https://github.com/DIDenis/com.didenis.broadcast-messages.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8b373a6bd302e30a430698030aac1709e97a2a99"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

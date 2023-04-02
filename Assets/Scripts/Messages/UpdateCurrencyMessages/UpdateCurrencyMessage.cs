@@ -1,4 +1,6 @@
-namespace BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages {
+using BroadcastMessages;
+
+namespace BaseDefense.Messages.UpdateCurrencyMessages {
 
     public abstract class UpdateCurrencyMessage : Message {
 

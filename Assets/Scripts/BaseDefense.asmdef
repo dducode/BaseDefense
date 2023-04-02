@@ -3,7 +3,8 @@
     "rootNamespace": "BaseDefense",
     "references": [
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:3c0621523a9c9fd48bd35e45d5eed99b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

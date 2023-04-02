@@ -1,4 +1,4 @@
-namespace BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages {
+namespace BaseDefense.Messages.UpdateCurrencyMessages {
 
     public class UpdateGemsMessage : UpdateCurrencyMessage {
 

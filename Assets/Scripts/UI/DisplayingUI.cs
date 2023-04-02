@@ -1,10 +1,10 @@
 using System.Collections;
-using BaseDefense.BroadcastMessages;
-using BaseDefense.BroadcastMessages.Messages;
-using BaseDefense.BroadcastMessages.Messages.UpdateCurrencyMessages;
 using UnityEngine;
 using TMPro;
 using BaseDefense.Extensions;
+using BaseDefense.Messages;
+using BaseDefense.Messages.UpdateCurrencyMessages;
+using BroadcastMessages;
 using DG.Tweening;
 
 namespace BaseDefense.UI {
