@@ -65,7 +65,6 @@ namespace BaseDefense.Characters {
         private State m_state;
         private ItemDrop m_itemDrop;
         private Ragdoll m_ragdoll;
-        private static readonly int ColorID = Shader.PropertyToID("_Color");
 
 
         [Inject]

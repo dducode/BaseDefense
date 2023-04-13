@@ -1,14 +1,12 @@
-using System;
-using System.IO;
 using BaseDefense.Characters;
-using BaseDefense.SaveSystem;
+using SaveSystem;
 using UnityEngine;
 using Zenject;
 
 namespace BaseDefense.UI {
 
     [RequireComponent(typeof(Canvas), typeof(CanvasGroup))]
-    public class GunSelectWindow : MonoBehaviour {
+    public class GunSelectWindow : MonoBehaviour, IPersistentObject {
 
         ///<summary>Рамка для выбранного игроком оружия</summary>
         [SerializeField, Tooltip("Рамка для выбранного игроком оружия")]
@@ -19,11 +17,9 @@ namespace BaseDefense.UI {
 
         [Inject]
         private PlayerCharacter m_player;
-        
+
         public Canvas Canvas { get; private set; }
         public CanvasGroup CanvasGroup { get; private set; }
-
-        private const string FILE_NAME = "uiSave.dat";
 
 
         public void SelectGun (GunSlot gunSlot) {
@@ -36,17 +32,26 @@ namespace BaseDefense.UI {
         }
 
 
-        private void Awake () {
-            Canvas = GetComponent<Canvas>();
-            CanvasGroup = GetComponent<CanvasGroup>();
-            Load();
-            Application.quitting += Save;
+        public void Save (UnityWriter writer) {
+            writer.Write(frame.anchoredPosition);
+            writer.Write(content.anchoredPosition);
         }
 
 
-        private void OnApplicationPause (bool pauseStatus) {
-            if (pauseStatus)
-                Save();
+        public void Load (UnityReader reader) {
+            frame.anchoredPosition = reader.ReadPosition();
+            content.anchoredPosition = reader.ReadPosition();
+        }
+
+
+        private const string FILE_NAME = "uiSave";
+
+
+        private void Awake () {
+            Canvas = GetComponent<Canvas>();
+            CanvasGroup = GetComponent<CanvasGroup>();
+            DataManager.LoadObjects(FILE_NAME, this);
+            Application.quitting += () => DataManager.SaveObjects(FILE_NAME, this);
         }
 
 
@@ -56,25 +61,9 @@ namespace BaseDefense.UI {
         }
 
 
-        private void Save () {
-            var path = Path.Combine(Application.persistentDataPath, FILE_NAME);
-            using var binaryWriter = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate));
-            var writer = new UnityWriter(binaryWriter);
-            writer.Write(frame.anchoredPosition);
-            writer.Write(content.anchoredPosition);
-        }
-
-
-        private void Load () {
-            var path = Path.Combine(Application.persistentDataPath, FILE_NAME);
-            if (!File.Exists(path))
-                return;
-
-            var binaryData = File.ReadAllBytes(path);
-            using var binaryReader = new BinaryReader(new MemoryStream(binaryData));
-            var reader = new UnityReader(binaryReader);
-            frame.anchoredPosition = reader.ReadPosition();
-            content.anchoredPosition = reader.ReadPosition();
+        private void OnApplicationPause (bool pauseStatus) {
+            if (pauseStatus)
+                DataManager.SaveObjects(FILE_NAME, this);
         }
 
     }

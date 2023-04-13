@@ -6,9 +6,9 @@ using Zenject;
 using BaseDefense.AttackImplemention.Guns;
 using BaseDefense.Items;
 using BaseDefense.Messages;
-using BaseDefense.SaveSystem;
 using BaseDefense.UI;
 using BroadcastMessages;
+using SaveSystem;
 using UnityEngine.Profiling;
 
 namespace BaseDefense.Characters {
@@ -82,13 +82,13 @@ namespace BaseDefense.Characters {
 
         public void Upgrade (UpgradableProperty property) {
             switch (property.upgradablePropertyType) {
-                case UpgradablePropertyType.SPEED:
+                case UpgradablePropertyType.Speed:
                     UpgradeSpeed(property.CurrentStep);
                     break;
-                case UpgradablePropertyType.CAPACITY:
+                case UpgradablePropertyType.Capacity:
                     UpgradeMaxCapacity(property.CurrentStep);
                     break;
-                case UpgradablePropertyType.MAX_HEALTH:
+                case UpgradablePropertyType.MaxHealth:
                     UpgradeMaxHealth(property.CurrentStep);
                     break;
                 default:

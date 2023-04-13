@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.didenis.broadcastmessages": "https://github.com/DIDenis/com.didenis.broadcast-messages.git",
+    "com.didenis.savesystem": "https://github.com/DIDenis/com.didenis.save-system.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "2.0.1",
     "com.unity.ide.rider": "3.0.18",

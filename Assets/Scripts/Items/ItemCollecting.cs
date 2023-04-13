@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using BaseDefense.Messages;
-using BaseDefense.SaveSystem;
 using BroadcastMessages;
 using UnityEngine;
 using Zenject;
 using DG.Tweening;
+using SaveSystem;
 using Random = UnityEngine.Random;
 
 namespace BaseDefense.Items {
 
     ///<summary>Обеспечивает сбор предметов с игрового поля, сброшенных с врагов</summary>
-    public class ItemCollecting : MonoBehaviour {
+    public class ItemCollecting : MonoBehaviour, IPersistentObject {
 
         ///<summary>Место, в котором находятся собранные деньги, пока игрок находится на вражеской базе</summary>
         [Tooltip("Место, в котором находятся собранные деньги, пока игрок находится на вражеской базе")]

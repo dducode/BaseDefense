@@ -12,5 +12,6 @@
 ## Пакеты, используемые в проекте
 * [Zenject](https://github.com/Mathijs-Bakker/Extenject)
 * [Broadcast Messages](https://github.com/DIDenis/com.didenis.broadcast-messages)
+* [Save System](https://github.com/DIDenis/com.didenis.save-system)
 * [DOTween](https://github.com/Demigiant/dotween)
 * [In-game Debug Console](https://github.com/yasirkula/UnityIngameDebugConsole)

@@ -2,10 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using BaseDefense.Characters;
 using BaseDefense.Messages;
-using BaseDefense.SaveSystem;
 using BroadcastMessages;
 using Zenject;
 using DG.Tweening;
+using SaveSystem;
 using UnityEngine.Assertions;
 
 namespace BaseDefense {
@@ -53,7 +53,6 @@ namespace BaseDefense {
                 Application.quitting += () => {
                     DataManager.SaveObjects(DATA_FILE_NAME, this);
                 };
-                Application.quitting += UpgradablePropertyContainer.Save;
             }
         }
 
@@ -62,10 +61,8 @@ namespace BaseDefense {
 
 
         private void OnApplicationPause (bool pauseStatus) {
-            if (saving && pauseStatus) {
+            if (saving && pauseStatus) 
                 DataManager.SaveObjects(DATA_FILE_NAME, this);
-                UpgradablePropertyContainer.Save();
-            }
         }
 
 
