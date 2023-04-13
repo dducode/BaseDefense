@@ -61,13 +61,13 @@ namespace BaseDefense.Items {
         private Inventory m_inventory;
 
 
-        public void Save (GameDataWriter writer) {
+        public void Save (UnityWriter writer) {
             writer.Write(capacity);
         }
 
 
-        public void Load (GameDataReader reader) {
-            capacity = reader.ReadInteger();
+        public void Load (UnityReader reader) {
+            capacity = reader.ReadInt();
         }
 
 

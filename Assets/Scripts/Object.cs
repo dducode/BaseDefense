@@ -11,7 +11,7 @@ namespace BaseDefense {
 
     /// <summary>Базовый класс для всех игровых объектов</summary>
     [Icon("Assets/EditorUI/object.png")]
-    public abstract class Object : MonoBehaviour {
+    public abstract class Object : MonoBehaviour, IPersistentObject {
 
         /// <inheritdoc cref="ObjectId"/>
         [Tooltip("Идентификатор объекта является уникальным только для объектов разных видов. " +
@@ -199,8 +199,8 @@ namespace BaseDefense {
         /// <summary>
         /// Сохраняет данные объекта в файл
         /// </summary>
-        /// <param name="writer"><see cref="GameDataWriter"/></param>
-        public virtual void Save (GameDataWriter writer) {
+        /// <param name="writer"><see cref="UnityWriter"/></param>
+        public virtual void Save (UnityWriter writer) {
             writer.Write(transform.position);
             writer.Write(transform.rotation);
         }
@@ -209,8 +209,8 @@ namespace BaseDefense {
         /// <summary>
         /// Загружает данные объекта из файла
         /// </summary>
-        /// <param name="reader"><see cref="GameDataReader"/></param>
-        public virtual void Load (GameDataReader reader) {
+        /// <param name="reader"><see cref="UnityReader"/></param>
+        public virtual void Load (UnityReader reader) {
             transform.position = reader.ReadPosition();
             transform.rotation = reader.ReadRotation();
         }

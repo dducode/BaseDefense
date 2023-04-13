@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.IO;
 using BaseDefense.Characters;
 using BaseDefense.Messages;
 using BaseDefense.SaveSystem;
@@ -11,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BaseDefense {
 
-    public class Game : MonoBehaviour {
+    public class Game : MonoBehaviour, IPersistentObject {
 
         [SerializeField]
         private EnemyBase basePrefab;
@@ -51,22 +50,27 @@ namespace BaseDefense {
             Messenger.SubscribeTo<NextLevelMessage>(NextLevel);
 
             if (saving) {
-                Application.quitting += SaveGame;
+                Application.quitting += () => {
+                    DataManager.SaveObjects(DATA_FILE_NAME, this);
+                };
                 Application.quitting += UpgradablePropertyContainer.Save;
             }
         }
 
 
+        private const string DATA_FILE_NAME = "saveData";
+
+
         private void OnApplicationPause (bool pauseStatus) {
             if (saving && pauseStatus) {
-                SaveGame();
+                DataManager.SaveObjects(DATA_FILE_NAME, this);
                 UpgradablePropertyContainer.Save();
             }
         }
 
 
         private void Start () {
-            if (!LoadGame()) {
+            if (!DataManager.LoadObjects(DATA_FILE_NAME, this)) {
                 var newBase = CreateNewBase();
                 newBase.transform.position = m_initialPosition;
                 newBase.Initialize(baseTemplates[m_currentLevel]);
@@ -107,45 +111,29 @@ namespace BaseDefense {
         }
 
 
-        private const string DATA_FILE_NAME = "saveData.dat";
-
-
-        private void SaveGame () {
-            var path = Path.Combine(Application.persistentDataPath, DATA_FILE_NAME);
-            using var binaryWriter = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate));
-            var writer = new GameDataWriter(binaryWriter);
+        public void Save (UnityWriter writer) {
             writer.Write(m_currentLevel);
             m_playerCharacter.Save(writer);
             SaveBase(writer);
         }
 
 
-        private void SaveBase (GameDataWriter writer) {
+        private void SaveBase (UnityWriter writer) {
             writer.Write(m_bases.Count);
             foreach (var enemyBase in m_bases)
                 enemyBase.Save(writer);
         }
 
 
-        private bool LoadGame () {
-            var path = Path.Combine(Application.persistentDataPath, DATA_FILE_NAME);
-            if (!File.Exists(path))
-                return false;
-
-            var binaryData = File.ReadAllBytes(path);
-            using var binaryReader = new BinaryReader(new MemoryStream(binaryData));
-            var reader = new GameDataReader(binaryReader);
-
-            m_currentLevel = reader.ReadInteger();
+        public void Load (UnityReader reader) {
+            m_currentLevel = reader.ReadInt();
             m_playerCharacter.Load(reader);
             LoadBase(reader);
-
-            return true;
         }
 
 
-        private void LoadBase (GameDataReader reader) {
-            var basesCount = reader.ReadInteger();
+        private void LoadBase (UnityReader reader) {
+            var basesCount = reader.ReadInt();
 
             for (var i = 0; i < basesCount; i++) {
                 var enemyBase = Object.CreateFromFactory(basePrefab, m_enemyFactory);

@@ -32,7 +32,7 @@ namespace BaseDefense {
 
         public static void Save () {
             using var binaryWriter = new BinaryWriter(File.Open(Path, FileMode.OpenOrCreate));
-            var writer = new GameDataWriter(binaryWriter);
+            var writer = new UnityWriter(binaryWriter);
             writer.Write(SpeedProperty.CurrentStep.stepCount);
             writer.Write(MaxHealthProperty.CurrentStep.stepCount);
             writer.Write(MaxCapacityProperty.CurrentStep.stepCount);
@@ -45,11 +45,11 @@ namespace BaseDefense {
 
             var binaryData = File.ReadAllBytes(Path);
             using var binaryReader = new BinaryReader(new MemoryStream(binaryData));
-            var reader = new GameDataReader(binaryReader);
+            var reader = new UnityReader(binaryReader);
 
-            SpeedProperty.CurrentStep = SpeedProperty.upgradablePropertySteps[reader.ReadInteger()];
-            MaxHealthProperty.CurrentStep = MaxHealthProperty.upgradablePropertySteps[reader.ReadInteger()];
-            MaxCapacityProperty.CurrentStep = MaxCapacityProperty.upgradablePropertySteps[reader.ReadInteger()];
+            SpeedProperty.CurrentStep = SpeedProperty.upgradablePropertySteps[reader.ReadInt()];
+            MaxHealthProperty.CurrentStep = MaxHealthProperty.upgradablePropertySteps[reader.ReadInt()];
+            MaxCapacityProperty.CurrentStep = MaxCapacityProperty.upgradablePropertySteps[reader.ReadInt()];
             return true;
         }
 

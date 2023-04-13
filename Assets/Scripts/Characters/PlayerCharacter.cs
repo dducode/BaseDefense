@@ -39,7 +39,7 @@ namespace BaseDefense.Characters {
         }
 
 
-        public override void Save (GameDataWriter writer) {
+        public override void Save (UnityWriter writer) {
             writer.Write(m_gun.Id);
             writer.Write(maxHealthPoints);
             writer.Write(maxSpeed);
@@ -48,8 +48,8 @@ namespace BaseDefense.Characters {
         }
 
 
-        public override void Load (GameDataReader reader) {
-            SelectGun(reader.ReadInteger());
+        public override void Load (UnityReader reader) {
+            SelectGun(reader.ReadInt());
             maxHealthPoints = reader.ReadFloat();
             maxSpeed = reader.ReadFloat();
             m_itemCollecting.Load(reader);

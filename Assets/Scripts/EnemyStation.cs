@@ -40,13 +40,13 @@ namespace BaseDefense {
         private ItemDrop[] m_itemDropComponents;
 
 
-        public override void Save (GameDataWriter writer) {
+        public override void Save (UnityWriter writer) {
             base.Save(writer);
             writer.Write(CurrentHealthPoints);
         }
 
 
-        public override void Load (GameDataReader reader) {
+        public override void Load (UnityReader reader) {
             base.Load(reader);
             CurrentHealthPoints = reader.ReadFloat();
         }

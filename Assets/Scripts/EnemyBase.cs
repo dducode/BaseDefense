@@ -64,7 +64,7 @@ namespace BaseDefense {
         private List<Crystal> m_crystals;
 
 
-        public override void Save (GameDataWriter writer) {
+        public override void Save (UnityWriter writer) {
             base.Save(writer);
 
             writer.Write(enabled);
@@ -77,7 +77,7 @@ namespace BaseDefense {
         }
 
 
-        public override void Load (GameDataReader reader) {
+        public override void Load (UnityReader reader) {
             base.Load(reader);
 
             enabled = reader.ReadBool();
@@ -103,7 +103,7 @@ namespace BaseDefense {
 
         #region SavingObjects
 
-        private void SaveEnemies (GameDataWriter writer) {
+        private void SaveEnemies (UnityWriter writer) {
             writer.Write(m_enemies.Count);
 
             foreach (var enemy in m_enemies) {
@@ -113,7 +113,7 @@ namespace BaseDefense {
         }
 
 
-        private void SaveEnemyStations (GameDataWriter writer) {
+        private void SaveEnemyStations (UnityWriter writer) {
             writer.Write(m_enemyStations.Count);
 
             foreach (var enemyStation in m_enemyStations) {
@@ -123,7 +123,7 @@ namespace BaseDefense {
         }
 
 
-        private void SaveCrystals (GameDataWriter writer) {
+        private void SaveCrystals (UnityWriter writer) {
             writer.Write(m_crystals.Count);
 
             foreach (var crystal in m_crystals) {
@@ -138,12 +138,12 @@ namespace BaseDefense {
 
         #region LoadingObjects
 
-        private void LoadEnemies (GameDataReader reader) {
+        private void LoadEnemies (UnityReader reader) {
             m_enemies = new List<EnemyCharacter>();
-            var enemiesCount = reader.ReadInteger();
+            var enemiesCount = reader.ReadInt();
 
             for (var i = 0; i < enemiesCount; i++) {
-                var enemyId = reader.ReadInteger();
+                var enemyId = reader.ReadInt();
                 var enemy = CreateFromFactory(enemyId, m_enemyFactory);
                 enemy.Load(reader);
                 var enemyTransform = enemy.transform;
@@ -153,12 +153,12 @@ namespace BaseDefense {
         }
 
 
-        private void LoadEnemyStations (GameDataReader reader) {
+        private void LoadEnemyStations (UnityReader reader) {
             m_enemyStations = new List<EnemyStation>();
-            var enemyStationsCount = reader.ReadInteger();
+            var enemyStationsCount = reader.ReadInt();
 
             for (var i = 0; i < enemyStationsCount; i++) {
-                var enemyStationId = reader.ReadInteger();
+                var enemyStationId = reader.ReadInt();
                 var enemyStation = CreateFromFactory(enemyStationId, m_enemyStationFactory, enemyField);
                 enemyStation.Load(reader);
                 m_enemyStations.Add(enemyStation);
@@ -166,12 +166,12 @@ namespace BaseDefense {
         }
 
 
-        private void LoadCrystals (GameDataReader reader) {
+        private void LoadCrystals (UnityReader reader) {
             m_crystals = new List<Crystal>();
-            var crystalsCount = reader.ReadInteger();
+            var crystalsCount = reader.ReadInt();
 
             for (var i = 0; i < crystalsCount; i++) {
-                var crystalId = reader.ReadInteger();
+                var crystalId = reader.ReadInt();
                 var crystal = Create<Crystal>(crystalId, enemyField);
                 crystal.Load(reader);
                 m_crystals.Add(crystal);

@@ -59,7 +59,7 @@ namespace BaseDefense.UI {
         private void Save () {
             var path = Path.Combine(Application.persistentDataPath, FILE_NAME);
             using var binaryWriter = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate));
-            var writer = new GameDataWriter(binaryWriter);
+            var writer = new UnityWriter(binaryWriter);
             writer.Write(frame.anchoredPosition);
             writer.Write(content.anchoredPosition);
         }
@@ -72,7 +72,7 @@ namespace BaseDefense.UI {
 
             var binaryData = File.ReadAllBytes(path);
             using var binaryReader = new BinaryReader(new MemoryStream(binaryData));
-            var reader = new GameDataReader(binaryReader);
+            var reader = new UnityReader(binaryReader);
             frame.anchoredPosition = reader.ReadPosition();
             content.anchoredPosition = reader.ReadPosition();
         }
