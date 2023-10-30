@@ -5,6 +5,7 @@
 
 ````mermaid
 flowchart RL
+
 O(Object)
 P(Projectile)
 B(BaseCharacter)

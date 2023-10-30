@@ -6,13 +6,14 @@ using BaseDefense.Messages;
 using BaseDefense.Messages.UpdateCurrencyMessages;
 using BroadcastMessages;
 using SaveSystem;
+using SaveSystem.UnityHandlers;
 
 namespace BaseDefense {
 
     public class Inventory : MonoBehaviour, IPersistentObject {
 
         private string m_inventoryData;
-        private const string INVENTORY_DATA_FILE_NAME = "inventoryData";
+        private const string InventoryDataFileName = "inventoryData.bytes";
 
 
         ///<summary>Кладёт предмет в инвентарь</summary>
@@ -34,7 +35,6 @@ namespace BaseDefense {
 
             m_inventoryData = EncodeData(data);
             item.DestroyItem();
-            DataManager.SaveObjects(INVENTORY_DATA_FILE_NAME, this);
         }
 
 
@@ -45,7 +45,7 @@ namespace BaseDefense {
             Messenger.SendMessage(new UpdateMoneysMessage(data.moneys));
             Messenger.SendMessage(new UnlockedGunsMessage(data.gunIds));
             m_inventoryData = EncodeData(data);
-            DataManager.SaveObjects(INVENTORY_DATA_FILE_NAME, this);
+            DataManager.SaveObject(InventoryDataFileName, this);
         }
 
 
@@ -54,25 +54,47 @@ namespace BaseDefense {
             data.gems -= price;
             Messenger.SendMessage(new UpdateGemsMessage(data.gems));
             m_inventoryData = EncodeData(data);
-            DataManager.SaveObjects(INVENTORY_DATA_FILE_NAME, this);
+            DataManager.SaveObject(InventoryDataFileName, this);
+        }
+
+
+        private const string Password = "4u7b8O-0j2lvGHtTZrQ.cV3aN?ydosUwWE9z,ShYkACm6InBgJRi!K_DMep1XLxq";
+
+
+        public void Save () {
+            DataManager.SaveObject(InventoryDataFileName, this);
+        }
+
+
+        public void Save (UnityWriter writer) {
+            var data = JsonUtility.ToJson(DecodeData(m_inventoryData));
+            var encryptData = Aes.Encrypt(data, Password);
+            writer.Write(encryptData);
+        }
+
+
+        public void Load (UnityReader reader) {
+            var data = Aes.Decrypt(reader.ReadString(), Password);
+            var inventoryData = JsonUtility.FromJson<InventoryData>(data);
+            m_inventoryData = EncodeData(inventoryData);
         }
 
 
         private void Awake () {
-            if (!DataManager.LoadObjects(INVENTORY_DATA_FILE_NAME, this)) {
+            if (!DataManager.LoadObject(InventoryDataFileName, this)) {
                 m_inventoryData = EncodeData(new InventoryData {
                     moneys = PlayerPrefs.GetInt("Money", 0),
                     gems = PlayerPrefs.GetInt("Gem", 0)
                 });
             }
 
-            Application.quitting += () => { DataManager.SaveObjects(INVENTORY_DATA_FILE_NAME, this); };
+            Application.quitting += () => { DataManager.SaveObject(InventoryDataFileName, this); };
         }
 
 
         private void OnApplicationPause (bool pauseStatus) {
             if (pauseStatus)
-                DataManager.SaveObjects(INVENTORY_DATA_FILE_NAME, this);
+                DataManager.SaveObject(InventoryDataFileName, this);
         }
 
 
@@ -100,22 +122,6 @@ namespace BaseDefense {
             }
         }
 #endif
-
-        private const string PASSWORD = "4u7b8O-0j2lvGHtTZrQ.cV3aN?ydosUwWE9z,ShYkACm6InBgJRi!K_DMep1XLxq";
-
-
-        public void Save (UnityWriter writer) {
-            var data = JsonUtility.ToJson(DecodeData(m_inventoryData));
-            var encryptData = Aes.Encrypt(data, PASSWORD);
-            writer.Write(encryptData);
-        }
-
-
-        public void Load (UnityReader reader) {
-            var data = Aes.Decrypt(reader.ReadString(), PASSWORD);
-            var inventoryData = JsonUtility.FromJson<InventoryData>(data);
-            m_inventoryData = EncodeData(inventoryData);
-        }
 
 
         private static string EncodeData (InventoryData data) {

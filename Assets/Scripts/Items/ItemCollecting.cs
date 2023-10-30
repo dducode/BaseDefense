@@ -6,6 +6,7 @@ using UnityEngine;
 using Zenject;
 using DG.Tweening;
 using SaveSystem;
+using SaveSystem.UnityHandlers;
 using Random = UnityEngine.Random;
 
 namespace BaseDefense.Items {
@@ -49,7 +50,7 @@ namespace BaseDefense.Items {
         private Vector3 m_firstPosition;
 
         ///<summary>Хранит все собранные игроком деньги</summary>
-        private Stack<Money> m_moneys;
+        private List<Money> m_moneys;
 
         ///<summary>Рекомендуется использовать это свойство перед запуском сопрограммы сброса денег</summary>
         public bool DropIsInProcess { get; private set; }
@@ -63,11 +64,28 @@ namespace BaseDefense.Items {
 
         public void Save (UnityWriter writer) {
             writer.Write(capacity);
+            writer.Write(m_stackSize);
+            writer.Write(m_stacksCount);
+            writer.Write(stackForMoneys.localPosition);
+            writer.Write(m_moneys.Count);
+
+            foreach (var money in m_moneys) 
+                money.Save(writer);
         }
 
 
         public void Load (UnityReader reader) {
             capacity = reader.ReadInt();
+            m_stackSize = reader.ReadInt();
+            m_stacksCount = reader.ReadInt();
+            stackForMoneys.localPosition = reader.ReadVector3();
+            var moneysCount = reader.ReadInt();
+
+            for (var i = 0; i < moneysCount; i++) {
+                var money = Object.Create(Resources.Load<Money>(Game.MoneyPath), stackForMoneys.parent);
+                money.Load(reader);
+                m_moneys.Add(money);
+            }
         }
 
 
@@ -76,9 +94,21 @@ namespace BaseDefense.Items {
         }
 
 
+        private IEnumerator m_await;
+
+
         ///<summary>Кладёт кристалл в инвентарь</summary>
         public void PutGem (Gem gem) {
             m_inventory.PutItem(gem);
+            m_await ??= Awaiting();
+            StopCoroutine(m_await);
+            StartCoroutine(m_await);
+        }
+
+
+        private IEnumerator Awaiting () {
+            yield return new WaitForSeconds(1.5f);
+            m_inventory.Save();
         }
 
 
@@ -93,7 +123,7 @@ namespace BaseDefense.Items {
             sequence.Join(money.transform.DOLocalMove(stackForMoneys.localPosition, animationDuration));
             sequence.Join(money.transform.DOLocalRotate(stackForMoneys.localRotation.eulerAngles, animationDuration));
             sequence.OnComplete(() => sequence.Kill());
-            m_moneys.Push(money);
+            m_moneys.Add(money);
             m_stackSize++;
 
             if (m_stackSize < maxStackSize)
@@ -126,7 +156,8 @@ namespace BaseDefense.Items {
 
             for (var i = 0; i < moneysCount; i++) {
                 const float torqueScalar = 0.5f;
-                var money = m_moneys.Pop();
+                var money = m_moneys[^1];
+                m_moneys.RemoveAt(m_moneys.Count - 1);
                 money.transform.parent = null;
                 ObjectsPool.MoveObjectToHisScene(money);
                 var force = new Vector3(
@@ -137,6 +168,7 @@ namespace BaseDefense.Items {
                     Random.Range(-torqueScalar, torqueScalar),
                     Random.Range(-torqueScalar, torqueScalar),
                     0);
+                money.Enabled = true;
                 money.Drop(force, torque);
                 m_inventory.PutItem(money);
 
@@ -147,12 +179,13 @@ namespace BaseDefense.Items {
             m_stackSize = 0;
             m_stacksCount = 0;
             DropIsInProcess = false;
+            m_inventory.Save();
         }
 
 
         private void Awake () {
             m_firstPosition = stackForMoneys.localPosition;
-            m_moneys = new Stack<Money>();
+            m_moneys = new List<Money>();
         }
 
 
@@ -170,10 +203,12 @@ namespace BaseDefense.Items {
             var moneysCount = m_moneys.Count;
 
             for (var i = 0; i < moneysCount; i++) {
-                var money = m_moneys.Pop();
+                var money = m_moneys[^1];
+                m_moneys.RemoveAt(m_moneys.Count - 1);
                 money.transform.parent = null;
                 ObjectsPool.MoveObjectToHisScene(money);
                 var force = new Vector3(Random.Range(0f, 1f), 1, Random.Range(0f, 1f)) * forceScalar;
+                money.Enabled = true;
                 money.Drop(force);
             }
 

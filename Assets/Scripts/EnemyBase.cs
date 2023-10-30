@@ -6,7 +6,7 @@ using Zenject;
 using BaseDefense.Characters;
 using BaseDefense.Messages;
 using BroadcastMessages;
-using SaveSystem;
+using SaveSystem.UnityHandlers;
 using TMPro;
 using UnityEngine.Serialization;
 
@@ -95,7 +95,7 @@ namespace BaseDefense {
             m_enemyStations = CreateStations(baseTemplate.EnemyStations.ToList());
             m_crystals = CreateCrystals(baseTemplate.Crystals.ToList());
             m_enemies = new List<EnemyCharacter>();
-            for (int i = 0; i < startEnemiesCount; i++)
+            for (var i = 0; i < startEnemiesCount; i++)
                 m_enemies.Add(SpawnEnemy());
         }
 

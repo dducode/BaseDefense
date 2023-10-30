@@ -618,12 +618,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Characters.BaseCharacter.IsAlive
   nameWithType: BaseCharacter.IsAlive
-- uid: BaseDefense.Characters.BaseCharacter.Load(BaseDefense.SaveSystem.GameDataReader)
-  name: Load(GameDataReader)
-  href: api/BaseDefense.Characters.BaseCharacter.html#BaseDefense_Characters_BaseCharacter_Load_BaseDefense_SaveSystem_GameDataReader_
-  commentId: M:BaseDefense.Characters.BaseCharacter.Load(BaseDefense.SaveSystem.GameDataReader)
-  fullName: BaseDefense.Characters.BaseCharacter.Load(BaseDefense.SaveSystem.GameDataReader)
-  nameWithType: BaseCharacter.Load(GameDataReader)
+- uid: BaseDefense.Characters.BaseCharacter.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.Characters.BaseCharacter.html#BaseDefense_Characters_BaseCharacter_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.Characters.BaseCharacter.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.Characters.BaseCharacter.Load(SaveSystem.UnityReader)
+  nameWithType: BaseCharacter.Load(UnityReader)
 - uid: BaseDefense.Characters.BaseCharacter.Load*
   name: Load
   href: api/BaseDefense.Characters.BaseCharacter.html#BaseDefense_Characters_BaseCharacter_Load_
@@ -669,12 +669,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Characters.BaseCharacter.OnDeath
   nameWithType: BaseCharacter.OnDeath
-- uid: BaseDefense.Characters.BaseCharacter.Save(BaseDefense.SaveSystem.GameDataWriter)
-  name: Save(GameDataWriter)
-  href: api/BaseDefense.Characters.BaseCharacter.html#BaseDefense_Characters_BaseCharacter_Save_BaseDefense_SaveSystem_GameDataWriter_
-  commentId: M:BaseDefense.Characters.BaseCharacter.Save(BaseDefense.SaveSystem.GameDataWriter)
-  fullName: BaseDefense.Characters.BaseCharacter.Save(BaseDefense.SaveSystem.GameDataWriter)
-  nameWithType: BaseCharacter.Save(GameDataWriter)
+- uid: BaseDefense.Characters.BaseCharacter.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.Characters.BaseCharacter.html#BaseDefense_Characters_BaseCharacter_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.Characters.BaseCharacter.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.Characters.BaseCharacter.Save(SaveSystem.UnityWriter)
+  nameWithType: BaseCharacter.Save(UnityWriter)
 - uid: BaseDefense.Characters.BaseCharacter.Save*
   name: Save
   href: api/BaseDefense.Characters.BaseCharacter.html#BaseDefense_Characters_BaseCharacter_Save_
@@ -891,12 +891,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Characters.PlayerCharacter.Hit
   nameWithType: PlayerCharacter.Hit
-- uid: BaseDefense.Characters.PlayerCharacter.Load(BaseDefense.SaveSystem.GameDataReader)
-  name: Load(GameDataReader)
-  href: api/BaseDefense.Characters.PlayerCharacter.html#BaseDefense_Characters_PlayerCharacter_Load_BaseDefense_SaveSystem_GameDataReader_
-  commentId: M:BaseDefense.Characters.PlayerCharacter.Load(BaseDefense.SaveSystem.GameDataReader)
-  fullName: BaseDefense.Characters.PlayerCharacter.Load(BaseDefense.SaveSystem.GameDataReader)
-  nameWithType: PlayerCharacter.Load(GameDataReader)
+- uid: BaseDefense.Characters.PlayerCharacter.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.Characters.PlayerCharacter.html#BaseDefense_Characters_PlayerCharacter_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.Characters.PlayerCharacter.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.Characters.PlayerCharacter.Load(SaveSystem.UnityReader)
+  nameWithType: PlayerCharacter.Load(UnityReader)
 - uid: BaseDefense.Characters.PlayerCharacter.Load*
   name: Load
   href: api/BaseDefense.Characters.PlayerCharacter.html#BaseDefense_Characters_PlayerCharacter_Load_
@@ -917,12 +917,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Characters.PlayerCharacter.OnDeath
   nameWithType: PlayerCharacter.OnDeath
-- uid: BaseDefense.Characters.PlayerCharacter.Save(BaseDefense.SaveSystem.GameDataWriter)
-  name: Save(GameDataWriter)
-  href: api/BaseDefense.Characters.PlayerCharacter.html#BaseDefense_Characters_PlayerCharacter_Save_BaseDefense_SaveSystem_GameDataWriter_
-  commentId: M:BaseDefense.Characters.PlayerCharacter.Save(BaseDefense.SaveSystem.GameDataWriter)
-  fullName: BaseDefense.Characters.PlayerCharacter.Save(BaseDefense.SaveSystem.GameDataWriter)
-  nameWithType: PlayerCharacter.Save(GameDataWriter)
+- uid: BaseDefense.Characters.PlayerCharacter.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.Characters.PlayerCharacter.html#BaseDefense_Characters_PlayerCharacter_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.Characters.PlayerCharacter.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.Characters.PlayerCharacter.Save(SaveSystem.UnityWriter)
+  nameWithType: PlayerCharacter.Save(UnityWriter)
 - uid: BaseDefense.Characters.PlayerCharacter.Save*
   name: Save
   href: api/BaseDefense.Characters.PlayerCharacter.html#BaseDefense_Characters_PlayerCharacter_Save_
@@ -1020,12 +1020,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Crystal.Initialize
   nameWithType: Crystal.Initialize
-- uid: BaseDefense.Crystal.Load(BaseDefense.SaveSystem.GameDataReader)
-  name: Load(GameDataReader)
-  href: api/BaseDefense.Crystal.html#BaseDefense_Crystal_Load_BaseDefense_SaveSystem_GameDataReader_
-  commentId: M:BaseDefense.Crystal.Load(BaseDefense.SaveSystem.GameDataReader)
-  fullName: BaseDefense.Crystal.Load(BaseDefense.SaveSystem.GameDataReader)
-  nameWithType: Crystal.Load(GameDataReader)
+- uid: BaseDefense.Crystal.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.Crystal.html#BaseDefense_Crystal_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.Crystal.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.Crystal.Load(SaveSystem.UnityReader)
+  nameWithType: Crystal.Load(UnityReader)
 - uid: BaseDefense.Crystal.Load*
   name: Load
   href: api/BaseDefense.Crystal.html#BaseDefense_Crystal_Load_
@@ -1033,12 +1033,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Crystal.Load
   nameWithType: Crystal.Load
-- uid: BaseDefense.Crystal.Save(BaseDefense.SaveSystem.GameDataWriter)
-  name: Save(GameDataWriter)
-  href: api/BaseDefense.Crystal.html#BaseDefense_Crystal_Save_BaseDefense_SaveSystem_GameDataWriter_
-  commentId: M:BaseDefense.Crystal.Save(BaseDefense.SaveSystem.GameDataWriter)
-  fullName: BaseDefense.Crystal.Save(BaseDefense.SaveSystem.GameDataWriter)
-  nameWithType: Crystal.Save(GameDataWriter)
+- uid: BaseDefense.Crystal.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.Crystal.html#BaseDefense_Crystal_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.Crystal.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.Crystal.Save(SaveSystem.UnityWriter)
+  nameWithType: Crystal.Save(UnityWriter)
 - uid: BaseDefense.Crystal.Save*
   name: Save
   href: api/BaseDefense.Crystal.html#BaseDefense_Crystal_Save_
@@ -1071,12 +1071,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.EnemyBase.Initialize
   nameWithType: EnemyBase.Initialize
-- uid: BaseDefense.EnemyBase.Load(BaseDefense.SaveSystem.GameDataReader)
-  name: Load(GameDataReader)
-  href: api/BaseDefense.EnemyBase.html#BaseDefense_EnemyBase_Load_BaseDefense_SaveSystem_GameDataReader_
-  commentId: M:BaseDefense.EnemyBase.Load(BaseDefense.SaveSystem.GameDataReader)
-  fullName: BaseDefense.EnemyBase.Load(BaseDefense.SaveSystem.GameDataReader)
-  nameWithType: EnemyBase.Load(GameDataReader)
+- uid: BaseDefense.EnemyBase.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.EnemyBase.html#BaseDefense_EnemyBase_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.EnemyBase.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.EnemyBase.Load(SaveSystem.UnityReader)
+  nameWithType: EnemyBase.Load(UnityReader)
 - uid: BaseDefense.EnemyBase.Load*
   name: Load
   href: api/BaseDefense.EnemyBase.html#BaseDefense_EnemyBase_Load_
@@ -1084,12 +1084,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.EnemyBase.Load
   nameWithType: EnemyBase.Load
-- uid: BaseDefense.EnemyBase.Save(BaseDefense.SaveSystem.GameDataWriter)
-  name: Save(GameDataWriter)
-  href: api/BaseDefense.EnemyBase.html#BaseDefense_EnemyBase_Save_BaseDefense_SaveSystem_GameDataWriter_
-  commentId: M:BaseDefense.EnemyBase.Save(BaseDefense.SaveSystem.GameDataWriter)
-  fullName: BaseDefense.EnemyBase.Save(BaseDefense.SaveSystem.GameDataWriter)
-  nameWithType: EnemyBase.Save(GameDataWriter)
+- uid: BaseDefense.EnemyBase.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.EnemyBase.html#BaseDefense_EnemyBase_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.EnemyBase.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.EnemyBase.Save(SaveSystem.UnityWriter)
+  nameWithType: EnemyBase.Save(UnityWriter)
 - uid: BaseDefense.EnemyBase.Save*
   name: Save
   href: api/BaseDefense.EnemyBase.html#BaseDefense_EnemyBase_Save_
@@ -1195,12 +1195,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.EnemyStation.Initialize
   nameWithType: EnemyStation.Initialize
-- uid: BaseDefense.EnemyStation.Load(BaseDefense.SaveSystem.GameDataReader)
-  name: Load(GameDataReader)
-  href: api/BaseDefense.EnemyStation.html#BaseDefense_EnemyStation_Load_BaseDefense_SaveSystem_GameDataReader_
-  commentId: M:BaseDefense.EnemyStation.Load(BaseDefense.SaveSystem.GameDataReader)
-  fullName: BaseDefense.EnemyStation.Load(BaseDefense.SaveSystem.GameDataReader)
-  nameWithType: EnemyStation.Load(GameDataReader)
+- uid: BaseDefense.EnemyStation.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.EnemyStation.html#BaseDefense_EnemyStation_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.EnemyStation.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.EnemyStation.Load(SaveSystem.UnityReader)
+  nameWithType: EnemyStation.Load(UnityReader)
 - uid: BaseDefense.EnemyStation.Load*
   name: Load
   href: api/BaseDefense.EnemyStation.html#BaseDefense_EnemyStation_Load_
@@ -1208,12 +1208,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.EnemyStation.Load
   nameWithType: EnemyStation.Load
-- uid: BaseDefense.EnemyStation.Save(BaseDefense.SaveSystem.GameDataWriter)
-  name: Save(GameDataWriter)
-  href: api/BaseDefense.EnemyStation.html#BaseDefense_EnemyStation_Save_BaseDefense_SaveSystem_GameDataWriter_
-  commentId: M:BaseDefense.EnemyStation.Save(BaseDefense.SaveSystem.GameDataWriter)
-  fullName: BaseDefense.EnemyStation.Save(BaseDefense.SaveSystem.GameDataWriter)
-  nameWithType: EnemyStation.Save(GameDataWriter)
+- uid: BaseDefense.EnemyStation.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.EnemyStation.html#BaseDefense_EnemyStation_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.EnemyStation.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.EnemyStation.Save(SaveSystem.UnityWriter)
+  nameWithType: EnemyStation.Save(UnityWriter)
 - uid: BaseDefense.EnemyStation.Save*
   name: Save
   href: api/BaseDefense.EnemyStation.html#BaseDefense_EnemyStation_Save_
@@ -1402,6 +1402,44 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Game.DestroyOldBase
   nameWithType: Game.DestroyOldBase
+- uid: BaseDefense.Game.GEM_PATH
+  name: GEM_PATH
+  href: api/BaseDefense.Game.html#BaseDefense_Game_GEM_PATH
+  commentId: F:BaseDefense.Game.GEM_PATH
+  fullName: BaseDefense.Game.GEM_PATH
+  nameWithType: Game.GEM_PATH
+- uid: BaseDefense.Game.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.Game.html#BaseDefense_Game_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.Game.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.Game.Load(SaveSystem.UnityReader)
+  nameWithType: Game.Load(UnityReader)
+- uid: BaseDefense.Game.Load*
+  name: Load
+  href: api/BaseDefense.Game.html#BaseDefense_Game_Load_
+  commentId: Overload:BaseDefense.Game.Load
+  isSpec: "True"
+  fullName: BaseDefense.Game.Load
+  nameWithType: Game.Load
+- uid: BaseDefense.Game.MONEY_PATH
+  name: MONEY_PATH
+  href: api/BaseDefense.Game.html#BaseDefense_Game_MONEY_PATH
+  commentId: F:BaseDefense.Game.MONEY_PATH
+  fullName: BaseDefense.Game.MONEY_PATH
+  nameWithType: Game.MONEY_PATH
+- uid: BaseDefense.Game.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.Game.html#BaseDefense_Game_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.Game.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.Game.Save(SaveSystem.UnityWriter)
+  nameWithType: Game.Save(UnityWriter)
+- uid: BaseDefense.Game.Save*
+  name: Save
+  href: api/BaseDefense.Game.html#BaseDefense_Game_Save_
+  commentId: Overload:BaseDefense.Game.Save
+  isSpec: "True"
+  fullName: BaseDefense.Game.Save
+  nameWithType: Game.Save
 - uid: BaseDefense.GunSlot
   name: GunSlot
   href: api/BaseDefense.GunSlot.html
@@ -1494,6 +1532,19 @@ references:
   commentId: F:BaseDefense.Inventory.InventoryData.moneys
   fullName: BaseDefense.Inventory.InventoryData.moneys
   nameWithType: Inventory.InventoryData.moneys
+- uid: BaseDefense.Inventory.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.Inventory.html#BaseDefense_Inventory_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.Inventory.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.Inventory.Load(SaveSystem.UnityReader)
+  nameWithType: Inventory.Load(UnityReader)
+- uid: BaseDefense.Inventory.Load*
+  name: Load
+  href: api/BaseDefense.Inventory.html#BaseDefense_Inventory_Load_
+  commentId: Overload:BaseDefense.Inventory.Load
+  isSpec: "True"
+  fullName: BaseDefense.Inventory.Load
+  nameWithType: Inventory.Load
 - uid: BaseDefense.Inventory.PurchaseGun(System.Int32,System.Int32)
   name: PurchaseGun(int, int)
   href: api/BaseDefense.Inventory.html#BaseDefense_Inventory_PurchaseGun_System_Int32_System_Int32_
@@ -1539,6 +1590,25 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Inventory.PutItem
   nameWithType: Inventory.PutItem
+- uid: BaseDefense.Inventory.Save
+  name: Save()
+  href: api/BaseDefense.Inventory.html#BaseDefense_Inventory_Save
+  commentId: M:BaseDefense.Inventory.Save
+  fullName: BaseDefense.Inventory.Save()
+  nameWithType: Inventory.Save()
+- uid: BaseDefense.Inventory.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.Inventory.html#BaseDefense_Inventory_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.Inventory.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.Inventory.Save(SaveSystem.UnityWriter)
+  nameWithType: Inventory.Save(UnityWriter)
+- uid: BaseDefense.Inventory.Save*
+  name: Save
+  href: api/BaseDefense.Inventory.html#BaseDefense_Inventory_Save_
+  commentId: Overload:BaseDefense.Inventory.Save
+  isSpec: "True"
+  fullName: BaseDefense.Inventory.Save
+  nameWithType: Inventory.Save
 - uid: BaseDefense.Items
   name: BaseDefense.Items
   href: api/BaseDefense.Items.html
@@ -1648,6 +1718,19 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Items.Item.Enabled
   nameWithType: Item.Enabled
+- uid: BaseDefense.Items.Item.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.Items.Item.html#BaseDefense_Items_Item_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.Items.Item.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.Items.Item.Load(SaveSystem.UnityReader)
+  nameWithType: Item.Load(UnityReader)
+- uid: BaseDefense.Items.Item.Load*
+  name: Load
+  href: api/BaseDefense.Items.Item.html#BaseDefense_Items_Item_Load_
+  commentId: Overload:BaseDefense.Items.Item.Load
+  isSpec: "True"
+  fullName: BaseDefense.Items.Item.Load
+  nameWithType: Item.Load
 - uid: BaseDefense.Items.Item.meshCollider
   name: meshCollider
   href: api/BaseDefense.Items.Item.html#BaseDefense_Items_Item_meshCollider
@@ -1660,6 +1743,19 @@ references:
   commentId: F:BaseDefense.Items.Item.rb
   fullName: BaseDefense.Items.Item.rb
   nameWithType: Item.rb
+- uid: BaseDefense.Items.Item.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.Items.Item.html#BaseDefense_Items_Item_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.Items.Item.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.Items.Item.Save(SaveSystem.UnityWriter)
+  nameWithType: Item.Save(UnityWriter)
+- uid: BaseDefense.Items.Item.Save*
+  name: Save
+  href: api/BaseDefense.Items.Item.html#BaseDefense_Items_Item_Save_
+  commentId: Overload:BaseDefense.Items.Item.Save
+  isSpec: "True"
+  fullName: BaseDefense.Items.Item.Save
+  nameWithType: Item.Save
 - uid: BaseDefense.Items.Item.trigger
   name: trigger
   href: api/BaseDefense.Items.Item.html#BaseDefense_Items_Item_trigger
@@ -1698,12 +1794,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Items.ItemCollecting.DropMoney
   nameWithType: ItemCollecting.DropMoney
-- uid: BaseDefense.Items.ItemCollecting.Load(BaseDefense.SaveSystem.GameDataReader)
-  name: Load(GameDataReader)
-  href: api/BaseDefense.Items.ItemCollecting.html#BaseDefense_Items_ItemCollecting_Load_BaseDefense_SaveSystem_GameDataReader_
-  commentId: M:BaseDefense.Items.ItemCollecting.Load(BaseDefense.SaveSystem.GameDataReader)
-  fullName: BaseDefense.Items.ItemCollecting.Load(BaseDefense.SaveSystem.GameDataReader)
-  nameWithType: ItemCollecting.Load(GameDataReader)
+- uid: BaseDefense.Items.ItemCollecting.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.Items.ItemCollecting.html#BaseDefense_Items_ItemCollecting_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.Items.ItemCollecting.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.Items.ItemCollecting.Load(SaveSystem.UnityReader)
+  nameWithType: ItemCollecting.Load(UnityReader)
 - uid: BaseDefense.Items.ItemCollecting.Load*
   name: Load
   href: api/BaseDefense.Items.ItemCollecting.html#BaseDefense_Items_ItemCollecting_Load_
@@ -1724,12 +1820,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Items.ItemCollecting.PutGem
   nameWithType: ItemCollecting.PutGem
-- uid: BaseDefense.Items.ItemCollecting.Save(BaseDefense.SaveSystem.GameDataWriter)
-  name: Save(GameDataWriter)
-  href: api/BaseDefense.Items.ItemCollecting.html#BaseDefense_Items_ItemCollecting_Save_BaseDefense_SaveSystem_GameDataWriter_
-  commentId: M:BaseDefense.Items.ItemCollecting.Save(BaseDefense.SaveSystem.GameDataWriter)
-  fullName: BaseDefense.Items.ItemCollecting.Save(BaseDefense.SaveSystem.GameDataWriter)
-  nameWithType: ItemCollecting.Save(GameDataWriter)
+- uid: BaseDefense.Items.ItemCollecting.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.Items.ItemCollecting.html#BaseDefense_Items_ItemCollecting_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.Items.ItemCollecting.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.Items.ItemCollecting.Save(SaveSystem.UnityWriter)
+  nameWithType: ItemCollecting.Save(UnityWriter)
 - uid: BaseDefense.Items.ItemCollecting.Save*
   name: Save
   href: api/BaseDefense.Items.ItemCollecting.html#BaseDefense_Items_ItemCollecting_Save_
@@ -2178,12 +2274,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Object.IsDestroyed
   nameWithType: Object.IsDestroyed
-- uid: BaseDefense.Object.Load(BaseDefense.SaveSystem.GameDataReader)
-  name: Load(GameDataReader)
-  href: api/BaseDefense.Object.html#BaseDefense_Object_Load_BaseDefense_SaveSystem_GameDataReader_
-  commentId: M:BaseDefense.Object.Load(BaseDefense.SaveSystem.GameDataReader)
-  fullName: BaseDefense.Object.Load(BaseDefense.SaveSystem.GameDataReader)
-  nameWithType: Object.Load(GameDataReader)
+- uid: BaseDefense.Object.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.Object.html#BaseDefense_Object_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.Object.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.Object.Load(SaveSystem.UnityReader)
+  nameWithType: Object.Load(UnityReader)
 - uid: BaseDefense.Object.Load*
   name: Load
   href: api/BaseDefense.Object.html#BaseDefense_Object_Load_
@@ -2191,12 +2287,12 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Object.Load
   nameWithType: Object.Load
-- uid: BaseDefense.Object.Save(BaseDefense.SaveSystem.GameDataWriter)
-  name: Save(GameDataWriter)
-  href: api/BaseDefense.Object.html#BaseDefense_Object_Save_BaseDefense_SaveSystem_GameDataWriter_
-  commentId: M:BaseDefense.Object.Save(BaseDefense.SaveSystem.GameDataWriter)
-  fullName: BaseDefense.Object.Save(BaseDefense.SaveSystem.GameDataWriter)
-  nameWithType: Object.Save(GameDataWriter)
+- uid: BaseDefense.Object.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.Object.html#BaseDefense_Object_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.Object.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.Object.Save(SaveSystem.UnityWriter)
+  nameWithType: Object.Save(UnityWriter)
 - uid: BaseDefense.Object.Save*
   name: Save
   href: api/BaseDefense.Object.html#BaseDefense_Object_Save_
@@ -2406,195 +2502,6 @@ references:
   isSpec: "True"
   fullName: BaseDefense.Ragdoll.Enabled
   nameWithType: Ragdoll.Enabled
-- uid: BaseDefense.SaveSystem
-  name: BaseDefense.SaveSystem
-  href: api/BaseDefense.SaveSystem.html
-  commentId: N:BaseDefense.SaveSystem
-  fullName: BaseDefense.SaveSystem
-  nameWithType: BaseDefense.SaveSystem
-- uid: BaseDefense.SaveSystem.GameDataReader
-  name: GameDataReader
-  href: api/BaseDefense.SaveSystem.GameDataReader.html
-  commentId: T:BaseDefense.SaveSystem.GameDataReader
-  fullName: BaseDefense.SaveSystem.GameDataReader
-  nameWithType: GameDataReader
-- uid: BaseDefense.SaveSystem.GameDataReader.#ctor(System.IO.BinaryReader)
-  name: GameDataReader(BinaryReader)
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader__ctor_System_IO_BinaryReader_
-  commentId: M:BaseDefense.SaveSystem.GameDataReader.#ctor(System.IO.BinaryReader)
-  name.vb: New(BinaryReader)
-  fullName: BaseDefense.SaveSystem.GameDataReader.GameDataReader(System.IO.BinaryReader)
-  fullName.vb: BaseDefense.SaveSystem.GameDataReader.New(System.IO.BinaryReader)
-  nameWithType: GameDataReader.GameDataReader(BinaryReader)
-  nameWithType.vb: GameDataReader.New(BinaryReader)
-- uid: BaseDefense.SaveSystem.GameDataReader.#ctor*
-  name: GameDataReader
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader__ctor_
-  commentId: Overload:BaseDefense.SaveSystem.GameDataReader.#ctor
-  isSpec: "True"
-  name.vb: New
-  fullName: BaseDefense.SaveSystem.GameDataReader.GameDataReader
-  fullName.vb: BaseDefense.SaveSystem.GameDataReader.New
-  nameWithType: GameDataReader.GameDataReader
-  nameWithType.vb: GameDataReader.New
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadBool
-  name: ReadBool()
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadBool
-  commentId: M:BaseDefense.SaveSystem.GameDataReader.ReadBool
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadBool()
-  nameWithType: GameDataReader.ReadBool()
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadBool*
-  name: ReadBool
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadBool_
-  commentId: Overload:BaseDefense.SaveSystem.GameDataReader.ReadBool
-  isSpec: "True"
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadBool
-  nameWithType: GameDataReader.ReadBool
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadFloat
-  name: ReadFloat()
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadFloat
-  commentId: M:BaseDefense.SaveSystem.GameDataReader.ReadFloat
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadFloat()
-  nameWithType: GameDataReader.ReadFloat()
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadFloat*
-  name: ReadFloat
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadFloat_
-  commentId: Overload:BaseDefense.SaveSystem.GameDataReader.ReadFloat
-  isSpec: "True"
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadFloat
-  nameWithType: GameDataReader.ReadFloat
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadInteger
-  name: ReadInteger()
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadInteger
-  commentId: M:BaseDefense.SaveSystem.GameDataReader.ReadInteger
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadInteger()
-  nameWithType: GameDataReader.ReadInteger()
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadInteger*
-  name: ReadInteger
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadInteger_
-  commentId: Overload:BaseDefense.SaveSystem.GameDataReader.ReadInteger
-  isSpec: "True"
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadInteger
-  nameWithType: GameDataReader.ReadInteger
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadPosition
-  name: ReadPosition()
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadPosition
-  commentId: M:BaseDefense.SaveSystem.GameDataReader.ReadPosition
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadPosition()
-  nameWithType: GameDataReader.ReadPosition()
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadPosition*
-  name: ReadPosition
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadPosition_
-  commentId: Overload:BaseDefense.SaveSystem.GameDataReader.ReadPosition
-  isSpec: "True"
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadPosition
-  nameWithType: GameDataReader.ReadPosition
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadRotation
-  name: ReadRotation()
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadRotation
-  commentId: M:BaseDefense.SaveSystem.GameDataReader.ReadRotation
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadRotation()
-  nameWithType: GameDataReader.ReadRotation()
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadRotation*
-  name: ReadRotation
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadRotation_
-  commentId: Overload:BaseDefense.SaveSystem.GameDataReader.ReadRotation
-  isSpec: "True"
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadRotation
-  nameWithType: GameDataReader.ReadRotation
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadString
-  name: ReadString()
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadString
-  commentId: M:BaseDefense.SaveSystem.GameDataReader.ReadString
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadString()
-  nameWithType: GameDataReader.ReadString()
-- uid: BaseDefense.SaveSystem.GameDataReader.ReadString*
-  name: ReadString
-  href: api/BaseDefense.SaveSystem.GameDataReader.html#BaseDefense_SaveSystem_GameDataReader_ReadString_
-  commentId: Overload:BaseDefense.SaveSystem.GameDataReader.ReadString
-  isSpec: "True"
-  fullName: BaseDefense.SaveSystem.GameDataReader.ReadString
-  nameWithType: GameDataReader.ReadString
-- uid: BaseDefense.SaveSystem.GameDataWriter
-  name: GameDataWriter
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html
-  commentId: T:BaseDefense.SaveSystem.GameDataWriter
-  fullName: BaseDefense.SaveSystem.GameDataWriter
-  nameWithType: GameDataWriter
-- uid: BaseDefense.SaveSystem.GameDataWriter.#ctor(System.IO.BinaryWriter)
-  name: GameDataWriter(BinaryWriter)
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html#BaseDefense_SaveSystem_GameDataWriter__ctor_System_IO_BinaryWriter_
-  commentId: M:BaseDefense.SaveSystem.GameDataWriter.#ctor(System.IO.BinaryWriter)
-  name.vb: New(BinaryWriter)
-  fullName: BaseDefense.SaveSystem.GameDataWriter.GameDataWriter(System.IO.BinaryWriter)
-  fullName.vb: BaseDefense.SaveSystem.GameDataWriter.New(System.IO.BinaryWriter)
-  nameWithType: GameDataWriter.GameDataWriter(BinaryWriter)
-  nameWithType.vb: GameDataWriter.New(BinaryWriter)
-- uid: BaseDefense.SaveSystem.GameDataWriter.#ctor*
-  name: GameDataWriter
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html#BaseDefense_SaveSystem_GameDataWriter__ctor_
-  commentId: Overload:BaseDefense.SaveSystem.GameDataWriter.#ctor
-  isSpec: "True"
-  name.vb: New
-  fullName: BaseDefense.SaveSystem.GameDataWriter.GameDataWriter
-  fullName.vb: BaseDefense.SaveSystem.GameDataWriter.New
-  nameWithType: GameDataWriter.GameDataWriter
-  nameWithType.vb: GameDataWriter.New
-- uid: BaseDefense.SaveSystem.GameDataWriter.Write(System.Boolean)
-  name: Write(bool)
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html#BaseDefense_SaveSystem_GameDataWriter_Write_System_Boolean_
-  commentId: M:BaseDefense.SaveSystem.GameDataWriter.Write(System.Boolean)
-  name.vb: Write(Boolean)
-  fullName: BaseDefense.SaveSystem.GameDataWriter.Write(bool)
-  fullName.vb: BaseDefense.SaveSystem.GameDataWriter.Write(Boolean)
-  nameWithType: GameDataWriter.Write(bool)
-  nameWithType.vb: GameDataWriter.Write(Boolean)
-- uid: BaseDefense.SaveSystem.GameDataWriter.Write(System.Int32)
-  name: Write(int)
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html#BaseDefense_SaveSystem_GameDataWriter_Write_System_Int32_
-  commentId: M:BaseDefense.SaveSystem.GameDataWriter.Write(System.Int32)
-  name.vb: Write(Integer)
-  fullName: BaseDefense.SaveSystem.GameDataWriter.Write(int)
-  fullName.vb: BaseDefense.SaveSystem.GameDataWriter.Write(Integer)
-  nameWithType: GameDataWriter.Write(int)
-  nameWithType.vb: GameDataWriter.Write(Integer)
-- uid: BaseDefense.SaveSystem.GameDataWriter.Write(System.Single)
-  name: Write(float)
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html#BaseDefense_SaveSystem_GameDataWriter_Write_System_Single_
-  commentId: M:BaseDefense.SaveSystem.GameDataWriter.Write(System.Single)
-  name.vb: Write(Single)
-  fullName: BaseDefense.SaveSystem.GameDataWriter.Write(float)
-  fullName.vb: BaseDefense.SaveSystem.GameDataWriter.Write(Single)
-  nameWithType: GameDataWriter.Write(float)
-  nameWithType.vb: GameDataWriter.Write(Single)
-- uid: BaseDefense.SaveSystem.GameDataWriter.Write(System.String)
-  name: Write(string)
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html#BaseDefense_SaveSystem_GameDataWriter_Write_System_String_
-  commentId: M:BaseDefense.SaveSystem.GameDataWriter.Write(System.String)
-  name.vb: Write(String)
-  fullName: BaseDefense.SaveSystem.GameDataWriter.Write(string)
-  fullName.vb: BaseDefense.SaveSystem.GameDataWriter.Write(String)
-  nameWithType: GameDataWriter.Write(string)
-  nameWithType.vb: GameDataWriter.Write(String)
-- uid: BaseDefense.SaveSystem.GameDataWriter.Write(UnityEngine.Quaternion)
-  name: Write(Quaternion)
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html#BaseDefense_SaveSystem_GameDataWriter_Write_UnityEngine_Quaternion_
-  commentId: M:BaseDefense.SaveSystem.GameDataWriter.Write(UnityEngine.Quaternion)
-  fullName: BaseDefense.SaveSystem.GameDataWriter.Write(UnityEngine.Quaternion)
-  nameWithType: GameDataWriter.Write(Quaternion)
-- uid: BaseDefense.SaveSystem.GameDataWriter.Write(UnityEngine.Vector3)
-  name: Write(Vector3)
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html#BaseDefense_SaveSystem_GameDataWriter_Write_UnityEngine_Vector3_
-  commentId: M:BaseDefense.SaveSystem.GameDataWriter.Write(UnityEngine.Vector3)
-  fullName: BaseDefense.SaveSystem.GameDataWriter.Write(UnityEngine.Vector3)
-  nameWithType: GameDataWriter.Write(Vector3)
-- uid: BaseDefense.SaveSystem.GameDataWriter.Write*
-  name: Write
-  href: api/BaseDefense.SaveSystem.GameDataWriter.html#BaseDefense_SaveSystem_GameDataWriter_Write_
-  commentId: Overload:BaseDefense.SaveSystem.GameDataWriter.Write
-  isSpec: "True"
-  fullName: BaseDefense.SaveSystem.GameDataWriter.Write
-  nameWithType: GameDataWriter.Write
 - uid: BaseDefense.Shop
   name: Shop
   href: api/BaseDefense.Shop.html
@@ -3179,6 +3086,19 @@ references:
   isSpec: "True"
   fullName: BaseDefense.UI.GunSelectWindow.CanvasGroup
   nameWithType: GunSelectWindow.CanvasGroup
+- uid: BaseDefense.UI.GunSelectWindow.Load(SaveSystem.UnityReader)
+  name: Load(UnityReader)
+  href: api/BaseDefense.UI.GunSelectWindow.html#BaseDefense_UI_GunSelectWindow_Load_SaveSystem_UnityReader_
+  commentId: M:BaseDefense.UI.GunSelectWindow.Load(SaveSystem.UnityReader)
+  fullName: BaseDefense.UI.GunSelectWindow.Load(SaveSystem.UnityReader)
+  nameWithType: GunSelectWindow.Load(UnityReader)
+- uid: BaseDefense.UI.GunSelectWindow.Load*
+  name: Load
+  href: api/BaseDefense.UI.GunSelectWindow.html#BaseDefense_UI_GunSelectWindow_Load_
+  commentId: Overload:BaseDefense.UI.GunSelectWindow.Load
+  isSpec: "True"
+  fullName: BaseDefense.UI.GunSelectWindow.Load
+  nameWithType: GunSelectWindow.Load
 - uid: BaseDefense.UI.GunSelectWindow.OnSelectGun(UnityEngine.RectTransform)
   name: OnSelectGun(RectTransform)
   href: api/BaseDefense.UI.GunSelectWindow.html#BaseDefense_UI_GunSelectWindow_OnSelectGun_UnityEngine_RectTransform_
@@ -3192,6 +3112,19 @@ references:
   isSpec: "True"
   fullName: BaseDefense.UI.GunSelectWindow.OnSelectGun
   nameWithType: GunSelectWindow.OnSelectGun
+- uid: BaseDefense.UI.GunSelectWindow.Save(SaveSystem.UnityWriter)
+  name: Save(UnityWriter)
+  href: api/BaseDefense.UI.GunSelectWindow.html#BaseDefense_UI_GunSelectWindow_Save_SaveSystem_UnityWriter_
+  commentId: M:BaseDefense.UI.GunSelectWindow.Save(SaveSystem.UnityWriter)
+  fullName: BaseDefense.UI.GunSelectWindow.Save(SaveSystem.UnityWriter)
+  nameWithType: GunSelectWindow.Save(UnityWriter)
+- uid: BaseDefense.UI.GunSelectWindow.Save*
+  name: Save
+  href: api/BaseDefense.UI.GunSelectWindow.html#BaseDefense_UI_GunSelectWindow_Save_
+  commentId: Overload:BaseDefense.UI.GunSelectWindow.Save
+  isSpec: "True"
+  fullName: BaseDefense.UI.GunSelectWindow.Save
+  nameWithType: GunSelectWindow.Save
 - uid: BaseDefense.UI.GunSelectWindow.SelectGun(BaseDefense.GunSlot)
   name: SelectGun(GunSlot)
   href: api/BaseDefense.UI.GunSelectWindow.html#BaseDefense_UI_GunSelectWindow_SelectGun_BaseDefense_GunSlot_
@@ -3335,25 +3268,6 @@ references:
   commentId: F:BaseDefense.UpgradableProperty.viewName
   fullName: BaseDefense.UpgradableProperty.viewName
   nameWithType: UpgradableProperty.viewName
-- uid: BaseDefense.UpgradablePropertyContainer
-  name: UpgradablePropertyContainer
-  href: api/BaseDefense.UpgradablePropertyContainer.html
-  commentId: T:BaseDefense.UpgradablePropertyContainer
-  fullName: BaseDefense.UpgradablePropertyContainer
-  nameWithType: UpgradablePropertyContainer
-- uid: BaseDefense.UpgradablePropertyContainer.Save
-  name: Save()
-  href: api/BaseDefense.UpgradablePropertyContainer.html#BaseDefense_UpgradablePropertyContainer_Save
-  commentId: M:BaseDefense.UpgradablePropertyContainer.Save
-  fullName: BaseDefense.UpgradablePropertyContainer.Save()
-  nameWithType: UpgradablePropertyContainer.Save()
-- uid: BaseDefense.UpgradablePropertyContainer.Save*
-  name: Save
-  href: api/BaseDefense.UpgradablePropertyContainer.html#BaseDefense_UpgradablePropertyContainer_Save_
-  commentId: Overload:BaseDefense.UpgradablePropertyContainer.Save
-  isSpec: "True"
-  fullName: BaseDefense.UpgradablePropertyContainer.Save
-  nameWithType: UpgradablePropertyContainer.Save
 - uid: BaseDefense.UpgradablePropertyStep
   name: UpgradablePropertyStep
   href: api/BaseDefense.UpgradablePropertyStep.html
@@ -3384,21 +3298,21 @@ references:
   commentId: T:BaseDefense.UpgradablePropertyType
   fullName: BaseDefense.UpgradablePropertyType
   nameWithType: UpgradablePropertyType
-- uid: BaseDefense.UpgradablePropertyType.CAPACITY
-  name: CAPACITY
-  href: api/BaseDefense.UpgradablePropertyType.html#BaseDefense_UpgradablePropertyType_CAPACITY
-  commentId: F:BaseDefense.UpgradablePropertyType.CAPACITY
-  fullName: BaseDefense.UpgradablePropertyType.CAPACITY
-  nameWithType: UpgradablePropertyType.CAPACITY
-- uid: BaseDefense.UpgradablePropertyType.MAX_HEALTH
-  name: MAX_HEALTH
-  href: api/BaseDefense.UpgradablePropertyType.html#BaseDefense_UpgradablePropertyType_MAX_HEALTH
-  commentId: F:BaseDefense.UpgradablePropertyType.MAX_HEALTH
-  fullName: BaseDefense.UpgradablePropertyType.MAX_HEALTH
-  nameWithType: UpgradablePropertyType.MAX_HEALTH
-- uid: BaseDefense.UpgradablePropertyType.SPEED
-  name: SPEED
-  href: api/BaseDefense.UpgradablePropertyType.html#BaseDefense_UpgradablePropertyType_SPEED
-  commentId: F:BaseDefense.UpgradablePropertyType.SPEED
-  fullName: BaseDefense.UpgradablePropertyType.SPEED
-  nameWithType: UpgradablePropertyType.SPEED
+- uid: BaseDefense.UpgradablePropertyType.Capacity
+  name: Capacity
+  href: api/BaseDefense.UpgradablePropertyType.html#BaseDefense_UpgradablePropertyType_Capacity
+  commentId: F:BaseDefense.UpgradablePropertyType.Capacity
+  fullName: BaseDefense.UpgradablePropertyType.Capacity
+  nameWithType: UpgradablePropertyType.Capacity
+- uid: BaseDefense.UpgradablePropertyType.MaxHealth
+  name: MaxHealth
+  href: api/BaseDefense.UpgradablePropertyType.html#BaseDefense_UpgradablePropertyType_MaxHealth
+  commentId: F:BaseDefense.UpgradablePropertyType.MaxHealth
+  fullName: BaseDefense.UpgradablePropertyType.MaxHealth
+  nameWithType: UpgradablePropertyType.MaxHealth
+- uid: BaseDefense.UpgradablePropertyType.Speed
+  name: Speed
+  href: api/BaseDefense.UpgradablePropertyType.html#BaseDefense_UpgradablePropertyType_Speed
+  commentId: F:BaseDefense.UpgradablePropertyType.Speed
+  fullName: BaseDefense.UpgradablePropertyType.Speed
+  nameWithType: UpgradablePropertyType.Speed

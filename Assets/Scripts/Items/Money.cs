@@ -1,3 +1,4 @@
+using System;
 using BaseDefense.Messages;
 using BroadcastMessages;
 using DG.Tweening;
@@ -14,16 +15,16 @@ namespace BaseDefense.Items {
         private float collectionTime = 3;
 
 
-        public override void DestroyItem () {
-            DestroyMoney();
-        }
-
-
         public override void Drop (Vector3 force, Vector3 torque = default) {
             transform.localScale = Vector3.one;
             Enabled = true;
             rb.AddForce(force, ForceMode.Impulse);
             rb.AddTorque(torque, ForceMode.Impulse);
+        }
+
+
+        public override void DestroyItem () {
+            DestroyMoney();
         }
 
 
@@ -46,6 +47,15 @@ namespace BaseDefense.Items {
         private void Remove () {
             Enabled = false;
             Destroy();
+        }
+
+
+
+        [Serializable]
+        private struct MoneyData {
+
+            public Transform parent;
+
         }
 
     }

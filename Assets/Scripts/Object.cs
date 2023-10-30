@@ -4,6 +4,7 @@ using BaseDefense.Exceptions;
 using BaseDefense.Properties;
 using DG.Tweening;
 using SaveSystem;
+using SaveSystem.UnityHandlers;
 using UnityEngine;
 using Zenject;
 
@@ -27,7 +28,7 @@ namespace BaseDefense {
         /// Объекты одного вида (напр. LowEnemy) имеют одинаковый id
         /// </remarks>
         public int Id => objectId.id;
-        
+
         /// <summary>
         /// Возвращает true, если объект уничтожен, иначе false
         /// </summary>
@@ -201,8 +202,8 @@ namespace BaseDefense {
         /// </summary>
         /// <param name="writer"><see cref="UnityWriter"/></param>
         public virtual void Save (UnityWriter writer) {
-            writer.Write(transform.position);
-            writer.Write(transform.rotation);
+            writer.Write(transform.localPosition);
+            writer.Write(transform.localRotation);
         }
 
 
@@ -211,8 +212,8 @@ namespace BaseDefense {
         /// </summary>
         /// <param name="reader"><see cref="UnityReader"/></param>
         public virtual void Load (UnityReader reader) {
-            transform.position = reader.ReadPosition();
-            transform.rotation = reader.ReadRotation();
+            transform.localPosition = reader.ReadVector3();
+            transform.localRotation = reader.ReadRotation();
         }
 
 

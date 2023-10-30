@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using SaveSystem.UnityHandlers;
 
 namespace BaseDefense.Items {
 
@@ -36,6 +37,18 @@ namespace BaseDefense.Items {
         }
 
         protected Rigidbody rb;
+
+
+        public override void Save (UnityWriter writer) {
+            base.Save(writer);
+            writer.Write(Enabled);
+        }
+
+
+        public override void Load (UnityReader reader) {
+            base.Load(reader);
+            Enabled = reader.ReadBool();
+        }
 
 
         ///<summary>Вызывается для выброса предмета</summary>

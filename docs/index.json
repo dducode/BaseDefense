@@ -1,0 +1,447 @@
+{
+  "api/BaseDefense.AttackImplemention.Guns.Crossbow.html": {
+    "href": "api/BaseDefense.AttackImplemention.Guns.Crossbow.html",
+    "title": "Class Crossbow",
+    "keywords": "Class Crossbow Inheritance object Object Component Behaviour MonoBehaviour Object Gun Crossbow Implements IPersistentObject Namespace: BaseDefense.AttackImplemention.Guns Assembly: BaseDefense.dll Syntax public class Crossbow : Gun, IPersistentObject Methods Shot() Производит выстрел из оружия public override void Shot()"
+  },
+  "api/BaseDefense.AttackImplemention.Guns.Firearm.html": {
+    "href": "api/BaseDefense.AttackImplemention.Guns.Firearm.html",
+    "title": "Class Firearm",
+    "keywords": "Class Firearm Inheritance object Object Component Behaviour MonoBehaviour Object Gun Firearm Implements IPersistentObject Namespace: BaseDefense.AttackImplemention.Guns Assembly: BaseDefense.dll Syntax public class Firearm : Gun, IPersistentObject Methods Shot() Производит выстрел из оружия public override void Shot()"
+  },
+  "api/BaseDefense.AttackImplemention.Guns.GrenadeLauncher.html": {
+    "href": "api/BaseDefense.AttackImplemention.Guns.GrenadeLauncher.html",
+    "title": "Class GrenadeLauncher",
+    "keywords": "Class GrenadeLauncher Inheritance object Object Component Behaviour MonoBehaviour Object Gun GrenadeLauncher Implements IPersistentObject Namespace: BaseDefense.AttackImplemention.Guns Assembly: BaseDefense.dll Syntax public class GrenadeLauncher : Gun, IPersistentObject Properties DamageRadius public float DamageRadius { get; } Property Value float Methods Shot() Производит выстрел из оружия public override void Shot()"
+  },
+  "api/BaseDefense.AttackImplemention.Guns.Gun.html": {
+    "href": "api/BaseDefense.AttackImplemention.Guns.Gun.html",
+    "title": "Class Gun",
+    "keywords": "Class Gun Базовый класс для всех видов оружия Inheritance object Object Component Behaviour MonoBehaviour Object Gun Crossbow Firearm GrenadeLauncher Implements IPersistentObject Namespace: BaseDefense.AttackImplemention.Guns Assembly: BaseDefense.dll Syntax [Icon(\"Assets/EditorUI/gun.png\")] public abstract class Gun : Object, IPersistentObject Fields intervalOfShots Временной интервал между выстрелами [Tooltip(\"Временной интервал между выстрелами. [0, infinity]\")] [SerializeField] [Min(0)] protected float intervalOfShots Field Value float [0, infinity] muzzles Дула оружия, преобразования, из которого вылетают патроны [Tooltip(\"Дула оружия, преобразования, из которого вылетают патроны\")] [SerializeField] protected Transform[] muzzles Field Value Transform[] projectilePrefab Префаб патрона. Каждому оружию соответствует свой патрон [Header(\"Общие характеристики оружия\")] [Tooltip(\"Префаб патрона. Каждому оружию соответствует свой патрон\")] [SerializeField] protected Projectile projectilePrefab Field Value Projectile TimeOfLastShot protected float TimeOfLastShot Field Value float Methods Awake() protected override void Awake() Shot() Производит выстрел из оружия public abstract void Shot()"
+  },
+  "api/BaseDefense.AttackImplemention.Guns.html": {
+    "href": "api/BaseDefense.AttackImplemention.Guns.html",
+    "title": "Namespace BaseDefense.AttackImplemention.Guns",
+    "keywords": "Namespace BaseDefense.AttackImplemention.Guns Classes Crossbow Firearm GrenadeLauncher Gun Базовый класс для всех видов оружия"
+  },
+  "api/BaseDefense.AttackImplemention.html": {
+    "href": "api/BaseDefense.AttackImplemention.html",
+    "title": "Namespace BaseDefense.AttackImplemention",
+    "keywords": "Namespace BaseDefense.AttackImplemention Classes Punch Interfaces IAttackable Интерфейс для реализации жизненного цикла атакуемого объекта"
+  },
+  "api/BaseDefense.AttackImplemention.IAttackable.html": {
+    "href": "api/BaseDefense.AttackImplemention.IAttackable.html",
+    "title": "Interface IAttackable",
+    "keywords": "Interface IAttackable Интерфейс для реализации жизненного цикла атакуемого объекта Namespace: BaseDefense.AttackImplemention Assembly: BaseDefense.dll Syntax public interface IAttackable Properties CurrentHealthPoints Текущий показатель здоровья объекта float CurrentHealthPoints { get; } Property Value float Methods Hit(float) Вызывается для нанесения повреждений объекту void Hit(float damage) Parameters damage float Количество нанесённых повреждений"
+  },
+  "api/BaseDefense.AttackImplemention.Projectiles.Arrow.html": {
+    "href": "api/BaseDefense.AttackImplemention.Projectiles.Arrow.html",
+    "title": "Class Arrow",
+    "keywords": "Class Arrow Inheritance object Object Component Behaviour MonoBehaviour Object Projectile Arrow Implements IPersistentObject Namespace: BaseDefense.AttackImplemention.Projectiles Assembly: BaseDefense.dll Syntax public class Arrow : Projectile, IPersistentObject Properties DamageTime Время, в течение которого яд наносит урон врагу public float DamageTime { get; set; } Property Value float [0, infinity] PoisonDamage Урон от яда наносится врагу в течение определённого времени public float PoisonDamage { get; set; } Property Value float [0, infinity] Methods AddImpulse(Vector3) Добавляет импульс во время выстрела из оружия public override void AddImpulse(Vector3 force) Parameters force Vector3 Вектор направления силы выстрела Awake() protected override void Awake() OnCollisionEnter(Collision) protected override void OnCollisionEnter(Collision collision) Parameters collision Collision"
+  },
+  "api/BaseDefense.AttackImplemention.Projectiles.Bullet.html": {
+    "href": "api/BaseDefense.AttackImplemention.Projectiles.Bullet.html",
+    "title": "Class Bullet",
+    "keywords": "Class Bullet Inheritance object Object Component Behaviour MonoBehaviour Object Projectile Bullet Implements IPersistentObject Namespace: BaseDefense.AttackImplemention.Projectiles Assembly: BaseDefense.dll Syntax public class Bullet : Projectile, IPersistentObject Methods AddImpulse(Vector3) Добавляет импульс во время выстрела из оружия public override void AddImpulse(Vector3 force) Parameters force Vector3 Вектор направления силы выстрела OnCollisionEnter(Collision) protected override void OnCollisionEnter(Collision collision) Parameters collision Collision"
+  },
+  "api/BaseDefense.AttackImplemention.Projectiles.Grenade.html": {
+    "href": "api/BaseDefense.AttackImplemention.Projectiles.Grenade.html",
+    "title": "Class Grenade",
+    "keywords": "Class Grenade Inheritance object Object Component Behaviour MonoBehaviour Object Projectile Grenade Implements IPersistentObject Namespace: BaseDefense.AttackImplemention.Projectiles Assembly: BaseDefense.dll Syntax public class Grenade : Projectile, IPersistentObject Properties DamageRadius Определяет радиус поражения при взрыве гранаты public float DamageRadius { get; set; } Property Value float [0.001, infinity] MaxDamage Урон зависит от дальности от эпицентра взрыва public float MaxDamage { get; set; } Property Value float [0, infinity] Methods AddImpulse(Vector3) Добавляет импульс во время выстрела из оружия public override void AddImpulse(Vector3 force) Parameters force Vector3 Вектор направления силы выстрела OnCollisionEnter(Collision) protected override void OnCollisionEnter(Collision collision) Parameters collision Collision"
+  },
+  "api/BaseDefense.AttackImplemention.Projectiles.html": {
+    "href": "api/BaseDefense.AttackImplemention.Projectiles.html",
+    "title": "Namespace BaseDefense.AttackImplemention.Projectiles",
+    "keywords": "Namespace BaseDefense.AttackImplemention.Projectiles Classes Arrow Bullet Grenade Projectile Базовый класс для всех видов патронов"
+  },
+  "api/BaseDefense.AttackImplemention.Projectiles.Projectile.html": {
+    "href": "api/BaseDefense.AttackImplemention.Projectiles.Projectile.html",
+    "title": "Class Projectile",
+    "keywords": "Class Projectile Базовый класс для всех видов патронов Inheritance object Object Component Behaviour MonoBehaviour Object Projectile Arrow Bullet Grenade Implements IPersistentObject Namespace: BaseDefense.AttackImplemention.Projectiles Assembly: BaseDefense.dll Syntax [Icon(\"Assets/EditorUI/ammo.png\")] [RequireComponent(typeof(Rigidbody), typeof(TrailRenderer))] public abstract class Projectile : Object, IPersistentObject Fields rb protected Rigidbody rb Field Value Rigidbody trailRenderer protected TrailRenderer trailRenderer Field Value TrailRenderer Methods AddImpulse(Vector3) Добавляет импульс во время выстрела из оружия public abstract void AddImpulse(Vector3 force) Parameters force Vector3 Вектор направления силы выстрела Awake() protected override void Awake() OnCollisionEnter(Collision) protected abstract void OnCollisionEnter(Collision collision) Parameters collision Collision"
+  },
+  "api/BaseDefense.AttackImplemention.Punch.html": {
+    "href": "api/BaseDefense.AttackImplemention.Punch.html",
+    "title": "Class Punch",
+    "keywords": "Class Punch Inheritance object Object Component Behaviour MonoBehaviour Punch Namespace: BaseDefense.AttackImplemention Assembly: BaseDefense.dll Syntax [RequireComponent(typeof(SphereCollider))] public class Punch : MonoBehaviour Properties Damage Урон, наносимый врагом игроку public MinMaxSliderFloat Damage { get; set; } Property Value MinMaxSliderFloat Диапазон значений на отрезке [minLimit, maxLimit] Enabled При включении поведения также включается прикреплённый триггер public bool Enabled { get; set; } Property Value bool"
+  },
+  "api/BaseDefense.BaseTemplate.html": {
+    "href": "api/BaseDefense.BaseTemplate.html",
+    "title": "Class BaseTemplate",
+    "keywords": "Class BaseTemplate Inheritance object Object Component Behaviour MonoBehaviour BaseTemplate Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public class BaseTemplate : MonoBehaviour Properties Crystals public IEnumerable<Crystal> Crystals { get; } Property Value IEnumerable<Crystal> EnemyStations public IEnumerable<EnemyStation> EnemyStations { get; } Property Value IEnumerable<EnemyStation>"
+  },
+  "api/BaseDefense.CameraMovement.html": {
+    "href": "api/BaseDefense.CameraMovement.html",
+    "title": "Class CameraMovement",
+    "keywords": "Class CameraMovement Inheritance object Object Component Behaviour MonoBehaviour CameraMovement Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public class CameraMovement : MonoBehaviour"
+  },
+  "api/BaseDefense.Characters.BaseCharacter.html": {
+    "href": "api/BaseDefense.Characters.BaseCharacter.html",
+    "title": "Class BaseCharacter",
+    "keywords": "Class BaseCharacter Базовый класс для всех типов персонажей Inheritance object Object Component Behaviour MonoBehaviour Object BaseCharacter EnemyCharacter PlayerCharacter Implements IPersistentObject IAttackable Namespace: BaseDefense.Characters Assembly: BaseDefense.dll Syntax [Icon(\"Assets/EditorUI/character.png\")] [RequireComponent(typeof(CharacterController), typeof(Animator), typeof(ParticleSystem))] public abstract class BaseCharacter : Object, IPersistentObject, IAttackable Fields attackDistance Расстояние, с которого персонаж начинает атаковать [Tooltip(\"Расстояние, с которого персонаж начинает атаковать. [0, infinity]\")] [SerializeField] [Min(0)] protected float attackDistance Field Value float [0, infinity] deathColor Цвет, который персонаж принимает после смерти [Tooltip(\"Цвет, который персонаж принимает после смерти\")] [SerializeField] protected Color deathColor Field Value Color maxHealthPoints Максимально возможное количество очков здоровья для данного персонажа [Header(\"Общие характеристики персонажа\")] [Tooltip(\"Максимально возможное количество очков здоровья для данного персонажа. [1, infinity]\")] [SerializeField] [Min(1)] protected float maxHealthPoints Field Value float [1, infinity] maxSpeed Максимально развиваемая персонажем скорость [Tooltip(\"Максимально развиваемая персонажем скорость. [0, infinity]\")] [SerializeField] [Min(0)] protected float maxSpeed Field Value float [0, infinity] Properties Animator public Animator Animator { get; } Property Value Animator Controller public CharacterController Controller { get; } Property Value CharacterController CurrentHealthPoints Текущее количество здоровья персонажа public float CurrentHealthPoints { get; protected set; } Property Value float [0, maxHealthPoints] DefaultColor Стандартный цвет персонажа. Выставляется при респавне вместо deathColor protected Color DefaultColor { get; } Property Value Color Enabled При включении поведения персонажа также включается его контроллёр protected bool Enabled { get; set; } Property Value bool HitEffect Анимация, проигрываемая при получении урона персонажем protected ParticleSystem HitEffect { get; } Property Value ParticleSystem IsAlive Состояние персонажа \"жив/мёртв\" public bool IsAlive { get; } Property Value bool Возвращает true, если текущий показатель здоровья больше 0, иначе false MeshRenderer protected SkinnedMeshRenderer MeshRenderer { get; } Property Value SkinnedMeshRenderer Methods Awake() protected override void Awake() Hit(float) Вызывается для нанесения урона персонажу public abstract void Hit(float damage) Parameters damage float Количество нанесённого урона Load(UnityReader) Загружает данные объекта из файла public override void Load(UnityReader reader) Parameters reader UnityReader SaveSystem.UnityReader OnDeath() Вызывается автоматически, когда персонаж мёртв protected abstract void OnDeath() Save(UnityWriter) Сохраняет данные объекта в файл public override void Save(UnityWriter writer) Parameters writer UnityWriter SaveSystem.UnityWriter"
+  },
+  "api/BaseDefense.Characters.EnemyCharacter.Factory.html": {
+    "href": "api/BaseDefense.Characters.EnemyCharacter.Factory.html",
+    "title": "Class EnemyCharacter.Factory",
+    "keywords": "Class EnemyCharacter.Factory Inheritance object PlaceholderFactoryBase<EnemyCharacter> PlaceholderFactory<Object, EnemyCharacter> EnemyCharacter.Factory Implements IPlaceholderFactory IValidatable IFactory<Object, EnemyCharacter> IFactory Namespace: BaseDefense.Characters Assembly: BaseDefense.dll Syntax public class EnemyCharacter.Factory : PlaceholderFactory<Object, EnemyCharacter>, IPlaceholderFactory, IValidatable, IFactory<Object, EnemyCharacter>, IFactory"
+  },
+  "api/BaseDefense.Characters.EnemyCharacter.html": {
+    "href": "api/BaseDefense.Characters.EnemyCharacter.html",
+    "title": "Class EnemyCharacter",
+    "keywords": "Class EnemyCharacter Inheritance object Object Component Behaviour MonoBehaviour Object BaseCharacter EnemyCharacter Implements IPersistentObject IAttackable Namespace: BaseDefense.Characters Assembly: BaseDefense.dll Syntax [RequireComponent(typeof(ItemDrop), typeof(Ragdoll))] public sealed class EnemyCharacter : BaseCharacter, IPersistentObject, IAttackable Properties AttackDistance Расстояние, с которого персонаж начинает атаковать public float AttackDistance { get; } Property Value float [0, infinity] MaxSpeed Максимально развиваемая персонажем скорость public float MaxSpeed { get; } Property Value float [0, infinity] WalkingSpeed Скорость, развиваемая врагом при патруле public float WalkingSpeed { get; } Property Value float [0, infinity] Methods AttackPlayer() Вызывается для атаки на игрока public void AttackPlayer() Constructor(PlayerCharacter) [Inject] public void Constructor(PlayerCharacter player) Parameters player PlayerCharacter EnemyUpdate() Заменяет обычный Update метод public bool EnemyUpdate() Returns bool Возвращает false, если персонаж мёртв Remarks Должен вызываться из другого сценария. Обычно это сценарий, который порождает персонажей данного типа GetRandomPoint() Вызывается для получения случайной целевой точки патруля public Vector3 GetRandomPoint() Returns Vector3 Hit(float) Вызывается для нанесения урона персонажу public override void Hit(float damage) Parameters damage float Количество нанесённого урона Initialize(Transform[], Vector3, Quaternion) Вызывается как для порождения нового врага, так и для респавна умершего public void Initialize(Transform[] targetPoints, Vector3 position, Quaternion rotation) Parameters targetPoints Transform[] Целевые точки для патруля position Vector3 Точка спавна врага rotation Quaternion Поворот, принимаемый во время спавна OnDeath() Вызывается автоматически, когда персонаж мёртв protected override void OnDeath() Patrol() Вызывается для патруля public void Patrol()"
+  },
+  "api/BaseDefense.Characters.html": {
+    "href": "api/BaseDefense.Characters.html",
+    "title": "Namespace BaseDefense.Characters",
+    "keywords": "Namespace BaseDefense.Characters Classes BaseCharacter Базовый класс для всех типов персонажей EnemyCharacter EnemyCharacter.Factory PlayerCharacter"
+  },
+  "api/BaseDefense.Characters.PlayerCharacter.html": {
+    "href": "api/BaseDefense.Characters.PlayerCharacter.html",
+    "title": "Class PlayerCharacter",
+    "keywords": "Class PlayerCharacter Inheritance object Object Component Behaviour MonoBehaviour Object BaseCharacter PlayerCharacter Implements IPersistentObject IAttackable Namespace: BaseDefense.Characters Assembly: BaseDefense.dll Syntax [RequireComponent(typeof(ItemCollecting), typeof(DisplayHealthPoints))] public sealed class PlayerCharacter : BaseCharacter, IPersistentObject, IAttackable Methods Awake() protected override void Awake() Constructor(JoystickController, Shop, DisplayingUI) [Inject] public void Constructor(JoystickController joystick, Shop shop, DisplayingUI displayingUI) Parameters joystick JoystickController shop Shop displayingUI DisplayingUI Hit(float) Вызывается для нанесения урона персонажу public override void Hit(float damage) Parameters damage float Количество нанесённого урона Load(UnityReader) Загружает данные объекта из файла public override void Load(UnityReader reader) Parameters reader UnityReader SaveSystem.UnityReader OnDeath() Вызывается автоматически, когда персонаж мёртв protected override void OnDeath() Save(UnityWriter) Сохраняет данные объекта в файл public override void Save(UnityWriter writer) Parameters writer UnityWriter SaveSystem.UnityWriter SelectGun(int) Вызывается при выборе оружия из магазина public void SelectGun(int gunId) Parameters gunId int Выбранное оружие Upgrade(UpgradableProperty) public void Upgrade(UpgradableProperty property) Parameters property UpgradableProperty"
+  },
+  "api/BaseDefense.Crystal.html": {
+    "href": "api/BaseDefense.Crystal.html",
+    "title": "Class Crystal",
+    "keywords": "Class Crystal Inheritance object Object Component Behaviour MonoBehaviour Object Crystal Implements IPersistentObject IAttackable Namespace: BaseDefense Assembly: BaseDefense.dll Syntax [RequireComponent(typeof(ItemDrop))] public class Crystal : Object, IPersistentObject, IAttackable Properties CurrentHealthPoints Текущее количество очков \"здоровья\" кристалла public float CurrentHealthPoints { get; } Property Value float [0, maxHealthPoints] Methods Awake() protected override void Awake() Hit(float) Вызывается для нанесения повреждений кристаллу public void Hit(float damage) Parameters damage float Количество нанесённых повреждений Initialize() public void Initialize() Load(UnityReader) Загружает данные объекта из файла public override void Load(UnityReader reader) Parameters reader UnityReader SaveSystem.UnityReader Save(UnityWriter) Сохраняет данные объекта в файл public override void Save(UnityWriter writer) Parameters writer UnityWriter SaveSystem.UnityWriter"
+  },
+  "api/BaseDefense.EnemyBase.Factory.html": {
+    "href": "api/BaseDefense.EnemyBase.Factory.html",
+    "title": "Class EnemyBase.Factory",
+    "keywords": "Class EnemyBase.Factory Inheritance object PlaceholderFactoryBase<EnemyBase> PlaceholderFactory<Object, EnemyBase> EnemyBase.Factory Implements IPlaceholderFactory IValidatable IFactory<Object, EnemyBase> IFactory Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public class EnemyBase.Factory : PlaceholderFactory<Object, EnemyBase>, IPlaceholderFactory, IValidatable, IFactory<Object, EnemyBase>, IFactory"
+  },
+  "api/BaseDefense.EnemyBase.html": {
+    "href": "api/BaseDefense.EnemyBase.html",
+    "title": "Class EnemyBase",
+    "keywords": "Class EnemyBase Inheritance object Object Component Behaviour MonoBehaviour Object EnemyBase Implements IPersistentObject Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public class EnemyBase : Object, IPersistentObject Properties TransitionsBetweenBases Переходы между уровнями public EnemyBase.Transitions TransitionsBetweenBases { get; } Property Value EnemyBase.Transitions Methods Initialize(BaseTemplate) public void Initialize(BaseTemplate baseTemplate) Parameters baseTemplate BaseTemplate Load(UnityReader) Загружает данные объекта из файла public override void Load(UnityReader reader) Parameters reader UnityReader SaveSystem.UnityReader Save(UnityWriter) Сохраняет данные объекта в файл public override void Save(UnityWriter writer) Parameters writer UnityWriter SaveSystem.UnityWriter"
+  },
+  "api/BaseDefense.EnemyBase.Transitions.html": {
+    "href": "api/BaseDefense.EnemyBase.Transitions.html",
+    "title": "Struct EnemyBase.Transitions",
+    "keywords": "Struct EnemyBase.Transitions Namespace: BaseDefense Assembly: BaseDefense.dll Syntax [Serializable] public struct EnemyBase.Transitions Fields backTransition public Transform backTransition Field Value Transform frontTransition public Transform frontTransition Field Value Transform"
+  },
+  "api/BaseDefense.EnemyStation.Factory.html": {
+    "href": "api/BaseDefense.EnemyStation.Factory.html",
+    "title": "Class EnemyStation.Factory",
+    "keywords": "Class EnemyStation.Factory Inheritance object PlaceholderFactoryBase<EnemyStation> PlaceholderFactory<Object, EnemyStation> EnemyStation.Factory Implements IPlaceholderFactory IValidatable IFactory<Object, EnemyStation> IFactory Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public class EnemyStation.Factory : PlaceholderFactory<Object, EnemyStation>, IPlaceholderFactory, IValidatable, IFactory<Object, EnemyStation>, IFactory"
+  },
+  "api/BaseDefense.EnemyStation.html": {
+    "href": "api/BaseDefense.EnemyStation.html",
+    "title": "Class EnemyStation",
+    "keywords": "Class EnemyStation Inheritance object Object Component Behaviour MonoBehaviour Object EnemyStation Implements IPersistentObject IAttackable Namespace: BaseDefense Assembly: BaseDefense.dll Syntax [RequireComponent(typeof(DisplayHealthPoints))] public class EnemyStation : Object, IPersistentObject, IAttackable Properties CurrentHealthPoints Текущее количество здоровья базы public float CurrentHealthPoints { get; } Property Value float [0, maxHealthPoints] Methods Awake() protected override void Awake() Hit(float) Вызывается для нанесения повреждений объекту public void Hit(float damage) Parameters damage float Количество нанесённых повреждений Initialize() public void Initialize() Load(UnityReader) Загружает данные объекта из файла public override void Load(UnityReader reader) Parameters reader UnityReader SaveSystem.UnityReader Save(UnityWriter) Сохраняет данные объекта в файл public override void Save(UnityWriter writer) Parameters writer UnityWriter SaveSystem.UnityWriter SpawnEnemy(Transform[]) public EnemyCharacter SpawnEnemy(Transform[] targetPoints) Parameters targetPoints Transform[] Returns EnemyCharacter"
+  },
+  "api/BaseDefense.Exceptions.AttemptDestroyObjectException.html": {
+    "href": "api/BaseDefense.Exceptions.AttemptDestroyObjectException.html",
+    "title": "Class AttemptDestroyObjectException",
+    "keywords": "Class AttemptDestroyObjectException Inheritance object Exception SystemException UnityException AttemptDestroyObjectException Implements ISerializable Namespace: BaseDefense.Exceptions Assembly: BaseDefense.dll Syntax public class AttemptDestroyObjectException : UnityException, ISerializable Constructors AttemptDestroyObjectException() public AttemptDestroyObjectException() AttemptDestroyObjectException(string, Exception) public AttemptDestroyObjectException(string message, Exception inner) Parameters message string inner Exception AttemptDestroyObjectException(string) public AttemptDestroyObjectException(string message) Parameters message string"
+  },
+  "api/BaseDefense.Exceptions.html": {
+    "href": "api/BaseDefense.Exceptions.html",
+    "title": "Namespace BaseDefense.Exceptions",
+    "keywords": "Namespace BaseDefense.Exceptions Classes AttemptDestroyObjectException RepeatedDestructionObjectException"
+  },
+  "api/BaseDefense.Exceptions.RepeatedDestructionObjectException.html": {
+    "href": "api/BaseDefense.Exceptions.RepeatedDestructionObjectException.html",
+    "title": "Class RepeatedDestructionObjectException",
+    "keywords": "Class RepeatedDestructionObjectException Inheritance object Exception RepeatedDestructionObjectException Implements ISerializable Namespace: BaseDefense.Exceptions Assembly: BaseDefense.dll Syntax public class RepeatedDestructionObjectException : Exception, ISerializable Constructors RepeatedDestructionObjectException() public RepeatedDestructionObjectException() RepeatedDestructionObjectException(string, Exception) public RepeatedDestructionObjectException(string message, Exception inner) Parameters message string inner Exception RepeatedDestructionObjectException(string) public RepeatedDestructionObjectException(string message) Parameters message string"
+  },
+  "api/BaseDefense.Extensions.GameExtensions.html": {
+    "href": "api/BaseDefense.Extensions.GameExtensions.html",
+    "title": "Class GameExtensions",
+    "keywords": "Class GameExtensions Inheritance object GameExtensions Namespace: BaseDefense.Extensions Assembly: BaseDefense.dll Syntax public static class GameExtensions Methods SetVelocityAndAngularVelocity(Rigidbody, Vector3, Vector3) Задаёт линейную и угловую скорость тела public static void SetVelocityAndAngularVelocity(this Rigidbody rigidbody, Vector3 velocity, Vector3 angularVelocity) Parameters rigidbody Rigidbody Изменяемое физическое тело velocity Vector3 Линейная скорость, устанавливаемая телу angularVelocity Vector3 Угловая скорость, устанавливаемая телу ToStringWithSeparator(int, char) Форматирует целое число в строку и добавляет разделитель между числовыми классами public static string ToStringWithSeparator(this int target, char separator = ' ') Parameters target int Форматируемая строка separator char Разделитель, добавляемый в строку Returns string"
+  },
+  "api/BaseDefense.Extensions.html": {
+    "href": "api/BaseDefense.Extensions.html",
+    "title": "Namespace BaseDefense.Extensions",
+    "keywords": "Namespace BaseDefense.Extensions Classes GameExtensions"
+  },
+  "api/BaseDefense.Game.html": {
+    "href": "api/BaseDefense.Game.html",
+    "title": "Class Game",
+    "keywords": "Class Game Inheritance object Object Component Behaviour MonoBehaviour Game Implements IPersistentObject Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public class Game : MonoBehaviour, IPersistentObject Fields GEM_PATH public const string GEM_PATH = \"Prefabs/Items/Gem\" Field Value string MONEY_PATH public const string MONEY_PATH = \"Prefabs/Items/Money\" Field Value string Methods Constructor(Factory, PlayerCharacter) [Inject] public void Constructor(EnemyBase.Factory enemyFactory, PlayerCharacter playerCharacter) Parameters enemyFactory EnemyBase.Factory playerCharacter PlayerCharacter DestroyOldBase() public void DestroyOldBase() Load(UnityReader) public void Load(UnityReader reader) Parameters reader UnityReader Save(UnityWriter) public void Save(UnityWriter writer) Parameters writer UnityWriter"
+  },
+  "api/BaseDefense.GunSlot.html": {
+    "href": "api/BaseDefense.GunSlot.html",
+    "title": "Class GunSlot",
+    "keywords": "Class GunSlot Inheritance object Object ScriptableObject GunSlot Namespace: BaseDefense Assembly: BaseDefense.dll Syntax [CreateAssetMenu(fileName = \"Gun Slot\", menuName = \"Gun Slot\", order = 51)] public class GunSlot : ScriptableObject Fields gun public Gun gun Field Value Gun price public int price Field Value int"
+  },
+  "api/BaseDefense.html": {
+    "href": "api/BaseDefense.html",
+    "title": "Namespace BaseDefense",
+    "keywords": "Namespace BaseDefense Classes BaseTemplate CameraMovement Crystal EnemyBase EnemyBase.Factory EnemyStation EnemyStation.Factory Game GunSlot Inventory JoystickController Object Базовый класс для всех игровых объектов ObjectsPool Реализует простой пул для объектов, наследуемых от BaseDefense.Object Ragdoll Shop UpgradableProperty UpgradablePropertyStep Structs EnemyBase.Transitions Inventory.InventoryData Enums UpgradablePropertyType"
+  },
+  "api/BaseDefense.Installers.html": {
+    "href": "api/BaseDefense.Installers.html",
+    "title": "Namespace BaseDefense.Installers",
+    "keywords": "Namespace BaseDefense.Installers Classes LevelInstaller UserInterfaceInstaller"
+  },
+  "api/BaseDefense.Installers.LevelInstaller.html": {
+    "href": "api/BaseDefense.Installers.LevelInstaller.html",
+    "title": "Class LevelInstaller",
+    "keywords": "Class LevelInstaller Inheritance object Object Component Behaviour MonoBehaviour MonoInstallerBase MonoInstaller LevelInstaller Implements IInstaller Namespace: BaseDefense.Installers Assembly: BaseDefense.dll Syntax public class LevelInstaller : MonoInstaller, IInstaller Methods InstallBindings() public override void InstallBindings()"
+  },
+  "api/BaseDefense.Installers.UserInterfaceInstaller.html": {
+    "href": "api/BaseDefense.Installers.UserInterfaceInstaller.html",
+    "title": "Class UserInterfaceInstaller",
+    "keywords": "Class UserInterfaceInstaller Inheritance object Object Component Behaviour MonoBehaviour MonoInstallerBase MonoInstaller UserInterfaceInstaller Implements IInstaller Namespace: BaseDefense.Installers Assembly: BaseDefense.dll Syntax public class UserInterfaceInstaller : MonoInstaller, IInstaller Methods InstallBindings() public override void InstallBindings()"
+  },
+  "api/BaseDefense.Inventory.html": {
+    "href": "api/BaseDefense.Inventory.html",
+    "title": "Class Inventory",
+    "keywords": "Class Inventory Inheritance object Object Component Behaviour MonoBehaviour Inventory Implements IPersistentObject Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public class Inventory : MonoBehaviour, IPersistentObject Methods Load(UnityReader) public void Load(UnityReader reader) Parameters reader UnityReader PurchaseGun(int, int) public void PurchaseGun(int gunId, int price) Parameters gunId int price int PurchaseUpgrade(int) public void PurchaseUpgrade(int price) Parameters price int PutItem(Item) Кладёт предмет в инвентарь public void PutItem(Item item) Parameters item Item Save() public void Save() Save(UnityWriter) public void Save(UnityWriter writer) Parameters writer UnityWriter"
+  },
+  "api/BaseDefense.Inventory.InventoryData.html": {
+    "href": "api/BaseDefense.Inventory.InventoryData.html",
+    "title": "Struct Inventory.InventoryData",
+    "keywords": "Struct Inventory.InventoryData Namespace: BaseDefense Assembly: BaseDefense.dll Syntax [Serializable] public struct Inventory.InventoryData Fields gems public int gems Field Value int gunIds public List<int> gunIds Field Value List<int> moneys public int moneys Field Value int"
+  },
+  "api/BaseDefense.Items.Gem.html": {
+    "href": "api/BaseDefense.Items.Gem.html",
+    "title": "Class Gem",
+    "keywords": "Class Gem Inheritance object Object Component Behaviour MonoBehaviour Object Item Gem Implements IPersistentObject Namespace: BaseDefense.Items Assembly: BaseDefense.dll Syntax public class Gem : Item, IPersistentObject Methods DestroyItem() Уничтожает предмет public override void DestroyItem() Remarks Рекомендуется вместо вызова метода Object.Destroy() в данном методе использовать ObjectsPool.Push() Drop(Vector3, Vector3) Вызывается для выброса предмета public override void Drop(Vector3 force, Vector3 torque = default) Parameters force Vector3 Направление силы, в котором нужно выбросить предмет torque Vector3 Направление вращения предмета во время выброса"
+  },
+  "api/BaseDefense.Items.html": {
+    "href": "api/BaseDefense.Items.html",
+    "title": "Namespace BaseDefense.Items",
+    "keywords": "Namespace BaseDefense.Items Classes Gem Item Базовый класс для всех видов выпадаемых предметов ItemCollecting Обеспечивает сбор предметов с игрового поля, сброшенных с врагов ItemDrop Money"
+  },
+  "api/BaseDefense.Items.Item.html": {
+    "href": "api/BaseDefense.Items.Item.html",
+    "title": "Class Item",
+    "keywords": "Class Item Базовый класс для всех видов выпадаемых предметов Inheritance object Object Component Behaviour MonoBehaviour Object Item Gem Money Implements IPersistentObject Namespace: BaseDefense.Items Assembly: BaseDefense.dll Syntax [Icon(\"Assets/EditorUI/item.png\")] [RequireComponent(typeof(SphereCollider), typeof(Rigidbody))] public abstract class Item : Object, IPersistentObject Fields meshCollider [SerializeField] protected Collider meshCollider Field Value Collider rb protected Rigidbody rb Field Value Rigidbody trigger [SerializeField] protected Collider trigger Field Value Collider Properties Enabled При включении предмета также включается его триггер, физика жёсткого тела и коллайдер public bool Enabled { get; set; } Property Value bool Methods Awake() protected override void Awake() Collapse() protected Sequence Collapse() Returns Sequence DestroyItem() Уничтожает предмет public abstract void DestroyItem() Remarks Рекомендуется вместо вызова метода Object.Destroy() в данном методе использовать ObjectsPool.Push() Drop(Vector3, Vector3) Вызывается для выброса предмета public abstract void Drop(Vector3 force, Vector3 torque = default) Parameters force Vector3 Направление силы, в котором нужно выбросить предмет torque Vector3 Направление вращения предмета во время выброса Load(UnityReader) Загружает данные объекта из файла public override void Load(UnityReader reader) Parameters reader UnityReader SaveSystem.UnityReader Save(UnityWriter) Сохраняет данные объекта в файл public override void Save(UnityWriter writer) Parameters writer UnityWriter SaveSystem.UnityWriter"
+  },
+  "api/BaseDefense.Items.ItemCollecting.html": {
+    "href": "api/BaseDefense.Items.ItemCollecting.html",
+    "title": "Class ItemCollecting",
+    "keywords": "Class ItemCollecting Обеспечивает сбор предметов с игрового поля, сброшенных с врагов Inheritance object Object Component Behaviour MonoBehaviour ItemCollecting Implements IPersistentObject Namespace: BaseDefense.Items Assembly: BaseDefense.dll Syntax public class ItemCollecting : MonoBehaviour, IPersistentObject Properties DropIsInProcess Рекомендуется использовать это свойство перед запуском сопрограммы сброса денег public bool DropIsInProcess { get; } Property Value bool Methods DropMoney() Реализует анимацию сброса денег и кладёт их в инвентарь public IEnumerator DropMoney() Returns IEnumerator Load(UnityReader) public void Load(UnityReader reader) Parameters reader UnityReader PutGem(Gem) Кладёт кристалл в инвентарь public void PutGem(Gem gem) Parameters gem Gem Save(UnityWriter) public void Save(UnityWriter writer) Parameters writer UnityWriter StackMoney(Money) Укладывает пачку денег на верх стека public void StackMoney(Money money) Parameters money Money UpgradeCapacity(UpgradablePropertyStep) public void UpgradeCapacity(UpgradablePropertyStep propertyStep) Parameters propertyStep UpgradablePropertyStep"
+  },
+  "api/BaseDefense.Items.ItemDrop.html": {
+    "href": "api/BaseDefense.Items.ItemDrop.html",
+    "title": "Class ItemDrop",
+    "keywords": "Class ItemDrop Inheritance object Object Component Behaviour MonoBehaviour ItemDrop Namespace: BaseDefense.Items Assembly: BaseDefense.dll Syntax public class ItemDrop : MonoBehaviour Methods DropItems() Вызывается для выброса предметов public void DropItems() Remarks Количество выпадаемых предметов выбирается случайным образом"
+  },
+  "api/BaseDefense.Items.Money.html": {
+    "href": "api/BaseDefense.Items.Money.html",
+    "title": "Class Money",
+    "keywords": "Class Money Inheritance object Object Component Behaviour MonoBehaviour Object Item Money Implements IPersistentObject Namespace: BaseDefense.Items Assembly: BaseDefense.dll Syntax public class Money : Item, IPersistentObject Methods DestroyItem() Уничтожает предмет public override void DestroyItem() Remarks Рекомендуется вместо вызова метода Object.Destroy() в данном методе использовать ObjectsPool.Push() Drop(Vector3, Vector3) Вызывается для выброса предмета public override void Drop(Vector3 force, Vector3 torque = default) Parameters force Vector3 Направление силы, в котором нужно выбросить предмет torque Vector3 Направление вращения предмета во время выброса"
+  },
+  "api/BaseDefense.JoystickController.html": {
+    "href": "api/BaseDefense.JoystickController.html",
+    "title": "Class JoystickController",
+    "keywords": "Class JoystickController Inheritance object Object Component Behaviour MonoBehaviour JoystickController Implements IBeginDragHandler IDragHandler IEndDragHandler IEventSystemHandler Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public class JoystickController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IEventSystemHandler Methods GetInput() public Vector3 GetInput() Returns Vector3 OnBeginDrag(PointerEventData) Called by a BaseInputModule before a drag is started. public void OnBeginDrag(PointerEventData eventData) Parameters eventData PointerEventData OnDrag(PointerEventData) When dragging is occurring this will be called every time the cursor is moved. public void OnDrag(PointerEventData eventData) Parameters eventData PointerEventData OnEndDrag(PointerEventData) Called by a BaseInputModule when a drag is ended. public void OnEndDrag(PointerEventData eventData) Parameters eventData PointerEventData"
+  },
+  "api/BaseDefense.Messages.DeathPlayerMessage.html": {
+    "href": "api/BaseDefense.Messages.DeathPlayerMessage.html",
+    "title": "Class DeathPlayerMessage",
+    "keywords": "Class DeathPlayerMessage Inheritance object Message DeathPlayerMessage Namespace: BaseDefense.Messages Assembly: BaseDefense.dll Syntax public class DeathPlayerMessage : Message"
+  },
+  "api/BaseDefense.Messages.DestroyUnusedItemsMessage.html": {
+    "href": "api/BaseDefense.Messages.DestroyUnusedItemsMessage.html",
+    "title": "Class DestroyUnusedItemsMessage",
+    "keywords": "Class DestroyUnusedItemsMessage Inheritance object Message DestroyUnusedItemsMessage Namespace: BaseDefense.Messages Assembly: BaseDefense.dll Syntax public class DestroyUnusedItemsMessage : Message"
+  },
+  "api/BaseDefense.Messages.html": {
+    "href": "api/BaseDefense.Messages.html",
+    "title": "Namespace BaseDefense.Messages",
+    "keywords": "Namespace BaseDefense.Messages Classes DeathPlayerMessage DestroyUnusedItemsMessage NextLevelMessage RestartMessage UnlockedGunsMessage"
+  },
+  "api/BaseDefense.Messages.NextLevelMessage.html": {
+    "href": "api/BaseDefense.Messages.NextLevelMessage.html",
+    "title": "Class NextLevelMessage",
+    "keywords": "Class NextLevelMessage Inheritance object Message NextLevelMessage Namespace: BaseDefense.Messages Assembly: BaseDefense.dll Syntax public class NextLevelMessage : Message"
+  },
+  "api/BaseDefense.Messages.RestartMessage.html": {
+    "href": "api/BaseDefense.Messages.RestartMessage.html",
+    "title": "Class RestartMessage",
+    "keywords": "Class RestartMessage Inheritance object Message RestartMessage Namespace: BaseDefense.Messages Assembly: BaseDefense.dll Syntax public class RestartMessage : Message"
+  },
+  "api/BaseDefense.Messages.UnlockedGunsMessage.html": {
+    "href": "api/BaseDefense.Messages.UnlockedGunsMessage.html",
+    "title": "Class UnlockedGunsMessage",
+    "keywords": "Class UnlockedGunsMessage Inheritance object Message UnlockedGunsMessage Namespace: BaseDefense.Messages Assembly: BaseDefense.dll Syntax public class UnlockedGunsMessage : Message Constructors UnlockedGunsMessage(List<int>) public UnlockedGunsMessage(List<int> unlockedGuns) Parameters unlockedGuns List<int> Fields unlockedGuns public readonly List<int> unlockedGuns Field Value List<int>"
+  },
+  "api/BaseDefense.Messages.UpdateCurrencyMessages.html": {
+    "href": "api/BaseDefense.Messages.UpdateCurrencyMessages.html",
+    "title": "Namespace BaseDefense.Messages.UpdateCurrencyMessages",
+    "keywords": "Namespace BaseDefense.Messages.UpdateCurrencyMessages Classes UpdateCurrencyMessage UpdateGemsMessage UpdateMoneysMessage"
+  },
+  "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateCurrencyMessage.html": {
+    "href": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateCurrencyMessage.html",
+    "title": "Class UpdateCurrencyMessage",
+    "keywords": "Class UpdateCurrencyMessage Inheritance object Message UpdateCurrencyMessage UpdateGemsMessage UpdateMoneysMessage Namespace: BaseDefense.Messages.UpdateCurrencyMessages Assembly: BaseDefense.dll Syntax public abstract class UpdateCurrencyMessage : Message Constructors UpdateCurrencyMessage(int) protected UpdateCurrencyMessage(int value) Parameters value int Fields Value public readonly int Value Field Value int"
+  },
+  "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateGemsMessage.html": {
+    "href": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateGemsMessage.html",
+    "title": "Class UpdateGemsMessage",
+    "keywords": "Class UpdateGemsMessage Inheritance object Message UpdateCurrencyMessage UpdateGemsMessage Namespace: BaseDefense.Messages.UpdateCurrencyMessages Assembly: BaseDefense.dll Syntax public class UpdateGemsMessage : UpdateCurrencyMessage Constructors UpdateGemsMessage(int) public UpdateGemsMessage(int value) Parameters value int"
+  },
+  "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateMoneysMessage.html": {
+    "href": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateMoneysMessage.html",
+    "title": "Class UpdateMoneysMessage",
+    "keywords": "Class UpdateMoneysMessage Inheritance object Message UpdateCurrencyMessage UpdateMoneysMessage Namespace: BaseDefense.Messages.UpdateCurrencyMessages Assembly: BaseDefense.dll Syntax public class UpdateMoneysMessage : UpdateCurrencyMessage Constructors UpdateMoneysMessage(int) public UpdateMoneysMessage(int value) Parameters value int"
+  },
+  "api/BaseDefense.Object.html": {
+    "href": "api/BaseDefense.Object.html",
+    "title": "Class Object",
+    "keywords": "Class Object Базовый класс для всех игровых объектов Inheritance object Object Component Behaviour MonoBehaviour Object Gun Projectile BaseCharacter Crystal EnemyBase EnemyStation Item Implements IPersistentObject Namespace: BaseDefense Assembly: BaseDefense.dll Syntax [Icon(\"Assets/EditorUI/object.png\")] public abstract class Object : MonoBehaviour, IPersistentObject Properties Id Идентификатор объекта public int Id { get; } Property Value int Remarks Идентификатор объекта является уникальным только для объектов разных видов. Объекты одного вида (напр. LowEnemy) имеют одинаковый id IsDestroyed Возвращает true, если объект уничтожен, иначе false public bool IsDestroyed { get; } Property Value bool Remarks Объект считается уничтоженным, если он был добавлен в пул и отключён на сцене Methods Awake() protected virtual void Awake() Create<T>(in T, Transform, Vector3, Quaternion) Создаёт новый объект public static T Create<T>(in T original, Transform parent = null, Vector3 position = default, Quaternion rotation = default) where T : Object Parameters original T Префаб, из которого создаётся объект parent Transform Родительский transform создаваемого объекта position Vector3 Позиция объекта при создании rotation Quaternion Ориентация объекта при создании Returns T Type Parameters T Create<T>(int, Transform, Vector3, Quaternion) Создаёт новый объект public static T Create<T>(int id, Transform parent = null, Vector3 position = default, Quaternion rotation = default) where T : Object Parameters id int Идентификатор создаваемого объекта parent Transform Родительский transform создаваемого объекта position Vector3 Позиция объекта при создании rotation Quaternion Ориентация объекта при создании Returns T Type Parameters T CreateFromFactory<T>(in T, in PlaceholderFactory<Object, T>, Transform, Vector3, Quaternion) Создаёт новый объект, используя фабрику public static T CreateFromFactory<T>(in T original, in PlaceholderFactory<Object, T> factory, Transform parent = null, Vector3 position = default, Quaternion rotation = default) where T : Object Parameters original T Префаб, из которого создаётся объект factory PlaceholderFactory<Object, T> Фабрика, с помощью которой создаётся объект parent Transform Родительский transform создаваемого объекта position Vector3 Позиция объекта при создании rotation Quaternion Ориентация объекта при создании Returns T Type Parameters T Тип создаваемого объекта CreateFromFactory<T>(int, PlaceholderFactory<Object, T>, Transform, Vector3, Quaternion) Создаёт новый объект, используя фабрику public static T CreateFromFactory<T>(int id, PlaceholderFactory<Object, T> factory, Transform parent = null, Vector3 position = default, Quaternion rotation = default) where T : Object Parameters id int Идентификатор создаваемого объекта factory PlaceholderFactory<Object, T> Фабрика, с помощью которой создаётся объект parent Transform Родительский transform создаваемого объекта position Vector3 Позиция объекта при создании rotation Quaternion Ориентация объекта при создании Returns T Type Parameters T Тип создаваемого объекта Destroy() Уничтожает объект public void Destroy() Destroy(Tween) Уничтожает объект public void Destroy(Tween tweenTask) Parameters tweenTask Tween Анимация, которая должна проиграть перед уничтожением объекта Destroy(IEnumerator) Уничтожает объект public void Destroy(IEnumerator task) Parameters task IEnumerator Задача, которая должна быть выполнена перед уничтожением объекта Destroy(float) Уничтожает объект public void Destroy(float time) Parameters time float Время, спустя которое объект должен быть уничтожен Equals(object) public override bool Equals(object other) Parameters other object Returns bool Возвращает true, если объекты имеют одинаковый id, иначе возвращает false GetHashCode() public override int GetHashCode() Returns int Load(UnityReader) Загружает данные объекта из файла public virtual void Load(UnityReader reader) Parameters reader UnityReader SaveSystem.UnityReader Save(UnityWriter) Сохраняет данные объекта в файл public virtual void Save(UnityWriter writer) Parameters writer UnityWriter SaveSystem.UnityWriter"
+  },
+  "api/BaseDefense.ObjectsPool.html": {
+    "href": "api/BaseDefense.ObjectsPool.html",
+    "title": "Class ObjectsPool",
+    "keywords": "Class ObjectsPool Реализует простой пул для объектов, наследуемых от BaseDefense.Object Inheritance object ObjectsPool Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public static class ObjectsPool Methods Get<T>(in T, out T) Извлекает объект из пула public static bool Get<T>(in T targetObject, out T foundObject) where T : Object Parameters targetObject T Искомый в пуле объект foundObject T Найденный объект, передаваемый вызывающему методу Returns bool Возвращает true, если объект найден. Иначе возвращает false Type Parameters T MoveObjectToHisScene(in Object) Вспомогательный метод для сортировки игровых объектов в разные сцены public static void MoveObjectToHisScene(in Object obj) Parameters obj Object Объект, переносимый в сцену Push(in Object) Добавляет объект в пул public static void Push(in Object value) Parameters value Object Объект, который добавляется в пул"
+  },
+  "api/BaseDefense.Properties.html": {
+    "href": "api/BaseDefense.Properties.html",
+    "title": "Namespace BaseDefense.Properties",
+    "keywords": "Namespace BaseDefense.Properties Classes MinMaxSliderFloat Значение с плавающей запятой, ограниченное определённым диапазоном MinMaxSliderInt Целочисленное значение, ограниченное определённым диапазоном Structs ObjectId Идентификатор объекта является уникальным только для объектов разных видов. Объекты одного вида (напр. LowEnemy) имеют одинаковый id"
+  },
+  "api/BaseDefense.Properties.MinMaxSliderFloat.html": {
+    "href": "api/BaseDefense.Properties.MinMaxSliderFloat.html",
+    "title": "Class MinMaxSliderFloat",
+    "keywords": "Class MinMaxSliderFloat Значение с плавающей запятой, ограниченное определённым диапазоном Inheritance object MinMaxSliderFloat Namespace: BaseDefense.Properties Assembly: BaseDefense.dll Syntax [Serializable] public class MinMaxSliderFloat Constructors MinMaxSliderFloat(float, float) public MinMaxSliderFloat(float minLimit, float maxLimit) Parameters minLimit float Минимально возможное значение для слайдера maxLimit float Максимально возможное значение для слайдера Fields maxLimit public float maxLimit Field Value float maxValue public float maxValue Field Value float minLimit public float minLimit Field Value float minValue public float minValue Field Value float"
+  },
+  "api/BaseDefense.Properties.MinMaxSliderInt.html": {
+    "href": "api/BaseDefense.Properties.MinMaxSliderInt.html",
+    "title": "Class MinMaxSliderInt",
+    "keywords": "Class MinMaxSliderInt Целочисленное значение, ограниченное определённым диапазоном Inheritance object MinMaxSliderInt Namespace: BaseDefense.Properties Assembly: BaseDefense.dll Syntax [Serializable] public class MinMaxSliderInt Constructors MinMaxSliderInt(int, int) public MinMaxSliderInt(int minLimit, int maxLimit) Parameters minLimit int Минимально возможное значение для слайдера maxLimit int Максимально возможное значение для слайдера Fields maxLimit public int maxLimit Field Value int maxValue public int maxValue Field Value int minLimit public int minLimit Field Value int minValue public int minValue Field Value int"
+  },
+  "api/BaseDefense.Properties.ObjectId.html": {
+    "href": "api/BaseDefense.Properties.ObjectId.html",
+    "title": "Struct ObjectId",
+    "keywords": "Struct ObjectId Идентификатор объекта является уникальным только для объектов разных видов. Объекты одного вида (напр. LowEnemy) имеют одинаковый id Namespace: BaseDefense.Properties Assembly: BaseDefense.dll Syntax [Serializable] public struct ObjectId Fields id public int id Field Value int"
+  },
+  "api/BaseDefense.Ragdoll.html": {
+    "href": "api/BaseDefense.Ragdoll.html",
+    "title": "Class Ragdoll",
+    "keywords": "Class Ragdoll Inheritance object Object Component Behaviour MonoBehaviour Ragdoll Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public sealed class Ragdoll : MonoBehaviour Properties Enabled public bool Enabled { get; set; } Property Value bool Methods AddImpulse(Vector3) public void AddImpulse(Vector3 force) Parameters force Vector3"
+  },
+  "api/BaseDefense.Shop.html": {
+    "href": "api/BaseDefense.Shop.html",
+    "title": "Class Shop",
+    "keywords": "Class Shop Inheritance object Object Component Behaviour MonoBehaviour Shop Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public sealed class Shop : MonoBehaviour Methods TakeGun(int, Gun) Вызывается для взятия оружия из магазина public Gun TakeGun(int gunId, Gun playerGun) Parameters gunId int Оружие, которое необходимо забрать из магазина playerGun Gun Оружие игрока Returns Gun Если в магазине нет запрашиваемого оружия - возвращается оружие игрока"
+  },
+  "api/BaseDefense.StateMachine.Attack.html": {
+    "href": "api/BaseDefense.StateMachine.Attack.html",
+    "title": "Class Attack",
+    "keywords": "Class Attack Inheritance object State Attack Namespace: BaseDefense.StateMachine Assembly: BaseDefense.dll Syntax public class Attack : State Constructors Attack(EnemyCharacter, Transform) public Attack(EnemyCharacter agent, Transform player) Parameters agent EnemyCharacter player Transform Methods Enter() protected override void Enter() Exit() protected override void Exit() Update() protected override void Update()"
+  },
+  "api/BaseDefense.StateMachine.html": {
+    "href": "api/BaseDefense.StateMachine.html",
+    "title": "Namespace BaseDefense.StateMachine",
+    "keywords": "Namespace BaseDefense.StateMachine Classes Attack Running State Walking"
+  },
+  "api/BaseDefense.StateMachine.Running.html": {
+    "href": "api/BaseDefense.StateMachine.Running.html",
+    "title": "Class Running",
+    "keywords": "Class Running Inheritance object State Running Namespace: BaseDefense.StateMachine Assembly: BaseDefense.dll Syntax public class Running : State Constructors Running(EnemyCharacter, Transform) public Running(EnemyCharacter agent, Transform player) Parameters agent EnemyCharacter player Transform Methods Enter() protected override void Enter() Exit() protected override void Exit() Update() protected override void Update()"
+  },
+  "api/BaseDefense.StateMachine.State.html": {
+    "href": "api/BaseDefense.StateMachine.State.html",
+    "title": "Class State",
+    "keywords": "Class State Inheritance object State Attack Running Walking Namespace: BaseDefense.StateMachine Assembly: BaseDefense.dll Syntax public abstract class State Fields Agent protected EnemyCharacter Agent Field Value EnemyCharacter Animator protected Animator Animator Field Value Animator AttackTrigger protected bool AttackTrigger Field Value bool Controller protected CharacterController Controller Field Value CharacterController NextState protected State NextState Field Value State Player protected Transform Player Field Value Transform Stage protected Action Stage Field Value Action Transform protected Transform Transform Field Value Transform Methods Enter() protected abstract void Enter() Exit() protected abstract void Exit() Process() public State Process() Returns State SetTrigger(bool) public void SetTrigger(bool value) Parameters value bool Update() protected abstract void Update()"
+  },
+  "api/BaseDefense.StateMachine.Walking.html": {
+    "href": "api/BaseDefense.StateMachine.Walking.html",
+    "title": "Class Walking",
+    "keywords": "Class Walking Inheritance object State Walking Namespace: BaseDefense.StateMachine Assembly: BaseDefense.dll Syntax public class Walking : State Constructors Walking(EnemyCharacter, Transform) public Walking(EnemyCharacter agent, Transform player) Parameters agent EnemyCharacter player Transform Methods Enter() protected override void Enter() Exit() protected override void Exit() Update() protected override void Update()"
+  },
+  "api/BaseDefense.UI.BillboardHealthPointsBar.html": {
+    "href": "api/BaseDefense.UI.BillboardHealthPointsBar.html",
+    "title": "Class BillboardHealthPointsBar",
+    "keywords": "Class BillboardHealthPointsBar Inheritance object Object Component Behaviour MonoBehaviour BillboardHealthPointsBar Namespace: BaseDefense.UI Assembly: BaseDefense.dll Syntax public class BillboardHealthPointsBar : MonoBehaviour"
+  },
+  "api/BaseDefense.UI.BuyButtons.GunBuyButton.html": {
+    "href": "api/BaseDefense.UI.BuyButtons.GunBuyButton.html",
+    "title": "Class GunBuyButton",
+    "keywords": "Class GunBuyButton Inheritance object Object Component Behaviour MonoBehaviour GunBuyButton Namespace: BaseDefense.UI.BuyButtons Assembly: BaseDefense.dll Syntax public class GunBuyButton : MonoBehaviour Methods PurchaseGun() public void PurchaseGun()"
+  },
+  "api/BaseDefense.UI.BuyButtons.html": {
+    "href": "api/BaseDefense.UI.BuyButtons.html",
+    "title": "Namespace BaseDefense.UI.BuyButtons",
+    "keywords": "Namespace BaseDefense.UI.BuyButtons Classes GunBuyButton UpgradeBuyButton"
+  },
+  "api/BaseDefense.UI.BuyButtons.UpgradeBuyButton.html": {
+    "href": "api/BaseDefense.UI.BuyButtons.UpgradeBuyButton.html",
+    "title": "Class UpgradeBuyButton",
+    "keywords": "Class UpgradeBuyButton Inheritance object Object Component Behaviour MonoBehaviour UpgradeBuyButton Namespace: BaseDefense.UI.BuyButtons Assembly: BaseDefense.dll Syntax public class UpgradeBuyButton : MonoBehaviour Methods Construct(PlayerCharacter, Inventory) [Inject] public void Construct(PlayerCharacter player, Inventory inventory) Parameters player PlayerCharacter inventory Inventory UpgradeProperty() public void UpgradeProperty()"
+  },
+  "api/BaseDefense.UI.DisplayHealthPoints.html": {
+    "href": "api/BaseDefense.UI.DisplayHealthPoints.html",
+    "title": "Class DisplayHealthPoints",
+    "keywords": "Class DisplayHealthPoints Реализует отображение полосы здоровья Inheritance object Object Component Behaviour MonoBehaviour DisplayHealthPoints Namespace: BaseDefense.UI Assembly: BaseDefense.dll Syntax public class DisplayHealthPoints : MonoBehaviour Methods SetMaxValue(int) public void SetMaxValue(int maxHealthPoints) Parameters maxHealthPoints int UpdateView(int) public void UpdateView(int currentHealthPoints) Parameters currentHealthPoints int"
+  },
+  "api/BaseDefense.UI.DisplayingUI.html": {
+    "href": "api/BaseDefense.UI.DisplayingUI.html",
+    "title": "Class DisplayingUI",
+    "keywords": "Class DisplayingUI Inheritance object Object Component Behaviour MonoBehaviour DisplayingUI Namespace: BaseDefense.UI Assembly: BaseDefense.dll Syntax public class DisplayingUI : MonoBehaviour Methods CloseShop() public void CloseShop() CloseUpgrades() public void CloseUpgrades() OpenShop() public void OpenShop() OpenUpgrades() public void OpenUpgrades() Restart() public void Restart()"
+  },
+  "api/BaseDefense.UI.GunSelectButton.html": {
+    "href": "api/BaseDefense.UI.GunSelectButton.html",
+    "title": "Class GunSelectButton",
+    "keywords": "Class GunSelectButton Inheritance object Object Component Behaviour MonoBehaviour GunSelectButton Namespace: BaseDefense.UI Assembly: BaseDefense.dll Syntax [RequireComponent(typeof(Button))] public class GunSelectButton : MonoBehaviour Methods DisableButton() public void DisableButton() EnableButton() public void EnableButton()"
+  },
+  "api/BaseDefense.UI.GunSelectWindow.html": {
+    "href": "api/BaseDefense.UI.GunSelectWindow.html",
+    "title": "Class GunSelectWindow",
+    "keywords": "Class GunSelectWindow Inheritance object Object Component Behaviour MonoBehaviour GunSelectWindow Implements IPersistentObject Namespace: BaseDefense.UI Assembly: BaseDefense.dll Syntax [RequireComponent(typeof(Canvas), typeof(CanvasGroup))] public class GunSelectWindow : MonoBehaviour, IPersistentObject Properties Canvas public Canvas Canvas { get; } Property Value Canvas CanvasGroup public CanvasGroup CanvasGroup { get; } Property Value CanvasGroup Methods Load(UnityReader) public void Load(UnityReader reader) Parameters reader UnityReader OnSelectGun(RectTransform) public void OnSelectGun(RectTransform rectTransform) Parameters rectTransform RectTransform Save(UnityWriter) public void Save(UnityWriter writer) Parameters writer UnityWriter SelectGun(GunSlot) public void SelectGun(GunSlot gunSlot) Parameters gunSlot GunSlot"
+  },
+  "api/BaseDefense.UI.html": {
+    "href": "api/BaseDefense.UI.html",
+    "title": "Namespace BaseDefense.UI",
+    "keywords": "Namespace BaseDefense.UI Classes BillboardHealthPointsBar DisplayHealthPoints Реализует отображение полосы здоровья DisplayingUI GunSelectButton GunSelectWindow PlayerUpgradesWindow PurchasingGunWindow"
+  },
+  "api/BaseDefense.UI.PlayerUpgradesWindow.html": {
+    "href": "api/BaseDefense.UI.PlayerUpgradesWindow.html",
+    "title": "Class PlayerUpgradesWindow",
+    "keywords": "Class PlayerUpgradesWindow Inheritance object Object Component Behaviour MonoBehaviour PlayerUpgradesWindow Namespace: BaseDefense.UI Assembly: BaseDefense.dll Syntax [RequireComponent(typeof(Canvas), typeof(CanvasGroup))] public class PlayerUpgradesWindow : MonoBehaviour Properties Canvas public Canvas Canvas { get; } Property Value Canvas CanvasGroup public CanvasGroup CanvasGroup { get; } Property Value CanvasGroup"
+  },
+  "api/BaseDefense.UI.PurchasingGunWindow.html": {
+    "href": "api/BaseDefense.UI.PurchasingGunWindow.html",
+    "title": "Class PurchasingGunWindow",
+    "keywords": "Class PurchasingGunWindow Inheritance object Object Component Behaviour MonoBehaviour PurchasingGunWindow Namespace: BaseDefense.UI Assembly: BaseDefense.dll Syntax public class PurchasingGunWindow : MonoBehaviour Properties GunSlot public GunSlot GunSlot { get; } Property Value GunSlot Methods Disable() public void Disable()"
+  },
+  "api/BaseDefense.UpgradableProperty.html": {
+    "href": "api/BaseDefense.UpgradableProperty.html",
+    "title": "Class UpgradableProperty",
+    "keywords": "Class UpgradableProperty Inheritance object Object ScriptableObject UpgradableProperty Namespace: BaseDefense Assembly: BaseDefense.dll Syntax [CreateAssetMenu(fileName = \"Upgradable Property\", menuName = \"Upgradable Property\", order = 51)] public class UpgradableProperty : ScriptableObject Fields upgradablePropertySteps public UpgradablePropertyStep[] upgradablePropertySteps Field Value UpgradablePropertyStep[] upgradablePropertyType public UpgradablePropertyType upgradablePropertyType Field Value UpgradablePropertyType viewName public string viewName Field Value string Properties CurrentStep public UpgradablePropertyStep CurrentStep { get; } Property Value UpgradablePropertyStep Methods SetNextStep() public void SetNextStep() TryGetNextStep(out UpgradablePropertyStep) public bool TryGetNextStep(out UpgradablePropertyStep step) Parameters step UpgradablePropertyStep Returns bool"
+  },
+  "api/BaseDefense.UpgradablePropertyStep.html": {
+    "href": "api/BaseDefense.UpgradablePropertyStep.html",
+    "title": "Class UpgradablePropertyStep",
+    "keywords": "Class UpgradablePropertyStep Inheritance object Object ScriptableObject UpgradablePropertyStep Namespace: BaseDefense Assembly: BaseDefense.dll Syntax [CreateAssetMenu(fileName = \"Property Step\", menuName = \"Upgradable Property Step\", order = 51)] public class UpgradablePropertyStep : ScriptableObject Fields price [Tooltip(\"Цена за прокачку свойства до текущего значения\")] public int price Field Value int stepCount [Tooltip(\"Текущий шаг свойства\")] public int stepCount Field Value int value [Tooltip(\"Значение текущего шага свойства\")] public float value Field Value float"
+  },
+  "api/BaseDefense.UpgradablePropertyType.html": {
+    "href": "api/BaseDefense.UpgradablePropertyType.html",
+    "title": "Enum UpgradablePropertyType",
+    "keywords": "Enum UpgradablePropertyType Namespace: BaseDefense Assembly: BaseDefense.dll Syntax public enum UpgradablePropertyType"
+  },
+  "api/index.html": {
+    "href": "api/index.html",
+    "title": "Документация к коду проекта Base Defense",
+    "keywords": "Документация к коду проекта Base Defense Основные классы и пространства имён Object Objects Pool Guns Projectiles Characters Items User Interface Пакеты, используемые в проекте Zenject Broadcast Messages Save System DOTween In-game Debug Console"
+  },
+  "index.html": {
+    "href": "index.html",
+    "title": "Добро пожаловать в документацию Base Defense",
+    "keywords": "Добро пожаловать в документацию Base Defense Для ознакомления с основами проекта см. Manual Для ознакомления с кодом проекта см. Scripting API"
+  },
+  "manual/dependencies.html": {
+    "href": "manual/dependencies.html",
+    "title": "Зависимости",
+    "keywords": "Зависимости Есть множество способов связки классов между собой - можно находить объекты нужных классов через метод FindObjectOfType, можно использовать паттерн Service Locator. В данном проекте для установки зависимостей между классами используется DI-фреймворк Zenject. С его помощью создаются специальные установщики, внутри которых объекты классов \"складываются\" в один контейнер. Всего в проекте 2 таких установщика - Level Installer и User Interface Installer Простые зависимости Допустим, игрок решил сменить оружие. Для этого ему нужно сходить в магазин и выбрать оружие. Объекту игрового персонажа изначально неизвестно про объект магазина, но мы может написать следующее [Inject] private Shop m_shop; Теперь Zenject при инициализации игры позаботится о том, чтобы игрок знал, где находится магазин, и смог выбрать оружие m_gun = m_shop.TakeGun(gunId); Это будет работать, т.к. ранее в LevelInstaller мы \"сложили\" объект магазина в общую кучу (контейнер) Container.Bind<Shop>().FromInstance(shop).AsSingle(); Зависимости для создаваемых объектов Ранее писалось, что Zenject заботится об установке зависимостей сразу после запуска игры. Это означает, что если мы во время игры создадим объект, которому нужны какие-то другие объекты, он не будет про них знать. Для решения этой проблемы используются фабрики. Хороший пример - спавн врага var enemy = Object.CreateFromFactory(enemyPrefab, m_enemyFactory); Чтобы это работало, спавнеру необходимо знать про фабрику врага [Inject] private EnemyCharacter.Factory m_enemyFactory; А чтобы Zenject \"рассказал\" спавнеру про фабрику, нужно, чтобы она в принципе существовала public sealed class EnemyCharacter : BaseCharacter { // ... public class Factory : PlaceholderFactory<UnityEngine.Object, EnemyCharacter> { } } А также необходимо \"положить\" её в контейнер Container.BindFactory<UnityEngine.Object, EnemyCharacter, EnemyCharacter.Factory>() .FromFactory<PrefabFactory<EnemyCharacter>>(); Теперь, при спавне врага методом Object.CreateFromFactory, все зависимости, нужные врагу, будут установлены."
+  },
+  "manual/inheritances.html": {
+    "href": "manual/inheritances.html",
+    "title": "Иерархия наследований",
+    "keywords": "Иерархия наследований Диаграмма наследований классов в игре выглядит следующим образом flowchart RL O(Object) P(Projectile) B(BaseCharacter) I(Item) G(Gun) EB(EnemyBase) ES(EnemyStation) C(Crystal) P --> O B --> O I --> O G --> O EB --> O ES --> O C --> O subgraph Projectiles Bl(Bullet) Gr(Grenade) Ar(Arrow) Bl --> P Gr --> P Ar --> P end subgraph Characters EnC(EnemyCharacter) PC(PlayerCharacter) EnC --> B PC --> B end subgraph Items Mn(Money) Gm(Gem) Mn --> I Gm --> I end subgraph Guns Cr(Crossbow) GrL(GrenadeLauncher) Fr(Firearm) Cr --> G GrL --> G Fr --> G end"
+  },
+  "manual/intro.html": {
+    "href": "manual/intro.html",
+    "title": "Введение",
+    "keywords": "Введение Как известно, все компоненты Unity наследуются от класса UnityEngine.Object для добавления к ним определённого функционала. В ходе разработки данной игры возникла потребность расширения части этого функционала, например, нужно было добавлять объекты в пул вместо их уничтожения, а затем переопределить логику их создания, основываясь на наличии либо отсутствии объекта в пуле. Также была потребность в централизации управления данными объекта - необходимо было определить методы чтения и записи данных объекта в файл. Для данных целей были созданы классы BaseDefense.Object (далее Object) и Objects Pool. Все игровые объекты, имеющие жизненный цикл, наследуются от класса Object. Подробнее о жизненном цикле объектов и иерархии наследований см. Жизненный цикл объектов и Иерархия наследований Чтобы у классов была возможность взаимодействия между собой, им нужно знать друг о друге, т.е. класс А должен иметь в качестве зависимости класс Б, чтобы вызывать его методы, читать данные из свойств и т.д. Для этой цели в проекте используется DI-фреймвор Zenject. Подробнее об использовании Zenject в Base Defense см. Зависимости Иногда классам необходимо реагировать на определённые игровые события (например, смерть игрока). Для того, чтобы не связывать множество классов друг с другом напрямую через Zenject, в проекте используется реализация паттерна Observer Broadcast Messages"
+  },
+  "manual/lifecycles.html": {
+    "href": "manual/lifecycles.html",
+    "title": "Жизненный цикл объектов",
+    "keywords": "Жизненный цикл объектов Уничтожение объектов В игре множество сущностей имеют собственный жизненный цикл. Из соображений оптимизации использования памяти нежелательно, к примеру, каждый раз, когда патрон попал куда-либо, уничтожать его, а затем снова создавать из префаба. Вместо этого патрон отключается на сцене и хранится в пуле объектов. А чтобы хранить патрон в пуле, необходимо его наследовать от базового класса Object ///<summary>Базовый класс для всех видов патронов</summary> public abstract class Projectile : Object { // ... protected abstract void OnCollisionEnter (Collision collision); // ... } Затем, когда патрон столкнулся с чем-либо, мы его \"уничтожаем\", добавляя в пул, вместо уничтожения на самом деле. Например, пуля попала во врага public class Bullet : Projectile { // ... protected override void OnCollisionEnter (Collision collision) { // ... if (collision.gameObject.GetComponent<IAttackable>() is { } attackable) attackable.Hit(m_damage); Destroy(); // ... } } Здесь при попадании пули мы сразу отключаем её gameObject и добавляем в пул. На сцене это выглядит аналогично уничтожению То же самое справедливо для предметов, собираемых игроком ///<summary>Базовый класс для всех видов выпадаемых предметов</summary> public abstract class Item : Object { // ... public abstract void DestroyItem (); // ... protected Sequence Collapse () { // ... } } Когда игрок соберёт предмет (например, драгоценный камень), произойдёт следующее public sealed class PlayerCharacter : BaseCharacter { // ... private void OnTriggerEnter (Collider other) { if (other.GetComponent<Item>() is { } item) switch (item) { case Gem gem: m_itemCollecting.PutGem(gem); break; // ... } // ... } // ... } public class ItemCollecting : MonoBehaviour { // ... ///<summary>Кладёт кристалл в инвентарь</summary> public void PutGem (Gem gem) { m_inventory.PutItem(gem); } // ... } public class Inventory : MonoBehaviour { // ... ///<summary>Кладёт предмет в инвентарь</summary> public void PutItem (Item item) { // ... item.DestroyItem(); // ... } // ... } public class Gem : Item { public override void DestroyItem () { // ... Destroy(tweenTask: Collapse()); } // ... } В данном случае перед уничтожением драгоценного камня сначала проиграет его анимация исчезновения (твинер Collapse), после чего gameObject камня отключится и он добавится в пул. Подробнее о перегрузках метода Destroy можно посмотреть в описании класса Object Создание объектов Когда пуля уничтожена, она на самом деле всё ещё хранится на сцене, просто её gameObject отключен. Но как только мы выстрелим из пистолета, нам нужно будет её снова \"создать\" public class Firearm : Gun { // ... public override void Shot () { // ... var bullet = Object.Create(projectilePrefab); // ... var force = /*...*/; bullet.AddImpulse(force); // ... } } В данном случае мы просто передаём методу Object.Create префаб пули, а внутри он уже решает, брать её из пула, либо создавать новую. Аналогично с драгоценными камнями. Они выбрасываются, когда игрок уничтожает кристалл. У кристалла есть компонент ItemDrop, у которого он вызывает метод DropItems при уничтожении public class Crystal : Object, IAttackable { // ... private void DestroyCrystal () { // ... m_itemDrop.DropItems(); Destroy(); } public class ItemDrop : MonoBehaviour { // ... ///<summary>Вызывается для выброса предметов</summary> ///<remarks>Количество выпадаемых предметов выбирается случайным образом</remarks> public void DropItems () { var itemsCount = Random.Range(/*...*/); for (var i = 0; i < itemsCount; i++) { // ... var item = Object.Create(itemPrefab); var force = new Vector3(/*...*/); item.Drop(force); } } } Сохранение и загрузка объектов В классе Object определены методы сохранения и загрузки состояния - в базовом варианте сохраняются и загружаются позиции и ориентации объектов public virtual void Save (GameDataWriter writer) { writer.Write(transform.position); writer.Write(transform.rotation); } public virtual void Load (GameDataReader reader) { transform.position = reader.ReadPosition(); transform.rotation = reader.ReadRotation(); } Однако в классах-наследниках можно переопределить данную реализацию, например, для дополнительного сохранения и загрузки текущего количества здоровья у персонажей public override void Save (GameDataWriter writer) { base.Save(writer); writer.Write(CurrentHealthPoints); } public override void Load (GameDataReader reader) { base.Load(reader); CurrentHealthPoints = reader.ReadFloat(); } Затем для сохранения, например, игрока, мы делаем следующее var writer = new GameDataWriter(binaryWriter); m_playerCharacter.Save(writer); Аналогично с загрузкой var reader = new GameDataReader(binaryReader); m_playerCharacter.Load(reader);"
+  }
+}

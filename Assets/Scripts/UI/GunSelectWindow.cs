@@ -1,5 +1,6 @@
 using BaseDefense.Characters;
 using SaveSystem;
+using SaveSystem.UnityHandlers;
 using UnityEngine;
 using Zenject;
 
@@ -39,19 +40,19 @@ namespace BaseDefense.UI {
 
 
         public void Load (UnityReader reader) {
-            frame.anchoredPosition = reader.ReadPosition();
-            content.anchoredPosition = reader.ReadPosition();
+            frame.anchoredPosition = reader.ReadVector2();
+            content.anchoredPosition = reader.ReadVector2();
         }
 
 
-        private const string FILE_NAME = "uiSave";
+        private const string FileName = "uiSave.bytes";
 
 
         private void Awake () {
             Canvas = GetComponent<Canvas>();
             CanvasGroup = GetComponent<CanvasGroup>();
-            DataManager.LoadObjects(FILE_NAME, this);
-            Application.quitting += () => DataManager.SaveObjects(FILE_NAME, this);
+            DataManager.LoadObject(FileName, this);
+            Application.quitting += () => DataManager.SaveObject(FileName, this);
         }
 
 
@@ -63,7 +64,7 @@ namespace BaseDefense.UI {
 
         private void OnApplicationPause (bool pauseStatus) {
             if (pauseStatus)
-                DataManager.SaveObjects(FILE_NAME, this);
+                DataManager.SaveObject(FileName, this);
         }
 
     }

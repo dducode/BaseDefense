@@ -4,12 +4,19 @@
   "xrefmap": "xrefmap.yml",
   "files": [
     {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
       "type": "ManagedReference",
       "source_relative_path": "api/BaseDefense.AttackImplemention.Guns.Crossbow.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Guns.Crossbow.html",
-          "hash": "ShXroyaGnepx7AVjXHdqeMizkspWWJWhvNl/g6PMwZk="
+          "relative_path": "api/BaseDefense.AttackImplemention.Guns.Crossbow.html"
         }
       },
       "version": ""
@@ -19,8 +26,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Guns.Firearm.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Guns.Firearm.html",
-          "hash": "+aaM3WME2LlPdcKAvpWTa4lB25okGOaz+RegDdjOqvY="
+          "relative_path": "api/BaseDefense.AttackImplemention.Guns.Firearm.html"
         }
       },
       "version": ""
@@ -30,8 +36,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Guns.GrenadeLauncher.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Guns.GrenadeLauncher.html",
-          "hash": "913oJaJLR0MHCwPZFaz+Y1/ruS2LYv6PUbLGac/WWn8="
+          "relative_path": "api/BaseDefense.AttackImplemention.Guns.GrenadeLauncher.html"
         }
       },
       "version": ""
@@ -41,8 +46,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Guns.Gun.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Guns.Gun.html",
-          "hash": "HxgqgqRSt9XQcqMNfX0q5thT2md6TIQUI0na+VULseI="
+          "relative_path": "api/BaseDefense.AttackImplemention.Guns.Gun.html"
         }
       },
       "version": ""
@@ -52,8 +56,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Guns.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Guns.html",
-          "hash": "m+hbmOMKcQCTg4Y3iVFianOmjO+1HldSPXWeI5tems4="
+          "relative_path": "api/BaseDefense.AttackImplemention.Guns.html"
         }
       },
       "version": ""
@@ -63,8 +66,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.IAttackable.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.IAttackable.html",
-          "hash": "ImBNbXBdndsEmm6z2QAmAKRmOvzmGAOOBd1Q9VAqHBI="
+          "relative_path": "api/BaseDefense.AttackImplemention.IAttackable.html"
         }
       },
       "version": ""
@@ -74,8 +76,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Arrow.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Arrow.html",
-          "hash": "9nvC9F3mVCYHDKnl/xr9DkBXkXTo4ckf6/DLCb1Ce7o="
+          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Arrow.html"
         }
       },
       "version": ""
@@ -85,8 +86,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Bullet.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Bullet.html",
-          "hash": "0RQxaxXPRxIR3rnIF7at+zjEFfZxRnHkeXHzCkW6yQo="
+          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Bullet.html"
         }
       },
       "version": ""
@@ -96,8 +96,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Grenade.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Grenade.html",
-          "hash": "/msdfaoQynBhUiziHOR/NLABrneqvRYy0tdVmA/N/bo="
+          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Grenade.html"
         }
       },
       "version": ""
@@ -107,8 +106,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Projectile.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Projectile.html",
-          "hash": "vTu2Hbms90ALa+BWdz2y+igUcEF6QIUegGWni9Vfl/I="
+          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.Projectile.html"
         }
       },
       "version": ""
@@ -118,8 +116,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Projectiles.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.html",
-          "hash": "FBdB+Br/sXbZzMJ4/zIqjd5EMrYqwTqTsvKRhA602vo="
+          "relative_path": "api/BaseDefense.AttackImplemention.Projectiles.html"
         }
       },
       "version": ""
@@ -129,8 +126,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.Punch.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.Punch.html",
-          "hash": "LS7dNkdFpmQ+OGH5AgXc95kdBP+v5mXJYMxrgcFh6oY="
+          "relative_path": "api/BaseDefense.AttackImplemention.Punch.html"
         }
       },
       "version": ""
@@ -140,8 +136,7 @@
       "source_relative_path": "api/BaseDefense.AttackImplemention.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.AttackImplemention.html",
-          "hash": "UK+5qhQECCsdsF+ZnN097wlq5vq/cRfh5WC7+lyaNqI="
+          "relative_path": "api/BaseDefense.AttackImplemention.html"
         }
       },
       "version": ""
@@ -151,8 +146,7 @@
       "source_relative_path": "api/BaseDefense.BaseTemplate.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.BaseTemplate.html",
-          "hash": "Emp1MZHUfmeMBV1VUYMSouAZiheIW3vr4YwLAlPOEzY="
+          "relative_path": "api/BaseDefense.BaseTemplate.html"
         }
       },
       "version": ""
@@ -162,8 +156,7 @@
       "source_relative_path": "api/BaseDefense.CameraMovement.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.CameraMovement.html",
-          "hash": "GGhlNHG2+o/xKrM3Mi8yzmxET6PJK487BdS89JtEFGo="
+          "relative_path": "api/BaseDefense.CameraMovement.html"
         }
       },
       "version": ""
@@ -173,8 +166,7 @@
       "source_relative_path": "api/BaseDefense.Characters.BaseCharacter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Characters.BaseCharacter.html",
-          "hash": "pAlY9uZlTJWszjvg212Oah8eQKnnaucMifSafEChi34="
+          "relative_path": "api/BaseDefense.Characters.BaseCharacter.html"
         }
       },
       "version": ""
@@ -184,8 +176,7 @@
       "source_relative_path": "api/BaseDefense.Characters.EnemyCharacter.Factory.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Characters.EnemyCharacter.Factory.html",
-          "hash": "PXS4sfwnHQhcZQhmdrHFAtvpfH5wm0JoiAFmZg9FTdI="
+          "relative_path": "api/BaseDefense.Characters.EnemyCharacter.Factory.html"
         }
       },
       "version": ""
@@ -195,8 +186,7 @@
       "source_relative_path": "api/BaseDefense.Characters.EnemyCharacter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Characters.EnemyCharacter.html",
-          "hash": "K3jr5YAW4H5Z0kB6xARDubLhggygv1RoS/IC48dmZnE="
+          "relative_path": "api/BaseDefense.Characters.EnemyCharacter.html"
         }
       },
       "version": ""
@@ -206,8 +196,7 @@
       "source_relative_path": "api/BaseDefense.Characters.PlayerCharacter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Characters.PlayerCharacter.html",
-          "hash": "wOT535JNHz2dV62OaFqzWsc9PPg4NPMoLx7nCiz1KGk="
+          "relative_path": "api/BaseDefense.Characters.PlayerCharacter.html"
         }
       },
       "version": ""
@@ -217,8 +206,7 @@
       "source_relative_path": "api/BaseDefense.Characters.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Characters.html",
-          "hash": "fc5K/l3ZQGHZ4fidHgRuttTk5IB3vw55gByZfbSsv+g="
+          "relative_path": "api/BaseDefense.Characters.html"
         }
       },
       "version": ""
@@ -228,8 +216,7 @@
       "source_relative_path": "api/BaseDefense.Crystal.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Crystal.html",
-          "hash": "l67HYrc05TTUTEkNzccgsrFlZ5MEG+Ba7Ck/Ppa0n0s="
+          "relative_path": "api/BaseDefense.Crystal.html"
         }
       },
       "version": ""
@@ -239,8 +226,7 @@
       "source_relative_path": "api/BaseDefense.EnemyBase.Factory.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.EnemyBase.Factory.html",
-          "hash": "yIR5JBnlZ3+C/dw2dg+jWwrLk3sjQHjY5aUGvfpCEfc="
+          "relative_path": "api/BaseDefense.EnemyBase.Factory.html"
         }
       },
       "version": ""
@@ -250,8 +236,7 @@
       "source_relative_path": "api/BaseDefense.EnemyBase.Transitions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.EnemyBase.Transitions.html",
-          "hash": "+7GrlqkrS31DDlEqLMiJ5cIeskhK3RxOCAUZWccrjjs="
+          "relative_path": "api/BaseDefense.EnemyBase.Transitions.html"
         }
       },
       "version": ""
@@ -261,8 +246,7 @@
       "source_relative_path": "api/BaseDefense.EnemyBase.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.EnemyBase.html",
-          "hash": "M0pyqTQCZA2FS1TmhvAb7HpCyHYf1WkDrfOh8pJtgo4="
+          "relative_path": "api/BaseDefense.EnemyBase.html"
         }
       },
       "version": ""
@@ -272,8 +256,7 @@
       "source_relative_path": "api/BaseDefense.EnemyStation.Factory.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.EnemyStation.Factory.html",
-          "hash": "2gL1y2BJNSt+39Nw8qXZRHeleuUHfZj06tGNcCuIG/A="
+          "relative_path": "api/BaseDefense.EnemyStation.Factory.html"
         }
       },
       "version": ""
@@ -283,8 +266,7 @@
       "source_relative_path": "api/BaseDefense.EnemyStation.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.EnemyStation.html",
-          "hash": "E7pbofKnQrKpCl67X5khORcezTdMEGPwt1xgGLJJ/zk="
+          "relative_path": "api/BaseDefense.EnemyStation.html"
         }
       },
       "version": ""
@@ -294,8 +276,7 @@
       "source_relative_path": "api/BaseDefense.Exceptions.AttemptDestroyObjectException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Exceptions.AttemptDestroyObjectException.html",
-          "hash": "JY76OkD7JQitJhUFIM2DJCOWvl3v77WmzINvIdPV79E="
+          "relative_path": "api/BaseDefense.Exceptions.AttemptDestroyObjectException.html"
         }
       },
       "version": ""
@@ -305,8 +286,7 @@
       "source_relative_path": "api/BaseDefense.Exceptions.RepeatedDestructionObjectException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Exceptions.RepeatedDestructionObjectException.html",
-          "hash": "dAizNOFYBfHn2fui8LSJ6+mMUaQMyGZledQ8jSOu1VI="
+          "relative_path": "api/BaseDefense.Exceptions.RepeatedDestructionObjectException.html"
         }
       },
       "version": ""
@@ -316,8 +296,7 @@
       "source_relative_path": "api/BaseDefense.Exceptions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Exceptions.html",
-          "hash": "oAsbH1dp3SERG/5q5oAduZAxjCFcyNphA/jB8D5YeoE="
+          "relative_path": "api/BaseDefense.Exceptions.html"
         }
       },
       "version": ""
@@ -327,8 +306,7 @@
       "source_relative_path": "api/BaseDefense.Extensions.GameExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Extensions.GameExtensions.html",
-          "hash": "rua4/jDmu6YU3KEddbGOHpHE+ojcwWrFt+swa5ttLK8="
+          "relative_path": "api/BaseDefense.Extensions.GameExtensions.html"
         }
       },
       "version": ""
@@ -338,8 +316,7 @@
       "source_relative_path": "api/BaseDefense.Extensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Extensions.html",
-          "hash": "zN2H+yHb7TYHzvsKVO3Veb0FXhM/jnOegt3DnICFU2A="
+          "relative_path": "api/BaseDefense.Extensions.html"
         }
       },
       "version": ""
@@ -349,8 +326,7 @@
       "source_relative_path": "api/BaseDefense.Game.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Game.html",
-          "hash": "nROiiH+ysW4txyIAI1EWW4pT+Wql3ouUpVp6rRfW00o="
+          "relative_path": "api/BaseDefense.Game.html"
         }
       },
       "version": ""
@@ -360,8 +336,7 @@
       "source_relative_path": "api/BaseDefense.GunSlot.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.GunSlot.html",
-          "hash": "4J3yzEjJUzntKiu2iDCKNuo8ypGssbWuOaN0rpDSghc="
+          "relative_path": "api/BaseDefense.GunSlot.html"
         }
       },
       "version": ""
@@ -371,8 +346,7 @@
       "source_relative_path": "api/BaseDefense.Installers.LevelInstaller.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Installers.LevelInstaller.html",
-          "hash": "34+FDz4Fu9EeM2Jz6aNOXOiGi4dfUe12yO9PBHb20Lk="
+          "relative_path": "api/BaseDefense.Installers.LevelInstaller.html"
         }
       },
       "version": ""
@@ -382,8 +356,7 @@
       "source_relative_path": "api/BaseDefense.Installers.UserInterfaceInstaller.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Installers.UserInterfaceInstaller.html",
-          "hash": "i8Lk2aGNyAgr7fQS8DL3sC4d6RW+SPhiOkQyldgf38o="
+          "relative_path": "api/BaseDefense.Installers.UserInterfaceInstaller.html"
         }
       },
       "version": ""
@@ -393,8 +366,7 @@
       "source_relative_path": "api/BaseDefense.Installers.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Installers.html",
-          "hash": "YEd2ye7H6gaO6Ef+AaMxgUu5jqYlkZG8Ntysa3d+eAQ="
+          "relative_path": "api/BaseDefense.Installers.html"
         }
       },
       "version": ""
@@ -404,8 +376,7 @@
       "source_relative_path": "api/BaseDefense.Inventory.InventoryData.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Inventory.InventoryData.html",
-          "hash": "VvrXHlRzIUC8+/PJ8ssm+oN+a6Gi/cgp7rZq/v/C+Lo="
+          "relative_path": "api/BaseDefense.Inventory.InventoryData.html"
         }
       },
       "version": ""
@@ -415,8 +386,7 @@
       "source_relative_path": "api/BaseDefense.Inventory.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Inventory.html",
-          "hash": "lxspW9j+U/uTapH4ADcsVDCbUJhm47ZqRqsRxLtVUaA="
+          "relative_path": "api/BaseDefense.Inventory.html"
         }
       },
       "version": ""
@@ -426,8 +396,7 @@
       "source_relative_path": "api/BaseDefense.Items.Gem.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Items.Gem.html",
-          "hash": "GO3XJu/XCdv/zmVCKDHd6GmQPvFqeW9uRFpJlK+rUsQ="
+          "relative_path": "api/BaseDefense.Items.Gem.html"
         }
       },
       "version": ""
@@ -437,8 +406,7 @@
       "source_relative_path": "api/BaseDefense.Items.Item.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Items.Item.html",
-          "hash": "YUD/vQIUPPBXBt2We3WTjaIy4jVxU2EaoZNx/P1qyHw="
+          "relative_path": "api/BaseDefense.Items.Item.html"
         }
       },
       "version": ""
@@ -448,8 +416,7 @@
       "source_relative_path": "api/BaseDefense.Items.ItemCollecting.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Items.ItemCollecting.html",
-          "hash": "3u3kJuGOf+nCdEnG+GW8rY90uaKJujIkHj5Hg5wLQpY="
+          "relative_path": "api/BaseDefense.Items.ItemCollecting.html"
         }
       },
       "version": ""
@@ -459,8 +426,7 @@
       "source_relative_path": "api/BaseDefense.Items.ItemDrop.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Items.ItemDrop.html",
-          "hash": "nkm1SonfleIQXJjg6SEmqIXGeJsJq4gC8SVWSks45J8="
+          "relative_path": "api/BaseDefense.Items.ItemDrop.html"
         }
       },
       "version": ""
@@ -470,8 +436,7 @@
       "source_relative_path": "api/BaseDefense.Items.Money.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Items.Money.html",
-          "hash": "sStBTNy/27gGQE69W8WeAOmwNG75ezE1En69NXK6IjE="
+          "relative_path": "api/BaseDefense.Items.Money.html"
         }
       },
       "version": ""
@@ -481,8 +446,7 @@
       "source_relative_path": "api/BaseDefense.Items.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Items.html",
-          "hash": "oNW1dKFU2KgXJ4natZITcwYFoCxXmPjTG58ACYUVFSI="
+          "relative_path": "api/BaseDefense.Items.html"
         }
       },
       "version": ""
@@ -492,8 +456,7 @@
       "source_relative_path": "api/BaseDefense.JoystickController.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.JoystickController.html",
-          "hash": "zfke6yXXkS2Tlj0mUa0n+95X+FdguMvqSCIpTxiCH0A="
+          "relative_path": "api/BaseDefense.JoystickController.html"
         }
       },
       "version": ""
@@ -503,8 +466,7 @@
       "source_relative_path": "api/BaseDefense.Messages.DeathPlayerMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.DeathPlayerMessage.html",
-          "hash": "OUHnpvK9vEJMbMxQqds2uNyekDqXfwZFgG8pBXI50OE="
+          "relative_path": "api/BaseDefense.Messages.DeathPlayerMessage.html"
         }
       },
       "version": ""
@@ -514,8 +476,7 @@
       "source_relative_path": "api/BaseDefense.Messages.DestroyUnusedItemsMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.DestroyUnusedItemsMessage.html",
-          "hash": "ulU7PE28cY22+Z7E3BrrjYlVKxK/vmxBlDtyp8JebT8="
+          "relative_path": "api/BaseDefense.Messages.DestroyUnusedItemsMessage.html"
         }
       },
       "version": ""
@@ -525,8 +486,7 @@
       "source_relative_path": "api/BaseDefense.Messages.NextLevelMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.NextLevelMessage.html",
-          "hash": "UY03Vmc8Wr5loTu1pHAfZ6Fmo64EFGO0FZ+H5fmnXo8="
+          "relative_path": "api/BaseDefense.Messages.NextLevelMessage.html"
         }
       },
       "version": ""
@@ -536,8 +496,7 @@
       "source_relative_path": "api/BaseDefense.Messages.RestartMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.RestartMessage.html",
-          "hash": "/+2G0Ooj+LCQc5ng1F+MxgVS+0w88pv5u38UJUYFBzg="
+          "relative_path": "api/BaseDefense.Messages.RestartMessage.html"
         }
       },
       "version": ""
@@ -547,8 +506,7 @@
       "source_relative_path": "api/BaseDefense.Messages.UnlockedGunsMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.UnlockedGunsMessage.html",
-          "hash": "Om7YLrdszGLvgunGbrlAgtzivduJBZAAHnXnUyZHZ40="
+          "relative_path": "api/BaseDefense.Messages.UnlockedGunsMessage.html"
         }
       },
       "version": ""
@@ -558,8 +516,7 @@
       "source_relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateCurrencyMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateCurrencyMessage.html",
-          "hash": "seueIIRw6MnBd9F9pVBsRA4ZK//aj6Y6Mpr00lOZmk0="
+          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateCurrencyMessage.html"
         }
       },
       "version": ""
@@ -569,8 +526,7 @@
       "source_relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateGemsMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateGemsMessage.html",
-          "hash": "v4QhVQkalZXdBgtEXzlK4xlTSrLY2JwMr3ovOqmlqZQ="
+          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateGemsMessage.html"
         }
       },
       "version": ""
@@ -580,8 +536,7 @@
       "source_relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateMoneysMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateMoneysMessage.html",
-          "hash": "BFubo4R23YEO7Q2oodaAIOUeZ1j9+VlTIaxTEFkYsUU="
+          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.UpdateMoneysMessage.html"
         }
       },
       "version": ""
@@ -591,8 +546,7 @@
       "source_relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.html",
-          "hash": "Hnv/QFAOqlfAu/lz5fHbAWhuH27+cUthuy1ry/iZbGc="
+          "relative_path": "api/BaseDefense.Messages.UpdateCurrencyMessages.html"
         }
       },
       "version": ""
@@ -602,8 +556,7 @@
       "source_relative_path": "api/BaseDefense.Messages.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Messages.html",
-          "hash": "VFyuw22CotvItGfRQF4BWBrVhzNp90U/pPGlI2YSYl8="
+          "relative_path": "api/BaseDefense.Messages.html"
         }
       },
       "version": ""
@@ -613,8 +566,7 @@
       "source_relative_path": "api/BaseDefense.Object.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Object.html",
-          "hash": "gzVIOzTyy3y39jsUYqjBdDcrrPMe5wCdqibk/qzUX4M="
+          "relative_path": "api/BaseDefense.Object.html"
         }
       },
       "version": ""
@@ -624,8 +576,7 @@
       "source_relative_path": "api/BaseDefense.ObjectsPool.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.ObjectsPool.html",
-          "hash": "BKqQqP6T4d/hwfsHFxL+I7s+Cxq1DF/6puaUGbB5kFg="
+          "relative_path": "api/BaseDefense.ObjectsPool.html"
         }
       },
       "version": ""
@@ -635,8 +586,7 @@
       "source_relative_path": "api/BaseDefense.Properties.MinMaxSliderFloat.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Properties.MinMaxSliderFloat.html",
-          "hash": "oZ7uiRyHJmtXQnA8XcqCuzENNcoMeElIVYQmUervx3o="
+          "relative_path": "api/BaseDefense.Properties.MinMaxSliderFloat.html"
         }
       },
       "version": ""
@@ -646,8 +596,7 @@
       "source_relative_path": "api/BaseDefense.Properties.MinMaxSliderInt.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Properties.MinMaxSliderInt.html",
-          "hash": "j1fx89oInpQsR400GMU2rdnfXFQeCoyLXBHJsiU6RJ0="
+          "relative_path": "api/BaseDefense.Properties.MinMaxSliderInt.html"
         }
       },
       "version": ""
@@ -657,8 +606,7 @@
       "source_relative_path": "api/BaseDefense.Properties.ObjectId.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Properties.ObjectId.html",
-          "hash": "/HZaRM5luB8YHUHpKKbSmzQa2pS9nZsnuImFeD6fi6U="
+          "relative_path": "api/BaseDefense.Properties.ObjectId.html"
         }
       },
       "version": ""
@@ -668,8 +616,7 @@
       "source_relative_path": "api/BaseDefense.Properties.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Properties.html",
-          "hash": "0VUCeaqL+cuXEvRRy+kTUdqOZv+WL/hBKdGJaz3ZwL4="
+          "relative_path": "api/BaseDefense.Properties.html"
         }
       },
       "version": ""
@@ -679,41 +626,7 @@
       "source_relative_path": "api/BaseDefense.Ragdoll.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Ragdoll.html",
-          "hash": "63dz/qBPyuY5NmvWxmqDOMUC5gWl3YXhTMBJYdo8msA="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.SaveSystem.GameDataReader.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.SaveSystem.GameDataReader.html",
-          "hash": "E5XJTbylG6bfIO7VhNOLmJwUI0htXqK/dGjGkkH2ROk="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.SaveSystem.GameDataWriter.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.SaveSystem.GameDataWriter.html",
-          "hash": "GNr/QKRH5BgsEPOUDadA0v5HXnRoZdIwuklDFRaI4gA="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.SaveSystem.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.SaveSystem.html",
-          "hash": "p6WgtfOrWk7U164dOTTw8OiUWr1Dc3d+EOqiUy+Jva4="
+          "relative_path": "api/BaseDefense.Ragdoll.html"
         }
       },
       "version": ""
@@ -723,8 +636,7 @@
       "source_relative_path": "api/BaseDefense.Shop.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.Shop.html",
-          "hash": "u7FJmEgXjQJfqspOLHHjTLAAjPF61LZtvthvik8L9/k="
+          "relative_path": "api/BaseDefense.Shop.html"
         }
       },
       "version": ""
@@ -734,8 +646,7 @@
       "source_relative_path": "api/BaseDefense.StateMachine.Attack.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.StateMachine.Attack.html",
-          "hash": "WZmnF+Q8D8Fl7ZDQ+Utg0MJyLy6d5+LaZiQ2Qp6HirY="
+          "relative_path": "api/BaseDefense.StateMachine.Attack.html"
         }
       },
       "version": ""
@@ -745,8 +656,7 @@
       "source_relative_path": "api/BaseDefense.StateMachine.Running.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.StateMachine.Running.html",
-          "hash": "nNdE8V1C/BMnqQD8Y8opbIm8mBVkTqQgmhtI0nI+N9E="
+          "relative_path": "api/BaseDefense.StateMachine.Running.html"
         }
       },
       "version": ""
@@ -756,8 +666,7 @@
       "source_relative_path": "api/BaseDefense.StateMachine.State.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.StateMachine.State.html",
-          "hash": "1OOcUBJdd3/+tTo5k4YTbcncT3pSDohCoqqcboaqKSk="
+          "relative_path": "api/BaseDefense.StateMachine.State.html"
         }
       },
       "version": ""
@@ -767,8 +676,7 @@
       "source_relative_path": "api/BaseDefense.StateMachine.Walking.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.StateMachine.Walking.html",
-          "hash": "hMJBOt6U2OiGDLAt8+fzB1D9TuGz+yy+GD1Qvq2K/M8="
+          "relative_path": "api/BaseDefense.StateMachine.Walking.html"
         }
       },
       "version": ""
@@ -778,8 +686,7 @@
       "source_relative_path": "api/BaseDefense.StateMachine.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.StateMachine.html",
-          "hash": "U0nFKPwcyCD4y+KYHzbZykuMTR42rybjJREZTffqpmA="
+          "relative_path": "api/BaseDefense.StateMachine.html"
         }
       },
       "version": ""
@@ -789,8 +696,7 @@
       "source_relative_path": "api/BaseDefense.UI.BillboardHealthPointsBar.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.BillboardHealthPointsBar.html",
-          "hash": "zqZH6EO5uJQfJrpy9X0VCCuoCuWgsW/RrMuFkufyUWA="
+          "relative_path": "api/BaseDefense.UI.BillboardHealthPointsBar.html"
         }
       },
       "version": ""
@@ -800,8 +706,7 @@
       "source_relative_path": "api/BaseDefense.UI.BuyButtons.GunBuyButton.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.BuyButtons.GunBuyButton.html",
-          "hash": "0S3mTHhPPzBe57Uqk9eRl1pmSdSMIc7CMn0YL/Vrc5E="
+          "relative_path": "api/BaseDefense.UI.BuyButtons.GunBuyButton.html"
         }
       },
       "version": ""
@@ -811,8 +716,7 @@
       "source_relative_path": "api/BaseDefense.UI.BuyButtons.UpgradeBuyButton.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.BuyButtons.UpgradeBuyButton.html",
-          "hash": "llvG2K56mC0RWY+paK+Z6UbNfvD7L9pn6jWiAwTsCFY="
+          "relative_path": "api/BaseDefense.UI.BuyButtons.UpgradeBuyButton.html"
         }
       },
       "version": ""
@@ -822,8 +726,7 @@
       "source_relative_path": "api/BaseDefense.UI.BuyButtons.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.BuyButtons.html",
-          "hash": "w2fdiqBNzWC3TdZ7vGLqMeUMmEpaKgGKsi1oxTEj7ds="
+          "relative_path": "api/BaseDefense.UI.BuyButtons.html"
         }
       },
       "version": ""
@@ -833,8 +736,7 @@
       "source_relative_path": "api/BaseDefense.UI.DisplayHealthPoints.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.DisplayHealthPoints.html",
-          "hash": "tDvrMSe3RRF5MWihZewIwDpItEyghlKhaKh0zWzmXmo="
+          "relative_path": "api/BaseDefense.UI.DisplayHealthPoints.html"
         }
       },
       "version": ""
@@ -844,8 +746,7 @@
       "source_relative_path": "api/BaseDefense.UI.DisplayingUI.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.DisplayingUI.html",
-          "hash": "INd6NaQEBN0NLrcR2y9dnLeNcdNj0r8mW2WTiTl5dfE="
+          "relative_path": "api/BaseDefense.UI.DisplayingUI.html"
         }
       },
       "version": ""
@@ -855,8 +756,7 @@
       "source_relative_path": "api/BaseDefense.UI.GunSelectButton.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.GunSelectButton.html",
-          "hash": "6T6otEjHsEWA3Iwfs+QeizVaDJ3ZW2FvSE6I/N9kyc8="
+          "relative_path": "api/BaseDefense.UI.GunSelectButton.html"
         }
       },
       "version": ""
@@ -866,8 +766,7 @@
       "source_relative_path": "api/BaseDefense.UI.GunSelectWindow.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.GunSelectWindow.html",
-          "hash": "yiSNQ1FZHjpiBkCwDOfDg0w0gSTnMEn2Ar8OvqZZzuE="
+          "relative_path": "api/BaseDefense.UI.GunSelectWindow.html"
         }
       },
       "version": ""
@@ -877,8 +776,7 @@
       "source_relative_path": "api/BaseDefense.UI.PlayerUpgradesWindow.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.PlayerUpgradesWindow.html",
-          "hash": "MR//VZ8HAgRdqYJu5HRt1appwhz2czhnJNQMrWSKdIo="
+          "relative_path": "api/BaseDefense.UI.PlayerUpgradesWindow.html"
         }
       },
       "version": ""
@@ -888,8 +786,7 @@
       "source_relative_path": "api/BaseDefense.UI.PurchasingGunWindow.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.PurchasingGunWindow.html",
-          "hash": "0LmREq4glk+J55yAIfqg0hOLnnXYf3SIZ4eZRHDO8Q0="
+          "relative_path": "api/BaseDefense.UI.PurchasingGunWindow.html"
         }
       },
       "version": ""
@@ -899,8 +796,7 @@
       "source_relative_path": "api/BaseDefense.UI.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UI.html",
-          "hash": "WPM87vipz79QG7boqf+2zyz6Z5+M05DUtn5uokiVQP0="
+          "relative_path": "api/BaseDefense.UI.html"
         }
       },
       "version": ""
@@ -910,19 +806,7 @@
       "source_relative_path": "api/BaseDefense.UpgradableProperty.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UpgradableProperty.html",
-          "hash": "LlZnePlsspIzDBeVD9X2ujtaRc5vTmtaFvts99SecFc="
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/BaseDefense.UpgradablePropertyContainer.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/BaseDefense.UpgradablePropertyContainer.html",
-          "hash": "xn7BuOO5tWXvRwxgy11uu+X3wrQZl8NKaB/5mYlTG5Y="
+          "relative_path": "api/BaseDefense.UpgradableProperty.html"
         }
       },
       "version": ""
@@ -932,8 +816,7 @@
       "source_relative_path": "api/BaseDefense.UpgradablePropertyStep.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UpgradablePropertyStep.html",
-          "hash": "cKCi32oLOLweusgmA0iP/lbo3aPX5Wj4tdN+aNjDOlQ="
+          "relative_path": "api/BaseDefense.UpgradablePropertyStep.html"
         }
       },
       "version": ""
@@ -943,8 +826,7 @@
       "source_relative_path": "api/BaseDefense.UpgradablePropertyType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.UpgradablePropertyType.html",
-          "hash": "e+VgVY8WxLVifMmq0qGETcOvcoZDqHSH4PRhfoOoTaU="
+          "relative_path": "api/BaseDefense.UpgradablePropertyType.html"
         }
       },
       "version": ""
@@ -954,8 +836,7 @@
       "source_relative_path": "api/BaseDefense.yml",
       "output": {
         ".html": {
-          "relative_path": "api/BaseDefense.html",
-          "hash": "7/zU9bFp6JIW9MTT6uMMKAAIr0LdtfNXbgGBzNYUXBs="
+          "relative_path": "api/BaseDefense.html"
         }
       },
       "version": ""
@@ -965,8 +846,7 @@
       "source_relative_path": "api/index.md",
       "output": {
         ".html": {
-          "relative_path": "api/index.html",
-          "hash": "K9wdpt10/tb+BUEI17zmzuywrVpqGuB+xFDsr7rILhs="
+          "relative_path": "api/index.html"
         }
       },
       "version": ""
@@ -976,8 +856,10 @@
       "source_relative_path": "api/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "api/toc.html",
-          "hash": "CgWCTIpu84AlISt4zaRqbaVfNGK614dkGUpMt4HRWew="
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
         }
       },
       "version": ""
@@ -1267,8 +1149,7 @@
       "source_relative_path": "index.md",
       "output": {
         ".html": {
-          "relative_path": "index.html",
-          "hash": "tjbh7VU116J+pKsK2p63RWHUh7P0c0ySXib9ISaR+nI="
+          "relative_path": "index.html"
         }
       },
       "version": ""
@@ -1278,8 +1159,7 @@
       "source_relative_path": "manual/dependencies.md",
       "output": {
         ".html": {
-          "relative_path": "manual/dependencies.html",
-          "hash": "BvYudMwyxFUT3nPMWaKauai9rFp+F0MeS8QdntDy7CA="
+          "relative_path": "manual/dependencies.html"
         }
       },
       "version": ""
@@ -1289,8 +1169,7 @@
       "source_relative_path": "manual/inheritances.md",
       "output": {
         ".html": {
-          "relative_path": "manual/inheritances.html",
-          "hash": "nybA31FXGqHAJpvuhpDcSpKPojtm/U5aLm+fOeeQKvg="
+          "relative_path": "manual/inheritances.html"
         }
       },
       "version": ""
@@ -1300,8 +1179,7 @@
       "source_relative_path": "manual/intro.md",
       "output": {
         ".html": {
-          "relative_path": "manual/intro.html",
-          "hash": "b6U3NzRjzdewPFfETkVWnyrbVQgrnHgfXthMU8B2szo="
+          "relative_path": "manual/intro.html"
         }
       },
       "version": ""
@@ -1311,8 +1189,7 @@
       "source_relative_path": "manual/lifecycles.md",
       "output": {
         ".html": {
-          "relative_path": "manual/lifecycles.html",
-          "hash": "K8rlEswQLG5d7HmCxd2NpjszxLeIhxj9yKV8jdi2JmI="
+          "relative_path": "manual/lifecycles.html"
         }
       },
       "version": ""
@@ -1322,8 +1199,10 @@
       "source_relative_path": "manual/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "manual/toc.html",
-          "hash": "/wyDACBCycDLMp1yyHqNT6i5xKBsQIEivlMwH6QkEvo="
+          "relative_path": "manual/toc.html"
+        },
+        ".json": {
+          "relative_path": "manual/toc.json"
         }
       },
       "version": ""
@@ -1333,8 +1212,10 @@
       "source_relative_path": "toc.yml",
       "output": {
         ".html": {
-          "relative_path": "toc.html",
-          "hash": "4jAlF+R79ENe0SrfkmgURfNAMiLOZ37zyoXz85t8IjY="
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
         }
       },
       "version": ""

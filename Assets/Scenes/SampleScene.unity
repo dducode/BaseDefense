@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402188, g: 0.4931649, b: 0.57223135, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -202,7 +202,9 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -474,13 +476,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 7df21f1d9c24f5741b57daee8fb0e97d,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -553,6 +555,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 944473920}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -733,6 +736,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &47429175 stripped
 RectTransform:
@@ -815,7 +821,9 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -1421,6 +1429,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 1348234749277333305, guid: eff49c62301951f47aef03693c1e4bcc,
@@ -1484,6 +1493,9 @@ PrefabInstance:
       value: AR_3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eff49c62301951f47aef03693c1e4bcc, type: 3}
 --- !u!114 &225655851 stripped
 MonoBehaviour:
@@ -1721,6 +1733,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 1248279606}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -1901,6 +1914,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &292924481 stripped
 RectTransform:
@@ -1950,9 +1966,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -2024,9 +2048,20 @@ MonoBehaviour:
   m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!114 &330585548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2044,6 +2079,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 790678987}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -2224,6 +2260,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &348458471 stripped
 RectTransform:
@@ -2698,14 +2737,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 1
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
+  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
   m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 1
 --- !u!1 &411886274
 GameObject:
   m_ObjectHideFlags: 0
@@ -2786,7 +2828,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -3371,6 +3415,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 47360706}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -3551,6 +3596,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &528807831 stripped
 RectTransform:
@@ -3783,6 +3831,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2017207994}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -3963,6 +4012,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &599122377 stripped
 RectTransform:
@@ -4722,13 +4774,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 3f418e46aa6a65447a7897ca8bbec527,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4885,13 +4937,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 4996412fb6ab4b14fb4a76970df952ea,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5259,13 +5311,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 040f834d0d8fb3741ad405509558ef8f,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5640,6 +5692,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 1520837729}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -5820,6 +5873,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &852884543 stripped
 RectTransform:
@@ -5972,7 +6028,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -90, y: -200}
+  m_AnchoredPosition: {x: -90, y: -150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &856857437
@@ -6093,6 +6149,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 1631088822}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -6273,6 +6330,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &876329348 stripped
 RectTransform:
@@ -6504,13 +6564,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: c454be1c76ca4454da1f9358897567b6,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6660,6 +6720,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 5789654599390064078, guid: a4a77de0ad5e5d24c8469360a5a31e94,
@@ -6723,6 +6784,9 @@ PrefabInstance:
       value: Pistol_3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4a77de0ad5e5d24c8469360a5a31e94, type: 3}
 --- !u!114 &972690403 stripped
 MonoBehaviour:
@@ -7094,6 +7158,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 5040769955338920250, guid: 126d5437ab6d33d40a256a0b96ea6684,
@@ -7157,6 +7222,9 @@ PrefabInstance:
       value: GrenadeLauncher_1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 126d5437ab6d33d40a256a0b96ea6684, type: 3}
 --- !u!114 &1057555984 stripped
 MonoBehaviour:
@@ -7265,13 +7333,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 867b51ecada28e049adbe4a6c7743d94,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7729,13 +7797,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 0e9f2d948c142f4418723fb8bc80b330,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8475,6 +8543,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 1069697810}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -8655,6 +8724,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &1394790401 stripped
 RectTransform:
@@ -8751,13 +8823,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 9e5704970f305f840b8b8ae4017d2c93,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9045,6 +9117,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 8340357413259036812, guid: 3d7b759923ed7e944a51b7cfee96b192,
@@ -9108,6 +9181,9 @@ PrefabInstance:
       value: GrenadeLauncher_3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d7b759923ed7e944a51b7cfee96b192, type: 3}
 --- !u!114 &1458583296 stripped
 MonoBehaviour:
@@ -9405,13 +9481,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 59d9bfac81cff204697b47e3ab9e3067,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9752,6 +9828,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 4682797458764948097, guid: 6fcb4578b2af555468d2384671f9b652,
@@ -9815,6 +9892,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fcb4578b2af555468d2384671f9b652, type: 3}
 --- !u!114 &1581301740 stripped
 MonoBehaviour:
@@ -9915,6 +9995,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 109172321315190402, guid: c96b66fcfd1dd0d4b928a10963417ca5,
@@ -9988,6 +10069,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c96b66fcfd1dd0d4b928a10963417ca5, type: 3}
 --- !u!1 &1595926534
 GameObject:
@@ -10289,13 +10373,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: df1316e201c352041a07752937bbaadd,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10903,6 +10987,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 6173023692739038251, guid: 916ac7bc1a5a7aa4c9e4adbb095a90ae,
@@ -10966,6 +11051,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 916ac7bc1a5a7aa4c9e4adbb095a90ae, type: 3}
 --- !u!114 &1686068070 stripped
 MonoBehaviour:
@@ -11674,6 +11762,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 496406253295213173, guid: 5cab3ad9cb563d34b9180ef99e39e2b5,
@@ -11737,6 +11826,9 @@ PrefabInstance:
       value: Crossbow_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cab3ad9cb563d34b9180ef99e39e2b5, type: 3}
 --- !u!114 &1800928949 stripped
 MonoBehaviour:
@@ -11761,6 +11853,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 3878549287919592314, guid: 674b48ffe57a53d4a97bf332717c37cc,
@@ -11824,6 +11917,9 @@ PrefabInstance:
       value: GrenadeLauncher_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 674b48ffe57a53d4a97bf332717c37cc, type: 3}
 --- !u!114 &1803544459 stripped
 MonoBehaviour:
@@ -12073,6 +12169,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 248032954583647534, guid: e55d6479299ef0a48be12aadd743fba3,
@@ -12136,6 +12233,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e55d6479299ef0a48be12aadd743fba3, type: 3}
 --- !u!114 &1852476909 stripped
 MonoBehaviour:
@@ -12698,7 +12798,9 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -12810,6 +12912,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 1410228284}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -12990,6 +13093,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &1958199980 stripped
 RectTransform:
@@ -13137,6 +13243,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 1439918123046904549, guid: e0c7d4345ee8ba746bc01a72d7617753,
@@ -13200,6 +13307,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0c7d4345ee8ba746bc01a72d7617753, type: 3}
 --- !u!114 &2005811052 stripped
 MonoBehaviour:
@@ -13224,6 +13334,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 722743142}
     m_Modifications:
     - target: {fileID: 1317186680467526005, guid: d78e66b38ba42ce409db10d2daf26c27,
@@ -13404,6 +13515,9 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d78e66b38ba42ce409db10d2daf26c27, type: 3}
 --- !u!224 &2013442215 stripped
 RectTransform:
@@ -13500,13 +13614,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1926540553}
-        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, GameAssembly
+        m_TargetAssemblyTypeName: BaseDefense.UI.GunSelectWindow, BaseDefense
         m_MethodName: SelectGun
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 51ef49715ec2d324c88569a04e5bb693,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, GameAssembly
+          m_ObjectArgumentAssemblyTypeName: BaseDefense.GunSlot, BaseDefense
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13655,6 +13769,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 538501972}
     m_Modifications:
     - target: {fileID: 8291244877435752753, guid: 467ce6ea229667340a16e06811ac3206,
@@ -13718,6 +13833,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 467ce6ea229667340a16e06811ac3206, type: 3}
 --- !u!114 &2050847773 stripped
 MonoBehaviour:
@@ -13811,7 +13929,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -90, y: -90}
+  m_AnchoredPosition: {x: -90, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2111433403
