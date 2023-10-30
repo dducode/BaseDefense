@@ -15,7 +15,7 @@ MonoBehaviour:
   enabledSaveEvents: 1
   savePeriod: 15
   saveMode: 0
-  debugEnabled: 1
+  debugEnabled: 0
   destroyCheckPoints: 1
   playerTag: Player
   registerImmediately: 0
